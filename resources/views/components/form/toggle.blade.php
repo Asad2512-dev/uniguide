@@ -41,3 +41,4 @@
     </button>
     <input type="hidden" name="{{ $name }}" :value="active ? '1' : '0'" />
 </div>
+

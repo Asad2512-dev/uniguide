@@ -87,3 +87,4 @@
     {{ $attributes->merge(['class' => $class]) }}
     aria-hidden="true"
 >{!! $svgContent !!}</svg>
+

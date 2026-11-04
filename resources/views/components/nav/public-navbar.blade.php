@@ -6,16 +6,20 @@
         <div class="flex items-center justify-between h-16 md:h-18">
             <!-- Brand Wordmark -->
             <div class="flex items-center gap-8">
-                <x-brand.wordmark size="md" />
+                <x-brand.wordmark size="md" :href="route('home')" />
 
                 <!-- Desktop Public Links -->
                 <nav class="hidden lg:flex items-center space-x-1" aria-label="Main Navigation">
                     @foreach(config('navigation.public', []) as $item)
+                        @php
+                            $targetUrl = route($item['route']) . (!empty($item['fragment']) ? '#' . $item['fragment'] : '');
+                            $isActive = request()->routeIs($item['route']);
+                        @endphp
                         <a 
-                            href="{{ route($item['route']) }}#{{ $item['fragment'] ?? '' }}" 
-                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold font-sans text-ink-700 hover:text-brand-600 hover:bg-surface-subtle transition-smooth"
+                            href="{{ $targetUrl }}" 
+                            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold font-sans transition-smooth {{ $isActive ? 'text-brand-700 bg-brand-50 shadow-2xs' : 'text-ink-700 hover:text-brand-600 hover:bg-surface-subtle' }}"
                         >
-                            <x-icon :name="$item['icon']" class="w-4 h-4 text-ink-400" />
+                            <x-icon :name="$item['icon']" class="w-4 h-4 {{ $isActive ? 'text-brand-600' : 'text-ink-400' }}" />
                             <span>{{ $item['label'] }}</span>
                             @if(isset($item['badge']))
                                 <span class="px-1.5 py-0.2 rounded text-[10px] font-mono font-bold bg-brand-50 text-brand-700 border border-brand-200/60">
@@ -48,7 +52,7 @@
                     <x-slot:trigger>
                         <button 
                             type="button" 
-                            class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-xs font-semibold text-ink-800 hover:bg-surface-subtle transition-smooth shadow-2xs"
+                            class="inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-xs font-semibold text-ink-800 hover:bg-surface-subtle transition-smooth shadow-2xs cursor-pointer"
                         >
                             <span class="w-2 h-2 rounded-full bg-brand-600"></span>
                             <span class="hidden md:inline">Portal Views</span>
@@ -85,11 +89,11 @@
 
                 <!-- Sign In / Get Started -->
                 <div class="hidden sm:flex items-center gap-2">
-                    <x-ui.button variant="ghost" size="sm" :href="route('preview.student')">
-                        Student Sign In
+                    <x-ui.button variant="ghost" size="sm" :href="route('auth.login')">
+                        Sign In
                     </x-ui.button>
-                    <x-ui.button variant="primary" size="sm" :href="route('design-system')" iconRight="arrow-right">
-                        Explore Portal
+                    <x-ui.button variant="primary" size="sm" :href="route('auth.register')" iconRight="arrow-right">
+                        Create Account
                     </x-ui.button>
                 </div>
 
@@ -97,7 +101,7 @@
                 <button 
                     type="button" 
                     @click="mobileMenuOpen = !mobileMenuOpen"
-                    class="lg:hidden p-2 rounded-lg text-ink-600 hover:text-ink-950 hover:bg-surface-subtle transition-colors"
+                    class="lg:hidden p-2 rounded-lg text-ink-600 hover:text-ink-950 hover:bg-surface-subtle transition-colors cursor-pointer"
                     aria-label="Toggle navigation menu"
                 >
                     <x-icon name="menu" class="w-5 h-5" />
@@ -119,21 +123,25 @@
         >
             <div class="space-y-6">
                 <div class="flex items-center justify-between pb-4 border-b border-border-default">
-                    <x-brand.wordmark size="sm" />
-                    <button type="button" @click="mobileMenuOpen = false" class="p-1 text-ink-400 hover:text-ink-700">
+                    <x-brand.wordmark size="sm" :href="route('home')" />
+                    <button type="button" @click="mobileMenuOpen = false" class="p-1 text-ink-400 hover:text-ink-700 cursor-pointer">
                         <x-icon name="x" class="w-5 h-5" />
                     </button>
                 </div>
 
                 <div class="space-y-1">
                     @foreach(config('navigation.public', []) as $item)
+                        @php
+                            $targetUrl = route($item['route']) . (!empty($item['fragment']) ? '#' . $item['fragment'] : '');
+                            $isActive = request()->routeIs($item['route']);
+                        @endphp
                         <a 
-                            href="{{ route($item['route']) }}#{{ $item['fragment'] ?? '' }}" 
+                            href="{{ $targetUrl }}" 
                             @click="mobileMenuOpen = false"
-                            class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold font-sans text-ink-800 hover:bg-surface-subtle hover:text-brand-600"
+                            class="flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-semibold font-sans transition-colors {{ $isActive ? 'bg-brand-50 text-brand-700 font-bold' : 'text-ink-800 hover:bg-surface-subtle hover:text-brand-600' }}"
                         >
                             <span class="flex items-center gap-2.5">
-                                <x-icon :name="$item['icon']" class="w-4 h-4 text-ink-400" />
+                                <x-icon :name="$item['icon']" class="w-4 h-4 {{ $isActive ? 'text-brand-600' : 'text-ink-400' }}" />
                                 <span>{{ $item['label'] }}</span>
                             </span>
                             @if(isset($item['badge']))
@@ -147,11 +155,11 @@
             </div>
 
             <div class="space-y-2 pt-6 border-t border-border-default">
-                <x-ui.button variant="outline" size="md" :href="route('preview.student')" class="w-full">
-                    Student Login
+                <x-ui.button variant="outline" size="md" :href="route('auth.login')" class="w-full">
+                    Student & Admin Login
                 </x-ui.button>
-                <x-ui.button variant="primary" size="md" :href="route('design-system')" class="w-full">
-                    Design System Catalog
+                <x-ui.button variant="primary" size="md" :href="route('auth.register')" class="w-full">
+                    Register for Free
                 </x-ui.button>
             </div>
         </div>

@@ -18,9 +18,9 @@
             <div class="grid grid-cols-1 md:grid-cols-5 gap-8 md:gap-12 pb-12 border-b border-border-subtle">
                 <!-- Col 1 & 2: Brand Identity -->
                 <div class="md:col-span-2 space-y-4">
-                    <x-brand.wordmark size="md" />
+                    <x-brand.wordmark size="md" :href="route('home')" />
                     <p class="text-xs text-ink-600 font-sans max-w-sm leading-relaxed">
-                        UniGuide Pakistan is the national-level higher education intelligence portal, connecting students across Punjab, Sindh, Khyber Pakhtunkhwa, Balochistan, Islamabad Capital Territory, Gilgit-Baltistan, and Azad Jammu & Kashmir with accredited degree programs and verified admissions.
+                        UniGuide Pakistan is the national higher education intelligence platform, connecting students across Punjab, Sindh, Khyber Pakhtunkhwa, Balochistan, Islamabad Capital Territory, Gilgit-Baltistan, and Azad Jammu & Kashmir with accredited degree programs and verified admissions.
                     </p>
                     <div class="flex items-center gap-2 pt-1">
                         <x-domain.verification-badge type="hec_recognized" detail="National Registry Sync" size="sm" />
@@ -33,11 +33,11 @@
                         Institutions & Programs
                     </h4>
                     <ul class="space-y-2 text-xs font-sans text-ink-600">
-                        <li><a href="{{ route('design-system') }}#domain-cards" class="hover:text-brand-600 transition-colors">Public Sector Universities</a></li>
-                        <li><a href="{{ route('design-system') }}#domain-cards" class="hover:text-brand-600 transition-colors">Chartered Private Universities</a></li>
-                        <li><a href="{{ route('design-system') }}#domain-cards" class="hover:text-brand-600 transition-colors">Engineering (PEC Accredited)</a></li>
-                        <li><a href="{{ route('design-system') }}#domain-cards" class="hover:text-brand-600 transition-colors">Medical & Dental (PMDC)</a></li>
-                        <li><a href="{{ route('design-system') }}#domain-cards" class="hover:text-brand-600 transition-colors">Computing & IT (NCEAC)</a></li>
+                        <li><a href="{{ route('home') }}#universities" class="hover:text-brand-600 transition-colors">Public Sector Universities</a></li>
+                        <li><a href="{{ route('home') }}#universities" class="hover:text-brand-600 transition-colors">Chartered Private Universities</a></li>
+                        <li><a href="{{ route('home') }}#programs" class="hover:text-brand-600 transition-colors">Engineering (PEC Accredited)</a></li>
+                        <li><a href="{{ route('home') }}#programs" class="hover:text-brand-600 transition-colors">Medical & Dental (PMDC)</a></li>
+                        <li><a href="{{ route('home') }}#programs" class="hover:text-brand-600 transition-colors">Computing & IT (NCEAC)</a></li>
                     </ul>
                 </div>
 
@@ -47,11 +47,11 @@
                         Student Guidance
                     </h4>
                     <ul class="space-y-2 text-xs font-sans text-ink-600">
-                        <li><a href="{{ route('design-system') }}#data-visualizations" class="hover:text-brand-600 transition-colors">Aggregate Merit Formulae</a></li>
-                        <li><a href="{{ route('design-system') }}#domain-cards" class="hover:text-brand-600 transition-colors">Ehsaas & HEC Scholarships</a></li>
-                        <li><a href="{{ route('design-system') }}#ai-guidance" class="hover:text-brand-600 transition-colors">AI Admission Counselor</a></li>
-                        <li><a href="{{ route('preview.student') }}" class="hover:text-brand-600 transition-colors">Student Document Locker</a></li>
-                        <li><a href="{{ route('design-system') }}#data-tables" class="hover:text-brand-600 transition-colors">University Comparison Matrix</a></li>
+                        <li><a href="{{ route('marketing.how_it_works') }}" class="hover:text-brand-600 transition-colors">How Admissions Work</a></li>
+                        <li><a href="{{ route('home') }}#scholarships" class="hover:text-brand-600 transition-colors">Ehsaas & HEC Scholarships</a></li>
+                        <li><a href="{{ route('home') }}#ai-counselor" class="hover:text-brand-600 transition-colors">AI Admission Counselor</a></li>
+                        <li><a href="{{ route('home') }}#comparison" class="hover:text-brand-600 transition-colors">University Comparison Matrix</a></li>
+                        <li><a href="{{ route('marketing.features') }}" class="hover:text-brand-600 transition-colors">Platform Capabilities</a></li>
                     </ul>
                 </div>
 
@@ -61,10 +61,11 @@
                         Platform & Charters
                     </h4>
                     <ul class="space-y-2 text-xs font-sans text-ink-600">
+                        <li><a href="{{ route('marketing.about') }}" class="hover:text-brand-600 transition-colors">About UniGuide</a></li>
+                        <li><a href="{{ route('marketing.contact') }}" class="hover:text-brand-600 transition-colors">Contact & Admissions Desk</a></li>
                         <li><a href="{{ route('preview.university_admin') }}" class="hover:text-brand-600 transition-colors">University Admin Console</a></li>
                         <li><a href="{{ route('preview.national_admin') }}" class="hover:text-brand-600 transition-colors">HEC National Command</a></li>
-                        <li><a href="{{ route('design-system') }}" class="hover:text-brand-600 transition-colors">Design System Specifications</a></li>
-                        <li><span class="text-ink-400">Statutory Gazette Registry</span></li>
+                        <li><a href="{{ route('design-system') }}" class="hover:text-brand-600 transition-colors">Design System Showcase</a></li>
                     </ul>
                 </div>
             </div>
@@ -75,11 +76,11 @@
                     © {{ date('Y') }} UniGuide Pakistan. All rights reserved. Data verified against official provincial charters and gazetted fee schedules.
                 </p>
                 <div class="flex items-center gap-4 text-[11px]">
-                    <a href="#" class="hover:text-ink-900 transition-colors">Privacy Policy</a>
+                    <a href="{{ route('marketing.about') }}" class="hover:text-ink-900 transition-colors">Data Transparency</a>
                     <span class="text-ink-300">•</span>
-                    <a href="#" class="hover:text-ink-900 transition-colors">Statutory Terms</a>
+                    <a href="{{ route('marketing.contact') }}" class="hover:text-ink-900 transition-colors">Institutional Inquiries</a>
                     <span class="text-ink-300">•</span>
-                    <a href="#" class="hover:text-ink-900 transition-colors">Verification Protocol</a>
+                    <a href="{{ route('design-system') }}" class="hover:text-ink-900 transition-colors">Design System</a>
                 </div>
             </div>
         </div>

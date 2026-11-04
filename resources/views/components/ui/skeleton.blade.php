@@ -30,3 +30,4 @@
         <td class="px-5 py-4 text-right"><div class="h-8 bg-ink-200/60 rounded-lg w-20 ml-auto"></div></td>
     </tr>
 @endif
+
