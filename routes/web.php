@@ -10,6 +10,7 @@ use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShellPreviewController;
+use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UniversityController;
 use Illuminate\Support\Facades\Route;
 
@@ -56,6 +57,39 @@ Route::prefix('counselor')->name('counselor.')->group(function () {
     Route::get('/evidence/{id?}', [CounselorController::class, 'evidence'])->name('evidence');
     Route::get('/history', [CounselorController::class, 'history'])->name('history');
     Route::delete('/history/{id}', [CounselorController::class, 'destroy'])->name('destroy');
+});
+
+// Authenticated Student Experience (Phase 05)
+Route::prefix('student')->name('student.')->group(function () {
+    Route::get('/onboarding', [StudentController::class, 'onboarding'])->name('onboarding');
+    Route::post('/onboarding', [StudentController::class, 'processOnboarding'])->name('onboarding.submit');
+    Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
+    Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
+    Route::post('/profile', [StudentController::class, 'updateProfile'])->name('profile.update');
+    Route::get('/recommendations', [StudentController::class, 'recommendations'])->name('recommendations');
+
+    // Saved Collections
+    Route::get('/saved/universities', [StudentController::class, 'savedUniversities'])->name('saved.universities');
+    Route::delete('/saved/universities/{slug}', [StudentController::class, 'removeSavedUniversity'])->name('saved.universities.destroy');
+    Route::get('/saved/programs', [StudentController::class, 'savedPrograms'])->name('saved.programs');
+    Route::delete('/saved/programs/{slug}', [StudentController::class, 'removeSavedProgram'])->name('saved.programs.destroy');
+    Route::get('/saved/scholarships', [StudentController::class, 'savedScholarships'])->name('saved.scholarships');
+    Route::delete('/saved/scholarships/{slug}', [StudentController::class, 'removeSavedScholarship'])->name('saved.scholarships.destroy');
+
+    // Admission Tracker
+    Route::get('/tracker', [StudentController::class, 'tracker'])->name('tracker');
+    Route::post('/tracker', [StudentController::class, 'storeTracker'])->name('tracker.store');
+    Route::put('/tracker/{id}', [StudentController::class, 'updateTracker'])->name('tracker.update');
+    Route::delete('/tracker/{id}', [StudentController::class, 'deleteTracker'])->name('tracker.destroy');
+
+    // Notifications Center
+    Route::get('/notifications', [StudentController::class, 'notifications'])->name('notifications');
+    Route::post('/notifications/{id}/read', [StudentController::class, 'markNotificationRead'])->name('notifications.read');
+    Route::post('/notifications/read-all', [StudentController::class, 'markAllNotificationsRead'])->name('notifications.read_all');
+
+    // Account Settings
+    Route::get('/settings', [StudentController::class, 'settings'])->name('settings');
+    Route::post('/settings', [StudentController::class, 'updateSettings'])->name('settings.update');
 });
 
 // Unified Multi-Entity Search & API Suggestions

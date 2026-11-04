@@ -1,4 +1,25 @@
 <x-layouts.student title="Student Portal — Admissions & Merit Dashboard">
+    <!-- Quick Access to Full Authenticated Experience Banner -->
+    <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-800 text-white shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center font-bold text-white shrink-0">
+                <x-icon name="sparkles" class="w-5 h-5 text-white" />
+            </div>
+            <div>
+                <h2 class="font-heading font-bold text-sm text-white">Full Authenticated Student Experience (Phase 05) Active</h2>
+                <p class="text-xs text-white/80 font-sans">Access personalized recommendations, admission tracker lifecycle, and saved collections.</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-2 shrink-0">
+            <a href="{{ route('student.dashboard') }}" class="px-3.5 py-1.5 rounded-xl bg-white text-brand-700 hover:bg-brand-50 text-xs font-bold font-sans transition-smooth">
+                Open Command Center →
+            </a>
+            <a href="{{ route('student.onboarding') }}" class="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold font-sans transition-smooth">
+                Launch Onboarding Wizard
+            </a>
+        </div>
+    </div>
+
     <!-- Page Header with Breadcrumbs & Actions -->
     <x-ui.page-header 
         title="Student Admissions Command"
