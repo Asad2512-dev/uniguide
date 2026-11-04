@@ -15,6 +15,9 @@
         </x-slot:breadcrumbs>
 
         <x-slot:actions>
+            <x-ui.button variant="primary" size="sm" icon="sliders" href="{{ route('national_admin.dashboard') }}">
+                Launch Full Platform (15 Modules)
+            </x-ui.button>
             <x-ui.button variant="outline" size="sm" icon="refresh-cw">
                 Sync Provincial Charters
             </x-ui.button>

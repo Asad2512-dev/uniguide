@@ -8,6 +8,7 @@ use App\Http\Controllers\DesignSystemController;
 use App\Http\Controllers\EligibilityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketingController;
+use App\Http\Controllers\NationalAdminController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\SearchController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\ShellPreviewController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UniversityAdminController;
 use App\Http\Controllers\UniversityController;
+use App\Http\Middleware\EnsureNationalAdminAuthorized;
 use App\Http\Middleware\EnsureUniversityAdminAuthorized;
 use Illuminate\Support\Facades\Route;
 
@@ -173,6 +175,65 @@ Route::prefix('admin/university')
         // Staff and Settings
         Route::get('/settings', [UniversityAdminController::class, 'settings'])->name('settings');
         Route::post('/settings', [UniversityAdminController::class, 'updateSettings'])->name('settings.update');
+    });
+
+// National Super Administration Platform (Phase 08)
+Route::prefix('admin/national')
+    ->name('national_admin.')
+    ->middleware(EnsureNationalAdminAuthorized::class)
+    ->group(function () {
+        Route::get('/', [NationalAdminController::class, 'dashboard'])->name('index');
+        Route::get('/dashboard', [NationalAdminController::class, 'dashboard'])->name('dashboard');
+
+        // University Registry
+        Route::get('/universities', [NationalAdminController::class, 'universities'])->name('universities');
+
+        // University Approval Center
+        Route::get('/approvals', [NationalAdminController::class, 'approvals'])->name('approvals');
+        Route::post('/approvals/{id}', [NationalAdminController::class, 'processApproval'])->name('approvals.process');
+
+        // Campus and Program Registry
+        Route::get('/programs', [NationalAdminController::class, 'programs'])->name('programs');
+
+        // Official Data Source Management
+        Route::get('/sources', [NationalAdminController::class, 'sources'])->name('sources');
+
+        // Web Scraping Control Center
+        Route::get('/scraping', [NationalAdminController::class, 'scraping'])->name('scraping');
+        Route::post('/scraping/trigger', [NationalAdminController::class, 'triggerCrawl'])->name('scraping.trigger');
+        Route::post('/scraping/retry-failed', [NationalAdminController::class, 'retryFailedCrawls'])->name('scraping.retry');
+
+        // Scraping Job History
+        Route::get('/scraping/history', [NationalAdminController::class, 'scrapingHistory'])->name('scraping_history');
+
+        // AI Extraction Review
+        Route::get('/ai-extraction', [NationalAdminController::class, 'aiExtraction'])->name('ai_extraction');
+        Route::post('/ai-extraction/{id}', [NationalAdminController::class, 'processExtraction'])->name('ai_extraction.process');
+
+        // Data Verification Queue
+        Route::get('/verification', [NationalAdminController::class, 'verification'])->name('verification');
+
+        // Knowledge Base Management (Vector Store)
+        Route::get('/knowledge-base', [NationalAdminController::class, 'knowledgeBase'])->name('knowledge_base');
+        Route::post('/knowledge-base/reindex', [NationalAdminController::class, 'reindexKnowledgeBase'])->name('knowledge_base.reindex');
+
+        // AI Chatbot Configuration
+        Route::get('/chatbot-config', [NationalAdminController::class, 'chatbotConfig'])->name('chatbot_config');
+        Route::post('/chatbot-config', [NationalAdminController::class, 'updateChatbotConfig'])->name('chatbot_config.update');
+
+        // Student and Admin User Management
+        Route::get('/users', [NationalAdminController::class, 'users'])->name('users');
+
+        // Notifications Management
+        Route::get('/notifications', [NationalAdminController::class, 'notifications'])->name('notifications');
+        Route::post('/notifications', [NationalAdminController::class, 'createNotification'])->name('notifications.create');
+
+        // Analytics and Reports
+        Route::get('/analytics', [NationalAdminController::class, 'analytics'])->name('analytics');
+
+        // System Settings and Audit Logs
+        Route::get('/settings', [NationalAdminController::class, 'settings'])->name('settings');
+        Route::post('/settings', [NationalAdminController::class, 'updateSettings'])->name('settings.update');
     });
 
 // Unified Multi-Entity Search & API Suggestions
