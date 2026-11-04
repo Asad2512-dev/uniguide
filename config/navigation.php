@@ -14,10 +14,15 @@ return [
     'public' => [
         [
             'label' => 'Explore Universities',
-            'route' => 'home',
-            'fragment' => 'universities',
+            'route' => 'universities.index',
             'icon' => 'building-2',
             'description' => 'Browse 248+ HEC-recognized public and chartered institutions across Pakistan.',
+        ],
+        [
+            'label' => 'Degree Programs',
+            'route' => 'programs.index',
+            'icon' => 'graduation-cap',
+            'description' => 'Search undergraduate and graduate degrees with merit formulas and fee structures.',
         ],
         [
             'label' => 'Platform Features',

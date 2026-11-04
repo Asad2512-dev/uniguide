@@ -14,6 +14,7 @@ class HomeController extends Controller
     {
         $featuredUniversities = [
             [
+                'slug' => 'nust',
                 'name' => 'National University of Sciences & Technology',
                 'acronym' => 'NUST',
                 'location' => 'Sector H-12, Islamabad',
@@ -29,6 +30,7 @@ class HomeController extends Controller
                 'province' => 'Islamabad (Federal)',
             ],
             [
+                'slug' => 'fast-nuces',
                 'name' => 'FAST - National University of Computer & Emerging Sciences',
                 'acronym' => 'FAST',
                 'location' => 'Islamabad, Lahore & Karachi Campuses',
@@ -44,6 +46,7 @@ class HomeController extends Controller
                 'province' => 'Multi-Campus',
             ],
             [
+                'slug' => 'lums',
                 'name' => 'Lahore University of Management Sciences',
                 'acronym' => 'LUMS',
                 'location' => 'DHA Phase 5, Lahore, Punjab',
@@ -59,6 +62,7 @@ class HomeController extends Controller
                 'province' => 'Punjab',
             ],
             [
+                'slug' => 'giki',
                 'name' => 'Ghulam Ishaq Khan Institute (GIKI)',
                 'acronym' => 'GIKI',
                 'location' => 'Topi, Swabi, Khyber Pakhtunkhwa',
@@ -74,6 +78,7 @@ class HomeController extends Controller
                 'province' => 'KPK',
             ],
             [
+                'slug' => 'iba-karachi',
                 'name' => 'Institute of Business Administration (IBA)',
                 'acronym' => 'IBA',
                 'location' => 'University Road & City Campus, Karachi',
@@ -89,6 +94,7 @@ class HomeController extends Controller
                 'province' => 'Sindh',
             ],
             [
+                'slug' => 'aku',
                 'name' => 'Aga Khan University (AKU)',
                 'acronym' => 'AKU',
                 'location' => 'Stadium Road, Karachi, Sindh',
@@ -107,6 +113,7 @@ class HomeController extends Controller
 
         $popularPrograms = [
             [
+                'slug' => 'fast-bs-computer-science',
                 'title' => 'BS Computer Science (BSCS)',
                 'university' => 'FAST-NUCES Islamabad',
                 'degreeLevel' => 'Undergraduate (BS)',
@@ -117,6 +124,7 @@ class HomeController extends Controller
                 'status' => 'open',
             ],
             [
+                'slug' => 'nust-bs-software-engineering',
                 'title' => 'BS Software Engineering',
                 'university' => 'NUST SEECS Islamabad',
                 'degreeLevel' => 'Undergraduate (BS)',
@@ -127,7 +135,8 @@ class HomeController extends Controller
                 'status' => 'open',
             ],
             [
-                'title' => 'BE Electrical Engineering',
+                'slug' => 'uet-be-mechanical-engineering',
+                'title' => 'BE Mechanical Engineering',
                 'university' => 'UET Lahore Main Campus',
                 'degreeLevel' => 'Undergraduate (BE)',
                 'duration' => '4 Years • 8 Semesters',
@@ -137,6 +146,7 @@ class HomeController extends Controller
                 'status' => 'upcoming',
             ],
             [
+                'slug' => 'iba-bba-honors',
                 'title' => 'Bachelor of Business Administration (BBA)',
                 'university' => 'IBA Karachi',
                 'degreeLevel' => 'Undergraduate (BBA Hons)',
@@ -147,6 +157,7 @@ class HomeController extends Controller
                 'status' => 'open',
             ],
             [
+                'slug' => 'giki-bs-artificial-intelligence',
                 'title' => 'BS Artificial Intelligence',
                 'university' => 'GIKI Topi, KPK',
                 'degreeLevel' => 'Undergraduate (BS)',
@@ -157,14 +168,15 @@ class HomeController extends Controller
                 'status' => 'merit_announced',
             ],
             [
+                'slug' => 'aku-mbbs',
                 'title' => 'Bachelor of Medicine & Surgery (MBBS)',
-                'university' => 'King Edward Medical University (KEMU) Lahore',
+                'university' => 'Aga Khan University (AKU) Karachi',
                 'degreeLevel' => 'Professional (MBBS)',
                 'duration' => '5 Years • Clinical Rotations',
-                'feePerSemester' => 'PKR 35,000 (Govt Subsidized)',
-                'cutoffMerit' => '91.80% MDCAT Aggregate',
-                'accreditation' => 'PMDC Recognized • WHO Listed',
-                'status' => 'upcoming',
+                'feePerSemester' => 'PKR 540,000',
+                'cutoffMerit' => 'AKU Test + MDCAT (PMDC)',
+                'accreditation' => 'PMDC Recognized Level-I',
+                'status' => 'closing_soon',
             ],
         ];
 
@@ -228,3 +240,4 @@ class HomeController extends Controller
         ]);
     }
 }
+

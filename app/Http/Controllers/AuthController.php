@@ -94,3 +94,4 @@ class AuthController extends Controller
         return redirect()->route('home')->with('toast_info', 'You have been safely signed out of UniGuide Pakistan.');
     }
 }
+

@@ -205,3 +205,4 @@ class MarketingController extends Controller
         return redirect()->route('marketing.contact')->with('success', 'Your inquiry has been logged with UniGuide National Support (#UG-TKT-' . rand(10000, 99999) . '). Our admissions counselor will contact you within 24 hours.');
     }
 }
+

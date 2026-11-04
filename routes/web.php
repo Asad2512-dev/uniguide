@@ -4,7 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DesignSystemController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketingController;
+use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShellPreviewController;
+use App\Http\Controllers\UniversityController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,6 +22,19 @@ use Illuminate\Support\Facades\Route;
 
 // Primary Marketing & University Discovery Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+// National University Directory & Campus Explorer (Phase 02)
+Route::get('/universities', [UniversityController::class, 'index'])->name('universities.index');
+Route::get('/universities/{slug}', [UniversityController::class, 'show'])->name('universities.show');
+Route::get('/universities/{slug}/campuses/{campusSlug}', [UniversityController::class, 'campus'])->name('universities.campuses.show');
+
+// Degree Program Catalog & Program Detail (Phase 02)
+Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
+Route::get('/programs/{slug}', [ProgramController::class, 'show'])->name('programs.show');
+
+// Unified Multi-Entity Search & API Suggestions
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::get('/api/search/suggestions', [SearchController::class, 'suggestions'])->name('search.suggestions');
 
 // Public Marketing & Platform Explanatory Screens
 Route::name('marketing.')->group(function () {

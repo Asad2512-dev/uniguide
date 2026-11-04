@@ -50,12 +50,12 @@
                         selectedSector: 'all',
                         selectedDiscipline: 'all',
                         suggestions: [
-                            { type: 'University', title: 'National University of Sciences & Technology (NUST)', meta: 'Islamabad • HEC #1', route: '#universities' },
-                            { type: 'University', title: 'FAST - NUCES (Computing & AI)', meta: 'Islamabad, Lahore, Karachi', route: '#universities' },
-                            { type: 'University', title: 'Lahore University of Management Sciences (LUMS)', meta: 'Lahore • Business & CS', route: '#universities' },
-                            { type: 'Program', title: 'BS Computer Science (BSCS)', meta: '4 Years • Average Fee PKR 140k/sem', route: '#programs' },
-                            { type: 'Program', title: 'BE Electrical Engineering (PEC Washington Accord)', meta: '4 Years • Top Merit', route: '#programs' },
-                            { type: 'Scholarship', title: 'HEC Need-Based Undergraduate Scholarship', meta: '100% Tuition + PKR 6,000/mo', route: '#scholarships' },
+                            { type: 'University', title: 'National University of Sciences & Technology (NUST)', meta: 'Islamabad • HEC #1', route: '{{ route('universities.show', 'nust') }}' },
+                            { type: 'University', title: 'FAST - NUCES (Computing & AI)', meta: 'Islamabad, Lahore, Karachi', route: '{{ route('universities.show', 'fast-nuces') }}' },
+                            { type: 'University', title: 'Lahore University of Management Sciences (LUMS)', meta: 'Lahore • Business & CS', route: '{{ route('universities.show', 'lums') }}' },
+                            { type: 'Program', title: 'BS Computer Science (BSCS)', meta: '4 Years • Average Fee PKR 140k/sem', route: '{{ route('programs.show', 'fast-bs-computer-science') }}' },
+                            { type: 'Program', title: 'BS Software Engineering (BSSE)', meta: '4 Years • Top Merit', route: '{{ route('programs.show', 'nust-bs-software-engineering') }}' },
+                            { type: 'Scholarship', title: 'HEC Need-Based Undergraduate Scholarship', meta: '100% Tuition + PKR 6,000/mo', route: '{{ route('universities.index') }}' },
                         ],
                         get filteredSuggestions() {
                             if (!this.searchQuery.trim()) return [];
@@ -125,6 +125,7 @@
                                         :placeholder="activeTab === 'aggregate' ? 'Enter your estimated aggregate (e.g. 78.5% or FSc marks)...' : (activeTab === 'program' ? 'Search degree (e.g. BS Software Engineering, MBBS, BBA)...' : 'Search university by name, city, or acronym (e.g. NUST, LUMS, Karachi)...')"
                                         class="w-full pl-11 pr-10 py-3 text-sm text-ink-900 placeholder:text-ink-400 bg-surface-subtle rounded-xl border border-border-default focus:outline-none focus:border-brand-500 focus:bg-surface focus:ring-2 focus:ring-brand-500/20 font-sans transition-all"
                                         @keydown.escape="searchQuery = ''"
+                                        @keydown.enter="window.location.href = searchQuery.trim() ? '{{ route('search.index') }}?q=' + encodeURIComponent(searchQuery) : '{{ route('universities.index') }}'"
                                     />
                                     <button 
                                         type="button" 
@@ -137,15 +138,14 @@
                                 </div>
 
                                 <div class="flex items-center gap-2 shrink-0">
-                                    <x-ui.button 
-                                        variant="primary" 
-                                        size="lg" 
-                                        iconRight="arrow-right"
-                                        class="w-full sm:w-auto h-11 px-6 shadow-xs"
-                                        href="#universities"
+                                    <button 
+                                        type="button"
+                                        @click="window.location.href = searchQuery.trim() ? '{{ route('search.index') }}?q=' + encodeURIComponent(searchQuery) : '{{ route('universities.index') }}'"
+                                        class="inline-flex items-center justify-center gap-2 w-full sm:w-auto h-11 px-6 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-sans text-xs font-semibold shadow-xs transition-smooth cursor-pointer"
                                     >
-                                        Explore Matches
-                                    </x-ui.button>
+                                        <span>Explore Matches</span>
+                                        <x-icon name="arrow-right" class="w-4 h-4" />
+                                    </button>
                                 </div>
                             </div>
 
@@ -243,7 +243,7 @@
             <!-- ========================================================================= -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mt-16 pt-8 border-t border-border-default">
                 <!-- Tile 1 -->
-                <a href="#universities" class="group p-5 bg-surface rounded-2xl border border-border-default hover:border-brand-300 hover:shadow-card hover:-translate-y-0.5 transition-all flex flex-col justify-between">
+                <a href="{{ route('universities.index') }}" class="group p-5 bg-surface rounded-2xl border border-border-default hover:border-brand-300 hover:shadow-card hover:-translate-y-0.5 transition-all flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center border border-brand-200/60 mb-4 group-hover:scale-110 transition-transform">
                             <x-icon name="building-2" class="w-5 h-5" />
@@ -262,7 +262,7 @@
                 </a>
 
                 <!-- Tile 2 -->
-                <a href="#programs" class="group p-5 bg-surface rounded-2xl border border-border-default hover:border-success-300 hover:shadow-card hover:-translate-y-0.5 transition-all flex flex-col justify-between">
+                <a href="{{ route('programs.index') }}" class="group p-5 bg-surface rounded-2xl border border-border-default hover:border-success-300 hover:shadow-card hover:-translate-y-0.5 transition-all flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-success-50 text-success-600 flex items-center justify-center border border-success-200/60 mb-4 group-hover:scale-110 transition-transform">
                             <x-icon name="graduation-cap" class="w-5 h-5" />
@@ -360,6 +360,7 @@
                     :status="$uni['status']"
                     :deadline="$uni['deadline']"
                     :featured="$uni['featured']"
+                    :href="route('universities.show', $uni['slug'])"
                 />
             @endforeach
         </div>
@@ -374,7 +375,7 @@
                     <p class="text-xs text-ink-500 font-sans">Discover sub-campuses in Faisalabad, Multan, Peshawar, Hyderabad, Sukkur, and Quetta.</p>
                 </div>
             </div>
-            <x-ui.button variant="outline" size="sm" :href="route('design-system') . '#domain-cards'" iconRight="arrow-right">
+            <x-ui.button variant="outline" size="sm" :href="route('universities.index')" iconRight="arrow-right">
                 View Full University Registry
             </x-ui.button>
         </div>
@@ -411,7 +412,7 @@
                         :cutoffMerit="$prog['cutoffMerit']"
                         :accreditation="$prog['accreditation']"
                         :status="$prog['status']"
-                        href="#programs"
+                        :href="route('programs.show', $prog['slug'])"
                     />
                 @endforeach
             </div>
@@ -735,3 +736,4 @@
         </div>
     </section>
 </x-layouts.public>
+
