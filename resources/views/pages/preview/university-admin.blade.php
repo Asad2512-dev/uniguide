@@ -15,11 +15,11 @@
         </x-slot:breadcrumbs>
 
         <x-slot:actions>
+            <x-ui.button variant="primary" size="sm" icon="layout-dashboard" href="{{ route('uni_admin.dashboard') }}">
+                Launch Full Administration Portal
+            </x-ui.button>
             <x-ui.button variant="outline" size="sm" icon="download">
                 Export Gazette CSV
-            </x-ui.button>
-            <x-ui.button variant="primary" size="sm" icon="sliders-horizontal" @click="$dispatch('open-drawer', 'admin-filter-drawer')">
-                Cycle Settings
             </x-ui.button>
         </x-slot:actions>
     </x-ui.page-header>

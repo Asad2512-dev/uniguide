@@ -13,7 +13,9 @@ use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShellPreviewController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\UniversityAdminController;
 use App\Http\Controllers\UniversityController;
+use App\Http\Middleware\EnsureUniversityAdminAuthorized;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -109,6 +111,69 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/settings', [StudentController::class, 'settings'])->name('settings');
     Route::post('/settings', [StudentController::class, 'updateSettings'])->name('settings.update');
 });
+
+// University Administration Portal (Phase 07)
+Route::prefix('admin/university')
+    ->name('uni_admin.')
+    ->middleware(EnsureUniversityAdminAuthorized::class)
+    ->group(function () {
+        Route::get('/', [UniversityAdminController::class, 'dashboard'])->name('index');
+        Route::get('/dashboard', [UniversityAdminController::class, 'dashboard'])->name('dashboard');
+
+        // Profile Management
+        Route::get('/profile', [UniversityAdminController::class, 'profile'])->name('profile');
+        Route::post('/profile', [UniversityAdminController::class, 'updateProfile'])->name('profile.update');
+
+        // Campus Management
+        Route::get('/campuses', [UniversityAdminController::class, 'campuses'])->name('campuses');
+        Route::post('/campuses', [UniversityAdminController::class, 'storeCampus'])->name('campuses.store');
+        Route::put('/campuses/{id}', [UniversityAdminController::class, 'updateCampus'])->name('campuses.update');
+
+        // Department Management
+        Route::get('/departments', [UniversityAdminController::class, 'departments'])->name('departments');
+        Route::post('/departments', [UniversityAdminController::class, 'storeDepartment'])->name('departments.store');
+
+        // Program Management
+        Route::get('/programs', [UniversityAdminController::class, 'programs'])->name('programs');
+        Route::post('/programs', [UniversityAdminController::class, 'storeProgram'])->name('programs.store');
+        Route::put('/programs/{id}', [UniversityAdminController::class, 'updateProgram'])->name('programs.update');
+
+        // Fee Management
+        Route::get('/fees', [UniversityAdminController::class, 'fees'])->name('fees');
+        Route::post('/fees', [UniversityAdminController::class, 'updateFees'])->name('fees.update');
+
+        // Admission Management
+        Route::get('/admissions', [UniversityAdminController::class, 'admissions'])->name('admissions');
+        Route::post('/admissions', [UniversityAdminController::class, 'updateAdmissions'])->name('admissions.update');
+
+        // Eligibility Rules Management
+        Route::get('/eligibility', [UniversityAdminController::class, 'eligibility'])->name('eligibility');
+        Route::post('/eligibility', [UniversityAdminController::class, 'updateEligibility'])->name('eligibility.update');
+
+        // Scholarship Management
+        Route::get('/scholarships', [UniversityAdminController::class, 'scholarships'])->name('scholarships');
+        Route::post('/scholarships', [UniversityAdminController::class, 'storeScholarship'])->name('scholarships.store');
+
+        // Document Management
+        Route::get('/documents', [UniversityAdminController::class, 'documents'])->name('documents');
+        Route::post('/documents/verify/{id}', [UniversityAdminController::class, 'verifyDocument'])->name('documents.verify');
+        Route::post('/documents/upload', [UniversityAdminController::class, 'uploadDocument'])->name('documents.upload');
+
+        // AI Data Verification
+        Route::get('/ai-verification', [UniversityAdminController::class, 'aiVerification'])->name('ai_verification');
+        Route::post('/ai-verification/{id}/approve', [UniversityAdminController::class, 'approveAiVerification'])->name('ai_verification.approve');
+        Route::post('/ai-verification/{id}/reject', [UniversityAdminController::class, 'rejectAiVerification'])->name('ai_verification.reject');
+        Route::post('/ai-verification/{id}/edit', [UniversityAdminController::class, 'editAiVerification'])->name('ai_verification.edit');
+
+        // Student Inquiry Management
+        Route::get('/inquiries', [UniversityAdminController::class, 'inquiries'])->name('inquiries');
+        Route::post('/inquiries/{id}/reply', [UniversityAdminController::class, 'replyInquiry'])->name('inquiries.reply');
+        Route::put('/inquiries/{id}/status', [UniversityAdminController::class, 'updateInquiryStatus'])->name('inquiries.status');
+
+        // Staff and Settings
+        Route::get('/settings', [UniversityAdminController::class, 'settings'])->name('settings');
+        Route::post('/settings', [UniversityAdminController::class, 'updateSettings'])->name('settings.update');
+    });
 
 // Unified Multi-Entity Search & API Suggestions
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');
