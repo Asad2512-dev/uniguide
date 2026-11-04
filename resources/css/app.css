@@ -166,3 +166,26 @@ h1, h2, h3, h4, h5, h6, .font-heading {
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
     outline: none;
 }
+
+/* WCAG 2.2 AA Focus Visibility */
+:focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 2px;
+}
+
+/* Mobile Touch Scrolling Momentum */
+.overflow-x-auto {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* WCAG 2.2 AA: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    ::before,
+    ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}

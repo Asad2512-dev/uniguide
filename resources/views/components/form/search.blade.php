@@ -20,6 +20,7 @@
         id="{{ $id }}"
         x-model="query"
         placeholder="{{ $placeholder }}"
+        aria-label="{{ $placeholder }}"
         {{ $attributes->merge([
             'class' => 'block w-full rounded-lg font-sans text-sm text-ink-900 bg-surface pl-10 pr-16 py-2 border border-border-default hover:border-border-strong focus:outline-none focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20 placeholder:text-ink-400 transition-smooth shadow-2xs'
         ]) }}

@@ -37,7 +37,7 @@
     @endif
 
     <!-- Statistics Overview Strip -->
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
             <span class="text-[11px] font-mono uppercase text-ink-500 block mb-1">Total Chartered</span>
             <span class="font-heading font-extrabold text-2xl text-ink-950">248</span>
@@ -118,67 +118,70 @@
 
         <!-- Registry Table -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                        <th class="py-3.5 px-4 font-semibold">Institution Name & Legislative Act</th>
-                        <th class="py-3.5 px-4 font-semibold">Sector & Region</th>
-                        <th class="py-3.5 px-4 text-center font-semibold">HEC Tier</th>
-                        <th class="py-3.5 px-4 text-center font-semibold">Campuses</th>
-                        <th class="py-3.5 px-4 text-center font-semibold">Programs</th>
-                        <th class="py-3.5 px-4 font-semibold">Last Audit</th>
-                        <th class="py-3.5 px-4 text-right font-semibold">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border-subtle text-xs">
-                    @foreach($universities as $uni)
-                        <tr 
-                            x-show="matches({{ json_encode($uni) }})"
-                            class="hover:bg-surface-subtle/80 transition-colors"
-                        >
-                            <td class="py-3.5 px-4">
-                                <div class="flex items-center gap-3">
-                                    <div class="w-9 h-9 rounded-xl bg-brand-50 border border-brand-200/80 text-brand-700 flex items-center justify-center font-bold text-xs shrink-0 font-heading">
-                                        {{ $uni['acronym'] }}
-                                    </div>
-                                    <div class="min-w-0">
-                                        <a href="{{ route('national_admin.universities') }}" class="font-heading font-bold text-ink-950 hover:text-brand-700 transition-colors block truncate">
-                                            {{ $uni['name'] }}
-                                        </a>
-                                        <span class="text-[11px] font-mono text-ink-500 block truncate">
-                                            {{ $uni['charter_type'] }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </td>
-                            <td class="py-3.5 px-4">
-                                <span class="font-medium text-ink-800 block">{{ $uni['sector'] }}</span>
-                                <span class="text-[11px] text-ink-500 block">{{ $uni['province'] }}</span>
-                            </td>
-                            <td class="py-3.5 px-4 text-center">
-                                <span class="inline-flex px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-brand-50 text-brand-700 border border-brand-200">
-                                    {{ $uni['hec_category'] }}
-                                </span>
-                            </td>
-                            <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-800">
-                                {{ $uni['active_campuses_count'] }}
-                            </td>
-                            <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-800">
-                                {{ $uni['active_programs_count'] }}
-                            </td>
-                            <td class="py-3.5 px-4 font-mono text-ink-600 text-[11px]">
-                                {{ $uni['last_audit_date'] }}
-                            </td>
-                            <td class="py-3.5 px-4 text-right">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    Verified
-                                </span>
-                            </td>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" aria-label="Chartered University Registry">
+                    <thead>
+                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Institution Name & Legislative Act</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Sector & Region</th>
+                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">HEC Tier</th>
+                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">Campuses</th>
+                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">Programs</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Last Audit</th>
+                            <th scope="col" class="py-3.5 px-4 text-right font-semibold">Status</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-border-subtle text-xs">
+                        @foreach($universities as $uni)
+                            <tr 
+                                x-show="matches({{ json_encode($uni) }})"
+                                class="hover:bg-surface-subtle/80 transition-colors"
+                            >
+                                <td class="py-3.5 px-4">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-9 h-9 rounded-xl bg-brand-50 border border-brand-200/80 text-brand-700 flex items-center justify-center font-bold text-xs shrink-0 font-heading">
+                                            {{ $uni['acronym'] }}
+                                        </div>
+                                        <div class="min-w-0">
+                                            <a href="{{ route('national_admin.universities') }}" class="font-heading font-bold text-ink-950 hover:text-brand-700 transition-colors block truncate">
+                                                {{ $uni['name'] }}
+                                            </a>
+                                            <span class="text-[11px] font-mono text-ink-500 block truncate">
+                                                {{ $uni['charter_type'] }}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="py-3.5 px-4">
+                                    <span class="font-medium text-ink-800 block">{{ $uni['sector'] }}</span>
+                                    <span class="text-[11px] text-ink-500 block">{{ $uni['province'] }}</span>
+                                </td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-brand-50 text-brand-700 border border-brand-200">
+                                        {{ $uni['hec_category'] }}
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-800">
+                                    {{ $uni['active_campuses_count'] }}
+                                </td>
+                                <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-800">
+                                    {{ $uni['active_programs_count'] }}
+                                </td>
+                                <td class="py-3.5 px-4 font-mono text-ink-600 text-[11px]">
+                                    {{ $uni['last_audit_date'] }}
+                                </td>
+                                <td class="py-3.5 px-4 text-right">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        Verified
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-layouts.national-admin>
+

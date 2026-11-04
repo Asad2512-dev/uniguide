@@ -91,57 +91,59 @@
 
         <!-- Programs Table Card -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                        <th class="py-3 px-4">Discipline & Code</th>
-                        <th class="py-3 px-4">Department / School</th>
-                        <th class="py-3 px-4">Duration & Credits</th>
-                        <th class="py-3 px-4">Accreditation</th>
-                        <th class="py-3 px-4">Tuition / Sem</th>
-                        <th class="py-3 px-4 text-right">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border-subtle text-xs">
-                    <template x-for="p in filteredPrograms()" :key="p.id">
-                        <tr class="hover:bg-surface-subtle/80 transition-colors">
-                            <td class="py-3.5 px-4">
-                                <span class="font-bold text-ink-950 font-heading block" x-text="p.name"></span>
-                                <span class="text-[11px] font-mono text-ink-500" x-text="p.code"></span>
-                            </td>
-
-                            <td class="py-3.5 px-4">
-                                <span class="font-semibold text-ink-800" x-text="p.department"></span>
-                                <span class="text-[11px] text-ink-400 block" x-text="p.campus"></span>
-                            </td>
-
-                            <td class="py-3.5 px-4">
-                                <span class="text-ink-800 font-sans" x-text="p.duration"></span>
-                                <span class="text-[10px] font-mono text-ink-500 block" x-text="p.credit_hours + ' Credit Hours'"></span>
-                            </td>
-
-                            <td class="py-3.5 px-4">
-                                <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200" x-text="p.accreditation"></span>
-                            </td>
-
-                            <td class="py-3.5 px-4">
-                                <span class="font-mono font-bold text-ink-950" x-text="p.tuition_semester"></span>
-                                <span class="text-[10px] text-brand-600 block" x-text="p.intake_seats + ' Approved Seats'"></span>
-                            </td>
-
-                            <td class="py-3.5 px-4 text-right">
-                                <button 
-                                    type="button" 
-                                    @click="openDrawer(p)"
-                                    class="px-3 py-1.5 rounded-lg border border-border-default hover:bg-surface text-ink-700 font-semibold text-xs transition-smooth cursor-pointer"
-                                >
-                                    Inspect & Edit →
-                                </button>
-                            </td>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" aria-label="Academic Degree Programs Catalog">
+                    <thead>
+                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <th scope="col" class="py-3 px-4">Discipline & Code</th>
+                            <th scope="col" class="py-3 px-4">Department / School</th>
+                            <th scope="col" class="py-3 px-4">Duration & Credits</th>
+                            <th scope="col" class="py-3 px-4">Accreditation</th>
+                            <th scope="col" class="py-3 px-4">Tuition / Sem</th>
+                            <th scope="col" class="py-3 px-4 text-right">Actions</th>
                         </tr>
-                    </template>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-border-subtle text-xs">
+                        <template x-for="p in filteredPrograms()" :key="p.id">
+                            <tr class="hover:bg-surface-subtle/80 transition-colors">
+                                <td class="py-3.5 px-4">
+                                    <span class="font-bold text-ink-950 font-heading block" x-text="p.name"></span>
+                                    <span class="text-[11px] font-mono text-ink-500" x-text="p.code"></span>
+                                </td>
+
+                                <td class="py-3.5 px-4">
+                                    <span class="font-semibold text-ink-800" x-text="p.department"></span>
+                                    <span class="text-[11px] text-ink-400 block" x-text="p.campus"></span>
+                                </td>
+
+                                <td class="py-3.5 px-4">
+                                    <span class="text-ink-800 font-sans" x-text="p.duration"></span>
+                                    <span class="text-[10px] font-mono text-ink-500 block" x-text="p.credit_hours + ' Credit Hours'"></span>
+                                </td>
+
+                                <td class="py-3.5 px-4">
+                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200" x-text="p.accreditation"></span>
+                                </td>
+
+                                <td class="py-3.5 px-4">
+                                    <span class="font-mono font-bold text-ink-950" x-text="p.tuition_semester"></span>
+                                    <span class="text-[10px] text-brand-600 block" x-text="p.intake_seats + ' Approved Seats'"></span>
+                                </td>
+
+                                <td class="py-3.5 px-4 text-right">
+                                    <button 
+                                        type="button" 
+                                        @click="openDrawer(p)"
+                                        class="px-3 py-1.5 rounded-lg border border-border-default hover:bg-surface text-ink-700 font-semibold text-xs transition-smooth cursor-pointer"
+                                    >
+                                        Inspect & Edit →
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Slide-over Detail Drawer -->

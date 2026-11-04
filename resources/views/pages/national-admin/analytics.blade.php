@@ -102,26 +102,29 @@
                 </div>
 
                 <div class="rounded-xl border border-border-default overflow-hidden">
-                    <table class="w-full text-left border-collapse text-xs">
-                        <thead>
-                            <tr class="bg-surface-subtle border-b border-border-default text-[10px] font-mono uppercase text-ink-500">
-                                <th class="py-2.5 px-3">Year</th>
-                                <th class="py-2.5 px-3">Public Avg</th>
-                                <th class="py-2.5 px-3 text-right">Private Avg</th>
-                            </tr>
-                        </thead>
-                        <tbody class="divide-y divide-border-subtle font-mono text-[11px]">
-                            @foreach($fee_inflation_index as $row)
-                                <tr class="hover:bg-surface-subtle/60">
-                                    <td class="py-2.5 px-3 font-bold text-ink-950">{{ $row['year'] }}</td>
-                                    <td class="py-2.5 px-3 text-ink-700">PKR {{ number_format($row['public_avg']) }}</td>
-                                    <td class="py-2.5 px-3 text-right font-semibold text-brand-700">PKR {{ number_format($row['private_avg']) }}</td>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse text-xs" aria-label="Annual Tuition Inflation Index">
+                            <thead>
+                                <tr class="bg-surface-subtle border-b border-border-default text-[10px] font-mono uppercase text-ink-500">
+                                    <th scope="col" class="py-2.5 px-3">Year</th>
+                                    <th scope="col" class="py-2.5 px-3">Public Avg</th>
+                                    <th scope="col" class="py-2.5 px-3 text-right">Private Avg</th>
                                 </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody class="divide-y divide-border-subtle font-mono text-[11px]">
+                                @foreach($fee_inflation_index as $row)
+                                    <tr class="hover:bg-surface-subtle/60">
+                                        <td class="py-2.5 px-3 font-bold text-ink-950">{{ $row['year'] }}</td>
+                                        <td class="py-2.5 px-3 text-ink-700">PKR {{ number_format($row['public_avg']) }}</td>
+                                        <td class="py-2.5 px-3 text-right font-semibold text-brand-700">PKR {{ number_format($row['private_avg']) }}</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </x-layouts.national-admin>
+

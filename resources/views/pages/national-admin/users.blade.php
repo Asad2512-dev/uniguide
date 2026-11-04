@@ -73,54 +73,57 @@
 
         <!-- Users Table -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                        <th class="py-3.5 px-4 font-semibold">User Identity & Email</th>
-                        <th class="py-3.5 px-4 font-semibold">Assigned Role</th>
-                        <th class="py-3.5 px-4 font-semibold">Institutional Scope</th>
-                        <th class="py-3.5 px-4 text-center font-semibold">2FA Security</th>
-                        <th class="py-3.5 px-4 font-semibold">Member Since</th>
-                        <th class="py-3.5 px-4 text-right font-semibold">Account State</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border-subtle text-xs">
-                    @foreach($users as $usr)
-                        <tr 
-                            x-show="matches({{ json_encode($usr) }})"
-                            class="hover:bg-surface-subtle/80 transition-colors"
-                        >
-                            <td class="py-3.5 px-4">
-                                <span class="font-bold text-ink-950 font-heading block">{{ $usr['name'] }}</span>
-                                <span class="text-[11px] font-mono text-ink-400 block">{{ $usr['email'] }}</span>
-                            </td>
-                            <td class="py-3.5 px-4">
-                                <span class="font-medium text-ink-800">{{ $usr['role'] }}</span>
-                            </td>
-                            <td class="py-3.5 px-4">
-                                <span class="inline-flex px-2 py-0.5 rounded text-[11px] font-mono bg-surface-subtle text-brand-700 border border-border-subtle">
-                                    {{ $usr['scope'] }}
-                                </span>
-                            </td>
-                            <td class="py-3.5 px-4 text-center">
-                                <span class="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-emerald-700">
-                                    <x-icon name="shield-check" class="w-3.5 h-3.5 text-emerald-600" />
-                                    {{ $usr['two_factor'] }}
-                                </span>
-                            </td>
-                            <td class="py-3.5 px-4 font-mono text-ink-500 text-[11px]">
-                                {{ $usr['created_at'] }}
-                            </td>
-                            <td class="py-3.5 px-4 text-right">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    {{ $usr['status'] }}
-                                </span>
-                            </td>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" aria-label="National User Directory">
+                    <thead>
+                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <th scope="col" class="py-3.5 px-4 font-semibold">User Identity & Email</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Assigned Role</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Institutional Scope</th>
+                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">2FA Security</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Member Since</th>
+                            <th scope="col" class="py-3.5 px-4 text-right font-semibold">Account State</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-border-subtle text-xs">
+                        @foreach($users as $usr)
+                            <tr 
+                                x-show="matches({{ json_encode($usr) }})"
+                                class="hover:bg-surface-subtle/80 transition-colors"
+                            >
+                                <td class="py-3.5 px-4">
+                                    <span class="font-bold text-ink-950 font-heading block">{{ $usr['name'] }}</span>
+                                    <span class="text-[11px] font-mono text-ink-400 block">{{ $usr['email'] }}</span>
+                                </td>
+                                <td class="py-3.5 px-4">
+                                    <span class="font-medium text-ink-800">{{ $usr['role'] }}</span>
+                                </td>
+                                <td class="py-3.5 px-4">
+                                    <span class="inline-flex px-2 py-0.5 rounded text-[11px] font-mono bg-surface-subtle text-brand-700 border border-border-subtle">
+                                        {{ $usr['scope'] }}
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 text-center">
+                                    <span class="inline-flex items-center gap-1 text-[11px] font-mono font-bold text-emerald-700">
+                                        <x-icon name="shield-check" class="w-3.5 h-3.5 text-emerald-600" />
+                                        {{ $usr['two_factor'] }}
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 font-mono text-ink-500 text-[11px]">
+                                    {{ $usr['created_at'] }}
+                                </td>
+                                <td class="py-3.5 px-4 text-right">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        {{ $usr['status'] }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-layouts.national-admin>
+

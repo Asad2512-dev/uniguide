@@ -92,26 +92,28 @@
             </div>
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                            <th class="py-3 px-4">Room Category</th>
-                            <th class="py-3 px-4">Per Semester Rent</th>
-                            <th class="py-3 px-4">Mess Dining (Monthly)</th>
-                            <th class="py-3 px-4">Refundable Security</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border-subtle text-xs">
-                        @foreach($fees['hostel_tariffs'] as $h)
-                            <tr>
-                                <td class="py-3.5 px-4 font-bold text-ink-950 font-sans">{{ $h['room_type'] }}</td>
-                                <td class="py-3.5 px-4 font-mono font-bold text-ink-900">PKR {{ number_format($h['fee_per_semester']) }}</td>
-                                <td class="py-3.5 px-4 font-mono text-ink-800">PKR {{ number_format($h['mess_monthly']) }} / mo</td>
-                                <td class="py-3.5 px-4 font-mono text-ink-600">PKR {{ number_format($h['security']) }}</td>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" aria-label="On-Campus Hostels & Mess Tariffs">
+                        <thead>
+                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                                <th scope="col" class="py-3 px-4">Room Category</th>
+                                <th scope="col" class="py-3 px-4">Per Semester Rent</th>
+                                <th scope="col" class="py-3 px-4">Mess Dining (Monthly)</th>
+                                <th scope="col" class="py-3 px-4">Refundable Security</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-border-subtle text-xs">
+                            @foreach($fees['hostel_tariffs'] as $h)
+                                <tr>
+                                    <td class="py-3.5 px-4 font-bold text-ink-950 font-sans">{{ $h['room_type'] }}</td>
+                                    <td class="py-3.5 px-4 font-mono font-bold text-ink-900">PKR {{ number_format($h['fee_per_semester']) }}</td>
+                                    <td class="py-3.5 px-4 font-mono text-ink-800">PKR {{ number_format($h['mess_monthly']) }} / mo</td>
+                                    <td class="py-3.5 px-4 font-mono text-ink-600">PKR {{ number_format($h['security']) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

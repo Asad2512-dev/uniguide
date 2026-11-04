@@ -10,6 +10,12 @@
     $menuData = config("navigation.$menuKey", []);
     $mainItems = $menuData['main'] ?? [];
     $secondaryItems = $menuData['secondary'] ?? [];
+    $portalHome = match($menuKey) {
+        'student' => route('student.dashboard'),
+        'university_admin' => route('uni_admin.dashboard'),
+        'national_admin' => route('national_admin.dashboard'),
+        default => route('home'),
+    };
 @endphp
 
 <aside 
@@ -19,7 +25,7 @@
 >
     <!-- Top Branding & Shell Identity -->
     <div class="h-16 flex items-center justify-between px-4 border-b border-border-default shrink-0">
-        <a href="{{ route('preview.public') }}" class="flex items-center gap-2.5 overflow-hidden focus:outline-none">
+        <a href="{{ $portalHome }}" class="flex items-center gap-2.5 overflow-hidden focus:outline-none" aria-label="UniGuide Dashboard">
             <x-brand.logo size="sm" />
             <div x-show="!collapsed" x-cloak class="flex flex-col whitespace-nowrap">
                 <span class="font-heading font-extrabold text-sm text-ink-950 tracking-tight leading-none">
@@ -64,6 +70,7 @@
                     <a 
                         href="{{ route($item['route']) }}" 
                         :title="collapsed ? '{{ $item['label'] }}' : ''"
+                        @if($isActive) aria-current="page" @endif
                         class="flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold font-sans transition-all duration-150 {{ $isActive ? 'bg-brand-50 text-brand-700 font-bold shadow-2xs' : 'text-ink-600 hover:text-ink-950 hover:bg-surface-subtle' }}"
                     >
                         <div class="flex items-center gap-2.5 min-w-0">
@@ -104,6 +111,7 @@
                         <a 
                             href="{{ route($item['route']) }}" 
                             :title="collapsed ? '{{ $item['label'] }}' : ''"
+                            @if($isActive) aria-current="page" @endif
                             class="flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold font-sans transition-all duration-150 {{ $isActive ? 'bg-brand-50 text-brand-700 font-bold shadow-2xs' : 'text-ink-600 hover:text-ink-950 hover:bg-surface-subtle' }}"
                         >
                             <div class="flex items-center gap-2.5 min-w-0">

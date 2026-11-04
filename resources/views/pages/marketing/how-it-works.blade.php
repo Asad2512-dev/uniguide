@@ -163,7 +163,7 @@
                 Log into the student portal to compute your chances across all top Pakistani universities in 30 seconds.
             </p>
             <div class="pt-2 flex items-center justify-center gap-3">
-                <x-ui.button variant="primary" size="md" :href="route('preview.student')" iconRight="arrow-right">
+                <x-ui.button variant="primary" size="md" :href="route('eligibility.index')" iconRight="arrow-right">
                     Open Student Merit Calculator
                 </x-ui.button>
             </div>

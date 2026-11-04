@@ -63,26 +63,61 @@
                         </span>
                         <span class="text-[10px] font-mono text-ink-400">/programs</span>
                     </a>
-                    <a href="{{ route('preview.public') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('counselor.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
-                            <x-icon name="compass" class="w-4 h-4 text-brand-600" />
-                            <span>Public Discovery & Marketing Shell</span>
+                            <x-icon name="bot" class="w-4 h-4 text-brand-600" />
+                            <span>AI University Counselor</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/preview/public</span>
+                        <span class="text-[10px] font-mono text-ink-400">/counselor</span>
                     </a>
-                    <a href="{{ route('preview.student') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('compare.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                        <span class="flex items-center gap-2.5 font-medium">
+                            <x-icon name="git-compare" class="w-4 h-4 text-brand-600" />
+                            <span>University Comparison Tool</span>
+                        </span>
+                        <span class="text-[10px] font-mono text-ink-400">/compare</span>
+                    </a>
+                    <a href="{{ route('eligibility.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                        <span class="flex items-center gap-2.5 font-medium">
+                            <x-icon name="calculator" class="w-4 h-4 text-brand-600" />
+                            <span>Merit & Eligibility Checker</span>
+                        </span>
+                        <span class="text-[10px] font-mono text-ink-400">/eligibility</span>
+                    </a>
+                    <a href="{{ route('admissions.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                        <span class="flex items-center gap-2.5 font-medium">
+                            <x-icon name="calendar" class="w-4 h-4 text-brand-600" />
+                            <span>Admissions & Deadlines Calendar</span>
+                        </span>
+                        <span class="text-[10px] font-mono text-ink-400">/admissions</span>
+                    </a>
+                    <a href="{{ route('scholarships.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                        <span class="flex items-center gap-2.5 font-medium">
+                            <x-icon name="award" class="w-4 h-4 text-brand-600" />
+                            <span>National Scholarships Directory</span>
+                        </span>
+                        <span class="text-[10px] font-mono text-ink-400">/scholarships</span>
+                    </a>
+                    <a href="{{ route('student.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="user" class="w-4 h-4 text-brand-600" />
-                            <span>Student Dashboard Shell</span>
+                            <span>Student Command Center</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/preview/student</span>
+                        <span class="text-[10px] font-mono text-ink-400">/student/dashboard</span>
                     </a>
-                    <a href="{{ route('preview.national_admin') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('uni_admin.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                        <span class="flex items-center gap-2.5 font-medium">
+                            <x-icon name="building-2" class="w-4 h-4 text-brand-600" />
+                            <span>University Admin Console</span>
+                        </span>
+                        <span class="text-[10px] font-mono text-ink-400">/admin/university</span>
+                    </a>
+                    <a href="{{ route('national_admin.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="shield-check" class="w-4 h-4 text-brand-600" />
-                            <span>HEC National Command Shell</span>
+                            <span>HEC National Command Platform</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/preview/national-admin</span>
+                        <span class="text-[10px] font-mono text-ink-400">/admin/national</span>
                     </a>
                     <a href="{{ route('design-system') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-brand-700 bg-brand-50/60 font-semibold group">
                         <span class="flex items-center gap-2.5">

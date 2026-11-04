@@ -112,36 +112,39 @@
             </div>
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                            <th class="py-3.5 px-4 font-semibold">Timestamp (PKT)</th>
-                            <th class="py-3.5 px-4 font-semibold">Actor & Role</th>
-                            <th class="py-3.5 px-4 font-semibold">Regulatory Action</th>
-                            <th class="py-3.5 px-4 text-right font-semibold">Client IP</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border-subtle text-xs">
-                        @foreach($audit_logs as $log)
-                            <tr class="hover:bg-surface-subtle/80 transition-colors">
-                                <td class="py-3.5 px-4 font-mono text-ink-500 text-[11px]">
-                                    {{ $log['timestamp'] }}
-                                </td>
-                                <td class="py-3.5 px-4">
-                                    <span class="font-bold text-ink-950 font-heading block">{{ $log['user'] }}</span>
-                                    <span class="text-[11px] font-mono text-brand-700 block">{{ $log['role'] }}</span>
-                                </td>
-                                <td class="py-3.5 px-4 text-ink-800 font-medium">
-                                    {{ $log['action'] }}
-                                </td>
-                                <td class="py-3.5 px-4 text-right font-mono text-ink-500 text-[11px]">
-                                    {{ $log['ip'] }}
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" aria-label="Immutable Supervisory Audit Trail">
+                        <thead>
+                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                                <th scope="col" class="py-3.5 px-4 font-semibold">Timestamp (PKT)</th>
+                                <th scope="col" class="py-3.5 px-4 font-semibold">Actor & Role</th>
+                                <th scope="col" class="py-3.5 px-4 font-semibold">Regulatory Action</th>
+                                <th scope="col" class="py-3.5 px-4 text-right font-semibold">Client IP</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-border-subtle text-xs">
+                            @foreach($audit_logs as $log)
+                                <tr class="hover:bg-surface-subtle/80 transition-colors">
+                                    <td class="py-3.5 px-4 font-mono text-ink-500 text-[11px]">
+                                        {{ $log['timestamp'] }}
+                                    </td>
+                                    <td class="py-3.5 px-4">
+                                        <span class="font-bold text-ink-950 font-heading block">{{ $log['user'] }}</span>
+                                        <span class="text-[11px] font-mono text-brand-700 block">{{ $log['role'] }}</span>
+                                    </td>
+                                    <td class="py-3.5 px-4 text-ink-800 font-medium">
+                                        {{ $log['action'] }}
+                                    </td>
+                                    <td class="py-3.5 px-4 text-right font-mono text-ink-500 text-[11px]">
+                                        {{ $log['ip'] }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
 </x-layouts.national-admin>
+

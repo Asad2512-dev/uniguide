@@ -24,56 +24,58 @@
 
     <div x-data="{ activeLog: null }" class="space-y-4">
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                        <th class="py-3.5 px-4 font-semibold">Job ID & Target</th>
-                        <th class="py-3.5 px-4 font-semibold">Started Timestamp</th>
-                        <th class="py-3.5 px-4 font-semibold">Duration</th>
-                        <th class="py-3.5 px-4 text-center font-semibold">Pages</th>
-                        <th class="py-3.5 px-4 text-center font-semibold">Records</th>
-                        <th class="py-3.5 px-4 font-semibold">Status</th>
-                        <th class="py-3.5 px-4 text-right font-semibold">Stdout</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border-subtle text-xs">
-                    @foreach($history as $item)
-                        <tr class="hover:bg-surface-subtle/80 transition-colors">
-                            <td class="py-3.5 px-4">
-                                <span class="font-mono text-[11px] text-ink-400 block">{{ $item['job_id'] }}</span>
-                                <span class="font-bold text-ink-950 font-heading block">{{ $item['target'] }}</span>
-                                <span class="text-[11px] font-mono text-ink-500 block truncate max-w-xs">{{ $item['url'] }}</span>
-                            </td>
-                            <td class="py-3.5 px-4 font-mono text-ink-600 text-[11px]">
-                                {{ $item['started_at'] }}
-                            </td>
-                            <td class="py-3.5 px-4 font-mono text-ink-800">
-                                {{ $item['duration'] }}
-                            </td>
-                            <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-800">
-                                {{ $item['pages'] }}
-                            </td>
-                            <td class="py-3.5 px-4 text-center font-mono font-bold text-emerald-700">
-                                {{ $item['records_extracted'] }}
-                            </td>
-                            <td class="py-3.5 px-4">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold {{ $item['status'] === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200' }}">
-                                    {{ $item['status'] }} ({{ $item['http_code'] }})
-                                </span>
-                            </td>
-                            <td class="py-3.5 px-4 text-right">
-                                <button 
-                                    type="button" 
-                                    @click="activeLog = {{ json_encode($item) }}"
-                                    class="px-2.5 py-1 rounded-lg border border-border-default hover:bg-brand-50 hover:text-brand-700 text-[11px] font-semibold text-ink-700 transition-colors cursor-pointer"
-                                >
-                                    View Terminal
-                                </button>
-                            </td>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" aria-label="Scraping Job Execution Logs">
+                    <thead>
+                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Job ID & Target</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Started Timestamp</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Duration</th>
+                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">Pages</th>
+                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">Records</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Status</th>
+                            <th scope="col" class="py-3.5 px-4 text-right font-semibold">Stdout</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-border-subtle text-xs">
+                        @foreach($history as $item)
+                            <tr class="hover:bg-surface-subtle/80 transition-colors">
+                                <td class="py-3.5 px-4">
+                                    <span class="font-mono text-[11px] text-ink-400 block">{{ $item['job_id'] }}</span>
+                                    <span class="font-bold text-ink-950 font-heading block">{{ $item['target'] }}</span>
+                                    <span class="text-[11px] font-mono text-ink-500 block truncate max-w-xs">{{ $item['url'] }}</span>
+                                </td>
+                                <td class="py-3.5 px-4 font-mono text-ink-600 text-[11px]">
+                                    {{ $item['started_at'] }}
+                                </td>
+                                <td class="py-3.5 px-4 font-mono text-ink-800">
+                                    {{ $item['duration'] }}
+                                </td>
+                                <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-800">
+                                    {{ $item['pages'] }}
+                                </td>
+                                <td class="py-3.5 px-4 text-center font-mono font-bold text-emerald-700">
+                                    {{ $item['records_extracted'] }}
+                                </td>
+                                <td class="py-3.5 px-4">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold {{ $item['status'] === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200' }}">
+                                        {{ $item['status'] }} ({{ $item['http_code'] }})
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 text-right">
+                                    <button 
+                                        type="button" 
+                                        @click="activeLog = {{ json_encode($item) }}"
+                                        class="px-2.5 py-1 rounded-lg border border-border-default hover:bg-brand-50 hover:text-brand-700 text-[11px] font-semibold text-ink-700 transition-colors cursor-pointer"
+                                    >
+                                        View Terminal
+                                    </button>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Terminal Log Viewer Modal (Alpine.js) -->
@@ -109,3 +111,4 @@
         </div>
     </div>
 </x-layouts.national-admin>
+

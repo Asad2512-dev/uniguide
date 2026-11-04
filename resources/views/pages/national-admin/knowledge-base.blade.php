@@ -37,7 +37,7 @@
     @endif
 
     <!-- Vector Store Performance Metrics Grid -->
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 mb-8">
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
             <span class="text-[10px] font-mono uppercase text-ink-500 block mb-1">Total Corpus</span>
             <span class="font-heading font-extrabold text-2xl text-ink-950">{{ $stats['total_documents'] }}</span>
@@ -78,38 +78,41 @@
         </div>
 
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                        <th class="py-3.5 px-4 font-semibold">Statutory Document & Authority</th>
-                        <th class="py-3.5 px-4 text-center font-semibold">Vector Chunks</th>
-                        <th class="py-3.5 px-4 font-semibold">Last Embedded</th>
-                        <th class="py-3.5 px-4 text-right font-semibold">Index Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border-subtle text-xs">
-                    @foreach($documents as $doc)
-                        <tr class="hover:bg-surface-subtle/80 transition-colors">
-                            <td class="py-3.5 px-4">
-                                <span class="font-bold text-ink-950 font-heading block">{{ $doc['title'] }}</span>
-                                <span class="text-[11px] font-mono text-brand-700 block">{{ $doc['authority'] }}</span>
-                            </td>
-                            <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-900">
-                                {{ $doc['chunks_count'] }}
-                            </td>
-                            <td class="py-3.5 px-4 font-mono text-ink-600 text-[11px]">
-                                {{ $doc['last_embedded'] }}
-                            </td>
-                            <td class="py-3.5 px-4 text-right">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    {{ $doc['status'] }}
-                                </span>
-                            </td>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" aria-label="Statutory Corpus Repository">
+                    <thead>
+                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Statutory Document & Authority</th>
+                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">Vector Chunks</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Last Embedded</th>
+                            <th scope="col" class="py-3.5 px-4 text-right font-semibold">Index Status</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-border-subtle text-xs">
+                        @foreach($documents as $doc)
+                            <tr class="hover:bg-surface-subtle/80 transition-colors">
+                                <td class="py-3.5 px-4">
+                                    <span class="font-bold text-ink-950 font-heading block">{{ $doc['title'] }}</span>
+                                    <span class="text-[11px] font-mono text-brand-700 block">{{ $doc['authority'] }}</span>
+                                </td>
+                                <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-900">
+                                    {{ $doc['chunks_count'] }}
+                                </td>
+                                <td class="py-3.5 px-4 font-mono text-ink-600 text-[11px]">
+                                    {{ $doc['last_embedded'] }}
+                                </td>
+                                <td class="py-3.5 px-4 text-right">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        {{ $doc['status'] }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-layouts.national-admin>
+

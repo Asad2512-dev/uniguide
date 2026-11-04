@@ -33,11 +33,11 @@
                         Institutions & Programs
                     </h4>
                     <ul class="space-y-2 text-xs font-sans text-ink-600">
-                        <li><a href="{{ route('home') }}#universities" class="hover:text-brand-600 transition-colors">Public Sector Universities</a></li>
-                        <li><a href="{{ route('home') }}#universities" class="hover:text-brand-600 transition-colors">Chartered Private Universities</a></li>
-                        <li><a href="{{ route('home') }}#programs" class="hover:text-brand-600 transition-colors">Engineering (PEC Accredited)</a></li>
-                        <li><a href="{{ route('home') }}#programs" class="hover:text-brand-600 transition-colors">Medical & Dental (PMDC)</a></li>
-                        <li><a href="{{ route('home') }}#programs" class="hover:text-brand-600 transition-colors">Computing & IT (NCEAC)</a></li>
+                        <li><a href="{{ route('universities.index') }}" class="hover:text-brand-600 transition-colors">National University Directory</a></li>
+                        <li><a href="{{ route('programs.index') }}" class="hover:text-brand-600 transition-colors">Academic Program Explorer</a></li>
+                        <li><a href="{{ route('admissions.index') }}" class="hover:text-brand-600 transition-colors">Admissions & Deadlines</a></li>
+                        <li><a href="{{ route('scholarships.index') }}" class="hover:text-brand-600 transition-colors">National Scholarships Directory</a></li>
+                        <li><a href="{{ route('compare.index') }}" class="hover:text-brand-600 transition-colors">University Comparison Matrix</a></li>
                     </ul>
                 </div>
 
@@ -47,11 +47,11 @@
                         Student Guidance
                     </h4>
                     <ul class="space-y-2 text-xs font-sans text-ink-600">
+                        <li><a href="{{ route('counselor.index') }}" class="hover:text-brand-600 transition-colors">AI Admission Counselor</a></li>
+                        <li><a href="{{ route('eligibility.index') }}" class="hover:text-brand-600 transition-colors">Merit & Eligibility Checker</a></li>
+                        <li><a href="{{ route('admissions.calendar') }}" class="hover:text-brand-600 transition-colors">Admission Calendar</a></li>
+                        <li><a href="{{ route('admissions.checklist') }}" class="hover:text-brand-600 transition-colors">Document Checklist</a></li>
                         <li><a href="{{ route('marketing.how_it_works') }}" class="hover:text-brand-600 transition-colors">How Admissions Work</a></li>
-                        <li><a href="{{ route('home') }}#scholarships" class="hover:text-brand-600 transition-colors">Ehsaas & HEC Scholarships</a></li>
-                        <li><a href="{{ route('home') }}#ai-counselor" class="hover:text-brand-600 transition-colors">AI Admission Counselor</a></li>
-                        <li><a href="{{ route('home') }}#comparison" class="hover:text-brand-600 transition-colors">University Comparison Matrix</a></li>
-                        <li><a href="{{ route('marketing.features') }}" class="hover:text-brand-600 transition-colors">Platform Capabilities</a></li>
                     </ul>
                 </div>
 
@@ -62,10 +62,10 @@
                     </h4>
                     <ul class="space-y-2 text-xs font-sans text-ink-600">
                         <li><a href="{{ route('marketing.about') }}" class="hover:text-brand-600 transition-colors">About UniGuide</a></li>
+                        <li><a href="{{ route('marketing.features') }}" class="hover:text-brand-600 transition-colors">Platform Capabilities</a></li>
                         <li><a href="{{ route('marketing.contact') }}" class="hover:text-brand-600 transition-colors">Contact & Admissions Desk</a></li>
-                        <li><a href="{{ route('preview.university_admin') }}" class="hover:text-brand-600 transition-colors">University Admin Console</a></li>
-                        <li><a href="{{ route('preview.national_admin') }}" class="hover:text-brand-600 transition-colors">HEC National Command</a></li>
-                        <li><a href="{{ route('design-system') }}" class="hover:text-brand-600 transition-colors">Design System Showcase</a></li>
+                        <li><a href="{{ route('uni_admin.dashboard') }}" class="hover:text-brand-600 transition-colors">University Admin Console</a></li>
+                        <li><a href="{{ route('national_admin.dashboard') }}" class="hover:text-brand-600 transition-colors">HEC National Command</a></li>
                     </ul>
                 </div>
             </div>

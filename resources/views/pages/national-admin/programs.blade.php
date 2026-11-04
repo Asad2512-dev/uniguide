@@ -73,52 +73,55 @@
 
         <!-- Programs Table -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-            <table class="w-full text-left border-collapse">
-                <thead>
-                    <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                        <th class="py-3.5 px-4 font-semibold">Degree Program & Level</th>
-                        <th class="py-3.5 px-4 font-semibold">Institution & Campus</th>
-                        <th class="py-3.5 px-4 font-semibold">Accreditation Body</th>
-                        <th class="py-3.5 px-4 text-center font-semibold">Quota Seats</th>
-                        <th class="py-3.5 px-4 font-semibold">Annual Tuition</th>
-                        <th class="py-3.5 px-4 text-right font-semibold">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-border-subtle text-xs">
-                    @foreach($programs as $p)
-                        <tr 
-                            x-show="matches({{ json_encode($p) }})"
-                            class="hover:bg-surface-subtle/80 transition-colors"
-                        >
-                            <td class="py-3.5 px-4">
-                                <span class="font-bold text-ink-950 font-heading block">{{ $p['name'] }}</span>
-                                <span class="text-[11px] font-mono text-brand-700 block">{{ $p['level'] }}</span>
-                            </td>
-                            <td class="py-3.5 px-4">
-                                <span class="font-semibold text-ink-800 block">{{ $p['university'] }}</span>
-                                <span class="text-[11px] text-ink-500 block">{{ $p['campus'] }}</span>
-                            </td>
-                            <td class="py-3.5 px-4">
-                                <span class="inline-flex px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-surface-subtle text-ink-700 border border-border-subtle">
-                                    {{ $p['council'] }}
-                                </span>
-                            </td>
-                            <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-900">
-                                {{ $p['quota_seats'] }}
-                            </td>
-                            <td class="py-3.5 px-4 font-mono font-semibold text-ink-900">
-                                {{ $p['annual_fee'] }}
-                            </td>
-                            <td class="py-3.5 px-4 text-right">
-                                <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                                    {{ $p['status'] }}
-                                </span>
-                            </td>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse" aria-label="Accredited Degree Programs Inventory">
+                    <thead>
+                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Degree Program & Level</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Institution & Campus</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Accreditation Body</th>
+                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">Quota Seats</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Annual Tuition</th>
+                            <th scope="col" class="py-3.5 px-4 text-right font-semibold">Status</th>
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody class="divide-y divide-border-subtle text-xs">
+                        @foreach($programs as $p)
+                            <tr 
+                                x-show="matches({{ json_encode($p) }})"
+                                class="hover:bg-surface-subtle/80 transition-colors"
+                            >
+                                <td class="py-3.5 px-4">
+                                    <span class="font-bold text-ink-950 font-heading block">{{ $p['name'] }}</span>
+                                    <span class="text-[11px] font-mono text-brand-700 block">{{ $p['level'] }}</span>
+                                </td>
+                                <td class="py-3.5 px-4">
+                                    <span class="font-semibold text-ink-800 block">{{ $p['university'] }}</span>
+                                    <span class="text-[11px] text-ink-500 block">{{ $p['campus'] }}</span>
+                                </td>
+                                <td class="py-3.5 px-4">
+                                    <span class="inline-flex px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-surface-subtle text-ink-700 border border-border-subtle">
+                                        {{ $p['council'] }}
+                                    </span>
+                                </td>
+                                <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-900">
+                                    {{ $p['quota_seats'] }}
+                                </td>
+                                <td class="py-3.5 px-4 font-mono font-semibold text-ink-900">
+                                    {{ $p['annual_fee'] }}
+                                </td>
+                                <td class="py-3.5 px-4 text-right">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                                        {{ $p['status'] }}
+                                    </span>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </x-layouts.national-admin>
+

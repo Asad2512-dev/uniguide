@@ -76,63 +76,65 @@
             </div>
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                            <th class="py-3 px-4">Applicant & ID</th>
-                            <th class="py-3 px-4">Applied Program</th>
-                            <th class="py-3 px-4">Credential Document</th>
-                            <th class="py-3 px-4">Submission Date</th>
-                            <th class="py-3 px-4">Status</th>
-                            <th class="py-3 px-4 text-right">Verification Action</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border-subtle text-xs">
-                        @foreach($documents['candidate_submissions'] as $sub)
-                            <tr class="hover:bg-surface-subtle/80 transition-colors">
-                                <td class="py-3.5 px-4">
-                                    <span class="font-bold text-ink-950 block font-heading">{{ $sub['applicant_name'] }}</span>
-                                    <span class="text-[11px] font-mono text-ink-400">{{ $sub['applicant_id'] }}</span>
-                                </td>
-                                <td class="py-3.5 px-4 font-semibold text-ink-800">{{ $sub['program'] }}</td>
-                                <td class="py-3.5 px-4 text-ink-900 font-medium">{{ $sub['doc_name'] }}</td>
-                                <td class="py-3.5 px-4 font-mono text-ink-500 text-[11px]">{{ $sub['submitted_at'] }}</td>
-                                <td class="py-3.5 px-4">
-                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold {{ match($sub['status']) {
-                                        'verified' => 'bg-emerald-50 text-emerald-800 border border-emerald-200',
-                                        'flagged' => 'bg-amber-50 text-amber-800 border border-amber-200',
-                                        default => 'bg-brand-50 text-brand-700 border border-brand-200',
-                                    } }}">
-                                        {{ $sub['status_label'] }}
-                                    </span>
-                                </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <div class="flex items-center justify-end gap-2">
-                                        @if($sub['status'] !== 'verified')
-                                            <form action="{{ route('uni_admin.documents.verify', $sub['id']) }}" method="POST" class="inline">
-                                                @csrf
-                                                <input type="hidden" name="status" value="verified" />
-                                                <button type="submit" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs border border-emerald-200 cursor-pointer">
-                                                    ✓ Approve
-                                                </button>
-                                            </form>
-                                        @endif
-
-                                        @if($sub['status'] !== 'flagged')
-                                            <form action="{{ route('uni_admin.documents.verify', $sub['id']) }}" method="POST" class="inline">
-                                                @csrf
-                                                <input type="hidden" name="status" value="flagged" />
-                                                <button type="submit" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 font-semibold text-xs border border-amber-200 cursor-pointer">
-                                                    ! Flag Discrepancy
-                                                </button>
-                                            </form>
-                                        @endif
-                                    </div>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" aria-label="Applicant Credential Submissions">
+                        <thead>
+                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                                <th scope="col" class="py-3 px-4">Applicant & ID</th>
+                                <th scope="col" class="py-3 px-4">Applied Program</th>
+                                <th scope="col" class="py-3 px-4">Credential Document</th>
+                                <th scope="col" class="py-3 px-4">Submission Date</th>
+                                <th scope="col" class="py-3 px-4">Status</th>
+                                <th scope="col" class="py-3 px-4 text-right">Verification Action</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-border-subtle text-xs">
+                            @foreach($documents['candidate_submissions'] as $sub)
+                                <tr class="hover:bg-surface-subtle/80 transition-colors">
+                                    <td class="py-3.5 px-4">
+                                        <span class="font-bold text-ink-950 block font-heading">{{ $sub['applicant_name'] }}</span>
+                                        <span class="text-[11px] font-mono text-ink-400">{{ $sub['applicant_id'] }}</span>
+                                    </td>
+                                    <td class="py-3.5 px-4 font-semibold text-ink-800">{{ $sub['program'] }}</td>
+                                    <td class="py-3.5 px-4 text-ink-900 font-medium">{{ $sub['doc_name'] }}</td>
+                                    <td class="py-3.5 px-4 font-mono text-ink-500 text-[11px]">{{ $sub['submitted_at'] }}</td>
+                                    <td class="py-3.5 px-4">
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold {{ match($sub['status']) {
+                                            'verified' => 'bg-emerald-50 text-emerald-800 border border-emerald-200',
+                                            'flagged' => 'bg-amber-50 text-amber-800 border border-amber-200',
+                                            default => 'bg-brand-50 text-brand-700 border border-brand-200',
+                                        } }}">
+                                            {{ $sub['status_label'] }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <div class="flex items-center justify-end gap-2">
+                                            @if($sub['status'] !== 'verified')
+                                                <form action="{{ route('uni_admin.documents.verify', $sub['id']) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value="verified" />
+                                                    <button type="submit" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-semibold text-xs border border-emerald-200 cursor-pointer">
+                                                        ✓ Approve
+                                                    </button>
+                                                </form>
+                                            @endif
+
+                                            @if($sub['status'] !== 'flagged')
+                                                <form action="{{ route('uni_admin.documents.verify', $sub['id']) }}" method="POST" class="inline">
+                                                    @csrf
+                                                    <input type="hidden" name="status" value="flagged" />
+                                                    <button type="submit" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-800 font-semibold text-xs border border-amber-200 cursor-pointer">
+                                                        ! Flag Discrepancy
+                                                    </button>
+                                                </form>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

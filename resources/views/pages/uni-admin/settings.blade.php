@@ -30,47 +30,49 @@
             </div>
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                            <th class="py-3 px-4">Staff Member & Email</th>
-                            <th class="py-3 px-4">Assigned Role</th>
-                            <th class="py-3 px-4">Directorate / Office</th>
-                            <th class="py-3 px-4">2FA Security</th>
-                            <th class="py-3 px-4 text-right">Status</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border-subtle text-xs">
-                        @foreach($staff as $st)
-                            <tr class="hover:bg-surface-subtle/80 transition-colors">
-                                <td class="py-3.5 px-4">
-                                    <span class="font-bold text-ink-950 block font-heading">{{ $st['name'] }}</span>
-                                    <span class="text-[11px] font-mono text-ink-400">{{ $st['email'] }}</span>
-                                </td>
-                                <td class="py-3.5 px-4">
-                                    <span class="font-semibold text-ink-900 block">{{ $st['role'] }}</span>
-                                    <span class="text-[10px] font-mono text-brand-700 bg-brand-50 px-1.5 py-0.2 rounded border border-brand-200/60 inline-block mt-0.5">
-                                        {{ $st['role_badge'] }}
-                                    </span>
-                                </td>
-                                <td class="py-3.5 px-4 text-ink-700">{{ $st['department'] }}</td>
-                                <td class="py-3.5 px-4">
-                                    @if($st['two_factor_enabled'])
-                                        <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
-                                            <x-icon name="shield-check" class="w-3.5 h-3.5 text-emerald-600" />
-                                            <span>2FA Active</span>
-                                        </span>
-                                    @else
-                                        <span class="text-[11px] text-amber-700 font-medium">Pending Setup</span>
-                                    @endif
-                                </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <x-ui.badge variant="success" size="sm" :dot="true">Active</x-ui.badge>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" aria-label="Authorized Administrative Staff Roster">
+                        <thead>
+                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                                <th scope="col" class="py-3 px-4">Staff Member & Email</th>
+                                <th scope="col" class="py-3 px-4">Assigned Role</th>
+                                <th scope="col" class="py-3 px-4">Directorate / Office</th>
+                                <th scope="col" class="py-3 px-4">2FA Security</th>
+                                <th scope="col" class="py-3 px-4 text-right">Status</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-border-subtle text-xs">
+                            @foreach($staff as $st)
+                                <tr class="hover:bg-surface-subtle/80 transition-colors">
+                                    <td class="py-3.5 px-4">
+                                        <span class="font-bold text-ink-950 block font-heading">{{ $st['name'] }}</span>
+                                        <span class="text-[11px] font-mono text-ink-400">{{ $st['email'] }}</span>
+                                    </td>
+                                    <td class="py-3.5 px-4">
+                                        <span class="font-semibold text-ink-900 block">{{ $st['role'] }}</span>
+                                        <span class="text-[10px] font-mono text-brand-700 bg-brand-50 px-1.5 py-0.2 rounded border border-brand-200/60 inline-block mt-0.5">
+                                            {{ $st['role_badge'] }}
+                                        </span>
+                                    </td>
+                                    <td class="py-3.5 px-4 text-ink-700">{{ $st['department'] }}</td>
+                                    <td class="py-3.5 px-4">
+                                        @if($st['two_factor_enabled'])
+                                            <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+                                                <x-icon name="shield-check" class="w-3.5 h-3.5 text-emerald-600" />
+                                                <span>2FA Active</span>
+                                            </span>
+                                        @else
+                                            <span class="text-[11px] text-amber-700 font-medium">Pending Setup</span>
+                                        @endif
+                                    </td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <x-ui.badge variant="success" size="sm" :dot="true">Active</x-ui.badge>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 

@@ -55,7 +55,7 @@
                             { type: 'University', title: 'Lahore University of Management Sciences (LUMS)', meta: 'Lahore • Business & CS', route: '{{ route('universities.show', 'lums') }}' },
                             { type: 'Program', title: 'BS Computer Science (BSCS)', meta: '4 Years • Average Fee PKR 140k/sem', route: '{{ route('programs.show', 'fast-bs-computer-science') }}' },
                             { type: 'Program', title: 'BS Software Engineering (BSSE)', meta: '4 Years • Top Merit', route: '{{ route('programs.show', 'nust-bs-software-engineering') }}' },
-                            { type: 'Scholarship', title: 'HEC Need-Based Undergraduate Scholarship', meta: '100% Tuition + PKR 6,000/mo', route: '{{ route('universities.index') }}' },
+                            { type: 'Scholarship', title: 'HEC Need-Based Undergraduate Scholarship', meta: '100% Tuition + PKR 6,000/mo', route: '{{ route('scholarships.index') }}' },
                         ],
                         get filteredSuggestions() {
                             if (!this.searchQuery.trim()) return [];
@@ -465,7 +465,7 @@
                 </div>
 
                 <div class="pt-2 flex items-center gap-3">
-                    <x-ui.button variant="primary" size="md" :href="route('preview.student')" iconRight="arrow-right">
+                    <x-ui.button variant="primary" size="md" :href="route('counselor.index')" iconRight="arrow-right">
                         Launch AI Admission Advisor
                     </x-ui.button>
                     <x-ui.button variant="outline" size="md" :href="route('marketing.how_it_works')">
@@ -524,12 +524,12 @@
             <!-- Comparison Table Container -->
             <div class="mt-10 overflow-hidden rounded-2xl border border-border-default bg-surface shadow-card">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left text-sm font-sans">
+                    <table class="w-full text-left text-sm font-sans" aria-label="Side-by-Side Institutional Comparison Matrix">
                         <thead>
                             <tr class="bg-surface-subtle border-b border-border-default">
-                                <th class="p-5 text-xs font-bold uppercase tracking-wider text-ink-500 w-1/4">Evaluation Parameter</th>
+                                <th scope="col" class="p-5 text-xs font-bold uppercase tracking-wider text-ink-500 w-1/4">Evaluation Parameter</th>
                                 @foreach($comparisonMatrix['institutions'] as $inst)
-                                    <th class="p-5 text-center w-1/4">
+                                    <th scope="col" class="p-5 text-center w-1/4">
                                         <div class="font-heading font-extrabold text-base text-ink-950">{{ $inst['name'] }}</div>
                                         <div class="text-xs text-ink-500 mt-0.5">{{ $inst['type'] }}</div>
                                         <span class="inline-block mt-2 px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-brand-50 text-brand-700 border border-brand-200/60">
@@ -554,7 +554,7 @@
             </div>
 
             <div class="mt-8 text-center">
-                <x-ui.button variant="outline" size="md" :href="route('design-system') . '#data-tables'" iconRight="arrow-right">
+                <x-ui.button variant="outline" size="md" :href="route('compare.index')" iconRight="arrow-right">
                     Open Advanced Multi-University Comparison Tool
                 </x-ui.button>
             </div>
@@ -728,8 +728,8 @@
                     <x-ui.button variant="secondary" size="lg" :href="route('auth.register')" class="bg-white text-ink-950 hover:bg-brand-50 shadow-elevated">
                         Create Free Student Account
                     </x-ui.button>
-                    <x-ui.button variant="outline" size="lg" :href="route('preview.student')" class="border-white/30 text-white hover:bg-white/10">
-                        View Demo Student Dashboard
+                    <x-ui.button variant="outline" size="lg" :href="route('student.dashboard')" class="border-white/30 text-white hover:bg-white/10">
+                        Launch Student Command Center
                     </x-ui.button>
                 </div>
             </div>

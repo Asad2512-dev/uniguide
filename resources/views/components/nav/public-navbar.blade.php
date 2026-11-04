@@ -1,5 +1,7 @@
 <header 
     x-data="{ mobileMenuOpen: false }"
+    x-init="$watch('mobileMenuOpen', v => document.body.classList.toggle('overflow-hidden', v))"
+    @keydown.escape.window="mobileMenuOpen = false"
     class="sticky top-0 z-40 w-full glass-header border-b border-border-default/80 transition-all duration-200"
 >
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -101,6 +103,8 @@
                 <button 
                     type="button" 
                     @click="mobileMenuOpen = !mobileMenuOpen"
+                    :aria-expanded="mobileMenuOpen.toString()"
+                    aria-controls="mobile-nav-drawer"
                     class="lg:hidden p-2 rounded-lg text-ink-600 hover:text-ink-950 hover:bg-surface-subtle transition-colors cursor-pointer"
                     aria-label="Toggle navigation menu"
                 >
@@ -112,6 +116,10 @@
 
     <!-- Mobile Drawer Overlay -->
     <div 
+        id="mobile-nav-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile Navigation"
         x-show="mobileMenuOpen" 
         x-cloak 
         class="lg:hidden fixed inset-0 z-50 bg-ink-950/40 backdrop-blur-xs" 
@@ -124,7 +132,7 @@
             <div class="space-y-6">
                 <div class="flex items-center justify-between pb-4 border-b border-border-default">
                     <x-brand.wordmark size="sm" :href="route('home')" />
-                    <button type="button" @click="mobileMenuOpen = false" class="p-1 text-ink-400 hover:text-ink-700 cursor-pointer">
+                    <button type="button" @click="mobileMenuOpen = false" class="p-1 text-ink-400 hover:text-ink-700 cursor-pointer" aria-label="Close mobile navigation menu">
                         <x-icon name="x" class="w-5 h-5" />
                     </button>
                 </div>

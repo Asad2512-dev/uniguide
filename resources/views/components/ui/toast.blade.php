@@ -1,8 +1,23 @@
 <div 
     x-data 
+    x-init="
+        @if(session('toast_success'))
+            $store.toasts.add({ title: 'Success', message: {{ json_encode(session('toast_success')) }}, type: 'success' });
+        @endif
+        @if(session('toast_error'))
+            $store.toasts.add({ title: 'Error', message: {{ json_encode(session('toast_error')) }}, type: 'error' });
+        @endif
+        @if(session('toast_warning'))
+            $store.toasts.add({ title: 'Warning', message: {{ json_encode(session('toast_warning')) }}, type: 'warning' });
+        @endif
+        @if(session('toast_info'))
+            $store.toasts.add({ title: 'Notice', message: {{ json_encode(session('toast_info')) }}, type: 'info' });
+        @endif
+    "
     class="fixed bottom-4 right-4 z-50 flex flex-col gap-2.5 max-w-sm w-full pointer-events-none p-2 sm:p-0"
     role="region" 
     aria-label="Notifications"
+    aria-live="polite"
 >
     <template x-for="toast in $store.toasts.items" :key="toast.id">
         <div 

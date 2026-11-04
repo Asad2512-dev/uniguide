@@ -97,43 +97,45 @@
             </div>
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
-                <table class="w-full text-left border-collapse">
-                    <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                            <th class="py-3 px-4 font-semibold">Province / Region</th>
-                            <th class="py-3 px-4 text-center font-semibold">Unis</th>
-                            <th class="py-3 px-4 text-center font-semibold">Campuses</th>
-                            <th class="py-3 px-4 text-center font-semibold">Programs</th>
-                            <th class="py-3 px-4 text-right font-semibold">Coverage</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-border-subtle text-xs">
-                        @foreach($regional_breakdown as $reg)
-                            <tr class="hover:bg-surface-subtle/80 transition-colors">
-                                <td class="py-3.5 px-4 font-bold text-ink-950 font-heading">
-                                    {{ $reg['region'] }}
-                                </td>
-                                <td class="py-3.5 px-4 text-center font-mono text-ink-700">
-                                    {{ $reg['universities'] }}
-                                </td>
-                                <td class="py-3.5 px-4 text-center font-mono text-ink-700">
-                                    {{ $reg['campuses'] }}
-                                </td>
-                                <td class="py-3.5 px-4 text-center font-mono text-ink-700">
-                                    {{ number_format($reg['programs']) }}
-                                </td>
-                                <td class="py-3.5 px-4 text-right">
-                                    <div class="inline-flex items-center gap-2">
-                                        <div class="w-16 bg-surface-subtle h-2 rounded-full overflow-hidden border border-border-subtle">
-                                            <div class="bg-emerald-500 h-full rounded-full" style="width: {{ $reg['coverage'] }}%"></div>
-                                        </div>
-                                        <span class="font-mono font-bold text-ink-800 text-[11px]">{{ $reg['coverage'] }}%</span>
-                                    </div>
-                                </td>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse" aria-label="Provincial Jurisdiction & Data Coverage">
+                        <thead>
+                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                                <th scope="col" class="py-3 px-4 font-semibold">Province / Region</th>
+                                <th scope="col" class="py-3 px-4 text-center font-semibold">Unis</th>
+                                <th scope="col" class="py-3 px-4 text-center font-semibold">Campuses</th>
+                                <th scope="col" class="py-3 px-4 text-center font-semibold">Programs</th>
+                                <th scope="col" class="py-3 px-4 text-right font-semibold">Coverage</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-border-subtle text-xs">
+                            @foreach($regional_breakdown as $reg)
+                                <tr class="hover:bg-surface-subtle/80 transition-colors">
+                                    <td class="py-3.5 px-4 font-bold text-ink-950 font-heading">
+                                        {{ $reg['region'] }}
+                                    </td>
+                                    <td class="py-3.5 px-4 text-center font-mono text-ink-700">
+                                        {{ $reg['universities'] }}
+                                    </td>
+                                    <td class="py-3.5 px-4 text-center font-mono text-ink-700">
+                                        {{ $reg['campuses'] }}
+                                    </td>
+                                    <td class="py-3.5 px-4 text-center font-mono text-ink-700">
+                                        {{ number_format($reg['programs']) }}
+                                    </td>
+                                    <td class="py-3.5 px-4 text-right">
+                                        <div class="inline-flex items-center gap-2">
+                                            <div class="w-16 bg-surface-subtle h-2 rounded-full overflow-hidden border border-border-subtle">
+                                                <div class="bg-emerald-500 h-full rounded-full" style="width: {{ $reg['coverage'] }}%"></div>
+                                            </div>
+                                            <span class="font-mono font-bold text-ink-800 text-[11px]">{{ $reg['coverage'] }}%</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -192,3 +194,4 @@
         </div>
     </div>
 </x-layouts.national-admin>
+

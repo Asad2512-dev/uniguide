@@ -12,8 +12,13 @@
 <div 
     x-data="{ open: false }" 
     @toggle-mobile-sidebar.window="open = !open"
+    @keydown.escape.window="open = false"
+    x-init="$watch('open', v => document.body.classList.toggle('overflow-hidden', v))"
     x-show="open" 
     x-cloak
+    role="dialog"
+    aria-modal="true"
+    aria-label="Mobile Navigation Drawer"
     class="md:hidden fixed inset-0 z-50 bg-ink-950/40 backdrop-blur-xs"
     @click="open = false"
 >
@@ -31,12 +36,12 @@
         <div class="space-y-4">
             <div class="flex items-center justify-between pb-3 border-b border-border-default">
                 <x-brand.wordmark size="sm" />
-                <button type="button" @click="open = false" class="p-1 text-ink-400 hover:text-ink-700">
+                <button type="button" @click="open = false" class="p-1 text-ink-400 hover:text-ink-700 cursor-pointer" aria-label="Close navigation menu">
                     <x-icon name="x" class="w-5 h-5" />
                 </button>
             </div>
 
-            <nav class="space-y-1">
+            <nav class="space-y-1" aria-label="Mobile Drawer Navigation">
                 @foreach($mainItems as $item)
                     @php
                         $isActive = request()->routeIs($item['active'] ?? $item['route'] ?? '');
@@ -44,6 +49,7 @@
                     <a 
                         href="{{ route($item['route']) }}" 
                         @click="open = false"
+                        @if($isActive) aria-current="page" @endif
                         class="flex items-center justify-between px-3 py-2 rounded-lg text-xs font-semibold font-sans {{ $isActive ? 'bg-brand-50 text-brand-700 font-bold' : 'text-ink-700 hover:bg-surface-subtle' }}"
                     >
                         <span class="flex items-center gap-2.5">
