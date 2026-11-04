@@ -281,7 +281,7 @@
                 </a>
 
                 <!-- Tile 3 -->
-                <a href="{{ route('marketing.how_it_works') }}" class="group p-5 bg-surface rounded-2xl border border-border-default hover:border-warning-300 hover:shadow-card hover:-translate-y-0.5 transition-all flex flex-col justify-between">
+                <a href="{{ route('admissions.index') }}" class="group p-5 bg-surface rounded-2xl border border-border-default hover:border-warning-300 hover:shadow-card hover:-translate-y-0.5 transition-all flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-warning-50 text-warning-600 flex items-center justify-center border border-warning-200/60 mb-4 group-hover:scale-110 transition-transform">
                             <x-icon name="calendar-range" class="w-5 h-5" />
@@ -300,7 +300,7 @@
                 </a>
 
                 <!-- Tile 4 -->
-                <a href="#scholarships" class="group p-5 bg-surface rounded-2xl border border-border-default hover:border-lavender-300 hover:shadow-card hover:-translate-y-0.5 transition-all flex flex-col justify-between">
+                <a href="{{ route('scholarships.index') }}" class="group p-5 bg-surface rounded-2xl border border-border-default hover:border-lavender-300 hover:shadow-card hover:-translate-y-0.5 transition-all flex flex-col justify-between">
                     <div>
                         <div class="w-10 h-10 rounded-xl bg-lavender-50 text-lavender-600 flex items-center justify-center border border-lavender-200/60 mb-4 group-hover:scale-110 transition-transform">
                             <x-icon name="award" class="w-5 h-5" />
@@ -572,7 +572,7 @@
                 description="Over PKR 4.2 Billion in verified federal, provincial, and bilateral educational grants. No student should discontinue higher education due to tuition costs."
             />
 
-            <x-ui.button variant="outline" size="sm" :href="route('preview.student')" icon="award">
+            <x-ui.button variant="outline" size="sm" :href="route('scholarships.index')" icon="award">
                 Check My Eligibility
             </x-ui.button>
         </div>
@@ -586,7 +586,7 @@
                     :eligibility="$sch['eligibility']"
                     :deadline="$sch['deadline']"
                     :category="$sch['category']"
-                    href="#scholarships"
+                    :href="route('scholarships.show', $sch['slug'])"
                 />
             @endforeach
         </div>

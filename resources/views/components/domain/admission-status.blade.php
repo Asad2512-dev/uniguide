@@ -36,6 +36,12 @@
             'pulse' => false,
             'icon' => 'refresh-cw',
         ],
+        'unverified' => [
+            'label' => 'Pending Verification',
+            'variant' => 'neutral',
+            'pulse' => false,
+            'icon' => 'help-circle',
+        ],
         default => [
             'label' => 'Admissions Closed',
             'variant' => 'neutral',

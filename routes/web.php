@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DesignSystemController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShellPreviewController;
 use App\Http\Controllers\UniversityController;
@@ -31,6 +33,16 @@ Route::get('/universities/{slug}/campuses/{campusSlug}', [UniversityController::
 // Degree Program Catalog & Program Detail (Phase 02)
 Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
 Route::get('/programs/{slug}', [ProgramController::class, 'show'])->name('programs.show');
+
+// Admissions, Deadlines Calendar & Document Checklist (Phase 03)
+Route::get('/admissions', [AdmissionController::class, 'index'])->name('admissions.index');
+Route::get('/admissions/calendar', [AdmissionController::class, 'calendar'])->name('admissions.calendar');
+Route::get('/admissions/checklist', [AdmissionController::class, 'checklist'])->name('admissions.checklist');
+Route::get('/admissions/{slug}', [AdmissionController::class, 'show'])->name('admissions.show');
+
+// Scholarship Explorer & Detail (Phase 03)
+Route::get('/scholarships', [ScholarshipController::class, 'index'])->name('scholarships.index');
+Route::get('/scholarships/{slug}', [ScholarshipController::class, 'show'])->name('scholarships.show');
 
 // Unified Multi-Entity Search & API Suggestions
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');

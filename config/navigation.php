@@ -25,10 +25,22 @@ return [
             'description' => 'Search undergraduate and graduate degrees with merit formulas and fee structures.',
         ],
         [
+            'label' => 'Admissions & Deadlines',
+            'route' => 'admissions.index',
+            'icon' => 'calendar-clock',
+            'badge' => 'Fall 2026',
+            'description' => 'Track open intakes, national entry test dates, and application cutoffs.',
+        ],
+        [
+            'label' => 'Scholarships',
+            'route' => 'scholarships.index',
+            'icon' => 'award',
+            'description' => 'Discover need-based and merit scholarships including HEC, Ehsaas, and provincial endowments.',
+        ],
+        [
             'label' => 'Platform Features',
             'route' => 'marketing.features',
             'icon' => 'sparkles',
-            'badge' => 'Intelligence',
             'description' => 'Merit engine, cutoff forecaster, side-by-side comparison, and document vault.',
         ],
         [
@@ -42,12 +54,6 @@ return [
             'route' => 'marketing.about',
             'icon' => 'shield-check',
             'description' => 'Our national charter, HEC data transparency, mission, and leadership.',
-        ],
-        [
-            'label' => 'Contact & Support',
-            'route' => 'marketing.contact',
-            'icon' => 'message-square',
-            'description' => 'Dedicated admissions assistance, BISE board queries, and institutional desk.',
         ],
     ],
 

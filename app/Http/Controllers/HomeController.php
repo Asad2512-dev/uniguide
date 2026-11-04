@@ -182,6 +182,7 @@ class HomeController extends Controller
 
         $scholarships = [
             [
+                'slug' => 'hec-need-based',
                 'title' => 'HEC Need-Based Undergraduate Scholarship',
                 'provider' => 'Higher Education Commission of Pakistan',
                 'coverage' => '100% Tuition Fee + PKR 6,000/mo Living Stipend',
@@ -190,6 +191,7 @@ class HomeController extends Controller
                 'category' => 'Need & Merit Based',
             ],
             [
+                'slug' => 'ehsaas-undergraduate',
                 'title' => 'Ehsaas National Undergraduate Scholarship Phase-IV',
                 'provider' => 'Ministry of Poverty Alleviation & Social Safety',
                 'coverage' => 'Full Tuition Waiver + Annual Maintenance Grant',
@@ -198,19 +200,21 @@ class HomeController extends Controller
                 'category' => 'National Equity Grant',
             ],
             [
-                'title' => 'USAID-Funded Merit & Needs-Based Scholarship',
-                'provider' => 'HEC Pakistan in collaboration with USAID',
-                'coverage' => 'Complete Degree Tuition + Books + Transport Stipend',
-                'eligibility' => '50% female student quota • Agriculture, Engineering, Medicine, & Social Sciences',
-                'deadline' => '10 August 2026',
-                'category' => 'Bilateral Development Grant',
+                'slug' => 'lums-nop',
+                'title' => 'LUMS National Outreach Programme (NOP) Scholarship',
+                'provider' => 'Lahore University of Management Sciences (LUMS)',
+                'coverage' => '100% Fully Funded Tuition, Boarding & Stipend',
+                'eligibility' => 'Demonstrated financial distress • Minimum 80% in Matric / SSC',
+                'deadline' => '31 March 2026',
+                'category' => 'Fully Funded Fellowship',
             ],
             [
-                'title' => 'Punjab Educational Endowment Fund (PEEF) Master & BS',
+                'slug' => 'peef-special-quota',
+                'title' => 'Punjab Educational Endowment Fund (PEEF) Special Quota',
                 'provider' => 'Govt. of Punjab & PEEF Trust',
                 'coverage' => 'Tuition Reimbursement + Monthly Boarding Allowance',
                 'eligibility' => 'Domicile in Punjab • 60%+ marks in Intermediate • Special quotas for orphans',
-                'deadline' => '20 September 2026',
+                'deadline' => '20 August 2026',
                 'category' => 'Provincial Endowment',
             ],
         ];
