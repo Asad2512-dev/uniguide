@@ -197,6 +197,7 @@ Route::prefix('admin/national')
 
         // Official Data Source Management
         Route::get('/sources', [NationalAdminController::class, 'sources'])->name('sources');
+        Route::post('/sources', [NationalAdminController::class, 'createSource'])->name('sources.create');
 
         // Web Scraping Control Center
         Route::get('/scraping', [NationalAdminController::class, 'scraping'])->name('scraping');
@@ -212,6 +213,7 @@ Route::prefix('admin/national')
 
         // Data Verification Queue
         Route::get('/verification', [NationalAdminController::class, 'verification'])->name('verification');
+        Route::post('/verification/{id}', [NationalAdminController::class, 'processVerification'])->name('verification.process');
 
         // Knowledge Base Management (Vector Store)
         Route::get('/knowledge-base', [NationalAdminController::class, 'knowledgeBase'])->name('knowledge_base');
@@ -223,6 +225,7 @@ Route::prefix('admin/national')
 
         // Student and Admin User Management
         Route::get('/users', [NationalAdminController::class, 'users'])->name('users');
+        Route::post('/users/invite', [NationalAdminController::class, 'inviteUser'])->name('users.invite');
 
         // Notifications Management
         Route::get('/notifications', [NationalAdminController::class, 'notifications'])->name('notifications');

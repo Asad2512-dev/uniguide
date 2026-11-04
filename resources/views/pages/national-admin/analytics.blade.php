@@ -15,7 +15,12 @@
         </x-slot:breadcrumbs>
 
         <x-slot:actions>
-            <x-ui.button variant="outline" size="sm" icon="file-down">
+            <x-ui.button 
+                variant="outline" 
+                size="sm" 
+                icon="file-down"
+                @click="$store.toasts?.add({ title: 'Federal Report Dispatched', message: 'Annual Higher Education Trends 2026 PDF dispatched to your inbox.', type: 'success' })"
+            >
                 Download Annual HEC Report
             </x-ui.button>
         </x-slot:actions>
@@ -34,14 +39,19 @@
     @endif
 
     <div class="space-y-8">
-        <!-- Discipline Demand Breakdown -->
-        <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
-            <div class="flex items-center justify-between">
+        <!-- Visual Discipline Demand Breakdown & Chart -->
+        <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                     <h3 class="font-heading font-bold text-base text-ink-950">Undergraduate Discipline Applicant Demand (Fall 2026)</h3>
                     <p class="text-xs text-ink-500 font-sans">Percentage of total first-preference applications submitted nationwide.</p>
                 </div>
                 <span class="text-xs font-mono text-ink-400">240,000 Total Candidates Sample</span>
+            </div>
+
+            <!-- Chart.js Visualization Canvas -->
+            <div class="h-64 w-full bg-surface-subtle/50 rounded-xl p-4 border border-border-subtle relative">
+                <canvas id="disciplineDemandChart"></canvas>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 pt-2">
@@ -91,14 +101,19 @@
                 </div>
             </div>
 
-            <!-- Fee Inflation Index (5 Cols) -->
+            <!-- Fee Inflation Index (5 Cols) with Trend Chart -->
             <div class="lg:col-span-5 p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
                         <h3 class="font-heading font-bold text-base text-ink-950">Annual Tuition Inflation Index</h3>
-                        <p class="text-xs text-ink-500 font-sans">Public vs Private semester averages.</p>
+                        <p class="text-xs text-ink-500 font-sans">Public vs Private semester averages (PKR).</p>
                     </div>
                     <span class="text-xs font-mono text-ink-400">PKR Benchmark</span>
+                </div>
+
+                <!-- Inflation Chart Canvas -->
+                <div class="h-48 w-full bg-surface-subtle/50 rounded-xl p-3 border border-border-subtle relative">
+                    <canvas id="feeTrendChart"></canvas>
                 </div>
 
                 <div class="rounded-xl border border-border-default overflow-hidden">
@@ -126,5 +141,82 @@
             </div>
         </div>
     </div>
-</x-layouts.national-admin>
 
+    <!-- Chart.js Initialization Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof window.createUniGuideChart === 'function') {
+                // 1. Discipline Demand Horizontal Bar Chart
+                const disciplineLabels = @json(array_column($discipline_demand, 'name'));
+                const disciplineData = @json(array_column($discipline_demand, 'share'));
+
+                window.createUniGuideChart('disciplineDemandChart', {
+                    type: 'bar',
+                    data: {
+                        labels: disciplineLabels,
+                        datasets: [{
+                            label: 'Applicant Share %',
+                            data: disciplineData,
+                            backgroundColor: ['#0D9488', '#0284C7', '#6366F1', '#D97706'],
+                            borderRadius: 8,
+                            maxBarThickness: 32,
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        plugins: {
+                            legend: { display: false }
+                        },
+                        scales: {
+                            x: {
+                                max: 60,
+                                ticks: {
+                                    callback: function(val) { return val + '%'; }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // 2. Fee Inflation Trend Line Chart
+                const feeYears = @json(array_column($fee_inflation_index, 'year'));
+                const publicFees = @json(array_column($fee_inflation_index, 'public_avg'));
+                const privateFees = @json(array_column($fee_inflation_index, 'private_avg'));
+
+                window.createUniGuideChart('feeTrendChart', {
+                    type: 'line',
+                    data: {
+                        labels: feeYears,
+                        datasets: [
+                            {
+                                label: 'Public Universities',
+                                data: publicFees,
+                                borderColor: '#0D9488',
+                                backgroundColor: 'rgba(13, 148, 136, 0.1)',
+                                tension: 0.3,
+                                fill: true,
+                            },
+                            {
+                                label: 'Private Universities',
+                                data: privateFees,
+                                borderColor: '#0284C7',
+                                backgroundColor: 'rgba(2, 132, 199, 0.1)',
+                                tension: 0.3,
+                                fill: true,
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                ticks: {
+                                    callback: function(val) { return 'PKR ' + (val / 1000) + 'k'; }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</x-layouts.national-admin>

@@ -33,7 +33,17 @@
         </div>
     @endif
 
-    <div class="space-y-4">
+    <div 
+        x-data="{ 
+            showModal: false, 
+            selectedItem: null,
+            openDiff(item) {
+                this.selectedItem = item;
+                this.showModal = true;
+            }
+        }" 
+        class="space-y-4"
+    >
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
             <div class="overflow-x-auto">
                 <table class="w-full text-left border-collapse" aria-label="Data Verification Queue">
@@ -72,9 +82,15 @@
                                     </span>
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <a href="{{ route('national_admin.ai_extraction') }}" class="px-2.5 py-1 rounded-lg border border-border-default hover:bg-brand-50 hover:text-brand-700 text-[11px] font-semibold text-ink-700 transition-colors inline-block">
-                                        Audit Diff →
-                                    </a>
+                                    <div class="flex items-center justify-end gap-2">
+                                        <button 
+                                            type="button" 
+                                            @click="openDiff({{ json_encode($item) }})"
+                                            class="px-2.5 py-1 rounded-lg border border-border-default hover:bg-brand-50 hover:text-brand-700 text-[11px] font-semibold text-ink-700 transition-colors cursor-pointer"
+                                        >
+                                            Audit Diff →
+                                        </button>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -82,6 +98,81 @@
                 </table>
             </div>
         </div>
+
+        <!-- Verification Diff Audit Modal (Alpine.js) -->
+        <div 
+            x-show="showModal" 
+            x-cloak
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-950/60 backdrop-blur-xs"
+            @keydown.escape.window="showModal = false"
+        >
+            <div 
+                class="bg-surface rounded-2xl border border-border-default shadow-elevated w-full max-w-xl overflow-hidden"
+                @click.away="showModal = false"
+            >
+                <template x-if="selectedItem">
+                    <div>
+                        <div class="px-6 py-4 border-b border-border-default bg-surface-subtle flex items-center justify-between">
+                            <div>
+                                <span class="text-[10px] font-mono uppercase tracking-wider text-brand-700 font-bold block" x-text="selectedItem.institution + ' • ' + selectedItem.entity_type"></span>
+                                <h3 class="font-heading font-bold text-sm text-ink-950" x-text="selectedItem.field"></h3>
+                            </div>
+                            <button type="button" @click="showModal = false" class="text-ink-400 hover:text-ink-700 cursor-pointer">
+                                <x-icon name="x" class="w-4 h-4" />
+                            </button>
+                        </div>
+
+                        <div class="p-6 space-y-4 text-xs">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div class="p-3.5 rounded-xl bg-surface-subtle border border-border-subtle">
+                                    <span class="text-[10px] font-mono uppercase text-ink-500 block mb-1">Current Master Value</span>
+                                    <span class="font-mono text-xs text-rose-700 font-semibold line-through block" x-text="selectedItem.before_value || 'None on file'"></span>
+                                </div>
+                                <div class="p-3.5 rounded-xl bg-emerald-50/60 border border-emerald-200">
+                                    <span class="text-[10px] font-mono uppercase text-emerald-800 block mb-1">Proposed Discovery Value</span>
+                                    <span class="font-mono text-xs text-emerald-950 font-bold block" x-text="selectedItem.after_value || 'Proposed value'"></span>
+                                </div>
+                            </div>
+
+                            <div class="p-3.5 rounded-xl bg-canvas border border-border-subtle flex items-center justify-between text-[11px] font-mono text-ink-600">
+                                <span class="flex items-center gap-1.5">
+                                    <x-icon name="file-text" class="w-3.5 h-3.5 text-brand-600" />
+                                    Source: <strong class="text-ink-900" x-text="selectedItem.source_doc || 'University Prospectus Feed'"></strong>
+                                </span>
+                                <span class="text-emerald-700 font-bold" x-text="'Confidence: ' + (selectedItem.confidence || 98.5) + '%'"></span>
+                            </div>
+
+                            <div class="text-[11px] text-ink-500 font-sans">
+                                Submitted by <span class="font-semibold text-ink-800" x-text="selectedItem.submitted_by"></span> at <span x-text="selectedItem.submitted_at"></span>. Approving will immediately sync this record to the public catalog and AI vector store.
+                            </div>
+                        </div>
+
+                        <div class="px-6 py-4 border-t border-border-default bg-surface-subtle flex items-center justify-between">
+                            <button type="button" @click="showModal = false" class="px-4 py-2 text-xs font-semibold text-ink-600 hover:text-ink-800 cursor-pointer">
+                                Close
+                            </button>
+
+                            <div class="flex items-center gap-2">
+                                <form method="POST" :action="'/admin/national/verification/' + selectedItem.id" class="inline">
+                                    @csrf
+                                    <input type="hidden" name="action" value="flagged">
+                                    <x-ui.button type="submit" variant="outline" size="sm" icon="alert-triangle" class="text-amber-700 hover:bg-amber-50 border-amber-200">
+                                        Flag Discrepancy
+                                    </x-ui.button>
+                                </form>
+
+                                <form method="POST" :action="'/admin/national/verification/' + selectedItem.id" class="inline">
+                                    @csrf
+                                    <input type="hidden" name="action" value="approved">
+                                    <x-ui.button type="submit" variant="primary" size="sm" icon="check">
+                                        Publish to Live Registry
+                                    </x-ui.button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
     </div>
 </x-layouts.national-admin>
-

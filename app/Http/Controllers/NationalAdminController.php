@@ -77,6 +77,19 @@ class NationalAdminController extends Controller
         ]);
     }
 
+    public function createSource(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:200',
+            'institution' => 'required|string|max:200',
+            'base_url' => 'required|url',
+        ]);
+
+        $this->nationalService->createDataSource($request->all());
+
+        return back()->with('toast_success', 'Official ingestion data source registered successfully.');
+    }
+
     /**
      * 6. Web Scraping Control Center
      */
@@ -147,6 +160,14 @@ class NationalAdminController extends Controller
         ]);
     }
 
+    public function processVerification(Request $request, string $id): RedirectResponse
+    {
+        $action = $request->input('action', 'approved');
+        $this->nationalService->processVerification($id, $action);
+
+        return back()->with('toast_success', 'Verification queue item status updated to '.ucfirst($action).'.');
+    }
+
     /**
      * 10. Knowledge Base Management (Vector Store)
      */
@@ -212,6 +233,26 @@ class NationalAdminController extends Controller
         return view('pages.national-admin.users', [
             'users' => $users,
         ]);
+    }
+
+    public function inviteUser(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:150',
+            'email' => 'required|email',
+            'role' => 'required|string',
+            'scope' => 'required|string',
+        ]);
+
+        $this->nationalService->inviteUser([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'role' => $request->input('role'),
+            'scope' => $request->input('scope'),
+            'two_factor' => $request->has('two_factor'),
+        ]);
+
+        return back()->with('toast_success', 'Administrative credentials invitation dispatched with mandatory 2FA enrollment.');
     }
 
     /**

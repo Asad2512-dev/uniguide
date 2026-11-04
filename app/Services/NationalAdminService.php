@@ -372,6 +372,27 @@ class NationalAdminService
         return session()->get('uniguide_national_sources', $default);
     }
 
+    public function createDataSource(array $data): void
+    {
+        $sources = $this->getDataSources();
+        $newSource = [
+            'id' => 'src-'.(count($sources) + 1),
+            'name' => $data['name'],
+            'institution' => $data['institution'],
+            'base_url' => $data['base_url'],
+            'endpoint' => $data['endpoint'] ?? '/',
+            'feed_type' => $data['feed_type'] ?? 'HTML Table Scraper',
+            'reliability_score' => 100.0,
+            'status' => 'healthy',
+            'http_status' => 200,
+            'last_crawled' => 'Just registered',
+            'crawl_frequency' => $data['crawl_frequency'] ?? 'Daily',
+        ];
+
+        array_unshift($sources, $newSource);
+        session()->put('uniguide_national_sources', $sources);
+    }
+
     /**
      * 6. Web Scraping Control Center.
      */
@@ -616,12 +637,78 @@ class NationalAdminService
      */
     public function getVerificationQueue(): array
     {
-        return [
-            ['id' => 'vq-1', 'entity_type' => 'University Profile', 'institution' => 'NUST Islamabad', 'field' => 'Helpline Contact & Rector Name', 'status' => 'Pending Review', 'priority' => 'High', 'submitted_by' => 'Dr. Tariq Mahmood', 'submitted_at' => 'Today at 11:20 AM'],
-            ['id' => 'vq-2', 'entity_type' => 'Tuition Fee Revision', 'institution' => 'FAST-NUCES', 'field' => 'Computing BS Tuition (+8.3%)', 'status' => 'Pending Review', 'priority' => 'High', 'submitted_by' => 'Admissions Registrar', 'submitted_at' => 'Today at 09:15 AM'],
-            ['id' => 'vq-3', 'entity_type' => 'New Program Filing', 'institution' => 'GIKI Topi', 'field' => 'BS Artificial Intelligence (90 Seats)', 'status' => 'Flagged for Audit', 'priority' => 'Medium', 'submitted_by' => 'Academic Council', 'submitted_at' => 'Yesterday at 04:00 PM'],
-            ['id' => 'vq-4', 'entity_type' => 'Quota Allocation', 'institution' => 'UET Lahore', 'field' => 'FATA & Balochistan Quota Seats Distribution', 'status' => 'Approved', 'priority' => 'Low', 'submitted_by' => 'Govt. of Punjab', 'submitted_at' => '02 Nov 2026'],
+        $default = [
+            [
+                'id' => 'vq-1',
+                'entity_type' => 'University Profile',
+                'institution' => 'NUST Islamabad',
+                'field' => 'Helpline Contact & Rector Name',
+                'status' => 'Pending Review',
+                'priority' => 'High',
+                'submitted_by' => 'Dr. Tariq Mahmood',
+                'submitted_at' => 'Today at 11:20 AM',
+                'before_value' => 'Rector: Air Marshal (Retd) Rizwan Riaz • Phone: +92 51 9085 6878',
+                'after_value' => 'Rector: Engr. Javed Mahmood Bukhari • Phone: +92 51 9085 1000',
+                'confidence' => 99.1,
+                'source_doc' => 'Official University Gazette SRO-2026/04',
+            ],
+            [
+                'id' => 'vq-2',
+                'entity_type' => 'Tuition Fee Revision',
+                'institution' => 'FAST-NUCES',
+                'field' => 'Computing BS Tuition (+8.3%)',
+                'status' => 'Pending Review',
+                'priority' => 'High',
+                'submitted_by' => 'Admissions Registrar',
+                'submitted_at' => 'Today at 09:15 AM',
+                'before_value' => 'Per Credit Hour: PKR 9,500 (Semester Avg PKR 171,000)',
+                'after_value' => 'Per Credit Hour: PKR 10,300 (Semester Avg PKR 185,400)',
+                'confidence' => 97.4,
+                'source_doc' => 'Board of Governors Circular No. 42/2026',
+            ],
+            [
+                'id' => 'vq-3',
+                'entity_type' => 'New Program Filing',
+                'institution' => 'GIKI Topi',
+                'field' => 'BS Artificial Intelligence (90 Seats)',
+                'status' => 'Flagged for Audit',
+                'priority' => 'Medium',
+                'submitted_by' => 'Academic Council',
+                'submitted_at' => 'Yesterday at 04:00 PM',
+                'before_value' => 'Not Offered on Main Campus',
+                'after_value' => 'BS AI: 90 Regular Intake Seats, HEC PQF Level-VI Approved',
+                'confidence' => 96.8,
+                'source_doc' => 'Academic Council Minutes 18th Session',
+            ],
+            [
+                'id' => 'vq-4',
+                'entity_type' => 'Quota Allocation',
+                'institution' => 'UET Lahore',
+                'field' => 'FATA & Balochistan Quota Seats Distribution',
+                'status' => 'Approved',
+                'priority' => 'Low',
+                'submitted_by' => 'Govt. of Punjab',
+                'submitted_at' => '02 Nov 2026',
+                'before_value' => 'FATA: 24 Seats • Balochistan: 18 Seats',
+                'after_value' => 'FATA: 30 Seats • Balochistan: 22 Seats (+10 Federal Addition)',
+                'confidence' => 100.0,
+                'source_doc' => 'Punjab Higher Education Department Gazette Notification',
+            ],
         ];
+
+        return session()->get('uniguide_national_verification', $default);
+    }
+
+    public function processVerification(string $id, string $action): void
+    {
+        $queue = $this->getVerificationQueue();
+        foreach ($queue as &$item) {
+            if ($item['id'] === $id) {
+                $item['status'] = $action === 'approved' ? 'Approved' : 'Flagged for Audit';
+                break;
+            }
+        }
+        session()->put('uniguide_national_verification', $queue);
     }
 
     /**
@@ -721,7 +808,7 @@ class NationalAdminService
      */
     public function getUsers(): array
     {
-        return [
+        $default = [
             [
                 'id' => 'usr-1',
                 'name' => 'Dr. Tariq Mahmood',
@@ -763,6 +850,26 @@ class NationalAdminService
                 'created_at' => '01 Jan 2026',
             ],
         ];
+
+        return session()->get('uniguide_national_users', $default);
+    }
+
+    public function inviteUser(array $data): void
+    {
+        $users = $this->getUsers();
+        $newUser = [
+            'id' => 'usr-'.(count($users) + 1),
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'role' => $data['role'],
+            'scope' => $data['scope'],
+            'status' => 'Pending Verification',
+            'two_factor' => ! empty($data['two_factor']) ? 'Enforced' : 'Optional',
+            'created_at' => 'Just now',
+        ];
+
+        array_unshift($users, $newUser);
+        session()->put('uniguide_national_users', $users);
     }
 
     /**

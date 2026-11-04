@@ -85,6 +85,19 @@ class NationalAdminPhaseTest extends TestCase
         $response->assertSee('NUST Official Admissions Portal');
         $response->assertSee('FAST-NUCES Central University Portal');
         $response->assertSee('Pakistan Engineering Council');
+
+        // Test registering a new authoritative source
+        $createResponse = $this->post('/admin/national/sources', [
+            'name' => 'QAU Admissions Prospectus Portal',
+            'institution' => 'Quaid-i-Azam University',
+            'base_url' => 'https://admissions.qau.edu.pk',
+            'endpoint' => '/fees',
+            'feed_type' => 'PDF Gazette Parser',
+            'crawl_frequency' => 'Daily',
+        ]);
+
+        $createResponse->assertStatus(302);
+        $createResponse->assertSessionHas('toast_success');
     }
 
     /**
@@ -159,6 +172,14 @@ class NationalAdminPhaseTest extends TestCase
         $response->assertSee('Data Verification Queue');
         $response->assertSee('NUST Islamabad');
         $response->assertSee('Pending Review');
+
+        // Test processing verification queue item
+        $verifyResponse = $this->post('/admin/national/verification/vq-1', [
+            'action' => 'approved',
+        ]);
+
+        $verifyResponse->assertStatus(302);
+        $verifyResponse->assertSessionHas('toast_success');
     }
 
     /**
@@ -217,6 +238,18 @@ class NationalAdminPhaseTest extends TestCase
         $response->assertSee('Student and Admin User Management');
         $response->assertSee('Dr. Tariq Mahmood');
         $response->assertSee('Prof. Dr. Mukhtar Ahmed');
+
+        // Test inviting a new administrator
+        $inviteResponse = $this->post('/admin/national/users/invite', [
+            'name' => 'Prof. Dr. Arshad Ali',
+            'email' => 'arshad.ali@hec.gov.pk',
+            'role' => 'Federal Oversight Commissioner',
+            'scope' => 'National Regulatory HEC',
+            'two_factor' => '1',
+        ]);
+
+        $inviteResponse->assertStatus(302);
+        $inviteResponse->assertSessionHas('toast_success');
     }
 
     /**

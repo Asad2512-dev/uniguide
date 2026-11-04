@@ -15,8 +15,16 @@
         </x-slot:breadcrumbs>
 
         <x-slot:actions>
-            <x-ui.button variant="outline" size="sm" icon="file-down">
+            <x-ui.button 
+                variant="outline" 
+                size="sm" 
+                icon="file-down"
+                @click="$store.toasts?.add({ title: 'Audit Roster Exported', message: 'Federal identity ledger downloaded as verified CSV.', type: 'success' })"
+            >
                 Export Audit Roster
+            </x-ui.button>
+            <x-ui.button variant="primary" size="sm" icon="user-plus" @click="$dispatch('open-invite-user')">
+                Invite Administrator
             </x-ui.button>
         </x-slot:actions>
     </x-ui.page-header>
@@ -37,6 +45,7 @@
         x-data="{
             search: '',
             roleFilter: 'all',
+            showInviteModal: false,
             matches(u) {
                 const s = this.search.toLowerCase();
                 const matchesSearch = !s || u.name.toLowerCase().includes(s) || u.email.toLowerCase().includes(s) || u.scope.toLowerCase().includes(s);
@@ -44,6 +53,7 @@
                 return matchesSearch && matchesRole;
             }
         }"
+        @open-invite-user.window="showInviteModal = true"
         class="space-y-4"
     >
         <!-- Filter Bar -->
@@ -124,6 +134,103 @@
                 </table>
             </div>
         </div>
+
+        <!-- Invite Administrator Modal (Alpine.js) -->
+        <div 
+            x-show="showInviteModal" 
+            x-cloak
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-950/60 backdrop-blur-xs"
+            @keydown.escape.window="showInviteModal = false"
+        >
+            <div 
+                class="bg-surface rounded-2xl border border-border-default shadow-elevated w-full max-w-lg overflow-hidden"
+                @click.away="showInviteModal = false"
+            >
+                <div class="px-6 py-4 border-b border-border-default bg-surface-subtle flex items-center justify-between">
+                    <div>
+                        <h3 class="font-heading font-bold text-sm text-ink-950">Grant Administrative Access</h3>
+                        <p class="text-[11px] text-ink-500 font-sans mt-0.5">Issue verified credentials with mandatory multi-factor authentication.</p>
+                    </div>
+                    <button type="button" @click="showInviteModal = false" class="text-ink-400 hover:text-ink-700 cursor-pointer">
+                        <x-icon name="x" class="w-4 h-4" />
+                    </button>
+                </div>
+
+                <form method="POST" action="{{ route('national_admin.users.invite') }}" class="p-6 space-y-4">
+                    @csrf
+                    <div>
+                        <label class="block text-xs font-semibold text-ink-700 mb-1.5 font-sans">Full Name & Title</label>
+                        <input 
+                            type="text" 
+                            name="name" 
+                            required
+                            placeholder="e.g. Prof. Dr. Arshad Ali"
+                            class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3.5 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                        />
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold text-ink-700 mb-1.5 font-sans">Official Email Address</label>
+                        <input 
+                            type="email" 
+                            name="email" 
+                            required
+                            placeholder="name@hec.gov.pk or registrar@nust.edu.pk"
+                            class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3.5 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono"
+                        />
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-ink-700 mb-1.5 font-sans">Assigned Access Role</label>
+                            <select 
+                                name="role" 
+                                required
+                                class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                            >
+                                <option value="University Administrator">University Administrator</option>
+                                <option value="Federal Oversight Commissioner">Federal Commissioner</option>
+                                <option value="Charter Committee Auditor">Charter Committee Auditor</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-ink-700 mb-1.5 font-sans">Institutional Scope</label>
+                            <input 
+                                type="text" 
+                                name="scope" 
+                                required
+                                placeholder="e.g. NUST Islamabad or HEC Islamabad"
+                                class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3.5 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="p-3.5 rounded-xl bg-surface-subtle border border-border-subtle">
+                        <label class="flex items-start gap-2.5 cursor-pointer">
+                            <input 
+                                type="checkbox" 
+                                name="two_factor" 
+                                value="1" 
+                                checked
+                                class="mt-0.5 rounded border-border-default text-brand-600 focus:ring-brand-500"
+                            />
+                            <div>
+                                <span class="text-xs font-semibold text-ink-900 block">Enforce Hardware / TOTP App 2FA</span>
+                                <span class="text-[11px] text-ink-500 block font-sans">Mandates Google Authenticator or YubiKey setup prior to granting dashboard access.</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <div class="pt-4 border-t border-border-subtle flex justify-end gap-3">
+                        <button type="button" @click="showInviteModal = false" class="px-4 py-2 text-xs font-semibold text-ink-600 hover:text-ink-800 cursor-pointer">
+                            Cancel
+                        </button>
+                        <x-ui.button type="submit" variant="primary" size="sm" icon="send">
+                            Send Invitation
+                        </x-ui.button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </x-layouts.national-admin>
-
