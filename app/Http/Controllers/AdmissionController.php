@@ -28,7 +28,7 @@ class AdmissionController extends Controller
         ];
 
         $sort = $request->query('sort', 'deadline_asc');
-        $page = max(1, (int)$request->query('page', 1));
+        $page = max(1, (int) $request->query('page', 1));
         $perPage = 6;
 
         $results = $this->admissionService->getAdmissions($filters, $sort, $perPage, $page);
@@ -36,8 +36,8 @@ class AdmissionController extends Controller
 
         // Calculate applied filters for chips
         $appliedFilters = [];
-        if (!empty($filters['q'])) {
-            $appliedFilters['q'] = ['label' => 'Query: "' . e($filters['q']) . '"', 'param' => 'q'];
+        if (! empty($filters['q'])) {
+            $appliedFilters['q'] = ['label' => 'Query: "'.e($filters['q']).'"', 'param' => 'q'];
         }
         if ($filters['status'] !== 'all' && isset($filterOptions['statuses'][$filters['status']])) {
             $appliedFilters['status'] = ['label' => $filterOptions['statuses'][$filters['status']], 'param' => 'status'];
@@ -71,7 +71,7 @@ class AdmissionController extends Controller
     {
         $admission = $this->admissionService->getAdmissionBySlug($slug);
 
-        if (!$admission) {
+        if (! $admission) {
             abort(404, 'Admission campaign not found');
         }
 
@@ -88,8 +88,8 @@ class AdmissionController extends Controller
      */
     public function calendar(Request $request)
     {
-        $month = $request->query('month') !== null ? (int)$request->query('month') : null;
-        $year = (int)$request->query('year', 2026);
+        $month = $request->query('month') !== null ? (int) $request->query('month') : null;
+        $year = (int) $request->query('year', 2026);
         $filterCategory = $request->query('category', 'all'); // 'all', 'deadline', 'test', 'scholarship', 'merit'
 
         $allEvents = $this->admissionService->getCalendarEvents($year, $month);

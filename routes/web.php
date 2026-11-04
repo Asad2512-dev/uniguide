@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CounselorController;
 use App\Http\Controllers\DesignSystemController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketingController;
@@ -43,6 +44,19 @@ Route::get('/admissions/{slug}', [AdmissionController::class, 'show'])->name('ad
 // Scholarship Explorer & Detail (Phase 03)
 Route::get('/scholarships', [ScholarshipController::class, 'index'])->name('scholarships.index');
 Route::get('/scholarships/{slug}', [ScholarshipController::class, 'show'])->name('scholarships.show');
+
+// AI University Counselor Experience (Phase 04)
+Route::prefix('counselor')->name('counselor.')->group(function () {
+    Route::get('/', [CounselorController::class, 'index'])->name('index');
+    Route::get('/chat/{id?}', [CounselorController::class, 'chat'])->name('chat');
+    Route::post('/chat/message', [CounselorController::class, 'sendMessage'])->name('message');
+    Route::get('/guided', [CounselorController::class, 'guided'])->name('guided');
+    Route::get('/recommendations', [CounselorController::class, 'recommendations'])->name('recommendations');
+    Route::get('/search', [CounselorController::class, 'search'])->name('search');
+    Route::get('/evidence/{id?}', [CounselorController::class, 'evidence'])->name('evidence');
+    Route::get('/history', [CounselorController::class, 'history'])->name('history');
+    Route::delete('/history/{id}', [CounselorController::class, 'destroy'])->name('destroy');
+});
 
 // Unified Multi-Entity Search & API Suggestions
 Route::get('/search', [SearchController::class, 'index'])->name('search.index');

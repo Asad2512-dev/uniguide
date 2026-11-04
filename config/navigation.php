@@ -13,6 +13,14 @@ return [
 
     'public' => [
         [
+            'label' => 'AI Counselor',
+            'route' => 'counselor.index',
+            'icon' => 'sparkles',
+            'badge' => 'Intelligent',
+            'badge_color' => 'brand',
+            'description' => 'Personalized admission advisor, aggregate evaluation, and conversational search.',
+        ],
+        [
             'label' => 'Explore Universities',
             'route' => 'universities.index',
             'icon' => 'building-2',
@@ -85,10 +93,11 @@ return [
             ],
             [
                 'label' => 'AI Admission Advisor',
-                'route' => 'preview.student',
+                'route' => 'counselor.index',
                 'icon' => 'sparkles',
                 'badge' => 'Online',
                 'badge_color' => 'success',
+                'active' => 'counselor.*',
             ],
             [
                 'label' => 'Scholarship Tracker',

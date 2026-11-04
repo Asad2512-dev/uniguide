@@ -23,15 +23,15 @@ class ScholarshipController extends Controller
         ];
 
         $sort = $request->query('sort', 'deadline_asc');
-        $page = max(1, (int)$request->query('page', 1));
+        $page = max(1, (int) $request->query('page', 1));
         $perPage = 6;
 
         $results = $this->admissionService->getScholarships($filters, $sort, $perPage, $page);
         $filterOptions = $this->admissionService->getFilterOptions();
 
         $appliedFilters = [];
-        if (!empty($filters['q'])) {
-            $appliedFilters['q'] = ['label' => 'Query: "' . e($filters['q']) . '"', 'param' => 'q'];
+        if (! empty($filters['q'])) {
+            $appliedFilters['q'] = ['label' => 'Query: "'.e($filters['q']).'"', 'param' => 'q'];
         }
         if ($filters['type'] !== 'all' && isset($filterOptions['scholarship_types'][$filters['type']])) {
             $appliedFilters['type'] = ['label' => $filterOptions['scholarship_types'][$filters['type']], 'param' => 'type'];
@@ -56,7 +56,7 @@ class ScholarshipController extends Controller
     {
         $scholarship = $this->admissionService->getScholarshipBySlug($slug);
 
-        if (!$scholarship) {
+        if (! $scholarship) {
             abort(404, 'Scholarship program not found');
         }
 

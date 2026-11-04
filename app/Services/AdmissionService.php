@@ -860,7 +860,7 @@ class AdmissionService
     {
         $items = collect($this->admissions);
 
-        if (!empty($filters['q'])) {
+        if (! empty($filters['q'])) {
             $q = strtolower(trim($filters['q']));
             $items = $items->filter(function ($a) use ($q) {
                 return str_contains(strtolower($a['title']), $q) ||
@@ -871,28 +871,28 @@ class AdmissionService
             });
         }
 
-        if (!empty($filters['status']) && $filters['status'] !== 'all') {
+        if (! empty($filters['status']) && $filters['status'] !== 'all') {
             $items = $items->where('status', $filters['status']);
         }
 
-        if (!empty($filters['province']) && $filters['province'] !== 'all') {
-            $items = $items->filter(fn($a) => $a['province'] === $filters['province'] || $a['province'] === 'multi');
+        if (! empty($filters['province']) && $filters['province'] !== 'all') {
+            $items = $items->filter(fn ($a) => $a['province'] === $filters['province'] || $a['province'] === 'multi');
         }
 
-        if (!empty($filters['degree_level']) && $filters['degree_level'] !== 'all') {
-            $items = $items->filter(fn($a) => in_array($filters['degree_level'], $a['degree_levels'] ?? []));
+        if (! empty($filters['degree_level']) && $filters['degree_level'] !== 'all') {
+            $items = $items->filter(fn ($a) => in_array($filters['degree_level'], $a['degree_levels'] ?? []));
         }
 
-        if (!empty($filters['session']) && $filters['session'] !== 'all') {
+        if (! empty($filters['session']) && $filters['session'] !== 'all') {
             $items = $items->where('session', $filters['session']);
         }
 
-        if (!empty($filters['university']) && $filters['university'] !== 'all') {
+        if (! empty($filters['university']) && $filters['university'] !== 'all') {
             $items = $items->where('university_slug', $filters['university']);
         }
 
         // Sort items
-        $items = match($sort) {
+        $items = match ($sort) {
             'deadline_desc' => $items->sortByDesc('deadline_date'),
             'title_asc' => $items->sortBy('title'),
             'university_asc' => $items->sortBy('university_name'),
@@ -900,7 +900,7 @@ class AdmissionService
         };
 
         $total = $items->count();
-        $totalPages = max(1, (int)ceil($total / $perPage));
+        $totalPages = max(1, (int) ceil($total / $perPage));
         $page = max(1, min($page, $totalPages));
         $offset = ($page - 1) * $perPage;
         $paginatedItems = $items->slice($offset, $perPage)->values()->all();
@@ -1207,7 +1207,7 @@ class AdmissionService
         $collection = collect($events);
 
         if ($month !== null) {
-            $collection = $collection->filter(fn($e) => $e['month_num'] === $month && $e['year'] === $year);
+            $collection = $collection->filter(fn ($e) => $e['month_num'] === $month && $e['year'] === $year);
         }
 
         return $collection->sortBy('date')->values()->all();
@@ -1220,7 +1220,7 @@ class AdmissionService
     {
         $items = collect($this->scholarships);
 
-        if (!empty($filters['q'])) {
+        if (! empty($filters['q'])) {
             $q = strtolower(trim($filters['q']));
             $items = $items->filter(function ($s) use ($q) {
                 return str_contains(strtolower($s['title']), $q) ||
@@ -1230,23 +1230,23 @@ class AdmissionService
             });
         }
 
-        if (!empty($filters['type']) && $filters['type'] !== 'all') {
+        if (! empty($filters['type']) && $filters['type'] !== 'all') {
             $items = $items->where('type', $filters['type']);
         }
 
-        if (!empty($filters['status']) && $filters['status'] !== 'all') {
+        if (! empty($filters['status']) && $filters['status'] !== 'all') {
             $items = $items->where('status', $filters['status']);
         }
 
         // Sort items
-        $items = match($sort) {
+        $items = match ($sort) {
             'deadline_desc' => $items->sortByDesc('deadline_date'),
             'title_asc' => $items->sortBy('title'),
             default => $items->sortBy('deadline_date'),
         };
 
         $total = $items->count();
-        $totalPages = max(1, (int)ceil($total / $perPage));
+        $totalPages = max(1, (int) ceil($total / $perPage));
         $page = max(1, min($page, $totalPages));
         $offset = ($page - 1) * $perPage;
         $paginatedItems = $items->slice($offset, $perPage)->values()->all();
