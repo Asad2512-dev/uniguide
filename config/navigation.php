@@ -46,6 +46,20 @@ return [
             'description' => 'Discover need-based and merit scholarships including HEC, Ehsaas, and provincial endowments.',
         ],
         [
+            'label' => 'Compare Universities',
+            'route' => 'compare.index',
+            'icon' => 'git-compare',
+            'badge' => 'Side-by-Side',
+            'description' => 'Compare up to 4 Pakistani universities across verified fees, merit formulas, and rankings.',
+        ],
+        [
+            'label' => 'Eligibility Checker',
+            'route' => 'eligibility.index',
+            'icon' => 'check-circle',
+            'badge' => 'Rules Engine',
+            'description' => 'Check your eligibility against PEC, NCEAC, and university admission statutes.',
+        ],
+        [
             'label' => 'Platform Features',
             'route' => 'marketing.features',
             'icon' => 'sparkles',

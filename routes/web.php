@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\AdmissionController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ComparisonController;
 use App\Http\Controllers\CounselorController;
 use App\Http\Controllers\DesignSystemController;
+use App\Http\Controllers\EligibilityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\ProgramController;
@@ -45,6 +47,22 @@ Route::get('/admissions/{slug}', [AdmissionController::class, 'show'])->name('ad
 // Scholarship Explorer & Detail (Phase 03)
 Route::get('/scholarships', [ScholarshipController::class, 'index'])->name('scholarships.index');
 Route::get('/scholarships/{slug}', [ScholarshipController::class, 'show'])->name('scholarships.show');
+
+// University Comparison Engine (Phase 06)
+Route::prefix('compare')->name('compare.')->group(function () {
+    Route::get('/', [ComparisonController::class, 'results'])->name('index');
+    Route::get('/builder', [ComparisonController::class, 'builder'])->name('builder');
+    Route::get('/results', [ComparisonController::class, 'results'])->name('results');
+});
+
+// Academic Eligibility Checker & Rules Engine (Phase 06)
+Route::prefix('eligibility')->name('eligibility.')->group(function () {
+    Route::get('/', [EligibilityController::class, 'wizard'])->name('index');
+    Route::get('/results', [EligibilityController::class, 'results'])->name('results');
+    Route::get('/rules/{ruleId?}', [EligibilityController::class, 'rule'])->name('rule');
+    Route::get('/shortlist', [EligibilityController::class, 'shortlist'])->name('shortlist');
+    Route::post('/shortlist', [EligibilityController::class, 'addToShortlist'])->name('shortlist.add');
+});
 
 // AI University Counselor Experience (Phase 04)
 Route::prefix('counselor')->name('counselor.')->group(function () {
