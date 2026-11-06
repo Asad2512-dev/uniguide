@@ -6,7 +6,7 @@
     <div x-data="{ addSchModal: false }">
         <x-ui.page-header 
             title="Scholarships, Endowments & Need-Based Aid"
-            description="Manage HEC Need-Based allocations, university merit tuition waivers, Ehsaas social safety aid, and provincial quota grants."
+            description="Manage Need-Based allocations, university merit tuition waivers, Ehsaas social safety aid, and provincial quota grants."
             badge="PKR 127.5M Aid Portfolio"
             badgeVariant="brand"
         >
@@ -29,11 +29,11 @@
         <!-- Schemes Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @foreach($scholarships as $sch)
-                <div class="p-6 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all flex flex-col justify-between">
+                <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="flex items-start justify-between pb-3 border-b border-border-subtle">
                             <div>
-                                <span class="text-[10px] font-mono font-bold uppercase text-brand-700 bg-brand-50 px-2 py-0.5 rounded">
+                                <span class="text-xs sm:text-[10px] font-mono font-bold uppercase text-brand-700 bg-brand-50 px-2 py-0.5 rounded">
                                     {{ $sch['category'] }}
                                 </span>
                                 <h3 class="font-heading font-bold text-base text-ink-950 mt-1.5">{{ $sch['name'] }}</h3>
@@ -42,7 +42,7 @@
                                 </span>
                             </div>
 
-                            <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
+                            <span class="text-xs sm:text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
                                 Active Scheme
                             </span>
                         </div>
@@ -50,28 +50,28 @@
                         <!-- Budget & Coverage KPIs -->
                         <div class="grid grid-cols-2 gap-3 text-xs font-sans">
                             <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle">
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Annual Allocation</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Annual Allocation</span>
                                 <span class="font-mono font-bold text-sm text-ink-950">{{ $sch['annual_budget'] }}</span>
                             </div>
                             <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle">
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Awarded / Target</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Awarded / Target</span>
                                 <span class="font-mono font-bold text-sm text-brand-600">{{ $sch['awarded_count'] }} / {{ $sch['beneficiaries_target'] }} Scholars</span>
                             </div>
                             <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle col-span-2">
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Coverage & Benefits</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Coverage & Benefits</span>
                                 <span class="font-semibold text-emerald-800">{{ $sch['coverage'] }}</span>
                             </div>
                         </div>
 
                         <!-- Eligibility Note -->
                         <div class="text-xs font-sans text-ink-600">
-                            <span class="text-[10px] text-ink-400 uppercase font-mono block font-bold mb-0.5">Qualifying Criteria:</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block font-bold mb-0.5">Qualifying Criteria:</span>
                             <p class="leading-relaxed">{{ $sch['eligibility_criteria'] }}</p>
                         </div>
                     </div>
 
                     <div class="mt-6 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                        <span class="text-[11px] text-ink-400 font-mono">{{ $sch['application_window'] }}</span>
+                        <span class="text-xs sm:text-[11px] text-ink-600 font-mono">{{ $sch['application_window'] }}</span>
                         <a href="{{ route('uni_admin.documents') }}" class="text-xs font-bold text-brand-600 hover:text-brand-700">
                             Audit Beneficiaries →
                         </a>
@@ -86,7 +86,7 @@
             x-cloak 
             class="fixed inset-0 z-50 overflow-y-auto bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
-            <div class="bg-surface rounded-2xl border border-border-default p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="addSchModal = false">
+            <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="addSchModal = false">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Register Financial Aid Scheme</h3>
                     <button type="button" @click="addSchModal = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>

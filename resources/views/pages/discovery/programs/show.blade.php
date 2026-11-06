@@ -16,7 +16,7 @@
         
         <!-- Breadcrumbs & Program Identity Header -->
         <header class="bg-surface border-b border-border-default/80">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -84,7 +84,7 @@
         </header>
 
         <!-- Main Body Grid -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <!-- Left 2 Cols: Academic Details & Curriculum -->
@@ -97,28 +97,28 @@
                             <span class="font-heading font-extrabold text-base sm:text-lg text-brand-700 mt-0.5 block">
                                 {{ $program['estimated_closing_merit'] }}
                             </span>
-                            <span class="text-[10px] text-ink-400 font-sans">Fall Batch Cutoff</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans">Fall Batch Cutoff</span>
                         </div>
                         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
                             <span class="block text-xs font-sans text-ink-500 font-medium">Semester Tuition</span>
                             <span class="font-heading font-extrabold text-base sm:text-lg text-ink-950 mt-0.5 block">
                                 {{ $program['fee_per_semester'] }}
                             </span>
-                            <span class="text-[10px] text-ink-400 font-sans">Per Semester</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans">Per Semester</span>
                         </div>
                         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
                             <span class="block text-xs font-sans text-ink-500 font-medium">Program Duration</span>
                             <span class="font-heading font-extrabold text-base sm:text-lg text-ink-950 mt-0.5 block">
                                 {{ $program['duration'] }}
                             </span>
-                            <span class="text-[10px] text-ink-400 font-sans">{{ $program['credit_hours'] }} Credit Hours</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans">{{ $program['credit_hours'] }} Credit Hours</span>
                         </div>
                         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
                             <span class="block text-xs font-sans text-ink-500 font-medium">Study Shift</span>
                             <span class="font-heading font-extrabold text-base sm:text-lg text-ink-950 mt-0.5 block">
                                 {{ $program['study_mode'] }}
                             </span>
-                            <span class="text-[10px] text-ink-400 font-sans">{{ $program['shift'] }}</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans">{{ $program['shift'] }}</span>
                         </div>
                     </div>
 
@@ -202,7 +202,7 @@
                                 @foreach($program['resolved_related'] as $relProg)
                                     <div class="p-4 rounded-2xl border border-border-default bg-surface hover:border-brand-300 hover:shadow-2xs transition-smooth flex flex-col justify-between">
                                         <div>
-                                            <span class="text-[10px] font-mono font-semibold uppercase px-1.5 py-0.2 rounded bg-brand-50 text-brand-700 border border-brand-200/60 mb-2 inline-block">
+                                            <span class="text-xs sm:text-[10px] font-mono font-semibold uppercase px-1.5 py-0.2 rounded bg-brand-50 text-brand-700 border border-brand-200/60 mb-2 inline-block">
                                                 {{ $relProg['degree_level'] }}
                                             </span>
                                             <h3 class="font-heading font-bold text-sm text-ink-950 hover:text-brand-600 transition-colors">
@@ -233,7 +233,7 @@
                 <aside class="space-y-6">
                     
                     <!-- Offering Campuses -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-4">
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-4">
                         <h3 class="font-heading font-bold text-sm text-ink-950 flex items-center gap-2">
                             <x-icon name="map-pin" class="w-4 h-4 text-brand-600" />
                             <span>Campuses Offering This Degree</span>
@@ -252,10 +252,10 @@
                                             {{ $camp['name'] }}
                                         </h4>
                                         @if($camp['is_main'])
-                                            <span class="text-[9px] font-mono font-semibold uppercase px-1 py-0.2 rounded bg-brand-50 text-brand-700">Main</span>
+                                            <span class="text-xs sm:text-[9px] font-mono font-semibold uppercase px-1 py-0.2 rounded bg-brand-50 text-brand-700">Main</span>
                                         @endif
                                     </div>
-                                    <p class="text-[11px] font-sans text-ink-500">
+                                    <p class="text-xs sm:text-[11px] font-sans text-ink-500">
                                         {{ $camp['city'] }}, {{ $camp['province'] }}
                                     </p>
                                     <a 
@@ -274,8 +274,8 @@
                     </div>
 
                     <!-- Council Accreditation Details -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-3">
-                        <span class="text-xs font-semibold text-ink-400 uppercase tracking-wider font-sans">Statutory Accreditation</span>
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-3">
+                        <span class="text-xs font-semibold text-ink-600 uppercase tracking-wider font-sans">Statutory Accreditation</span>
                         <div class="flex items-center gap-2">
                             <span class="px-2 py-0.5 rounded text-xs font-mono font-bold bg-success-50 text-success-700 border border-success-200/60">
                                 {{ $program['council'] }}
@@ -288,18 +288,18 @@
                     </div>
 
                     <!-- Parent University Card -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-4">
-                        <span class="text-xs font-semibold text-ink-400 uppercase tracking-wider font-sans">Institution Profile</span>
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-4">
+                        <span class="text-xs font-semibold text-ink-600 uppercase tracking-wider font-sans">Institution Profile</span>
                         <div class="flex items-center gap-3">
                             <div class="w-12 h-12 rounded-xl bg-surface-subtle border border-border-default flex items-center justify-center font-heading font-extrabold text-base text-brand-700 shrink-0">
-                                {{ $program['university']['acronym'] ?? 'HEC' }}
+                                {{ $program['university']['acronym'] ?? 'UG' }}
                             </div>
                             <div>
                                 <h4 class="font-heading font-bold text-sm text-ink-950">
                                     {{ $program['university_name'] }}
                                 </h4>
                                 <span class="text-xs font-sans text-ink-500">
-                                    {{ $program['university']['city'] ?? 'Pakistan' }} • {{ $program['university']['hec_ranking'] ?? 'Chartered' }}
+                                    {{ $program['university']['city'] ?? 'Pakistan' }}
                                 </span>
                             </div>
                         </div>

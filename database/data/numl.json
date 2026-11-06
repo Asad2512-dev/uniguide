@@ -1,0 +1,361 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-11-05T00:54:40+05:00",
+  "source_url": "https://www.hec.gov.pk/english/universities/pages/recognised.aspx",
+  "content_sha256": "47ff4b25bfd6aa90b0e1f1af49ad7ec996e00e3a0476c8e7245e81c4cacc2125",
+  "university": {
+    "name": "National University of Modern Languages",
+    "city": "Islamabad",
+    "province": "Islamabad Capital Territory",
+    "sector": "Public",
+    "charteredby": "Government of Pakistan",
+    "discipline": "General",
+    "source_url": "https://www.hec.gov.pk/english/universities/Pages/Islamabad/National-University-of-Modern-Languages.aspx",
+    "slug": "numl",
+    "acronym": "NUML",
+    "website": "https://www.numl.edu.pk/",
+    "address": "H-9/4 Islamabad, Pakistan",
+    "phone": "+92-51-9265100",
+    "email": "info@numl.edu.pk",
+    "verification_status": "verified",
+    "institution_status": "officially_listed",
+    "campus_coverage": "directory_verified_contacts_incomplete"
+  },
+  "campuses": [
+    {
+      "source_id": "numl:islamabad",
+      "slug": "islamabad-campus",
+      "name": "NUML Islamabad Main Campus",
+      "city": "Islamabad",
+      "province": "Islamabad Capital Territory",
+      "campus_type": "main",
+      "website": "https://www.numl.edu.pk/",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/contact"
+      ],
+      "review_notes": [],
+      "address": "H-9/4 Islamabad, Pakistan",
+      "phone": "+92-51-9265100",
+      "email": "info@numl.edu.pk"
+    },
+    {
+      "source_id": "numl:rawalpindi",
+      "slug": "rawalpindi-campus",
+      "name": "NUML Rawalpindi Campus",
+      "city": "Rawalpindi",
+      "province": "Punjab",
+      "campus_type": "regional",
+      "website": "https://numlrwp.numl.edu.pk",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "unknown",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/"
+      ],
+      "review_notes": [
+        "Official campus URL unreachable during research; address, contact details and current operating status require review."
+      ]
+    },
+    {
+      "source_id": "numl:lahore",
+      "slug": "lahore-campus",
+      "name": "NUML Lahore Campus",
+      "city": "Lahore",
+      "province": "Punjab",
+      "campus_type": "regional",
+      "website": "https://www.numl.edu.pk/lahore",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/lahore/campus/contacts"
+      ],
+      "review_notes": [],
+      "published_contact_excerpt": [
+        "Lahore Campus",
+        "NUML Lahore Campus 2nd Floor Aiwan e Iqbal Egerton Road Lahore",
+        "Tel: +92-42-99204588",
+        "Email:",
+        "info-lhr@numl.edu.pk",
+        "Fax: +92-42-36316856",
+        "Management Sciences",
+        "Aiwan e Iqbal Egerton Road Lahore",
+        "Tel: 042-36316986"
+      ],
+      "address": "NUML Lahore Campus 2nd Floor Aiwan e Iqbal Egerton Road Lahore",
+      "phone": "+92-42-99204588",
+      "email": "info-lhr@numl.edu.pk"
+    },
+    {
+      "source_id": "numl:faisalabad",
+      "slug": "faisalabad-campus",
+      "name": "NUML Faisalabad Campus",
+      "city": "Faisalabad",
+      "province": "Punjab",
+      "campus_type": "regional",
+      "website": "https://www.numl.edu.pk/faisalabad",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/faisalabad/campus/contacts"
+      ],
+      "review_notes": [
+        "Campus contact block publishes a named staff email; retained as published, not inferred as a generic admissions mailbox."
+      ],
+      "published_contact_excerpt": [
+        "Faisalabad Campus",
+        "National University of Modern Languages Faisalabad Campus 5 Km Main Jaranwala Road, near Police Station Saddar, Faisalabad",
+        "Tel: 0304-1138532",
+        "Email:",
+        "shraza@numl.edu.pk",
+        "Department of Management Sciences",
+        "National University of Modern Languages Faisalabad Campus 5 Km Main Jaranwala Road, near Police Station Saddar, Faisalabad",
+        "Tel: 03006091640",
+        "Email:"
+      ],
+      "address": "National University of Modern Languages Faisalabad Campus 5 Km Main Jaranwala Road, near Police Station Saddar, Faisalabad",
+      "phone": "0304-1138532",
+      "email": "shraza@numl.edu.pk"
+    },
+    {
+      "source_id": "numl:multan",
+      "slug": "multan-campus",
+      "name": "NUML Multan Campus",
+      "city": "Multan",
+      "province": "Punjab",
+      "campus_type": "regional",
+      "website": "https://www.numl.edu.pk/multan",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/multan/campus/contacts"
+      ],
+      "review_notes": [],
+      "published_contact_excerpt": [
+        "Multan Campus",
+        "Opposite side of BZU Multan, location on map : https://maps.app.goo.gl/fzJYjVyir8kQgsCE7",
+        "Tel: 061-2123067",
+        "Email:",
+        "info-mtn@numl.edu.pk",
+        "Fax: 061-2123067",
+        "Department of English",
+        "HoD English Office, Room No. 23, Ground Floor,",
+        "Tel: 061-9330460"
+      ],
+      "address": "Opposite side of BZU Multan, location on map : https://maps.app.goo.gl/fzJYjVyir8kQgsCE7",
+      "phone": "061-2123067",
+      "email": "info-mtn@numl.edu.pk"
+    },
+    {
+      "source_id": "numl:peshawar",
+      "slug": "peshawar-campus",
+      "name": "NUML Peshawar Campus",
+      "city": "Peshawar",
+      "province": "Khyber Pakhtunkhwa",
+      "campus_type": "regional",
+      "website": "https://www.numl.edu.pk/peshawar",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/peshawar/campus/contacts"
+      ],
+      "review_notes": [],
+      "published_contact_excerpt": [
+        "Peshawar Campus",
+        "University Road, Canal Town, Near BISE Peshawar Khyber Pakhtunkhwa",
+        "Tel: 091-9218380",
+        "Email:",
+        "info-psh@numl.edu.pk",
+        "Fax: 091-9218381",
+        "Department of Computer Science",
+        "NUML Peshawar Campus",
+        "Tel: 091-9218380-81"
+      ],
+      "address": "University Road, Canal Town, Near BISE Peshawar Khyber Pakhtunkhwa",
+      "phone": "091-9218380",
+      "email": "info-psh@numl.edu.pk"
+    },
+    {
+      "source_id": "numl:karachi",
+      "slug": "karachi-campus",
+      "name": "NUML Karachi Campus",
+      "city": "Karachi",
+      "province": "Sindh",
+      "campus_type": "regional",
+      "website": "https://www.numl.edu.pk/karachi",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/karachi/campus/contacts"
+      ],
+      "review_notes": [],
+      "published_contact_excerpt": [
+        "Karachi Campus",
+        "ST # 3, Block K, North Nazimabad, Karachi.",
+        "Tel: 021-36721027-31",
+        "Email:",
+        "info-khi@numl.edu.pk",
+        "Fax: 36721030",
+        "English (UGS)",
+        "ST-3, Block K, North Nazimabad, Karachi",
+        "Tel: 021-36721027"
+      ],
+      "address": "ST # 3, Block K, North Nazimabad, Karachi.",
+      "phone": "021-36721027-31",
+      "email": "info-khi@numl.edu.pk"
+    },
+    {
+      "source_id": "numl:hyderabad",
+      "slug": "hyderabad-campus",
+      "name": "NUML Hyderabad Campus",
+      "city": "Hyderabad",
+      "province": "Sindh",
+      "campus_type": "regional",
+      "website": "https://www.numl.edu.pk/hyderabad",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/hyderabad/campus/contacts"
+      ],
+      "review_notes": [],
+      "published_contact_excerpt": [
+        "Hyderabad Campus",
+        "National University of Modern Languages Hyderabad Campus Unit No: 09 Latifabad, Hyderabad",
+        "Tel: 022-3820490",
+        "Email:",
+        "rd-hyd@numl.edu.pk",
+        "Department of Management Sciences",
+        "National University of Modern Languages(NUML) Hyderabad Campus",
+        "Tel: 022 3820489",
+        "Email:"
+      ],
+      "address": "National University of Modern Languages Hyderabad Campus Unit No: 09 Latifabad, Hyderabad",
+      "phone": "022-3820490",
+      "email": "rd-hyd@numl.edu.pk"
+    },
+    {
+      "source_id": "numl:quetta",
+      "slug": "quetta-campus",
+      "name": "NUML Quetta Campus",
+      "city": "Quetta",
+      "province": "Balochistan",
+      "campus_type": "regional",
+      "website": "https://www.numl.edu.pk/quetta",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/quetta/campus/contacts"
+      ],
+      "review_notes": [],
+      "published_contact_excerpt": [
+        "Quetta Campus",
+        "NUML Quetta, Koila Phatak in front of BPSC Office, Airport Road Chowk Quetta",
+        "Tel: 081-2870212",
+        "Email:",
+        "info-qta@numl.edu.pk",
+        "Fax: 081-2870212",
+        "Department of English",
+        "No Record Found",
+        "Management Sciences"
+      ],
+      "address": "NUML Quetta, Koila Phatak in front of BPSC Office, Airport Road Chowk Quetta",
+      "phone": "081-2870212",
+      "email": "info-qta@numl.edu.pk"
+    },
+    {
+      "source_id": "numl:mirpurajk",
+      "slug": "mirpurajk-campus",
+      "name": "NUML Mirpur Campus",
+      "city": "Mirpur",
+      "province": "Azad Jammu & Kashmir",
+      "campus_type": "regional",
+      "website": "https://www.numl.edu.pk/mirpurajk",
+      "recognition_status": "hec_listed",
+      "verification_status": "verified",
+      "operational_status": "officially_listed",
+      "sources": [
+        "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx",
+        "https://www.numl.edu.pk/",
+        "https://www.numl.edu.pk/mirpurajk/campus/contacts"
+      ],
+      "review_notes": [
+        "Street address appears in departmental contact blocks on the same campus contact page. HEC institution profile omits Mirpur; HEC dedicated campus list includes Mirpur-AJ&K."
+      ],
+      "published_contact_excerpt": [
+        "MirpurAJK Campus",
+        "NUML, Regional Campus (Mirpur)",
+        "Tel: (05827)940512-4",
+        "Email:",
+        "rd-mpr@numl.edu.pk",
+        "Department of English",
+        "No Record Found",
+        "Department of Management Sciences",
+        "Sector A, New City Mirpur, Azad Kashmir-10250"
+      ],
+      "address": "Sector A, New City Mirpur, Azad Kashmir-10250",
+      "phone": "(05827)940512-4",
+      "email": "rd-mpr@numl.edu.pk"
+    }
+  ],
+  "sources": {
+    "https://www.numl.edu.pk/": {
+      "content_sha256": "e4307089cbd1f3fe85d0bcacd849cee02efb29063f235b45f0513436bd71621e"
+    },
+    "https://www.numl.edu.pk/contact": {
+      "content_sha256": "57266871aa0bf1a6f40a99851a3710ee97cef5803bfa2ee4b3ca2e3b5bf3ee6f"
+    },
+    "https://www.hec.gov.pk/english/universities/Pages/DAIs/HEC-recognized-Campuses.aspx": {
+      "content_sha256": "6d7a3007611ff5b340453099cb6fad6a93e9415a17ad9b9c6147a45fb11dc86d"
+    },
+    "https://www.numl.edu.pk/lahore/campus/contacts": {
+      "content_sha256": "c1d0113f2c02af6f3b4def446e60b87b215e591e18185da513fed35a9657d07d"
+    },
+    "https://www.numl.edu.pk/faisalabad/campus/contacts": {
+      "content_sha256": "8dddd52d46367a1cde43588cd36c664631fc4f6b54e1d9948f8c95896fb2df42"
+    },
+    "https://www.numl.edu.pk/multan/campus/contacts": {
+      "content_sha256": "537edde09bc22d0bd78bd899230311d2dc8896eac60973b22ac4ceceac0e8cce"
+    },
+    "https://www.numl.edu.pk/hyderabad/campus/contacts": {
+      "content_sha256": "e597913470f0c91462bbb69f8bdaf08f3d56375264bdf9aa1328a411b51c7c38"
+    },
+    "https://www.numl.edu.pk/quetta/campus/contacts": {
+      "content_sha256": "d1bb5d4a5125050c8eb3ca5fee3af6f750abc358113c2cc6a12ac91734aa67ee"
+    },
+    "https://www.numl.edu.pk/peshawar/campus/contacts": {
+      "content_sha256": "a04fba543e489807fb3802e4c1e0eaab6784df7a8c048bd9e38c4a9f3361af6d"
+    },
+    "https://www.numl.edu.pk/karachi/campus/contacts": {
+      "content_sha256": "2d016e4902d9dedc157630ef1b55daf4e38e4a1e2ec742125a00b78d6b25d48c"
+    },
+    "https://www.numl.edu.pk/mirpurajk/campus/contacts": {
+      "content_sha256": "f460c92b18a941711e66051c7232f4e85724a22ea4ca4a0abd1b20f8f90ff825"
+    }
+  }
+}

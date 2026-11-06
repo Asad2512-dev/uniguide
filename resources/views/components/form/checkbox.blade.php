@@ -32,7 +32,7 @@
                 <span class="font-medium text-ink-900 group-hover:text-brand-700 transition-colors">{{ $label }}</span>
             @endif
             @if($description)
-                <p class="text-ink-500 text-[11px] mt-0.5">{{ $description }}</p>
+                <p class="text-ink-500 text-xs sm:text-[11px] mt-0.5">{{ $description }}</p>
             @endif
         </div>
     @endif

@@ -6,7 +6,7 @@
         
         <!-- Header Banner -->
         <header class="bg-surface border-b border-border-default/80">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -33,7 +33,7 @@
                                 </span>
                             @else
                                 <span class="px-2 py-0.5 rounded-full text-xs font-semibold bg-surface-subtle text-ink-600 border border-border-default font-sans">
-                                    Regional Constituent Campus
+                                    {{ ucfirst(str_replace('_', ' ', $campus['campus_type'] ?? 'unknown')) }} Campus
                                 </span>
                             @endif
                         </div>
@@ -64,8 +64,17 @@
             </div>
         </header>
 
+        @if(!empty($campus['registry_key']))
+            <div class="landing-container mx-auto mt-6 px-4 sm:px-6 lg:px-8 text-sm text-ink-700">
+                Campus identity: {{ str_replace('_', ' ', $campus['verification_status']) }} ·
+                Recognition evidence: {{ str_replace('_', ' ', $campus['recognition_status']) }} ·
+                Operating status: {{ str_replace('_', ' ', $campus['operational_status']) }}.
+                Unpublished contact details remain unverified.
+            </div>
+        @endif
+
         <!-- Main Body -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <!-- Left 2 Cols: Campus Facilities, Hostels, Transport, Programs -->
@@ -137,7 +146,7 @@
                                 <div class="p-4 rounded-xl border border-border-default hover:border-brand-300 hover:shadow-2xs transition-smooth flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                                     <div>
                                         <div class="flex items-center gap-2 mb-1">
-                                            <span class="text-[10px] font-mono font-semibold uppercase px-1.5 py-0.2 rounded bg-brand-50 text-brand-700 border border-brand-200/60">
+                                            <span class="text-xs sm:text-[10px] font-mono font-semibold uppercase px-1.5 py-0.2 rounded bg-brand-50 text-brand-700 border border-brand-200/60">
                                                 {{ $prog['degree_level'] }}
                                             </span>
                                             <h3 class="font-heading font-bold text-sm text-ink-950 hover:text-brand-600 transition-colors">
@@ -170,7 +179,7 @@
                 <aside class="space-y-6">
                     
                     <!-- Contact Box -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-4">
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-4">
                         <h3 class="font-heading font-bold text-sm text-ink-950 flex items-center gap-2">
                             <x-icon name="phone-call" class="w-4 h-4 text-brand-600" />
                             <span>Campus Administrative Office</span>
@@ -178,17 +187,17 @@
 
                         <div class="space-y-3 text-xs font-sans text-ink-600">
                             <div>
-                                <span class="block text-[11px] font-medium text-ink-400 mb-0.5">Physical Campus Address</span>
+                                <span class="block text-xs sm:text-[11px] font-medium text-ink-600 mb-0.5">Physical Campus Address</span>
                                 <span class="text-ink-800">{{ $campus['address'] }}</span>
                             </div>
                             <div>
-                                <span class="block text-[11px] font-medium text-ink-400 mb-0.5">Campus Direct Inquiries</span>
+                                <span class="block text-xs sm:text-[11px] font-medium text-ink-600 mb-0.5">Campus Direct Inquiries</span>
                                 <a href="tel:{{ $campus['phone'] }}" class="font-mono text-brand-600 hover:underline">
                                     {{ $campus['phone'] }}
                                 </a>
                             </div>
                             <div>
-                                <span class="block text-[11px] font-medium text-ink-400 mb-0.5">Campus Admissions Desk Email</span>
+                                <span class="block text-xs sm:text-[11px] font-medium text-ink-600 mb-0.5">Campus Admissions Desk Email</span>
                                 <a href="mailto:{{ $campus['email'] }}" class="text-brand-600 hover:underline">
                                     {{ $campus['email'] }}
                                 </a>
@@ -197,8 +206,8 @@
                     </div>
 
                     <!-- Parent Institution Summary -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-3">
-                        <span class="text-xs font-semibold text-ink-400 uppercase tracking-wider font-sans">Parent Institution</span>
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-3">
+                        <span class="text-xs font-semibold text-ink-600 uppercase tracking-wider font-sans">Parent Institution</span>
                         <h3 class="font-heading font-bold text-base text-ink-950">
                             {{ $university['name'] }}
                         </h3>

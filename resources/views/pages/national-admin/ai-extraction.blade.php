@@ -8,7 +8,7 @@
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'AI Extraction Review']
                 ]"
             />
@@ -29,16 +29,16 @@
 
     <div x-data="{ editingId: null, editedValue: '' }" class="space-y-6">
         @foreach($extractions as $ext)
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card hover:border-brand-200 transition-all">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card hover:border-brand-200 transition-all">
                 <!-- Header Strip -->
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-border-subtle">
                     <div>
                         <div class="flex items-center gap-2 mb-1">
                             <span class="font-heading font-extrabold text-sm text-brand-700">{{ $ext['university'] }}</span>
-                            <span class="text-ink-400">•</span>
+                            <span class="text-ink-600">•</span>
                             <span class="text-xs font-medium text-ink-600">{{ $ext['entity'] }}</span>
-                            <span class="text-ink-400">•</span>
-                            <span class="text-[11px] font-mono text-ink-400">{{ $ext['timestamp'] }}</span>
+                            <span class="text-ink-600">•</span>
+                            <span class="text-xs sm:text-[11px] font-mono text-ink-600">{{ $ext['timestamp'] }}</span>
                         </div>
                         <h3 class="font-heading font-bold text-base text-ink-950">{{ $ext['field_name'] }}</h3>
                     </div>
@@ -46,7 +46,7 @@
                     <!-- Confidence Badge & Status -->
                     <div class="flex items-center gap-3">
                         <div class="text-right">
-                            <span class="text-[10px] font-mono uppercase text-ink-400 block">AI Confidence</span>
+                            <span class="text-xs sm:text-[10px] font-mono uppercase text-ink-600 block">AI Confidence</span>
                             <span class="font-mono font-extrabold text-sm {{ $ext['confidence'] >= 95 ? 'text-emerald-700' : 'text-amber-700' }}">
                                 {{ $ext['confidence'] }}%
                             </span>
@@ -89,13 +89,13 @@
                 <!-- Before & After Diff Box -->
                 <div class="py-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div class="p-3.5 rounded-xl bg-surface-subtle border border-border-subtle">
-                        <span class="text-[10px] font-mono uppercase text-ink-400 block mb-1">Previous Published Value</span>
+                        <span class="text-xs sm:text-[10px] font-mono uppercase text-ink-600 block mb-1">Previous Published Value</span>
                         <span class="font-mono text-xs text-rose-700 font-semibold line-through block">
                             {{ $ext['before_value'] }}
                         </span>
                     </div>
                     <div class="p-3.5 rounded-xl bg-emerald-50/50 border border-emerald-200/80">
-                        <span class="text-[10px] font-mono uppercase text-emerald-800 block mb-1">Extracted Value (Proposed)</span>
+                        <span class="text-xs sm:text-[10px] font-mono uppercase text-emerald-800 block mb-1">Extracted Value (Proposed)</span>
                         <span class="font-mono text-xs text-emerald-900 font-bold block">
                             {{ $ext['after_value'] }}
                         </span>
@@ -105,13 +105,13 @@
                 <!-- Source Document Snippet -->
                 <div class="pt-3 border-t border-border-subtle flex flex-col md:flex-row md:items-center justify-between gap-3 text-xs">
                     <div class="space-y-1">
-                        <span class="text-[11px] font-mono text-ink-500">Source: {{ $ext['source_document'] }}</span>
-                        <p class="font-mono text-[11px] text-ink-700 italic bg-canvas p-2.5 rounded-lg border border-border-subtle">
+                        <span class="text-xs sm:text-[11px] font-mono text-ink-500">Source: {{ $ext['source_document'] }}</span>
+                        <p class="font-mono text-xs sm:text-[11px] text-ink-700 italic bg-canvas p-2.5 rounded-lg border border-border-subtle">
                             "{{ $ext['extracted_snippet'] }}"
                         </p>
                     </div>
                     <div class="shrink-0 text-right">
-                        <span class="text-[11px] font-medium {{ $ext['has_warning'] ? 'text-amber-700 font-semibold' : 'text-emerald-700' }}">
+                        <span class="text-xs sm:text-[11px] font-medium {{ $ext['has_warning'] ? 'text-amber-700 font-semibold' : 'text-emerald-700' }}">
                             {{ $ext['validation_status'] }}
                         </span>
                     </div>

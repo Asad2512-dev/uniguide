@@ -92,9 +92,9 @@
         <!-- Programs Table Card -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse" aria-label="Academic Degree Programs Catalog">
+                <table data-mobile-table class="w-full text-left border-collapse" aria-label="Academic Degree Programs Catalog">
                     <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                        <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                             <th scope="col" class="py-3 px-4">Discipline & Code</th>
                             <th scope="col" class="py-3 px-4">Department / School</th>
                             <th scope="col" class="py-3 px-4">Duration & Credits</th>
@@ -108,26 +108,26 @@
                             <tr class="hover:bg-surface-subtle/80 transition-colors">
                                 <td class="py-3.5 px-4">
                                     <span class="font-bold text-ink-950 font-heading block" x-text="p.name"></span>
-                                    <span class="text-[11px] font-mono text-ink-500" x-text="p.code"></span>
+                                    <span class="text-xs sm:text-[11px] font-mono text-ink-500" x-text="p.code"></span>
                                 </td>
 
                                 <td class="py-3.5 px-4">
                                     <span class="font-semibold text-ink-800" x-text="p.department"></span>
-                                    <span class="text-[11px] text-ink-400 block" x-text="p.campus"></span>
+                                    <span class="text-xs sm:text-[11px] text-ink-600 block" x-text="p.campus"></span>
                                 </td>
 
                                 <td class="py-3.5 px-4">
                                     <span class="text-ink-800 font-sans" x-text="p.duration"></span>
-                                    <span class="text-[10px] font-mono text-ink-500 block" x-text="p.credit_hours + ' Credit Hours'"></span>
+                                    <span class="text-xs sm:text-[10px] font-mono text-ink-500 block" x-text="p.credit_hours + ' Credit Hours'"></span>
                                 </td>
 
                                 <td class="py-3.5 px-4">
-                                    <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200" x-text="p.accreditation"></span>
+                                    <span class="px-2 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200" x-text="p.accreditation"></span>
                                 </td>
 
                                 <td class="py-3.5 px-4">
                                     <span class="font-mono font-bold text-ink-950" x-text="p.tuition_semester"></span>
-                                    <span class="text-[10px] text-brand-600 block" x-text="p.intake_seats + ' Approved Seats'"></span>
+                                    <span class="text-xs sm:text-[10px] text-brand-600 block" x-text="p.intake_seats + ' Approved Seats'"></span>
                                 </td>
 
                                 <td class="py-3.5 px-4 text-right">
@@ -149,6 +149,10 @@
         <!-- Slide-over Detail Drawer -->
         <div 
             x-show="drawerOpen" 
+            x-modal-focus="drawerOpen"
+            role="dialog" aria-modal="true" aria-label="Academic program details"
+            @keydown.escape.window="drawerOpen = false"
+
             x-cloak 
             class="fixed inset-0 z-50 overflow-hidden bg-ink-950/40 backdrop-blur-xs flex justify-end"
         >
@@ -166,10 +170,10 @@
                 <div class="space-y-6">
                     <div class="flex items-center justify-between pb-4 border-b border-border-subtle">
                         <div>
-                            <span class="text-[10px] font-mono uppercase text-brand-700 font-bold bg-brand-50 px-2 py-0.5 rounded" x-text="selectedProgram ? selectedProgram.code : ''"></span>
+                            <span class="text-xs sm:text-[10px] font-mono uppercase text-brand-700 font-bold bg-brand-50 px-2 py-0.5 rounded" x-text="selectedProgram ? selectedProgram.code : ''"></span>
                             <h3 class="font-heading font-bold text-xl text-ink-950 mt-1" x-text="selectedProgram ? selectedProgram.name : ''"></h3>
                         </div>
-                        <button type="button" @click="drawerOpen = false" class="text-ink-400 hover:text-ink-700 text-base">✕</button>
+                        <button type="button" @click="drawerOpen = false" aria-label="Close academic program details" class="text-ink-400 hover:text-ink-700 text-base">✕</button>
                     </div>
 
                     <form :action="'{{ route('uni_admin.programs') }}/' + (selectedProgram ? selectedProgram.id : '')" method="POST" class="space-y-4">
@@ -210,12 +214,12 @@
 
                         <!-- Read-only Statutory Policy Note -->
                         <div class="p-4 rounded-xl bg-surface-subtle border border-border-default space-y-1 text-xs">
-                            <span class="text-[10px] font-mono uppercase text-ink-400 font-bold block">Eligibility Baseline</span>
+                            <span class="text-xs sm:text-[10px] font-mono uppercase text-ink-600 font-bold block">Eligibility Baseline</span>
                             <div class="text-ink-800" x-text="selectedProgram ? selectedProgram.min_eligibility : ''"></div>
                         </div>
 
                         <div class="pt-4 border-t border-border-subtle flex items-center justify-end gap-2">
-                            <button type="button" @click="drawerOpen = false" class="px-4 py-2 rounded-xl border border-border-default text-xs font-semibold text-ink-700">Cancel</button>
+                            <button type="button" @click="drawerOpen = false" aria-label="Close academic program details" class="px-4 py-2 rounded-xl border border-border-default text-xs font-semibold text-ink-700">Cancel</button>
                             <button type="submit" class="px-5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold">Save Program Updates</button>
                         </div>
                     </form>
@@ -226,13 +230,17 @@
         <!-- Add Program Modal -->
         <div 
             x-show="addModalOpen" 
+            x-modal-focus="addModalOpen"
+            role="dialog" aria-modal="true" aria-label="Register academic degree"
+            @keydown.escape.window="addModalOpen = false"
+
             x-cloak 
             class="fixed inset-0 z-50 overflow-y-auto bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
-            <div class="bg-surface rounded-2xl border border-border-default p-6 max-w-xl w-full shadow-elevated space-y-5" @click.outside="addModalOpen = false">
+            <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 max-w-xl max-h-[calc(100dvh-2rem)] overflow-y-auto w-full shadow-elevated space-y-5" @click.outside="addModalOpen = false">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Register New Academic Degree</h3>
-                    <button type="button" @click="addModalOpen = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>
+                    <button type="button" @click="addModalOpen = false" aria-label="Close register academic degree" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>
                 </div>
 
                 <form action="{{ route('uni_admin.programs.store') }}" method="POST" class="space-y-4">
@@ -295,7 +303,7 @@
                     </div>
 
                     <div class="pt-3 border-t border-border-subtle flex items-center justify-end gap-2">
-                        <button type="button" @click="addModalOpen = false" class="px-4 py-2 rounded-xl border border-border-default text-xs font-semibold text-ink-700">Cancel</button>
+                        <button type="button" @click="addModalOpen = false" aria-label="Close register academic degree" class="px-4 py-2 rounded-xl border border-border-default text-xs font-semibold text-ink-700">Cancel</button>
                         <button type="submit" class="px-5 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold">Publish Program</button>
                     </div>
                 </form>

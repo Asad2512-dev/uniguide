@@ -14,8 +14,8 @@
     @endif
 
     <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div class="space-y-1">
-            <div class="flex items-center gap-2.5">
+        <div class="min-w-0 space-y-1">
+            <div class="flex flex-wrap items-center gap-2.5">
                 <h1 class="text-2xl md:text-3xl font-heading font-bold text-ink-950 tracking-tight">
                     {{ $title }}
                 </h1>
@@ -34,7 +34,7 @@
         </div>
 
         @if(isset($actions))
-            <div class="flex items-center gap-2.5 shrink-0">
+            <div class="flex flex-wrap items-center gap-2.5 shrink-0">
                 {{ $actions }}
             </div>
         @endif

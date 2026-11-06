@@ -18,12 +18,12 @@
 >
     <span>{{ $label }}</span>
     @if($count !== null)
-        <span class="inline-flex items-center justify-center px-1.5 py-0.2 rounded-full text-[10px] {{ $active ? 'bg-brand-600 text-white font-bold' : 'bg-ink-100 text-ink-600' }}">
+        <span class="inline-flex items-center justify-center px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] {{ $active ? 'bg-brand-600 text-white font-bold' : 'bg-ink-100 text-ink-600' }}">
             {{ $count }}
         </span>
     @endif
     @if($removable)
-        <span class="text-ink-400 hover:text-ink-700 -mr-0.5" aria-hidden="true">
+        <span class="text-ink-600 hover:text-ink-700 -mr-0.5" aria-hidden="true">
             <x-icon name="x" class="w-3 h-3" />
         </span>
     @endif

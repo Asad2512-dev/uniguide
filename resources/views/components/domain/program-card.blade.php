@@ -14,7 +14,7 @@
     <div>
         <div class="flex items-start justify-between gap-3 mb-2.5">
             <div>
-                <span class="inline-flex items-center text-[11px] font-semibold tracking-wider uppercase text-brand-700 bg-brand-50 px-2 py-0.5 rounded border border-brand-200/60 mb-1.5 font-sans">
+                <span class="inline-flex items-center text-xs sm:text-[11px] font-semibold tracking-wider uppercase text-brand-700 bg-brand-50 px-2 py-0.5 rounded border border-brand-200/60 mb-1.5 font-sans">
                     {{ $degreeLevel }}
                 </span>
                 <h4 class="font-heading font-bold text-base text-ink-950 hover:text-brand-600 transition-colors">
@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <div class="flex items-center gap-1.5 text-[11px] text-ink-500 font-sans mt-2">
+        <div class="flex items-center gap-1.5 text-xs sm:text-[11px] text-ink-500 font-sans mt-2">
             <x-icon name="shield-check" class="w-3.5 h-3.5 text-success-600 shrink-0" />
             <span class="truncate">{{ $accreditation }}</span>
         </div>

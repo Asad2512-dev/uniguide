@@ -16,7 +16,7 @@
         <!-- Hero & Intelligent Prompt Composer Section -->
         <section class="relative border-b border-border-default/80 bg-gradient-to-b from-surface via-surface to-brand-50/20 overflow-hidden pt-10 pb-16 md:pt-14 md:pb-20">
             <!-- Subtle Radial Gradient Background Accents -->
-            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 pointer-events-none opacity-40">
+            <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-none h-96 pointer-events-none opacity-40">
                 <div class="absolute -top-24 left-1/4 w-96 h-96 bg-brand-200/40 rounded-full blur-3xl"></div>
                 <div class="absolute -top-20 right-1/4 w-80 h-80 bg-indigo-200/30 rounded-full blur-3xl"></div>
             </div>
@@ -35,7 +35,7 @@
                     <x-icon name="sparkles" class="w-3.5 h-3.5 text-brand-600" />
                     <span>UniGuide National AI Admission Counselor</span>
                     <span class="text-ink-300">•</span>
-                    <span class="font-mono text-[11px] text-brand-800 font-bold">Fall 2026 Calibrated</span>
+                    <span class="font-mono text-xs sm:text-[11px] text-brand-800 font-bold">Fall 2026 Calibrated</span>
                 </div>
 
                 <h1 class="font-heading font-bold text-3xl sm:text-4xl md:text-5xl text-ink-950 tracking-tight leading-tight mb-4">
@@ -46,7 +46,7 @@
                 </h1>
 
                 <p class="text-base sm:text-lg text-ink-600 font-sans max-w-2xl mx-auto mb-8 leading-relaxed">
-                    Ask anything about Pakistani university merit formulas, closing cutoffs, tuition fees, entry-test weightages, and fully-funded HEC scholarships.
+                    Ask anything about Pakistani university merit formulas, closing cutoffs, tuition fees, entry-test weightages, and fully-funded scholarships.
                 </p>
 
                 <!-- Large Intelligent Prompt Composer Card -->
@@ -70,12 +70,12 @@
                             <!-- Trust Micro-badge -->
                             <div class="flex items-center gap-2 text-xs text-ink-500 font-sans">
                                 <x-icon name="shield-check" class="w-4 h-4 text-success-600 shrink-0" />
-                                <span>Calibrated against HEC Act, PEC Level-II & NCEAC Category W records</span>
+                                <span>Calibrated against recorded university sources</span>
                             </div>
 
                             <!-- Actions & Submit -->
                             <div class="flex items-center justify-end gap-2">
-                                <span class="hidden sm:inline-block text-[11px] font-mono text-ink-400">⌘ + Enter to send</span>
+                                <span class="hidden sm:inline-block text-xs sm:text-[11px] font-mono text-ink-600">⌘ + Enter to send</span>
                                 <button 
                                     type="submit"
                                     :disabled="!promptInput.trim() || isSubmitting"
@@ -101,7 +101,7 @@
 
                 <!-- Quick Query Pills -->
                 <div class="flex flex-wrap items-center justify-center gap-2 text-xs">
-                    <span class="text-ink-400 font-medium">Try asking:</span>
+                    <span class="text-ink-600 font-medium">Try asking:</span>
                     <button 
                         type="button" 
                         @click="submitPrompt('How is NUST CS aggregate calculated with NET, FSc, and Matric?')"
@@ -118,10 +118,10 @@
                     </button>
                     <button 
                         type="button" 
-                        @click="submitPrompt('What are the eligibility criteria for HEC Need-Based Scholarships?')"
+                        @click="submitPrompt('What are the eligibility criteria for Need-Based Scholarships?')"
                         class="px-2.5 py-1 rounded-full bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
                     >
-                        HEC Need-Based Aid
+                        Need-Based Aid
                     </button>
                     <button 
                         type="button" 
@@ -135,7 +135,7 @@
         </section>
 
         <!-- Main Content Grid -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-10">
             <!-- Guided Counseling Banner (High-Impact Recommendation Flow) -->
             <div class="mb-12 rounded-2xl border border-brand-200/80 bg-gradient-to-r from-brand-900 via-ink-950 to-brand-950 text-white p-6 sm:p-8 shadow-card relative overflow-hidden">
                 <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
@@ -165,10 +165,9 @@
                             Start Guided Assessment
                         </x-ui.button>
                         <x-ui.button 
-                            variant="outline" 
+                            variant="outline-white" 
                             size="lg" 
                             :href="route('counselor.search')" 
-                            class="border-white/20 text-white hover:bg-white/10"
                         >
                             Natural Language Search
                         </x-ui.button>
@@ -196,7 +195,7 @@
                                     <div class="w-10 h-10 rounded-xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-700 group-hover:scale-105 group-hover:bg-brand-600 group-hover:text-white transition-all">
                                         <x-icon :name="$action['icon']" class="w-5 h-5" />
                                     </div>
-                                    <span class="text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full bg-surface-subtle border border-border-default text-ink-600">
+                                    <span class="text-xs sm:text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full bg-surface-subtle border border-border-default text-ink-600">
                                         {{ $action['badge'] }}
                                     </span>
                                 </div>
@@ -276,7 +275,7 @@
                     <div class="space-y-3">
                         @forelse($recentConversations as $conv)
                             <div class="p-3.5 rounded-xl border border-border-default bg-surface hover:border-brand-200 hover:shadow-2xs transition-all">
-                                <div class="flex items-center justify-between text-[11px] text-ink-400 font-sans mb-1.5">
+                                <div class="flex items-center justify-between text-xs sm:text-[11px] text-ink-400 font-sans mb-1.5">
                                     <span class="font-semibold text-brand-700 bg-brand-50 px-2 py-0.5 rounded">
                                         {{ $conv['topic_label'] ?? 'Counseling' }}
                                     </span>
@@ -285,11 +284,11 @@
                                 <h4 class="font-heading font-bold text-xs text-ink-900 line-clamp-1 mb-1">
                                     {{ $conv['title'] }}
                                 </h4>
-                                <p class="text-[11px] text-ink-500 font-sans line-clamp-2 mb-3">
+                                <p class="text-xs sm:text-[11px] text-ink-500 font-sans line-clamp-2 mb-3">
                                     {{ $conv['summary'] ?? 'Session discussion and institutional evaluation.' }}
                                 </p>
                                 <div class="flex items-center justify-between pt-2 border-t border-border-subtle text-xs">
-                                    <span class="text-[11px] text-ink-400 font-mono">{{ $conv['message_count'] ?? 2 }} messages</span>
+                                    <span class="text-xs sm:text-[11px] text-ink-600 font-mono">{{ $conv['message_count'] ?? 2 }} messages</span>
                                     <a 
                                         href="{{ route('counselor.chat', $conv['id']) }}"
                                         class="inline-flex items-center gap-1 font-semibold text-brand-600 hover:text-brand-700"
@@ -300,7 +299,7 @@
                                 </div>
                             </div>
                         @empty
-                            <div class="p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
+                            <div class="p-4 sm:p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
                                 No previous conversations recorded.
                             </div>
                         @endforelse
@@ -315,7 +314,7 @@
                 </div>
             </div>
 
-            <!-- Transparency & AI Boundaries Card (HEC Trust Mandate) -->
+            <!-- Transparency & AI Boundaries Card (Trust Mandate) -->
             <div class="rounded-2xl border border-border-default bg-surface-subtle p-6 sm:p-8">
                 <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 mb-6 border-b border-border-default">
                     <div class="flex items-center gap-3">

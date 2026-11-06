@@ -28,7 +28,7 @@
                 @endif
             </label>
             @if(!$required)
-                <span class="text-[11px] text-ink-400 font-sans">Optional</span>
+                <span class="text-xs sm:text-[11px] text-ink-600 font-sans">Optional</span>
             @endif
         </div>
     @endif
@@ -49,7 +49,9 @@
             @if($required) required @endif
             @if($disabled) disabled @endif
             {{ $attributes->merge([
-                'class' => 'block w-full rounded-lg font-sans text-sm text-ink-900 bg-surface placeholder:text-ink-400 transition-smooth focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:bg-surface-subtle disabled:text-ink-400 disabled:cursor-not-allowed ' . 
+                'aria-invalid' => $hasError ? 'true' : null,
+                'aria-describedby' => $hasError ? $id . '-error' : ($helperText ? $id . '-help' : null),
+                'class' => 'block min-h-11 min-w-0 w-full rounded-lg font-sans text-sm text-ink-900 bg-surface placeholder:text-ink-400 transition-smooth focus:outline-none focus:ring-2 focus:ring-offset-0 disabled:bg-surface-subtle disabled:text-ink-400 disabled:cursor-not-allowed ' .
                 ($icon ? 'pl-9 ' : 'pl-3.5 ') . 
                 ($iconRight ? 'pr-9 ' : 'pr-3.5 ') . 
                 'py-2 border ' . 
@@ -68,12 +70,12 @@
     </div>
 
     @if($hasError)
-        <p class="mt-1.5 text-xs text-error-600 flex items-center gap-1 font-sans" role="alert">
+        <p id="{{ $id }}-error" class="mt-1.5 text-xs text-error-600 flex items-center gap-1 font-sans" role="alert">
             <x-icon name="alert-circle" class="w-3.5 h-3.5 shrink-0" />
             <span>{{ $error }}</span>
         </p>
     @elseif($helperText)
-        <p class="mt-1.5 text-xs text-ink-500 font-sans">
+        <p id="{{ $id }}-help" class="mt-1.5 text-xs text-ink-500 font-sans">
             {{ $helperText }}
         </p>
     @endif

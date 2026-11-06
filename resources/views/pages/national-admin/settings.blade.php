@@ -8,7 +8,7 @@
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'Settings & Audit Logs']
                 ]"
             />
@@ -29,7 +29,7 @@
 
     <div class="space-y-8">
         <!-- Settings Form -->
-        <form method="POST" action="{{ route('national_admin.settings.update') }}" class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
+        <form method="POST" action="{{ route('national_admin.settings.update') }}" class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
             @csrf
 
             <div class="flex items-center justify-between">
@@ -53,7 +53,7 @@
                         max="32"
                         class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3.5 py-2 text-ink-800 font-mono focus:outline-none focus:ring-2 focus:ring-brand-500"
                     />
-                    <span class="text-[10px] text-ink-400 mt-1 block">Parallel workers scraping institutional repositories simultaneously.</span>
+                    <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Parallel workers scraping institutional repositories simultaneously.</span>
                 </div>
 
                 <div>
@@ -66,7 +66,7 @@
                         max="5000"
                         class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3.5 py-2 text-ink-800 font-mono focus:outline-none focus:ring-2 focus:ring-brand-500"
                     />
-                    <span class="text-[10px] text-ink-400 mt-1 block">Maximum requests allowed per IP address before 429 throttling.</span>
+                    <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Maximum requests allowed per IP address before 429 throttling.</span>
                 </div>
             </div>
 
@@ -81,7 +81,7 @@
                     />
                     <div>
                         <span class="text-xs font-semibold text-ink-950">Require Federal Commissioner Signature on Tuition Hikes > 15%</span>
-                        <span class="text-[11px] text-ink-500 block">Enforces statutory approval before any fee increase exceeding national inflation benchmarks is displayed.</span>
+                        <span class="text-xs sm:text-[11px] text-ink-500 block">Enforces statutory approval before any fee increase exceeding national inflation benchmarks is displayed.</span>
                     </div>
                 </label>
 
@@ -95,7 +95,7 @@
                     />
                     <div>
                         <span class="text-xs font-semibold text-ink-950">Immutable Federal Audit Logging (WORM Storage)</span>
-                        <span class="text-[11px] text-ink-500 block">Logs every data mutation with cryptographic timestamping to ensure statutory integrity.</span>
+                        <span class="text-xs sm:text-[11px] text-ink-500 block">Logs every data mutation with cryptographic timestamping to ensure statutory integrity.</span>
                     </div>
                 </label>
             </div>
@@ -108,14 +108,14 @@
                     <h3 class="font-heading font-bold text-base text-ink-950">Immutable Supervisory Audit Trail</h3>
                     <p class="text-xs text-ink-500 font-sans">Tamper-evident chronological record of regulatory actions.</p>
                 </div>
-                <span class="text-xs font-mono text-ink-400">Section 14 HEC Act</span>
+                <span class="text-xs font-mono text-ink-600">Section 14 Act</span>
             </div>
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse" aria-label="Immutable Supervisory Audit Trail">
+                    <table data-mobile-table class="w-full text-left border-collapse" aria-label="Immutable Supervisory Audit Trail">
                         <thead>
-                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                                 <th scope="col" class="py-3.5 px-4 font-semibold">Timestamp (PKT)</th>
                                 <th scope="col" class="py-3.5 px-4 font-semibold">Actor & Role</th>
                                 <th scope="col" class="py-3.5 px-4 font-semibold">Regulatory Action</th>
@@ -125,17 +125,17 @@
                         <tbody class="divide-y divide-border-subtle text-xs">
                             @foreach($audit_logs as $log)
                                 <tr class="hover:bg-surface-subtle/80 transition-colors">
-                                    <td class="py-3.5 px-4 font-mono text-ink-500 text-[11px]">
+                                    <td class="py-3.5 px-4 font-mono text-ink-500 text-xs sm:text-[11px]">
                                         {{ $log['timestamp'] }}
                                     </td>
                                     <td class="py-3.5 px-4">
                                         <span class="font-bold text-ink-950 font-heading block">{{ $log['user'] }}</span>
-                                        <span class="text-[11px] font-mono text-brand-700 block">{{ $log['role'] }}</span>
+                                        <span class="text-xs sm:text-[11px] font-mono text-brand-700 block">{{ $log['role'] }}</span>
                                     </td>
                                     <td class="py-3.5 px-4 text-ink-800 font-medium">
                                         {{ $log['action'] }}
                                     </td>
-                                    <td class="py-3.5 px-4 text-right font-mono text-ink-500 text-[11px]">
+                                    <td class="py-3.5 px-4 text-right font-mono text-ink-500 text-xs sm:text-[11px]">
                                         {{ $log['ip'] }}
                                     </td>
                                 </tr>

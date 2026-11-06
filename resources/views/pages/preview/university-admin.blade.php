@@ -1,7 +1,7 @@
 <x-layouts.university-admin title="Institutional Console — NUST Admissions Directorate">
     <x-ui.page-header 
         title="Institutional Admissions Console"
-        description="Manage candidate credentials, entry test validations, merit quota distributions, and statutory HEC reporting."
+        description="Manage candidate credentials, entry test validations, merit quota distributions, and statutory reporting."
         badge="NUST Main Campus H-12"
         badgeVariant="brand"
     >
@@ -48,7 +48,7 @@
                         Undergraduate Programs & Quota Allocations
                     </h3>
                     <p class="text-xs text-ink-500 font-sans mt-0.5">
-                        Fall 2026 Academic Year • Pakistan Engineering Council & HEC Approved Seats
+                        Fall 2026 Academic Year • Pakistan Engineering Council & Approved Seats
                     </p>
                 </div>
                 <div class="flex items-center gap-2">
@@ -146,7 +146,7 @@
     </div>
 
     <!-- Filter Drawer -->
-    <x-ui.drawer id="admin-filter-drawer" title="Admissions Cycle Configuration" description="Configure quota reserves and HEC statutory limits.">
+    <x-ui.drawer id="admin-filter-drawer" title="Admissions Cycle Configuration" description="Configure quota reserves and statutory limits.">
         <div class="space-y-4">
             <x-form.select name="active_session" label="Active Academic Session" :options="['fall_2026' => 'Fall 2026 Undergraduate', 'spring_2027' => 'Spring 2027 Postgraduate']" />
             <x-form.toggle name="online_portal" label="Accept Online Registrations" description="Permits candidates to submit NET credentials" checked="true" />

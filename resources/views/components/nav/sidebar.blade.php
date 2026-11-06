@@ -21,17 +21,17 @@
 <aside 
     x-data="{ collapsed: false }" 
     :class="collapsed ? 'w-20' : 'w-64'"
-    class="hidden md:flex flex-col shrink-0 bg-surface border-r border-border-default h-screen sticky top-0 transition-all duration-300 z-30 select-none"
+    class="hidden md:flex flex-col shrink-0 bg-surface border-r border-border-default h-dvh sticky top-0 transition-all duration-300 z-30 select-none"
 >
     <!-- Top Branding & Shell Identity -->
-    <div class="h-16 flex items-center justify-between px-4 border-b border-border-default shrink-0">
+    <div :class="collapsed ? 'px-2' : 'px-4'" class="h-16 flex items-center justify-between gap-1 border-b border-border-default shrink-0">
         <a href="{{ $portalHome }}" class="flex items-center gap-2.5 overflow-hidden focus:outline-none" aria-label="UniGuide Dashboard">
             <x-brand.logo size="sm" />
             <div x-show="!collapsed" x-cloak class="flex flex-col whitespace-nowrap">
                 <span class="font-heading font-extrabold text-sm text-ink-950 tracking-tight leading-none">
                     Uni<span class="text-brand-600">Guide</span>
                 </span>
-                <span class="text-[10px] font-semibold text-brand-700 tracking-wider uppercase font-sans mt-0.5">
+                <span class="text-xs sm:text-[10px] font-semibold text-brand-700 tracking-wider uppercase font-sans mt-0.5">
                     {{ $roleLabel }}
                 </span>
             </div>
@@ -50,10 +50,10 @@
     </div>
 
     <!-- Scrollable Nav List -->
-    <div class="flex-1 overflow-y-auto p-3 space-y-6">
+    <div class="min-h-0 flex-1 overflow-y-auto p-3 space-y-6">
         <!-- Main Section -->
         <div>
-            <div x-show="!collapsed" class="px-2 mb-2 text-[10px] font-bold text-ink-400 uppercase tracking-wider font-sans">
+            <div x-show="!collapsed" class="px-2 mb-2 text-xs sm:text-[10px] font-bold text-ink-400 uppercase tracking-wider font-sans">
                 Main Workspace
             </div>
             <nav class="space-y-1" aria-label="Sidebar Main Navigation">
@@ -69,9 +69,10 @@
                     @endphp
                     <a 
                         href="{{ route($item['route']) }}" 
+                        :aria-label="collapsed ? '{{ $item['label'] }}' : null"
                         :title="collapsed ? '{{ $item['label'] }}' : ''"
                         @if($isActive) aria-current="page" @endif
-                        class="flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold font-sans transition-all duration-150 {{ $isActive ? 'bg-brand-50 text-brand-700 font-bold shadow-2xs' : 'text-ink-600 hover:text-ink-950 hover:bg-surface-subtle' }}"
+                        class="flex min-h-11 items-center justify-between gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold font-sans transition-all duration-150 {{ $isActive ? 'bg-brand-50 text-brand-700 font-bold shadow-2xs' : 'text-ink-600 hover:text-ink-950 hover:bg-surface-subtle' }}"
                     >
                         <div class="flex items-center gap-2.5 min-w-0">
                             <x-icon :name="$item['icon']" class="w-4.5 h-4.5 shrink-0 {{ $isActive ? 'text-brand-600' : 'text-ink-400' }}" />
@@ -81,7 +82,7 @@
                         @if(isset($item['badge']))
                             <span 
                                 x-show="!collapsed" 
-                                class="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold border {{ $badgeColor }}"
+                                class="shrink-0 whitespace-nowrap px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold border {{ $badgeColor }}"
                             >
                                 {{ $item['badge'] }}
                             </span>
@@ -94,7 +95,7 @@
         <!-- Secondary Section -->
         @if(count($secondaryItems) > 0)
             <div>
-                <div x-show="!collapsed" class="px-2 mb-2 text-[10px] font-bold text-ink-400 uppercase tracking-wider font-sans">
+                <div x-show="!collapsed" class="px-2 mb-2 text-xs sm:text-[10px] font-bold text-ink-400 uppercase tracking-wider font-sans">
                     Governance & Tools
                 </div>
                 <nav class="space-y-1" aria-label="Sidebar Secondary Navigation">
@@ -110,9 +111,10 @@
                         @endphp
                         <a 
                             href="{{ route($item['route']) }}" 
-                            :title="collapsed ? '{{ $item['label'] }}' : ''"
+                            :aria-label="collapsed ? '{{ $item['label'] }}' : null"
+                        :title="collapsed ? '{{ $item['label'] }}' : ''"
                             @if($isActive) aria-current="page" @endif
-                            class="flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-semibold font-sans transition-all duration-150 {{ $isActive ? 'bg-brand-50 text-brand-700 font-bold shadow-2xs' : 'text-ink-600 hover:text-ink-950 hover:bg-surface-subtle' }}"
+                            class="flex min-h-11 items-center justify-between gap-2 px-2.5 py-2 rounded-xl text-xs font-semibold font-sans transition-all duration-150 {{ $isActive ? 'bg-brand-50 text-brand-700 font-bold shadow-2xs' : 'text-ink-600 hover:text-ink-950 hover:bg-surface-subtle' }}"
                         >
                             <div class="flex items-center gap-2.5 min-w-0">
                                 <x-icon :name="$item['icon']" class="w-4.5 h-4.5 shrink-0 {{ $isActive ? 'text-brand-600' : 'text-ink-400' }}" />
@@ -122,7 +124,7 @@
                             @if(isset($item['badge']))
                                 <span 
                                     x-show="!collapsed" 
-                                    class="px-1.5 py-0.2 rounded-full text-[10px] font-mono font-bold border {{ $badgeColor }}"
+                                    class="shrink-0 whitespace-nowrap px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold border {{ $badgeColor }}"
                                 >
                                     {{ $item['badge'] }}
                                 </span>
@@ -142,7 +144,7 @@
             </div>
             <div x-show="!collapsed" class="flex-1 min-w-0">
                 <p class="text-xs font-bold text-ink-950 truncate font-heading">{{ $userName }}</p>
-                <p class="text-[11px] text-ink-500 truncate font-sans">{{ $userRole }}</p>
+                <p class="text-xs sm:text-[11px] text-ink-500 truncate font-sans">{{ $userRole }}</p>
             </div>
         </div>
     </div>

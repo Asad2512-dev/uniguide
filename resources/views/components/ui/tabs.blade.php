@@ -12,7 +12,7 @@
     x-data="{ currentTab: '{{ $defaultTab }}' }" 
     class="w-full"
 >
-    <div class="{{ $variant === 'underline' ? 'border-b border-border-default' : 'p-1 bg-surface-subtle rounded-xl inline-flex' }}">
+    <div class="{{ $variant === 'underline' ? 'border-b border-border-default' : 'p-1 bg-surface-subtle rounded-xl flex max-w-full' }}">
         <nav class="flex space-x-2 md:space-x-6 overflow-x-auto scrollbar-none" aria-label="Tabs">
             @foreach($tabs as $tab)
                 <button 
@@ -21,7 +21,7 @@
                     :class="currentTab === '{{ $tab['id'] }}' 
                         ? '{{ $variant === 'underline' ? 'border-brand-600 text-brand-700 font-semibold' : 'bg-surface text-ink-950 font-semibold shadow-xs' }}' 
                         : '{{ $variant === 'underline' ? 'border-transparent text-ink-500 hover:text-ink-800 hover:border-ink-300 font-medium' : 'text-ink-600 hover:text-ink-900 font-medium' }}'"
-                    class="group inline-flex items-center gap-2 py-3 px-1 text-sm font-sans transition-smooth cursor-pointer whitespace-nowrap {{ $variant === 'underline' ? 'border-b-2 -mb-px' : 'rounded-lg px-3.5 py-1.5' }}"
+                    class="group inline-flex max-sm:min-h-11 shrink-0 items-center gap-2 py-3 px-1 text-sm font-sans transition-smooth cursor-pointer whitespace-nowrap {{ $variant === 'underline' ? 'border-b-2 -mb-px' : 'rounded-lg px-3.5 py-1.5' }}"
                 >
                     @if(isset($tab['icon']))
                         <x-icon :name="$tab['icon']" class="w-4 h-4 shrink-0 transition-colors" ::class="currentTab === '{{ $tab['id'] }}' ? 'text-brand-600' : 'text-ink-400 group-hover:text-ink-600'" />

@@ -23,7 +23,7 @@
     <!-- Page Header with Breadcrumbs & Actions -->
     <x-ui.page-header 
         title="Student Admissions Command"
-        description="Track your active university admission applications, official entry test marks, and calculated merit percentiles across Pakistan."
+        description="Track your active university admission applications, official entry test marks, and calculated merit percentiles across Punjab and Islamabad."
         badge="Applicant ID: #UG-2026-8841"
         badgeVariant="brand"
     >
@@ -85,7 +85,7 @@
             changeType="up"
             icon="award"
             iconColor="warning"
-            period="Ehsaas & HEC Need-Based"
+            period="Ehsaas & Need-Based"
         />
     </div>
 

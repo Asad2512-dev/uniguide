@@ -2,6 +2,15 @@
 
 namespace App\Services;
 
+use App\Models\Campus;
+use App\Models\City;
+use App\Models\Department;
+use App\Models\Inquiry;
+use App\Models\Program;
+use App\Models\Province;
+use App\Models\University;
+use Illuminate\Support\Str;
+
 class UniversityAdminService
 {
     protected string $institutionSlug = 'nust';
@@ -9,6 +18,25 @@ class UniversityAdminService
     protected string $institutionCode = 'INST-HEC-PK-019';
 
     protected string $institutionName = 'National University of Sciences & Technology (NUST)';
+
+    protected function getTargetUniversity(): ?University
+    {
+        $user = auth()->user();
+        if ($user) {
+            abort_unless(in_array($user->role, ['university_admin', 'university_staff', 'national_admin', 'super_admin', 'admin'], true), 403);
+            $slug = $user->institution_slug;
+            if (in_array($user->role, ['national_admin', 'super_admin', 'admin'], true)) {
+                $slug = session('uniguide_admin_institution', $slug ?: 'nust');
+            }
+        } else {
+            $slug = session('uniguide_admin_institution', 'nust');
+        }
+
+        $slug = $slug ?: 'nust';
+
+        return University::withoutGlobalScope('regional_catalog')->where('slug', $slug)->first()
+            ?: University::withoutGlobalScope('regional_catalog')->where('slug', 'nust')->first();
+    }
 
     /**
      * Get active institution metadata.
@@ -198,6 +226,19 @@ class UniversityAdminService
         $current = $this->getProfile();
         $updated = array_merge($current, $data);
         session()->put('uniguide_admin_profile', $updated);
+
+        $uni = $this->getTargetUniversity();
+        if ($uni) {
+            $uni->update([
+                'name' => $data['name'] ?? $uni->name,
+                'phone' => $data['helpline'] ?? ($data['phone'] ?? $uni->phone),
+                'email' => $data['admissions_email'] ?? $uni->email,
+                'website_url' => $data['website'] ?? $uni->website_url,
+                'address' => $data['address'] ?? $uni->address,
+                'chancellor' => $data['chancellor'] ?? $uni->chancellor,
+                'vice_chancellor' => $data['rector'] ?? ($data['vice_chancellor'] ?? $uni->vice_chancellor),
+            ]);
+        }
     }
 
     /**
@@ -240,40 +281,6 @@ class UniversityAdminService
                 'head' => 'Brigadier Asif Iqbal',
                 'facilities' => ['Robotics & Automation Labs', 'Wind Tunnel Testing Rig', 'Auditorium', 'Officers Mess', 'Sports Grounds'],
             ],
-            [
-                'id' => 'cmp-3',
-                'name' => 'Military College of Signals (MCS)',
-                'city' => 'Rawalpindi',
-                'province' => 'Punjab',
-                'is_primary' => false,
-                'established' => 1947,
-                'land_area' => '45 Acres',
-                'student_capacity' => 1800,
-                'hostel_capacity' => '850 beds',
-                'departments_count' => 2,
-                'programs_count' => 4,
-                'status' => 'active',
-                'address' => 'Humayun Road, Lalkurti, Rawalpindi',
-                'head' => 'Brigadier Naveed Shafi',
-                'facilities' => ['Cryptographic Research Labs', 'Fiber Optics Testbed', 'Smart Classrooms'],
-            ],
-            [
-                'id' => 'cmp-4',
-                'name' => 'Pakistan Navy Engineering College (PNEC)',
-                'city' => 'Karachi',
-                'province' => 'Sindh',
-                'is_primary' => false,
-                'established' => 1962,
-                'land_area' => '55 Acres',
-                'student_capacity' => 2100,
-                'hostel_capacity' => '900 beds',
-                'departments_count' => 3,
-                'programs_count' => 6,
-                'status' => 'active',
-                'address' => 'Habib Rahmatullah Road, Karsaz, Karachi',
-                'head' => 'Commodore Kamran Tariq SI(M)',
-                'facilities' => ['Marine Propulsion Laboratory', 'Ship Hydrodynamics Basin', 'CAD/CAM Suites'],
-            ],
         ];
 
         return session()->get('uniguide_admin_campuses', $default);
@@ -291,6 +298,35 @@ class UniversityAdminService
         $data['facilities'] = $data['facilities'] ?? ['Academic Block', 'Library', 'Hostel'];
         $campuses[] = $data;
         session()->put('uniguide_admin_campuses', $campuses);
+
+        $uni = $this->getTargetUniversity();
+        if ($uni) {
+            $region = app(RegionCatalog::class);
+            $normRegion = $region->normalizeRegion($data['province'] ?? 'punjab');
+            $province = Province::firstOrCreate(
+                ['slug' => $normRegion],
+                ['name' => $data['province'] ?? 'Punjab']
+            );
+            $city = City::firstOrCreate(
+                ['province_id' => $province->id, 'slug' => Str::slug($data['city'] ?? 'city')],
+                ['name' => $data['city'] ?? 'City']
+            );
+            $isAllowed = $region->allowsRegion($data['province'] ?? '');
+            Campus::withoutGlobalScope('regional_catalog')->updateOrCreate(
+                ['university_id' => $uni->id, 'slug' => Str::slug($data['name'])],
+                [
+                    'name' => $data['name'],
+                    'city_id' => $city->id,
+                    'city' => $city->name,
+                    'province' => $normRegion,
+                    'address' => $data['address'] ?? null,
+                    'status' => $isAllowed ? 'active' : 'pending',
+                    'verification_status' => $isAllowed ? 'verified' : 'pending_verification',
+                    'operational_status' => $isAllowed ? 'officially_listed' : 'unknown',
+                    'recognition_status' => 'hec_listed',
+                ]
+            );
+        }
     }
 
     public function updateCampus(string $id, array $data): void
@@ -395,6 +431,19 @@ class UniversityAdminService
         $data['programs_count'] = 1;
         $depts[] = $data;
         session()->put('uniguide_admin_departments', $depts);
+
+        $uni = $this->getTargetUniversity();
+        if ($uni) {
+            Department::create([
+                'university_id' => $uni->id,
+                'slug' => Str::slug($data['name'] ?? 'dept-'.uniqid()),
+                'name' => $data['name'],
+                'acronym' => $data['acronym'] ?? null,
+                'faculty_count' => $data['faculty_count'] ?? 10,
+                'programs_count' => $data['programs_count'] ?? 1,
+                'status' => 'active',
+            ]);
+        }
     }
 
     /**
@@ -445,26 +494,6 @@ class UniversityAdminService
             ],
             [
                 'id' => 'prog-3',
-                'name' => 'BS Artificial Intelligence',
-                'slug' => 'bs-artificial-intelligence',
-                'code' => 'NUST-SEECS-BSAI',
-                'level' => 'Undergraduate',
-                'department' => 'SEECS',
-                'campus' => 'Islamabad Main Campus',
-                'duration' => '4 Years (8 Semesters)',
-                'credit_hours' => 134,
-                'study_mode' => 'Full-time On-Campus',
-                'accreditation' => 'NCEAC Category W (Pending Final Audit)',
-                'intake_seats' => 100,
-                'tuition_semester' => 'PKR 195,000',
-                'tuition_numeric' => 195000,
-                'min_eligibility' => '50% Intermediate / Equivalent',
-                'merit_formula' => '75% NET + 15% FSc + 10% Matric',
-                'status' => 'published',
-                'published_at' => '15 Jan 2026',
-            ],
-            [
-                'id' => 'prog-4',
                 'name' => 'BE Electrical Engineering',
                 'slug' => 'be-electrical-engineering',
                 'code' => 'NUST-SEECS-BEEE',
@@ -478,35 +507,35 @@ class UniversityAdminService
                 'intake_seats' => 160,
                 'tuition_semester' => 'PKR 185,000',
                 'tuition_numeric' => 185000,
-                'min_eligibility' => '60.0% FSc Pre-Engineering Mandated by PEC Act V of 1976',
+                'min_eligibility' => '60% FSc Pre-Engineering Mandatory (PEC Regulation)',
                 'merit_formula' => '75% NET + 15% FSc + 10% Matric',
                 'status' => 'published',
-                'published_at' => '15 Jan 2026',
+                'published_at' => '10 Jan 2026',
+            ],
+            [
+                'id' => 'prog-4',
+                'name' => 'BS Artificial Intelligence',
+                'slug' => 'bs-artificial-intelligence',
+                'code' => 'NUST-SEECS-BSAI',
+                'level' => 'Undergraduate',
+                'department' => 'SEECS',
+                'campus' => 'Islamabad Main Campus',
+                'duration' => '4 Years (8 Semesters)',
+                'credit_hours' => 134,
+                'study_mode' => 'Full-time On-Campus',
+                'accreditation' => 'NCEAC Category W',
+                'intake_seats' => 100,
+                'tuition_semester' => 'PKR 195,000',
+                'tuition_numeric' => 195000,
+                'min_eligibility' => '50% Intermediate with Math',
+                'merit_formula' => '75% NET + 15% FSc + 10% Matric',
+                'status' => 'published',
+                'published_at' => '01 Feb 2026',
             ],
             [
                 'id' => 'prog-5',
-                'name' => 'BE Mechanical Engineering',
-                'slug' => 'be-mechanical-engineering',
-                'code' => 'NUST-SMME-BEME',
-                'level' => 'Undergraduate',
-                'department' => 'SMME',
-                'campus' => 'Islamabad Main Campus',
-                'duration' => '4 Years (8 Semesters)',
-                'credit_hours' => 138,
-                'study_mode' => 'Full-time On-Campus',
-                'accreditation' => 'PEC Level-II (Washington Accord)',
-                'intake_seats' => 140,
-                'tuition_semester' => 'PKR 185,000',
-                'tuition_numeric' => 185000,
-                'min_eligibility' => '60.0% FSc Pre-Engineering',
-                'merit_formula' => '75% NET + 15% FSc + 10% Matric',
-                'status' => 'published',
-                'published_at' => '15 Jan 2026',
-            ],
-            [
-                'id' => 'prog-6',
-                'name' => 'Bachelor of Business Administration (BBA)',
-                'slug' => 'bba-honors',
+                'name' => 'Bachelor of Business Administration (BBA Hons)',
+                'slug' => 'bba-hons',
                 'code' => 'NUST-NBS-BBA',
                 'level' => 'Undergraduate',
                 'department' => 'NBS',
@@ -514,32 +543,12 @@ class UniversityAdminService
                 'duration' => '4 Years (8 Semesters)',
                 'credit_hours' => 132,
                 'study_mode' => 'Full-time On-Campus',
-                'accreditation' => 'NBEAC W Category',
-                'intake_seats' => 150,
+                'accreditation' => 'NBEAC Category W',
+                'intake_seats' => 180,
                 'tuition_semester' => 'PKR 210,000',
                 'tuition_numeric' => 210000,
-                'min_eligibility' => '50% Intermediate in any discipline',
-                'merit_formula' => '75% NET (Business) + 15% FSc + 10% Matric',
-                'status' => 'published',
-                'published_at' => '15 Jan 2026',
-            ],
-            [
-                'id' => 'prog-7',
-                'name' => 'MS Data Science',
-                'slug' => 'ms-data-science',
-                'code' => 'NUST-SEECS-MSDS',
-                'level' => 'Postgraduate',
-                'department' => 'SEECS',
-                'campus' => 'Islamabad Main Campus',
-                'duration' => '2 Years (4 Semesters)',
-                'credit_hours' => 30,
-                'study_mode' => 'Evening / Weekend Hybrid',
-                'accreditation' => 'HEC Recognized',
-                'intake_seats' => 45,
-                'tuition_semester' => 'PKR 125,000',
-                'tuition_numeric' => 125000,
-                'min_eligibility' => '16-Year BS CS/SE/EE with minimum 2.5/4.0 CGPA & GAT General',
-                'merit_formula' => '50% Academic + 30% GAT + 20% Interview',
+                'min_eligibility' => '50% Intermediate any discipline',
+                'merit_formula' => '65% NET + 20% FSc + 15% Matric',
                 'status' => 'published',
                 'published_at' => '15 Jan 2026',
             ],
@@ -557,6 +566,26 @@ class UniversityAdminService
         $data['published_at'] = now()->format('d M Y');
         $programs[] = $data;
         session()->put('uniguide_admin_programs', $programs);
+
+        $uni = $this->getTargetUniversity();
+        if ($uni) {
+            Program::updateOrCreate(
+                [
+                    'university_id' => $uni->id,
+                    'slug' => Str::slug($data['name'] ?? 'prog-'.uniqid()),
+                ],
+                [
+                    'name' => $data['name'] ?? 'Academic Program',
+                    'degree_level' => strtolower($data['level'] ?? 'undergraduate'),
+                    'discipline' => 'computing',
+                    'duration_years' => 4,
+                    'total_semesters' => 8,
+                    'fee_per_semester' => 'PKR 195,000',
+                    'estimated_closing_merit' => '78.5%',
+                    'status' => 'active',
+                ]
+            );
+        }
     }
 
     public function updateProgram(string $id, array $data): void
@@ -569,6 +598,9 @@ class UniversityAdminService
             }
         }
         session()->put('uniguide_admin_programs', $programs);
+
+        $numericId = (int) str_replace('prog-', '', $id);
+        Program::where('id', $numericId)->orWhere('slug', $id)->first()?->update($data);
     }
 
     /**
@@ -665,7 +697,7 @@ class UniversityAdminService
                 'badge_color' => 'success',
                 'portal_open_date' => '01 May 2026',
                 'deadline_date' => '15 July 2026',
-                'entry_tests' => 'NET-4 Series (Islamabad, Karachi, Quetta)',
+                'entry_tests' => 'NET-4 Series (Islamabad, Rawalpindi, Lahore)',
                 'merit_list_1' => '20 July 2026',
                 'merit_list_2' => '27 July 2026',
                 'orientation_date' => '01 September 2026',
@@ -673,7 +705,7 @@ class UniversityAdminService
                 'applications_received' => 12840,
                 'quotas' => [
                     ['category' => 'Open Merit', 'percentage' => 85, 'seats' => 2932],
-                    ['category' => 'Balochistan & Erstwhile FATA Quota', 'percentage' => 5, 'seats' => 172],
+                    ['category' => 'Underprivileged Districts Quota', 'percentage' => 5, 'seats' => 172],
                     ['category' => 'Armed Forces Wards (Army/Navy/PAF)', 'percentage' => 5, 'seats' => 172],
                     ['category' => 'International / Overseas Pakistani (ACT/SAT)', 'percentage' => 5, 'seats' => 174],
                 ],
@@ -703,20 +735,20 @@ class UniversityAdminService
                 'id' => 'adm-3',
                 'name' => 'Spring 2027 Transfer & Special Intake',
                 'cycle' => 'Spring 2027',
-                'level' => 'Undergraduate Migration',
+                'level' => 'Undergraduate Transfer',
                 'status' => 'upcoming',
-                'status_badge' => 'Upcoming (November 2026)',
+                'status_badge' => 'Schedule Announced',
                 'badge_color' => 'neutral',
-                'portal_open_date' => '15 November 2026',
-                'deadline_date' => '20 December 2026',
-                'entry_tests' => 'Departmental Migration Assessment',
-                'merit_list_1' => '05 January 2027',
-                'merit_list_2' => '12 January 2027',
+                'portal_open_date' => '01 November 2026',
+                'deadline_date' => '15 December 2026',
+                'entry_tests' => 'Institutional Assessment & Credit Transfer Review',
+                'merit_list_1' => '24 December 2026',
+                'merit_list_2' => '05 January 2027',
                 'orientation_date' => '01 February 2027',
-                'total_seats' => 120,
+                'total_seats' => 180,
                 'applications_received' => 0,
                 'quotas' => [
-                    ['category' => 'Lateral Entry / Credit Transfer', 'percentage' => 100, 'seats' => 120],
+                    ['category' => 'Inter-University Transfer (PEC/NCEAC Approved)', 'percentage' => 100, 'seats' => 180],
                 ],
             ],
         ];
@@ -845,14 +877,14 @@ class UniversityAdminService
             ],
             [
                 'id' => 'sch-4',
-                'name' => 'Punjab & Balochistan Provincial Educational Endowments (PEEF/BEEF)',
-                'funding_agency' => 'Provincial Endowment Boards',
+                'name' => 'Punjab Provincial Educational Endowment (PEEF)',
+                'funding_agency' => 'Punjab Educational Endowment Fund',
                 'category' => 'Provincial Quota Endowment',
                 'coverage' => 'Full Tuition + Dedicated On-Campus Hostel Accommodation',
                 'annual_budget' => 'PKR 22,500,000',
                 'beneficiaries_target' => 65,
                 'awarded_count' => 61,
-                'eligibility_criteria' => 'Domiciled in designated underdeveloped districts with 60%+ marks',
+                'eligibility_criteria' => 'Domiciled in designated Punjab districts with 60%+ marks',
                 'application_window' => 'Annual Directorate Intake',
                 'status' => 'active',
             ],
@@ -1170,6 +1202,15 @@ class UniversityAdminService
             }
         }
         session()->put('uniguide_admin_inquiries', $inquiries);
+
+        $numId = (int) str_replace('inq-', '', $id);
+        $inquiry = Inquiry::find($numId);
+        if ($inquiry) {
+            $inquiry->update([
+                'reply_content' => $replyText,
+                'status' => 'resolved',
+            ]);
+        }
     }
 
     public function updateInquiryStatus(string $id, string $status): void
@@ -1182,6 +1223,14 @@ class UniversityAdminService
             }
         }
         session()->put('uniguide_admin_inquiries', $inquiries);
+
+        $numId = (int) str_replace('inq-', '', $id);
+        $inquiry = Inquiry::find($numId);
+        if ($inquiry) {
+            $inquiry->update([
+                'status' => $status,
+            ]);
+        }
     }
 
     /**

@@ -2,13 +2,13 @@
     <x-ui.page-header 
         title="University Approval Center"
         description="Statutory review board for constituent campus approvals, degree charter level upgrades, and statutory council accreditations."
-        badge="HEC Regulatory Board"
+        badge="Regulatory Board"
         badgeVariant="warning"
     >
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'Charter Approvals']
                 ]"
             />
@@ -48,7 +48,7 @@
                 class="px-3.5 py-1.5 rounded-xl border text-xs transition-colors flex items-center gap-2 shrink-0 cursor-pointer"
             >
                 <span>All Filings</span>
-                <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-surface font-mono text-ink-600 border border-border-subtle">
+                <span class="px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] bg-surface font-mono text-ink-600 border border-border-subtle">
                     {{ count($approvals) }}
                 </span>
             </button>
@@ -60,7 +60,7 @@
                 class="px-3.5 py-1.5 rounded-xl border text-xs transition-colors flex items-center gap-2 shrink-0 cursor-pointer"
             >
                 <span>Pending Statutory Review</span>
-                <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-amber-100 font-mono text-amber-800 font-bold">
+                <span class="px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] bg-amber-100 font-mono text-amber-800 font-bold">
                     {{ count(array_filter($approvals, fn($a) => $a['status'] !== 'approved')) }}
                 </span>
             </button>
@@ -72,7 +72,7 @@
                 class="px-3.5 py-1.5 rounded-xl border text-xs transition-colors flex items-center gap-2 shrink-0 cursor-pointer"
             >
                 <span>Gazette Ratified</span>
-                <span class="px-1.5 py-0.5 rounded-full text-[10px] bg-emerald-100 font-mono text-emerald-800 font-bold">
+                <span class="px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] bg-emerald-100 font-mono text-emerald-800 font-bold">
                     {{ count(array_filter($approvals, fn($a) => $a['status'] === 'approved')) }}
                 </span>
             </button>
@@ -83,15 +83,15 @@
             @foreach($approvals as $app)
                 <div 
                     x-show="activeTab === 'all' || (activeTab === 'pending' && '{{ $app['status'] }}' !== 'approved') || (activeTab === 'approved' && '{{ $app['status'] }}' === 'approved')"
-                    class="p-6 rounded-2xl bg-surface border border-border-default shadow-card hover:border-brand-200 transition-all"
+                    class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card hover:border-brand-200 transition-all"
                 >
                     <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-border-subtle">
                         <div>
                             <div class="flex items-center gap-2 mb-1">
-                                <span class="px-2.5 py-0.5 rounded text-[10px] font-mono uppercase tracking-wider font-bold {{ $app['status'] === 'approved' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200' }}">
+                                <span class="px-2.5 py-0.5 rounded text-xs sm:text-[10px] font-mono uppercase tracking-wider font-bold {{ $app['status'] === 'approved' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-800 border border-amber-200' }}">
                                     {{ $app['status_label'] }}
                                 </span>
-                                <span class="text-xs font-mono text-ink-400">Filed {{ $app['submission_date'] }}</span>
+                                <span class="text-xs font-mono text-ink-600">Filed {{ $app['submission_date'] }}</span>
                             </div>
                             <h3 class="font-heading font-extrabold text-base text-ink-950">{{ $app['institution'] }}</h3>
                             <p class="text-xs font-semibold text-brand-700 font-sans mt-0.5">{{ $app['application_type'] }}</p>
@@ -135,13 +135,13 @@
 
                     <div class="pt-4 grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
                         <div>
-                            <span class="text-[11px] font-mono uppercase text-ink-400 block mb-1">Dossier Summary</span>
+                            <span class="text-xs sm:text-[11px] font-mono uppercase text-ink-600 block mb-1">Dossier Summary</span>
                             <p class="text-ink-700 font-sans leading-relaxed">{{ $app['details'] }}</p>
                         </div>
                         <div>
-                            <span class="text-[11px] font-mono uppercase text-ink-400 block mb-1">Inspection Committee</span>
+                            <span class="text-xs sm:text-[11px] font-mono uppercase text-ink-600 block mb-1">Inspection Committee</span>
                             <p class="text-ink-700 font-sans font-medium">{{ $app['inspection_committee'] }}</p>
-                            <span class="text-[11px] text-ink-500 block mt-1">Applicant Rector: {{ $app['applicant_rector'] }}</span>
+                            <span class="text-xs sm:text-[11px] text-ink-500 block mt-1">Applicant Rector: {{ $app['applicant_rector'] }}</span>
                         </div>
                     </div>
                 </div>
@@ -163,7 +163,7 @@
                     <div>
                         <div class="px-6 py-4 border-b border-border-default bg-surface-subtle flex items-center justify-between">
                             <div>
-                                <span class="text-[10px] font-mono uppercase tracking-wider text-brand-700 font-bold block" x-text="selectedDossier.application_type"></span>
+                                <span class="text-xs sm:text-[10px] font-mono uppercase tracking-wider text-brand-700 font-bold block" x-text="selectedDossier.application_type"></span>
                                 <h3 class="font-heading font-bold text-base text-ink-950" x-text="selectedDossier.institution"></h3>
                             </div>
                             <button type="button" @click="showModal = false" class="text-ink-400 hover:text-ink-700 cursor-pointer">
@@ -171,12 +171,12 @@
                             </button>
                         </div>
 
-                        <div class="p-6 space-y-6 text-xs max-h-[75vh] overflow-y-auto">
+                        <div class="p-4 sm:p-6 space-y-6 text-xs max-h-[75vh] overflow-y-auto">
                             <!-- Summary Block -->
                             <div class="p-4 rounded-xl bg-canvas border border-border-subtle space-y-2">
-                                <span class="text-[11px] font-mono uppercase text-ink-500 font-semibold block">Official Application Filing</span>
+                                <span class="text-xs sm:text-[11px] font-mono uppercase text-ink-500 font-semibold block">Official Application Filing</span>
                                 <p class="text-ink-800 font-sans text-xs leading-relaxed" x-text="selectedDossier.details"></p>
-                                <div class="pt-2 flex items-center justify-between text-[11px] font-mono text-ink-500 border-t border-border-subtle">
+                                <div class="pt-2 flex items-center justify-between text-xs sm:text-[11px] font-mono text-ink-500 border-t border-border-subtle">
                                     <span>Rector / Petitioner: <strong class="text-ink-900" x-text="selectedDossier.applicant_rector"></strong></span>
                                     <span>Submission Date: <span x-text="selectedDossier.submission_date"></span></span>
                                 </div>
@@ -190,28 +190,28 @@
                                         <x-icon name="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                                         <div>
                                             <span class="font-bold text-ink-900 block">Land Requirement (25+ Acres)</span>
-                                            <span class="text-ink-500 text-[11px]">Freehold institutional ownership verified via Punjab Land Records Authority.</span>
+                                            <span class="text-ink-500 text-xs sm:text-[11px]">Freehold institutional ownership verified via Punjab Land Records Authority.</span>
                                         </div>
                                     </div>
                                     <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle flex items-start gap-2.5">
                                         <x-icon name="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                                         <div>
                                             <span class="font-bold text-ink-900 block">Faculty PhD Density</span>
-                                            <span class="text-ink-500 text-[11px]">42% full-time PhD faculty meets HEC Charter Guideline Tier-I.</span>
+                                            <span class="text-ink-500 text-xs sm:text-[11px]">42% full-time PhD faculty meets Charter Guideline Tier-I.</span>
                                         </div>
                                     </div>
                                     <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle flex items-start gap-2.5">
                                         <x-icon name="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                                         <div>
-                                            <span class="font-bold text-ink-900 block">HEC PERN-II Digital Library</span>
-                                            <span class="text-ink-500 text-[11px]">100 Mbps fiber optic connection established with access to IEEE and Springer.</span>
+                                            <span class="font-bold text-ink-900 block">PERN-II Digital Library</span>
+                                            <span class="text-ink-500 text-xs sm:text-[11px]">100 Mbps fiber optic connection established with access to IEEE and Springer.</span>
                                         </div>
                                     </div>
                                     <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle flex items-start gap-2.5">
                                         <x-icon name="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                                         <div>
                                             <span class="font-bold text-ink-900 block">Statutory Council Clearance</span>
-                                            <span class="text-ink-500 text-[11px]">PEC & NCEAC inspection delegations have ratified initial infrastructure.</span>
+                                            <span class="text-ink-500 text-xs sm:text-[11px]">PEC & NCEAC inspection delegations have ratified initial infrastructure.</span>
                                         </div>
                                     </div>
                                 </div>
@@ -219,9 +219,9 @@
 
                             <!-- Inspection Committee Evaluation -->
                             <div class="p-4 rounded-xl bg-surface-subtle border border-border-subtle">
-                                <span class="text-[11px] font-mono uppercase text-ink-500 font-semibold block mb-1">Inspection Committee Finding</span>
+                                <span class="text-xs sm:text-[11px] font-mono uppercase text-ink-500 font-semibold block mb-1">Inspection Committee Finding</span>
                                 <p class="text-ink-800 font-sans" x-text="selectedDossier.inspection_committee"></p>
-                                <p class="text-[11px] text-ink-500 font-sans mt-1">Recommended for unconditional Gazette SRO publication subject to standard annual QA audit.</p>
+                                <p class="text-xs sm:text-[11px] text-ink-500 font-sans mt-1">Recommended for unconditional Gazette SRO publication subject to standard annual QA audit.</p>
                             </div>
                         </div>
 

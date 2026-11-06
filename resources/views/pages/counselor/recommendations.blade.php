@@ -4,9 +4,10 @@
 >
     <div x-data="{ activeTab: 'all' }" class="min-h-screen bg-canvas pb-24">
         
+        <div class="mx-4 mt-4 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm leading-relaxed text-warning-800" role="note">Planning illustration: this assessment uses existing preset calculations. It does not establish verified eligibility or guarantee admission. Confirm current requirements and financial-aid terms with the institution.</div>
         <!-- Header Banner & Calculated Merit Overview -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -22,7 +23,7 @@
                             <x-icon name="sparkles" class="w-3.5 h-3.5 text-brand-600" />
                             <span>AI Strategic Evaluation Plan</span>
                             <span class="text-ink-300">•</span>
-                            <span class="font-mono text-[11px] text-brand-800">Fall 2026 Intake</span>
+                            <span class="font-mono text-xs sm:text-[11px] text-brand-800">Fall 2026 Intake</span>
                         </div>
                         <h1 class="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-ink-950 tracking-tight">
                             Your Admission Likelihood Tiers
@@ -35,15 +36,15 @@
                     <!-- User Profile Quick Chip -->
                     <div class="shrink-0 p-3.5 rounded-xl border border-border-default bg-surface-subtle flex flex-wrap items-center gap-4 text-xs font-sans">
                         <div>
-                            <span class="text-ink-400 block text-[10px] uppercase font-mono">Academic Input</span>
+                            <span class="text-ink-600 block text-xs sm:text-[10px] uppercase font-mono">Academic Input</span>
                             <span class="font-bold text-ink-900">{{ $profile['matric_percentage'] }}% Matric • {{ $profile['fsc_percentage'] }}% FSc</span>
                         </div>
                         <div class="border-l border-border-default pl-4">
-                            <span class="text-ink-400 block text-[10px] uppercase font-mono">Target Test</span>
+                            <span class="text-ink-600 block text-xs sm:text-[10px] uppercase font-mono">Target Test</span>
                             <span class="font-bold text-ink-900">{{ $profile['test_type'] }} (Score: {{ $profile['test_score'] }})</span>
                         </div>
                         <div class="border-l border-border-default pl-4">
-                            <span class="text-ink-400 block text-[10px] uppercase font-mono">Budget Cap</span>
+                            <span class="text-ink-600 block text-xs sm:text-[10px] uppercase font-mono">Budget Cap</span>
                             <span class="font-bold text-brand-700">PKR {{ number_format($profile['budget_max']) }}/sem</span>
                         </div>
                         <div class="border-l border-border-default pl-4">
@@ -58,14 +59,14 @@
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-8 pt-6 border-t border-border-subtle">
                     @foreach($aggregates as $key => $agg)
                         <div class="p-3.5 rounded-xl border border-brand-100 bg-brand-50/20">
-                            <span class="text-[10px] uppercase tracking-wider text-ink-500 font-mono font-semibold block truncate">
+                            <span class="text-xs sm:text-[10px] uppercase tracking-wider text-ink-500 font-mono font-semibold block truncate">
                                 {{ $agg['label'] }}
                             </span>
                             <div class="flex items-baseline gap-1 mt-1">
                                 <span class="font-heading font-extrabold text-2xl text-brand-700">{{ $agg['score'] }}</span>
                                 <span class="text-xs font-mono text-brand-600 font-bold">%</span>
                             </div>
-                            <span class="text-[10px] text-ink-400 font-sans block mt-1 truncate" title="{{ $agg['formula'] }}">
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans block mt-1 truncate" title="{{ $agg['formula'] }}">
                                 {{ $agg['formula'] }}
                             </span>
                         </div>
@@ -75,7 +76,7 @@
         </section>
 
         <!-- Main Tiers & Program Recommendations -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             
             <!-- Tier Filter Pills -->
             <div class="flex items-center justify-between pb-6 border-b border-border-default flex-wrap gap-4">
@@ -143,7 +144,7 @@
                     <div class="flex items-center gap-2">
                         <div class="w-3 h-3 rounded-full bg-amber-500"></div>
                         <h2 class="font-heading font-bold text-lg text-ink-950">Reach Programs (High Ambition / Competitive)</h2>
-                        <span class="text-xs text-ink-400 font-mono">Cutoff is near or slightly above preliminary aggregate</span>
+                        <span class="text-xs text-ink-600 font-mono">Cutoff is near or slightly above preliminary aggregate</span>
                     </div>
                 </div>
 
@@ -159,7 +160,7 @@
                                 </div>
 
                                 <div class="space-y-1">
-                                    <span class="text-[11px] text-ink-400 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
+                                    <span class="text-xs sm:text-[11px] text-ink-600 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
                                     <h3 class="font-heading font-bold text-base text-ink-950">
                                         {{ $item['program'] }}
                                     </h3>
@@ -170,18 +171,18 @@
 
                                 <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-border-subtle text-xs font-sans">
                                     <div>
-                                        <span class="text-[10px] text-ink-400 block font-mono">Calculated Aggregate</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Calculated Aggregate</span>
                                         <span class="font-bold text-amber-700 font-mono">{{ $item['calculated_aggregate'] }}%</span>
                                     </div>
                                     <div>
-                                        <span class="text-[10px] text-ink-400 block font-mono">Semester Tuition</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Semester Tuition</span>
                                         <span class="font-bold text-ink-900 font-mono">{{ $item['fee_semester'] }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                                <span class="text-[11px] text-ink-400 font-mono">{{ $item['accreditation'] }}</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 font-mono">{{ $item['accreditation'] }}</span>
                                 <div class="flex items-center gap-2">
                                     <a 
                                         href="{{ route('counselor.chat') }}?prompt=How+can+I+improve+my+chances+for+{{ urlencode($item['program']) }}+at+{{ urlencode($item['acronym']) }}%3F"
@@ -193,7 +194,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-2 p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
+                        <div class="col-span-2 p-4 sm:p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
                             No reach institutions in current filter.
                         </div>
                     @endforelse
@@ -206,7 +207,7 @@
                     <div class="flex items-center gap-2">
                         <div class="w-3 h-3 rounded-full bg-brand-600"></div>
                         <h2 class="font-heading font-bold text-lg text-ink-950">Target Match Programs (High Probability 60%–85%)</h2>
-                        <span class="text-xs text-ink-400 font-mono">Calculated aggregate matches or comfortably clears closing cutoffs</span>
+                        <span class="text-xs text-ink-600 font-mono">Calculated aggregate matches or comfortably clears closing cutoffs</span>
                     </div>
                 </div>
 
@@ -222,7 +223,7 @@
                                 </div>
 
                                 <div class="space-y-1">
-                                    <span class="text-[11px] text-ink-400 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
+                                    <span class="text-xs sm:text-[11px] text-ink-600 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
                                     <h3 class="font-heading font-bold text-base text-ink-950">
                                         {{ $item['program'] }}
                                     </h3>
@@ -233,18 +234,18 @@
 
                                 <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-border-subtle text-xs font-sans">
                                     <div>
-                                        <span class="text-[10px] text-ink-400 block font-mono">Calculated Aggregate</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Calculated Aggregate</span>
                                         <span class="font-bold text-brand-700 font-mono">{{ $item['calculated_aggregate'] }}% (+{{ $item['diff'] }}% Margin)</span>
                                     </div>
                                     <div>
-                                        <span class="text-[10px] text-ink-400 block font-mono">Semester Tuition</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Semester Tuition</span>
                                         <span class="font-bold text-ink-900 font-mono">{{ $item['fee_semester'] }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                                <span class="text-[11px] text-ink-400 font-mono">{{ $item['accreditation'] }}</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 font-mono">{{ $item['accreditation'] }}</span>
                                 <div class="flex items-center gap-2">
                                     <a 
                                         href="{{ route('universities.show', $item['slug']) }}"
@@ -256,7 +257,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-2 p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
+                        <div class="col-span-2 p-4 sm:p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
                             No match programs found.
                         </div>
                     @endforelse
@@ -269,7 +270,7 @@
                     <div class="flex items-center gap-2">
                         <div class="w-3 h-3 rounded-full bg-emerald-600"></div>
                         <h2 class="font-heading font-bold text-lg text-ink-950">Safety Programs (Guaranteed >90% Probability)</h2>
-                        <span class="text-xs text-ink-400 font-mono">Aggregate comfortably exceeds previous year closing thresholds</span>
+                        <span class="text-xs text-ink-600 font-mono">Aggregate comfortably exceeds previous year closing thresholds</span>
                     </div>
                 </div>
 
@@ -285,7 +286,7 @@
                                 </div>
 
                                 <div class="space-y-1">
-                                    <span class="text-[11px] text-ink-400 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
+                                    <span class="text-xs sm:text-[11px] text-ink-600 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
                                     <h3 class="font-heading font-bold text-base text-ink-950">
                                         {{ $item['program'] }}
                                     </h3>
@@ -296,18 +297,18 @@
 
                                 <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-border-subtle text-xs font-sans">
                                     <div>
-                                        <span class="text-[10px] text-ink-400 block font-mono">Calculated Aggregate</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Calculated Aggregate</span>
                                         <span class="font-bold text-emerald-700 font-mono">{{ $item['calculated_aggregate'] }}%</span>
                                     </div>
                                     <div>
-                                        <span class="text-[10px] text-ink-400 block font-mono">Semester Tuition</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Semester Tuition</span>
                                         <span class="font-bold text-ink-900 font-mono">{{ $item['fee_semester'] }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                                <span class="text-[11px] text-ink-400 font-mono">{{ $item['accreditation'] }}</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 font-mono">{{ $item['accreditation'] }}</span>
                                 <div class="flex items-center gap-2">
                                     <a 
                                         href="{{ route('universities.show', $item['slug']) }}"
@@ -319,7 +320,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-2 p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
+                        <div class="col-span-2 p-4 sm:p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
                             No safety programs found in this tier.
                         </div>
                     @endforelse
@@ -344,7 +345,7 @@
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-6">
                         @foreach($scholarships as $sch)
                             <div class="p-4 rounded-xl bg-surface border border-emerald-200/80 shadow-2xs">
-                                <span class="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-mono">
+                                <span class="text-xs sm:text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded font-mono">
                                     {{ $sch['status'] }}
                                 </span>
                                 <h4 class="font-heading font-bold text-sm text-ink-950 mt-2">{{ $sch['name'] }}</h4>

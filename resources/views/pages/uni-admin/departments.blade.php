@@ -51,7 +51,7 @@
 
                             <x-ui.table.cell>
                                 <span class="font-semibold text-xs text-ink-900 block">{{ $dept['head'] }}</span>
-                                <span class="text-[11px] text-ink-500 font-sans">{{ $dept['head_title'] }}</span>
+                                <span class="text-xs sm:text-[11px] text-ink-500 font-sans">{{ $dept['head_title'] }}</span>
                             </x-ui.table.cell>
 
                             <x-ui.table.cell>
@@ -60,7 +60,7 @@
 
                             <x-ui.table.cell>
                                 <span class="font-mono text-xs font-bold text-ink-900 block">{{ $dept['faculty_count'] }} Faculty</span>
-                                <span class="font-mono text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60 inline-block mt-0.5">
+                                <span class="font-mono text-xs sm:text-[10px] text-emerald-700 bg-emerald-50 px-1.5 py-0.5 rounded border border-emerald-200/60 inline-block mt-0.5">
                                     {{ $dept['phd_faculty_ratio'] }}
                                 </span>
                             </x-ui.table.cell>
@@ -86,7 +86,7 @@
             x-cloak 
             class="fixed inset-0 z-50 overflow-y-auto bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
-            <div class="bg-surface rounded-2xl border border-border-default p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="addDeptModal = false">
+            <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="addDeptModal = false">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Create Academic Department</h3>
                     <button type="button" @click="addDeptModal = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>

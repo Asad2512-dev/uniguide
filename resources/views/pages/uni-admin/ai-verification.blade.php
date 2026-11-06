@@ -41,7 +41,7 @@
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-border-subtle">
                         <div class="space-y-1">
                             <div class="flex items-center gap-2">
-                                <span class="text-[10px] font-mono uppercase font-bold text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded">
+                                <span class="text-xs sm:text-[10px] font-mono uppercase font-bold text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded">
                                     {{ $item['entity'] }}
                                 </span>
                                 <span class="text-ink-300">•</span>
@@ -55,7 +55,7 @@
                         <!-- Status Badge & Confidence Score -->
                         <div class="flex items-center gap-3">
                             <div class="text-right">
-                                <span class="text-[10px] text-ink-400 font-mono block">AI Confidence</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 font-mono block">AI Confidence</span>
                                 <span class="text-xs font-mono font-bold text-brand-600">{{ $item['confidence_score'] }}%</span>
                             </div>
 
@@ -74,29 +74,29 @@
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <!-- Previous Live Value -->
                         <div class="p-4 rounded-xl bg-surface-subtle border border-border-subtle space-y-1.5">
-                            <span class="text-[10px] font-mono font-bold text-ink-400 uppercase tracking-wider block">
+                            <span class="text-xs sm:text-[10px] font-mono font-bold text-ink-600 uppercase tracking-wider block">
                                 Current Official Live Value
                             </span>
                             <div class="text-sm font-bold text-ink-700 font-mono">
                                 {{ $item['previous_value'] }}
                             </div>
-                            <span class="text-[11px] text-ink-400 font-sans block">Currently rendered on search and comparison tools.</span>
+                            <span class="text-xs sm:text-[11px] text-ink-600 font-sans block">Currently rendered on search and comparison tools.</span>
                         </div>
 
                         <!-- Proposed AI Extracted Value -->
                         <div class="p-4 rounded-xl bg-brand-50/30 border border-brand-200/80 space-y-1.5">
                             <div class="flex items-center justify-between">
-                                <span class="text-[10px] font-mono font-bold text-brand-800 uppercase tracking-wider block">
+                                <span class="text-xs sm:text-[10px] font-mono font-bold text-brand-800 uppercase tracking-wider block">
                                     Proposed Extracted Modification
                                 </span>
-                                <span class="text-[10px] font-mono font-bold text-brand-700 bg-brand-100 px-2 py-0.2 rounded">
+                                <span class="text-xs sm:text-[10px] font-mono font-bold text-brand-700 bg-brand-100 px-2 py-0.2 rounded">
                                     {{ $item['value_diff'] }}
                                 </span>
                             </div>
                             <div class="text-sm font-bold text-brand-900 font-mono">
                                 {{ $item['proposed_value'] }}
                             </div>
-                            <span class="text-[11px] text-brand-700 font-sans block">Extracted from newly crawled institutional release.</span>
+                            <span class="text-xs sm:text-[11px] text-brand-700 font-sans block">Extracted from newly crawled institutional release.</span>
                         </div>
                     </div>
 
@@ -107,7 +107,7 @@
                                 <x-icon name="file-text" class="w-4 h-4 text-ink-500" />
                                 <span>Verbatim Source Context: {{ $item['source_title'] }}</span>
                             </span>
-                            <a href="{{ $item['source_url'] }}" target="_blank" rel="noopener" class="text-brand-600 hover:text-brand-700 underline text-[11px] font-mono flex items-center gap-1">
+                            <a href="{{ $item['source_url'] }}" target="_blank" rel="noopener" class="text-brand-600 hover:text-brand-700 underline text-xs sm:text-[11px] font-mono flex items-center gap-1">
                                 <span>Inspect Source URL</span>
                                 <x-icon name="external-link" class="w-3 h-3" />
                             </a>
@@ -115,7 +115,7 @@
                         <blockquote class="text-xs text-ink-800 font-sans italic border-l-2 border-brand-500 pl-3 leading-relaxed">
                             "{{ $item['source_text_snippet'] }}"
                         </blockquote>
-                        <div class="text-[10px] font-mono text-ink-400">
+                        <div class="text-xs sm:text-[10px] font-mono text-ink-400">
                             Crawled & parsed on {{ $item['extraction_timestamp'] }}
                         </div>
                     </div>
@@ -182,7 +182,7 @@
             x-cloak 
             class="fixed inset-0 z-50 overflow-y-auto bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
-            <div class="bg-surface rounded-2xl border border-border-default p-6 max-w-md w-full shadow-elevated space-y-5" @click.outside="editModalOpen = false">
+            <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 max-w-md w-full shadow-elevated space-y-5" @click.outside="editModalOpen = false">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Modify AI Extracted Value</h3>
                     <button type="button" @click="editModalOpen = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>
@@ -191,7 +191,7 @@
                 <form :action="'{{ route('uni_admin.ai_verification') }}/' + (activeItem ? activeItem.id : '') + '/edit'" method="POST" class="space-y-4">
                     @csrf
                     <div>
-                        <span class="text-[10px] font-mono uppercase text-ink-400 block mb-1">Target Field</span>
+                        <span class="text-xs sm:text-[10px] font-mono uppercase text-ink-600 block mb-1">Target Field</span>
                         <div class="font-bold text-xs text-ink-900" x-text="activeItem ? activeItem.field : ''"></div>
                     </div>
 

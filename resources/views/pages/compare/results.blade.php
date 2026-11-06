@@ -6,6 +6,7 @@
         x-data="{
             highlightDifferences: false,
             mobileActiveIndex: 0,
+            mobileCompareIndex: {{ count($universities) > 1 ? 1 : 'null' }},
             activeTab: 'all',
             universities: @js($universities),
             sections: @js($sections),
@@ -22,7 +23,7 @@
     >
         <!-- Header Strip -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -69,24 +70,29 @@
             </div>
         </section>
 
-        <!-- Mobile University Switcher Tabs -->
-        <div class="lg:hidden sticky top-16 z-30 bg-surface border-b border-border-default px-4 py-2.5">
-            <span class="text-[10px] uppercase font-mono text-ink-400 block mb-1">Switch View Column:</span>
-            <div class="flex items-center gap-2 overflow-x-auto pb-1">
-                @foreach($universities as $index => $uni)
-                    <button 
-                        type="button" 
-                        @click="mobileActiveIndex = {{ $index }}"
-                        class="px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-smooth"
-                        :class="mobileActiveIndex === {{ $index }} ? 'bg-brand-600 text-white shadow-2xs' : 'bg-surface-subtle border border-border-default text-ink-700'"
-                    >
-                        {{ $uni['acronym'] }}
-                    </button>
-                @endforeach
+        <fieldset class="lg:hidden sticky top-[var(--public-header-height)] z-30 border-b border-border-default bg-surface px-4 py-3">
+            <legend class="sr-only">Choose universities to compare</legend>
+            <div class="grid grid-cols-2 gap-3">
+                <label class="min-w-0 text-xs font-semibold text-ink-600">First university
+                    <select x-model.number="mobileActiveIndex" class="mt-1 min-h-11 w-full rounded-lg border border-border-default bg-surface-subtle px-2 text-sm" aria-label="First comparison university">
+                        @foreach($universities as $index => $uni)
+                            <option value="{{ $index }}" :disabled="mobileCompareIndex === {{ $index }}">{{ $uni['name'] }}</option>
+                        @endforeach
+                    </select>
+                </label>
+                @if(count($universities) > 1)
+                    <label class="min-w-0 text-xs font-semibold text-ink-600">Second university
+                        <select x-model.number="mobileCompareIndex" class="mt-1 min-h-11 w-full rounded-lg border border-border-default bg-surface-subtle px-2 text-sm" aria-label="Second comparison university">
+                            @foreach($universities as $index => $uni)
+                                <option value="{{ $index }}" :disabled="mobileActiveIndex === {{ $index }}">{{ $uni['name'] }}</option>
+                            @endforeach
+                        </select>
+                    </label>
+                @endif
             </div>
-        </div>
+        </fieldset>
 
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             
             <!-- Sticky Header Strip for Desktop -->
             <div class="hidden lg:grid grid-cols-12 gap-4 sticky top-16 z-30 bg-surface/95 backdrop-blur-xs p-4 rounded-2xl border border-border-default shadow-card mb-8">
@@ -110,10 +116,10 @@
                                     <x-icon name="x" class="w-3.5 h-3.5" />
                                 </button>
                             </div>
-                            <span class="text-[11px] text-ink-500 font-sans block truncate">{{ $uni['name'] }}</span>
+                            <span class="text-xs sm:text-[11px] text-ink-500 font-sans block truncate">{{ $uni['name'] }}</span>
                         </div>
 
-                        <div class="mt-2 pt-1 border-t border-border-subtle flex items-center justify-between text-[11px]">
+                        <div class="mt-2 pt-1 border-t border-border-subtle flex items-center justify-between text-xs sm:text-[11px]">
                             <span class="font-mono text-brand-700 font-semibold">{{ $uni['fee_range'] }}</span>
                             <a href="{{ route('universities.show', $uni['slug']) }}" class="text-brand-600 hover:text-brand-700 font-semibold">
                                 Profile →
@@ -151,7 +157,7 @@
                                     <div class="lg:col-span-3 font-semibold text-ink-900 flex items-center justify-between">
                                         <span>{{ $metricLabel }}</span>
                                         @if(!$allSame)
-                                            <span x-show="highlightDifferences" class="text-[9px] font-mono uppercase bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded">
+                                            <span x-show="highlightDifferences" class="text-xs sm:text-[9px] font-mono uppercase bg-amber-100 text-amber-800 font-bold px-1.5 py-0.2 rounded">
                                                 Differs
                                             </span>
                                         @endif
@@ -167,13 +173,13 @@
                                     </div>
 
                                     <!-- Value Mobile (Active Index Only) -->
-                                    <div class="lg:hidden text-ink-800 leading-relaxed pt-1 border-t border-border-subtle mt-1">
+                                    <div class="lg:hidden grid grid-cols-2 gap-3 text-ink-800 leading-relaxed pt-2 border-t border-border-subtle mt-1">
                                         @foreach($values as $vIndex => $val)
-                                            <div x-show="mobileActiveIndex === {{ $vIndex }}">
-                                                <span class="text-[10px] uppercase font-mono text-ink-400 block font-bold">
+                                            <div class="min-w-0 break-words" x-show="mobileActiveIndex === {{ $vIndex }} || mobileCompareIndex === {{ $vIndex }}" :style="mobileActiveIndex === {{ $vIndex }} ? 'order: 0' : 'order: 1'">
+                                                <span class="text-xs sm:text-[10px] uppercase font-mono text-ink-600 block font-bold">
                                                     {{ $universities[$vIndex]['acronym'] }}
                                                 </span>
-                                                <span class="text-xs text-ink-900 font-medium">{{ $val }}</span>
+                                                <span class="text-sm text-ink-900 font-medium">{{ $val }}</span>
                                             </div>
                                         @endforeach
                                     </div>
@@ -185,7 +191,7 @@
             </div>
 
             <!-- Footer Action Strip -->
-            <div class="mt-12 p-6 rounded-2xl bg-surface border border-border-default shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div class="mt-12 p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div class="space-y-1">
                     <h3 class="font-heading font-bold text-sm text-ink-950">Need a definitive recommendation?</h3>
                     <p class="text-xs text-ink-500 font-sans">Ask our AI counselor to weigh your specific board marks against these universities.</p>

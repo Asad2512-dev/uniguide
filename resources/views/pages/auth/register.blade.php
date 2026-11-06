@@ -70,17 +70,8 @@
                         <x-form.select 
                             name="province" 
                             label="Provincial Domicile" 
-                            :options="[
-                                'punjab' => 'Punjab',
-                                'sindh_urban' => 'Sindh (Urban)',
-                                'sindh_rural' => 'Sindh (Rural)',
-                                'ict' => 'Islamabad Capital Territory (Federal)',
-                                'kpk' => 'Khyber Pakhtunkhwa',
-                                'balochistan' => 'Balochistan',
-                                'ajk' => 'Azad Jammu & Kashmir',
-                                'gb' => 'Gilgit-Baltistan'
-                            ]"
-                            selected="{{ old('province', 'ict') }}"
+                            :options="$coverageRegions"
+                            selected="{{ old('province', 'islamabad-capital-territory') }}"
                             required="true"
                         />
                     </div>
@@ -121,7 +112,7 @@
                     <div class="pt-2">
                         <x-form.checkbox 
                             name="terms" 
-                            label="I agree to UniGuide Pakistan Terms & HEC Data Verification Standards" 
+                            label="I agree to UniGuide Pakistan Terms & UniGuide Data Standards" 
                             description="I authorize UniGuide to verify my intermediate roll numbers against BISE and official entry testing bodies."
                             checked="true"
                             required="true"

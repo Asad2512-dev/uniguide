@@ -6,7 +6,7 @@
         
         <!-- Header & Search Box -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -24,7 +24,7 @@
                         @endif
                     </h1>
                     <p class="text-xs sm:text-sm text-ink-600 font-sans mt-1">
-                        Displaying verified records across 248+ HEC chartered universities and accredited degree programs.
+                        Displaying verified records across 248+ registered universities and accredited degree programs.
                     </p>
 
                     <!-- Search Input Form -->
@@ -69,7 +69,7 @@
                                 class="px-3.5 py-1.5 rounded-xl border transition-smooth whitespace-nowrap flex items-center gap-1.5 {{ $type === 'all' ? 'bg-brand-600 text-white border-brand-600 shadow-2xs' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle' }}"
                             >
                                 <span>All Results</span>
-                                <span class="px-1.5 py-0.2 rounded-full text-[10px] font-mono {{ $type === 'all' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
+                                <span class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono {{ $type === 'all' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
                                     {{ $results['total'] }}
                                 </span>
                             </a>
@@ -78,7 +78,7 @@
                                 class="px-3.5 py-1.5 rounded-xl border transition-smooth whitespace-nowrap flex items-center gap-1.5 {{ $type === 'universities' ? 'bg-brand-600 text-white border-brand-600 shadow-2xs' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle' }}"
                             >
                                 <span>Universities</span>
-                                <span class="px-1.5 py-0.2 rounded-full text-[10px] font-mono {{ $type === 'universities' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
+                                <span class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono {{ $type === 'universities' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
                                     {{ count($results['universities']) }}
                                 </span>
                             </a>
@@ -87,7 +87,7 @@
                                 class="px-3.5 py-1.5 rounded-xl border transition-smooth whitespace-nowrap flex items-center gap-1.5 {{ $type === 'programs' ? 'bg-brand-600 text-white border-brand-600 shadow-2xs' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle' }}"
                             >
                                 <span>Degree Programs</span>
-                                <span class="px-1.5 py-0.2 rounded-full text-[10px] font-mono {{ $type === 'programs' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
+                                <span class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono {{ $type === 'programs' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
                                     {{ count($results['programs']) }}
                                 </span>
                             </a>
@@ -98,7 +98,7 @@
         </section>
 
         <!-- Main Body -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             @if(empty($query))
                 <!-- Initial State: Prompt search -->
                 <div class="bg-surface rounded-2xl border border-border-default p-12 text-center shadow-2xs max-w-xl mx-auto">
@@ -111,7 +111,7 @@
                     </p>
 
                     <div class="flex items-center justify-center flex-wrap gap-2 text-xs font-sans">
-                        <span class="text-ink-400 font-medium">Quick suggestions:</span>
+                        <span class="text-ink-600 font-medium">Quick suggestions:</span>
                         <a href="{{ route('search.index', ['q' => 'NUST']) }}" class="px-2.5 py-1 rounded-lg bg-surface-subtle border border-border-default text-brand-700 hover:border-brand-300">NUST</a>
                         <a href="{{ route('search.index', ['q' => 'Computer Science']) }}" class="px-2.5 py-1 rounded-lg bg-surface-subtle border border-border-default text-brand-700 hover:border-brand-300">Computer Science</a>
                         <a href="{{ route('search.index', ['q' => 'FAST']) }}" class="px-2.5 py-1 rounded-lg bg-surface-subtle border border-border-default text-brand-700 hover:border-brand-300">FAST</a>

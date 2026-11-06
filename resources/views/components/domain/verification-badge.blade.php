@@ -8,7 +8,7 @@
 @php
     $data = match($type) {
         'hec_recognized' => [
-            'label' => 'HEC Recognized',
+            'label' => 'University Registry',
             'sub' => $detail ?? 'Category W (Highest)',
             'icon' => 'shield-check',
             'color' => 'text-success-700 bg-success-50 border-success-200/80',
@@ -38,6 +38,7 @@
     };
 @endphp
 
+@if($type !== 'hec_recognized')
 <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md border text-xs font-medium font-sans {{ $data['color'] }} transition-smooth">
     <x-icon :name="$data['icon']" class="w-3.5 h-3.5 shrink-0 {{ $data['iconColor'] }}" />
     <span class="font-semibold">{{ $data['label'] }}</span>
@@ -46,9 +47,11 @@
         <span class="opacity-80 font-normal">{{ $data['sub'] }}</span>
     @endif
     @if($verifiedAt)
-        <span class="text-[10px] text-ink-500 font-mono ml-1" title="Data verification freshness">
+        <span class="text-xs sm:text-[10px] text-ink-500 font-mono ml-1" title="Data verification freshness">
             [{{ $verifiedAt }}]
         </span>
     @endif
 </div>
 
+
+@endif

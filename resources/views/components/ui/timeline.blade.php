@@ -30,7 +30,7 @@
                     <h5 class="font-bold text-sm text-ink-950 font-heading">
                         {{ $event['title'] }}
                     </h5>
-                    <time class="text-[11px] font-mono text-ink-500 font-medium shrink-0">
+                    <time class="text-xs sm:text-[11px] font-mono text-ink-500 font-medium shrink-0">
                         {{ $event['date'] }}
                     </time>
                 </div>

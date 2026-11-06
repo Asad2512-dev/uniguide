@@ -24,7 +24,7 @@ return [
             'label' => 'Explore Universities',
             'route' => 'universities.index',
             'icon' => 'building-2',
-            'description' => 'Browse 248+ HEC-recognized public and chartered institutions across Pakistan.',
+            'description' => 'Browse 248+ listed public and chartered institutions across Pakistan.',
         ],
         [
             'label' => 'Degree Programs',
@@ -43,7 +43,7 @@ return [
             'label' => 'Scholarships',
             'route' => 'scholarships.index',
             'icon' => 'award',
-            'description' => 'Discover need-based and merit scholarships including HEC, Ehsaas, and provincial endowments.',
+            'description' => 'Discover need-based and merit scholarships including Ehsaas, and provincial endowments.',
         ],
         [
             'label' => 'Compare Universities',
@@ -75,7 +75,7 @@ return [
             'label' => 'About UniGuide',
             'route' => 'marketing.about',
             'icon' => 'shield-check',
-            'description' => 'Our national charter, HEC data transparency, mission, and leadership.',
+            'description' => 'Our national charter, data transparency, mission, and leadership.',
         ],
     ],
 

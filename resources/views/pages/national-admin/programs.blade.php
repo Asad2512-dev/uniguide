@@ -8,7 +8,7 @@
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'Programs & Campuses']
                 ]"
             />
@@ -74,9 +74,9 @@
         <!-- Programs Table -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse" aria-label="Accredited Degree Programs Inventory">
+                <table data-mobile-table class="w-full text-left border-collapse" aria-label="Accredited Degree Programs Inventory">
                     <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                        <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                             <th scope="col" class="py-3.5 px-4 font-semibold">Degree Program & Level</th>
                             <th scope="col" class="py-3.5 px-4 font-semibold">Institution & Campus</th>
                             <th scope="col" class="py-3.5 px-4 font-semibold">Accreditation Body</th>
@@ -93,14 +93,14 @@
                             >
                                 <td class="py-3.5 px-4">
                                     <span class="font-bold text-ink-950 font-heading block">{{ $p['name'] }}</span>
-                                    <span class="text-[11px] font-mono text-brand-700 block">{{ $p['level'] }}</span>
+                                    <span class="text-xs sm:text-[11px] font-mono text-brand-700 block">{{ $p['level'] }}</span>
                                 </td>
                                 <td class="py-3.5 px-4">
                                     <span class="font-semibold text-ink-800 block">{{ $p['university'] }}</span>
-                                    <span class="text-[11px] text-ink-500 block">{{ $p['campus'] }}</span>
+                                    <span class="text-xs sm:text-[11px] text-ink-500 block">{{ $p['campus'] }}</span>
                                 </td>
                                 <td class="py-3.5 px-4">
-                                    <span class="inline-flex px-2 py-0.5 rounded text-[11px] font-mono font-medium bg-surface-subtle text-ink-700 border border-border-subtle">
+                                    <span class="inline-flex px-2 py-0.5 rounded text-xs sm:text-[11px] font-mono font-medium bg-surface-subtle text-ink-700 border border-border-subtle">
                                         {{ $p['council'] }}
                                     </span>
                                 </td>
@@ -111,7 +111,7 @@
                                     {{ $p['annual_fee'] }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs sm:text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         {{ $p['status'] }}
                                     </span>

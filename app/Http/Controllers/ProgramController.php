@@ -25,7 +25,7 @@ class ProgramController extends Controller
         ];
 
         $sort = $request->query('sort', 'merit_desc');
-        $page = max(1, (int)$request->query('page', 1));
+        $page = max(1, (int) $request->query('page', 1));
         $perPage = 6;
 
         $results = $this->discoveryService->getPrograms($filters, $sort, $perPage, $page);
@@ -33,8 +33,8 @@ class ProgramController extends Controller
 
         // Applied filters for chips
         $appliedFilters = [];
-        if (!empty($filters['q'])) {
-            $appliedFilters['q'] = ['label' => 'Keyword: "' . e($filters['q']) . '"', 'param' => 'q'];
+        if (! empty($filters['q'])) {
+            $appliedFilters['q'] = ['label' => 'Keyword: "'.e($filters['q']).'"', 'param' => 'q'];
         }
         if ($filters['discipline'] !== 'all' && isset($filterOptions['disciplines'][$filters['discipline']])) {
             $appliedFilters['discipline'] = ['label' => $filterOptions['disciplines'][$filters['discipline']], 'param' => 'discipline'];
@@ -45,7 +45,7 @@ class ProgramController extends Controller
         if ($filters['university'] !== 'all') {
             $uni = $this->discoveryService->getUniversityBySlug($filters['university']);
             if ($uni) {
-                $appliedFilters['university'] = ['label' => 'University: ' . $uni['acronym'], 'param' => 'university'];
+                $appliedFilters['university'] = ['label' => 'University: '.$uni['acronym'], 'param' => 'university'];
             }
         }
 
@@ -69,7 +69,7 @@ class ProgramController extends Controller
     {
         $program = $this->discoveryService->getProgramBySlug($slug);
 
-        if (!$program) {
+        if (! $program) {
             abort(404, 'Academic program not found');
         }
 
@@ -78,4 +78,3 @@ class ProgramController extends Controller
         ]);
     }
 }
-

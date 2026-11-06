@@ -6,7 +6,7 @@
         
         <!-- Header Banner & Counts Strip -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -21,7 +21,7 @@
                             <x-icon name="shield-check" class="w-3.5 h-3.5 text-emerald-600" />
                             <span>Verified Backend Rules Engine</span>
                             <span class="text-ink-300">•</span>
-                            <span class="font-mono text-[11px] text-emerald-800">PEC & NCEAC Regulated</span>
+                            <span class="font-mono text-xs sm:text-[11px] text-emerald-800">PEC & NCEAC Regulated</span>
                         </div>
                         <h1 class="font-heading font-bold text-2xl sm:text-3xl lg:text-4xl text-ink-950 tracking-tight">
                             Official Academic Eligibility Results
@@ -33,11 +33,11 @@
 
                     <!-- Candidate Quick Context Chip -->
                     <div class="shrink-0 p-3.5 rounded-xl border border-border-default bg-surface-subtle text-xs font-sans">
-                        <span class="text-[10px] text-ink-400 uppercase font-mono block font-bold">Evaluated Profile</span>
+                        <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block font-bold">Evaluated Profile</span>
                         <span class="font-bold text-ink-900 block mt-0.5">
                             {{ $candidate['qualification'] }} ({{ $candidate['academic_group'] }}) • {{ $candidate['fsc_percentage'] }}% FSc
                         </span>
-                        <span class="text-[11px] text-brand-700 font-mono block mt-0.5">
+                        <span class="text-xs sm:text-[11px] text-brand-700 font-mono block mt-0.5">
                             Test: {{ $candidate['test_type'] }} (Score: {{ $candidate['test_score'] }})
                         </span>
                     </div>
@@ -47,9 +47,9 @@
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-8 pt-6 border-t border-border-subtle">
                     <div class="p-4 rounded-xl bg-emerald-50/40 border border-emerald-200 flex items-center justify-between">
                         <div>
-                            <span class="text-[11px] font-bold text-emerald-800 uppercase tracking-wider font-mono">Eligible Programs</span>
+                            <span class="text-xs sm:text-[11px] font-bold text-emerald-800 uppercase tracking-wider font-mono">Eligible Programs</span>
                             <div class="font-heading font-extrabold text-2xl text-emerald-700 mt-0.5">{{ $counts['eligible'] }}</div>
-                            <span class="text-[10px] text-emerald-600 font-sans">Statutory requirements satisfied</span>
+                            <span class="text-xs sm:text-[10px] text-emerald-600 font-sans">Statutory requirements satisfied</span>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
                             <x-icon name="check-circle" class="w-5 h-5" />
@@ -58,9 +58,9 @@
 
                     <div class="p-4 rounded-xl bg-warning-50/40 border border-warning-200 flex items-center justify-between">
                         <div>
-                            <span class="text-[11px] font-bold text-warning-800 uppercase tracking-wider font-mono">Conditional / Action Required</span>
+                            <span class="text-xs sm:text-[11px] font-bold text-warning-800 uppercase tracking-wider font-mono">Conditional / Action Required</span>
                             <div class="font-heading font-extrabold text-2xl text-warning-700 mt-0.5">{{ $counts['conditional'] }}</div>
-                            <span class="text-[10px] text-warning-600 font-sans">Requires deficiency math or IBCC</span>
+                            <span class="text-xs sm:text-[10px] text-warning-600 font-sans">Requires deficiency math or IBCC</span>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-warning-100 text-warning-700 flex items-center justify-center font-bold">
                             <x-icon name="alert-circle" class="w-5 h-5" />
@@ -69,9 +69,9 @@
 
                     <div class="p-4 rounded-xl bg-surface-subtle border border-border-default flex items-center justify-between">
                         <div>
-                            <span class="text-[11px] font-bold text-ink-600 uppercase tracking-wider font-mono">Ineligible by Statute</span>
+                            <span class="text-xs sm:text-[11px] font-bold text-ink-600 uppercase tracking-wider font-mono">Ineligible by Statute</span>
                             <div class="font-heading font-extrabold text-2xl text-ink-900 mt-0.5">{{ $counts['ineligible'] }}</div>
-                            <span class="text-[10px] text-ink-400 font-sans">Marks below minimum regulatory cutoff</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans">Marks below minimum regulatory cutoff</span>
                         </div>
                         <div class="w-10 h-10 rounded-xl bg-surface border border-border-default text-ink-400 flex items-center justify-center font-bold">
                             <x-icon name="x-circle" class="w-5 h-5" />
@@ -82,7 +82,7 @@
         </section>
 
         <!-- Main Results Grid -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
             
             <!-- Filter Tabs -->
             <div class="flex items-center justify-between pb-4 border-b border-border-default flex-wrap gap-4">
@@ -142,7 +142,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @foreach($results['eligible'] as $el)
-                        <div class="p-6 rounded-2xl bg-surface border border-emerald-200/90 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between">
+                        <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-emerald-200/90 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between">
                             <div class="space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-emerald-100">
                                     <span class="text-xs font-bold text-emerald-800 font-mono bg-emerald-50 px-2 py-0.5 rounded">
@@ -152,25 +152,25 @@
                                 </div>
 
                                 <div>
-                                    <span class="text-xs text-ink-400 uppercase font-mono font-semibold">{{ $el['acronym'] }} • {{ $el['campus'] }}</span>
+                                    <span class="text-xs text-ink-600 uppercase font-mono font-semibold">{{ $el['acronym'] }} • {{ $el['campus'] }}</span>
                                     <h3 class="font-heading font-bold text-base text-ink-950 mt-0.5">{{ $el['program'] }}</h3>
                                     <p class="text-xs text-emerald-700 font-sans mt-1">{{ $el['eligibility_note'] }}</p>
                                 </div>
 
                                 <div class="grid grid-cols-2 gap-2 pt-2 border-t border-border-subtle text-xs font-sans">
                                     <div>
-                                        <span class="text-[10px] text-ink-400 block font-mono">Calculated Aggregate</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Calculated Aggregate</span>
                                         <span class="font-bold text-emerald-700 font-mono">{{ $el['calculated_aggregate'] }}% (vs {{ $el['closing_cutoff_ref'] }})</span>
                                     </div>
                                     <div>
-                                        <span class="text-[10px] text-ink-400 block font-mono">Semester Tuition</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Semester Tuition</span>
                                         <span class="font-bold text-ink-900 font-mono">{{ $el['fee_semester'] }}</span>
                                     </div>
                                 </div>
                             </div>
 
                             <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                                <a href="{{ route('eligibility.rule', $el['applied_rule']) }}" class="text-[11px] text-ink-500 hover:text-brand-600 underline font-mono truncate max-w-xs">
+                                <a href="{{ route('eligibility.rule', $el['applied_rule']) }}" class="text-xs sm:text-[11px] text-ink-500 hover:text-brand-600 underline font-mono truncate max-w-xs">
                                     Rule: {{ $el['rule_title'] }}
                                 </a>
 
@@ -198,7 +198,7 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @forelse($results['conditional'] as $cond)
-                        <div class="p-6 rounded-2xl bg-surface border border-warning-200/90 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between">
+                        <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-warning-200/90 shadow-2xs hover:shadow-card transition-all flex flex-col justify-between">
                             <div class="space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-warning-100">
                                     <span class="text-xs font-bold text-warning-800 font-mono bg-warning-50 px-2 py-0.5 rounded">
@@ -208,14 +208,14 @@
                                 </div>
 
                                 <div>
-                                    <span class="text-xs text-ink-400 uppercase font-mono font-semibold">{{ $cond['acronym'] }} • {{ $cond['campus'] }}</span>
+                                    <span class="text-xs text-ink-600 uppercase font-mono font-semibold">{{ $cond['acronym'] }} • {{ $cond['campus'] }}</span>
                                     <h3 class="font-heading font-bold text-base text-ink-950 mt-0.5">{{ $cond['program'] }}</h3>
                                     <p class="text-xs text-warning-800 font-sans mt-1 leading-relaxed">{{ $cond['condition_reason'] }}</p>
                                 </div>
                             </div>
 
                             <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                                <a href="{{ route('eligibility.rule', $cond['applied_rule']) }}" class="text-[11px] text-ink-500 hover:text-brand-600 underline font-mono">
+                                <a href="{{ route('eligibility.rule', $cond['applied_rule']) }}" class="text-xs sm:text-[11px] text-ink-500 hover:text-brand-600 underline font-mono">
                                     Inspect Legal Clause →
                                 </a>
 
@@ -225,7 +225,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-full p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
+                        <div class="col-span-full p-4 sm:p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
                             No conditional requirements flagged.
                         </div>
                     @endforelse
@@ -241,24 +241,24 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     @forelse($results['ineligible'] as $inelig)
-                        <div class="p-6 rounded-2xl bg-surface border border-border-default hover:border-border-strong transition-all flex flex-col justify-between">
+                        <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default hover:border-border-strong transition-all flex flex-col justify-between">
                             <div class="space-y-3">
                                 <div class="flex items-center justify-between pb-2 border-b border-border-subtle">
                                     <span class="text-xs font-bold text-ink-700 font-mono bg-surface-subtle px-2 py-0.5 rounded">
                                         {{ $inelig['status_label'] }}
                                     </span>
-                                    <span class="text-xs text-ink-400 font-mono">{{ $inelig['verified_date'] }}</span>
+                                    <span class="text-xs text-ink-600 font-mono">{{ $inelig['verified_date'] }}</span>
                                 </div>
 
                                 <div>
-                                    <span class="text-xs text-ink-400 uppercase font-mono font-semibold">{{ $inelig['acronym'] }} • {{ $inelig['campus'] }}</span>
+                                    <span class="text-xs text-ink-600 uppercase font-mono font-semibold">{{ $inelig['acronym'] }} • {{ $inelig['campus'] }}</span>
                                     <h3 class="font-heading font-bold text-base text-ink-950 mt-0.5">{{ $inelig['program'] }}</h3>
                                     <p class="text-xs text-error-700 font-sans mt-1 leading-relaxed">{{ $inelig['unmet_reason'] }}</p>
                                 </div>
                             </div>
 
                             <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                                <a href="{{ route('eligibility.rule', $inelig['applied_rule']) }}" class="text-[11px] text-ink-500 hover:text-brand-600 underline font-mono">
+                                <a href="{{ route('eligibility.rule', $inelig['applied_rule']) }}" class="text-xs sm:text-[11px] text-ink-500 hover:text-brand-600 underline font-mono">
                                     Inspect Mandatory Statute →
                                 </a>
 
@@ -268,7 +268,7 @@
                             </div>
                         </div>
                     @empty
-                        <div class="col-span-full p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
+                        <div class="col-span-full p-4 sm:p-6 rounded-xl border border-dashed border-border-default text-center text-xs text-ink-400">
                             Congratulations! No ineligible programs found.
                         </div>
                     @endforelse

@@ -6,7 +6,7 @@
     <div x-data="{ addModalOpen: false, editModalOpen: false, activeCampus: null }">
         <x-ui.page-header 
             title="Campus & Infrastructure Management"
-            description="Manage flagship residential campuses and regional constituent colleges across Islamabad, Rawalpindi, and Karachi."
+            description="Manage flagship residential campuses and regional constituent colleges across Punjab and Islamabad."
             badge="{{ count($campuses) }} Active Campuses"
             badgeVariant="brand"
         >
@@ -29,7 +29,7 @@
         <!-- Campuses Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             @foreach($campuses as $cmp)
-                <div class="p-6 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all flex flex-col justify-between">
+                <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all flex flex-col justify-between">
                     <div class="space-y-4">
                         <div class="flex items-start justify-between gap-4 pb-3 border-b border-border-subtle">
                             <div>
@@ -44,7 +44,7 @@
                                 </span>
                             </div>
 
-                            <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <span class="text-xs sm:text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
                                 Active
                             </span>
                         </div>
@@ -52,25 +52,25 @@
                         <!-- Campus Infrastructure Specs -->
                         <div class="grid grid-cols-2 gap-3 text-xs font-sans">
                             <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle">
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Land Masterplan</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Land Masterplan</span>
                                 <span class="font-bold text-ink-900 font-mono">{{ $cmp['land_area'] }}</span>
                             </div>
                             <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle">
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Student Population</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Student Population</span>
                                 <span class="font-bold text-brand-600 font-mono">{{ number_format($cmp['student_capacity']) }} Students</span>
                             </div>
                             <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle col-span-2">
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Residential Hostel Provision</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Residential Hostel Provision</span>
                                 <span class="font-bold text-ink-900 font-mono">{{ $cmp['hostel_capacity'] }}</span>
                             </div>
                         </div>
 
                         <!-- Facilities Tag Cloud -->
                         <div>
-                            <span class="text-[10px] text-ink-400 uppercase font-mono font-bold block mb-1.5">Key Facilities & Labs</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono font-bold block mb-1.5">Key Facilities & Labs</span>
                             <div class="flex flex-wrap gap-1.5">
                                 @foreach($cmp['facilities'] as $fac)
-                                    <span class="px-2 py-0.5 rounded-md bg-surface-subtle border border-border-subtle text-[11px] text-ink-700 font-sans">
+                                    <span class="px-2 py-0.5 rounded-md bg-surface-subtle border border-border-subtle text-xs sm:text-[11px] text-ink-700 font-sans">
                                         {{ $fac }}
                                     </span>
                                 @endforeach
@@ -80,12 +80,12 @@
                         <!-- Leadership & Address -->
                         <div class="pt-3 border-t border-border-subtle text-xs font-sans text-ink-600">
                             <div>Campus Commandant: <strong class="text-ink-900 font-semibold">{{ $cmp['head'] }}</strong></div>
-                            <div class="text-[11px] text-ink-400 mt-0.5">{{ $cmp['address'] }}</div>
+                            <div class="text-xs sm:text-[11px] text-ink-400 mt-0.5">{{ $cmp['address'] }}</div>
                         </div>
                     </div>
 
                     <div class="mt-6 pt-4 border-t border-border-subtle flex items-center justify-between text-xs">
-                        <span class="font-mono text-ink-400 text-[11px]">
+                        <span class="font-mono text-ink-600 text-xs sm:text-[11px]">
                             {{ $cmp['departments_count'] }} Depts • {{ $cmp['programs_count'] }} Degrees
                         </span>
 
@@ -107,7 +107,7 @@
             x-cloak 
             class="fixed inset-0 z-50 overflow-y-auto bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
-            <div class="bg-surface rounded-2xl border border-border-default p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="addModalOpen = false">
+            <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="addModalOpen = false">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Add Constituent Campus</h3>
                     <button type="button" @click="addModalOpen = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>
@@ -117,16 +117,16 @@
                     @csrf
                     <div>
                         <label class="block text-xs font-semibold text-ink-800 mb-1">Campus Name</label>
-                        <input type="text" name="name" placeholder="e.g. Quetta Sub-Campus" required class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans" />
+                        <input type="text" name="name" placeholder="Campus name" required class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans" />
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
                             <label class="block text-xs font-semibold text-ink-800 mb-1">City</label>
-                            <input type="text" name="city" placeholder="Quetta" required class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans" />
+                            <input type="text" name="city" placeholder="City" required class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans" />
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-ink-800 mb-1">Province</label>
-                            <input type="text" name="province" placeholder="Balochistan" required class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans" />
+                            <input type="text" name="province" placeholder="Punjab or Islamabad Capital Territory" required class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans" />
                         </div>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
@@ -149,7 +149,7 @@
                     </div>
                     <div>
                         <label class="block text-xs font-semibold text-ink-800 mb-1">Postal Address</label>
-                        <input type="text" name="address" placeholder="Cantonment Road, Quetta" required class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans" />
+                        <input type="text" name="address" placeholder="Official campus address" required class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans" />
                     </div>
 
                     <div class="pt-3 border-t border-border-subtle flex items-center justify-end gap-2">
@@ -166,7 +166,7 @@
             x-cloak 
             class="fixed inset-0 z-50 overflow-y-auto bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
-            <div class="bg-surface rounded-2xl border border-border-default p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="editModalOpen = false">
+            <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="editModalOpen = false">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Update Campus Specifications</h3>
                     <button type="button" @click="editModalOpen = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>

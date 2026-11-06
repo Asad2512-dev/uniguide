@@ -4,10 +4,10 @@
 >
     <!-- Header -->
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
                 title="UniGuide Platform Capabilities"
-                description="Designed specifically for the realities of higher education in Pakistan: multiple examination boards, decentralized tests, and strict HEC guidelines."
+                description="Designed specifically for the realities of higher education in Pakistan: multiple examination boards, decentralized tests, and strict guidelines."
                 badge="SaaS-Scale Architecture"
                 badgeVariant="brand"
             >
@@ -23,7 +23,7 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+    <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         <!-- Feature Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             @foreach($featureModules as $feat)
@@ -33,7 +33,7 @@
                             <div class="w-10 h-10 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center border border-brand-200/60">
                                 <x-icon :name="$feat['icon']" class="w-5 h-5" />
                             </div>
-                            <span class="text-[10px] font-mono font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-2 py-0.5 rounded border border-brand-200">
+                            <span class="text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-brand-700 bg-brand-50 px-2 py-0.5 rounded border border-brand-200">
                                 {{ $feat['badge'] }}
                             </span>
                         </div>
@@ -60,7 +60,7 @@
         </div>
 
         <!-- Interactive Feature Spotlight: Document Locker & 1-Link Banking -->
-        <section class="p-8 md:p-12 bg-surface rounded-3xl border border-border-default shadow-card">
+        <section class="p-4 sm:p-8 md:p-12 bg-surface rounded-3xl border border-border-default shadow-card">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-7 space-y-4">
                     <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-                <div class="lg:col-span-5 bg-surface-subtle p-6 rounded-2xl border border-border-default text-center space-y-3">
+                <div class="lg:col-span-5 bg-surface-subtle p-4 sm:p-6 rounded-2xl border border-border-default text-center space-y-3">
                     <x-icon name="receipt" class="w-12 h-12 text-brand-600 mx-auto" />
                     <span class="font-heading font-bold text-base text-ink-950 block">1-Bill National Integration</span>
                     <p class="text-xs text-ink-500 font-sans">Automated challan verification for 240+ institutions</p>

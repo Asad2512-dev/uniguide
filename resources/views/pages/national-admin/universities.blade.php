@@ -2,13 +2,13 @@
     <x-ui.page-header 
         title="National University Registry"
         description="Master registry of all chartered higher education institutions under federal and provincial legislative acts."
-        badge="248 Recognized Institutions"
+        :badge="count($universities) . ' Registry Records'"
         badgeVariant="brand"
     >
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'University Registry']
                 ]"
             />
@@ -39,26 +39,26 @@
     <!-- Statistics Overview Strip -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
-            <span class="text-[11px] font-mono uppercase text-ink-500 block mb-1">Total Chartered</span>
-            <span class="font-heading font-extrabold text-2xl text-ink-950">248</span>
-            <span class="text-[11px] text-emerald-700 mt-1 flex items-center gap-1 font-medium">
-                <x-icon name="check" class="w-3.5 h-3.5" /> 100% Recognized
+            <span class="text-xs sm:text-[11px] font-mono uppercase text-ink-500 block mb-1">Total Chartered</span>
+            <span class="font-heading font-extrabold text-2xl text-ink-950">{{ count($universities) }}</span>
+            <span class="text-xs sm:text-[11px] text-emerald-700 mt-1 flex items-center gap-1 font-medium">
+                <x-icon name="check" class="w-3.5 h-3.5" /> Verification tracked per record
             </span>
         </div>
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
-            <span class="text-[11px] font-mono uppercase text-ink-500 block mb-1">Public Sector</span>
-            <span class="font-heading font-extrabold text-2xl text-brand-700">142</span>
-            <span class="text-[11px] text-ink-500 mt-1 block">57.2% Federal/Provincial</span>
+            <span class="text-xs sm:text-[11px] font-mono uppercase text-ink-500 block mb-1">Public Sector</span>
+            <span class="font-heading font-extrabold text-2xl text-brand-700">{{ collect($universities)->where('sector', 'Public')->count() }}</span>
+            <span class="text-xs sm:text-[11px] text-ink-500 mt-1 block">Federal and provincial institutions</span>
         </div>
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
-            <span class="text-[11px] font-mono uppercase text-ink-500 block mb-1">Private Sector</span>
-            <span class="font-heading font-extrabold text-2xl text-indigo-700">106</span>
-            <span class="text-[11px] text-ink-500 mt-1 block">42.8% Independent Charters</span>
+            <span class="text-xs sm:text-[11px] font-mono uppercase text-ink-500 block mb-1">Private Sector</span>
+            <span class="font-heading font-extrabold text-2xl text-indigo-700">{{ collect($universities)->where('sector', 'Private')->count() }}</span>
+            <span class="text-xs sm:text-[11px] text-ink-500 mt-1 block">Private institutions in registry</span>
         </div>
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
-            <span class="text-[11px] font-mono uppercase text-ink-500 block mb-1">HEC Category W4</span>
-            <span class="font-heading font-extrabold text-2xl text-emerald-700">38</span>
-            <span class="text-[11px] text-ink-500 mt-1 block">Top Quality Rating</span>
+            <span class="text-xs sm:text-[11px] font-mono uppercase text-ink-500 block mb-1">Verified Records</span>
+            <span class="font-heading font-extrabold text-2xl text-emerald-700">{{ collect($universities)->where('status', 'Verified')->count() }}</span>
+            <span class="text-xs sm:text-[11px] text-ink-500 mt-1 block">Independent record review completed</span>
         </div>
     </div>
 
@@ -109,9 +109,6 @@
                     <option value="all">All Jurisdictions</option>
                     <option value="Islamabad">Islamabad (ICT)</option>
                     <option value="Punjab">Punjab</option>
-                    <option value="Sindh">Sindh</option>
-                    <option value="Khyber">KPK</option>
-                    <option value="Balochistan">Balochistan</option>
                 </select>
             </div>
         </div>
@@ -119,12 +116,11 @@
         <!-- Registry Table -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse" aria-label="Chartered University Registry">
+                <table data-mobile-table class="registry-table w-full text-left border-collapse" aria-label="Chartered University Registry">
                     <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                        <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                             <th scope="col" class="py-3.5 px-4 font-semibold">Institution Name & Legislative Act</th>
                             <th scope="col" class="py-3.5 px-4 font-semibold">Sector & Region</th>
-                            <th scope="col" class="py-3.5 px-4 text-center font-semibold">HEC Tier</th>
                             <th scope="col" class="py-3.5 px-4 text-center font-semibold">Campuses</th>
                             <th scope="col" class="py-3.5 px-4 text-center font-semibold">Programs</th>
                             <th scope="col" class="py-3.5 px-4 font-semibold">Last Audit</th>
@@ -146,7 +142,7 @@
                                             <a href="{{ route('national_admin.universities') }}" class="font-heading font-bold text-ink-950 hover:text-brand-700 transition-colors block truncate">
                                                 {{ $uni['name'] }}
                                             </a>
-                                            <span class="text-[11px] font-mono text-ink-500 block truncate">
+                                            <span class="text-xs sm:text-[11px] font-mono text-ink-500 block truncate">
                                                 {{ $uni['charter_type'] }}
                                             </span>
                                         </div>
@@ -154,12 +150,7 @@
                                 </td>
                                 <td class="py-3.5 px-4">
                                     <span class="font-medium text-ink-800 block">{{ $uni['sector'] }}</span>
-                                    <span class="text-[11px] text-ink-500 block">{{ $uni['province'] }}</span>
-                                </td>
-                                <td class="py-3.5 px-4 text-center">
-                                    <span class="inline-flex px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-brand-50 text-brand-700 border border-brand-200">
-                                        {{ $uni['hec_category'] }}
-                                    </span>
+                                    <span class="text-xs sm:text-[11px] text-ink-500 block">{{ $uni['province'] }}</span>
                                 </td>
                                 <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-800">
                                     {{ $uni['active_campuses_count'] }}
@@ -167,11 +158,11 @@
                                 <td class="py-3.5 px-4 text-center font-mono font-bold text-ink-800">
                                     {{ $uni['active_programs_count'] }}
                                 </td>
-                                <td class="py-3.5 px-4 font-mono text-ink-600 text-[11px]">
+                                <td class="py-3.5 px-4 font-mono text-ink-600 text-xs sm:text-[11px]">
                                     {{ $uni['last_audit_date'] }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs sm:text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         Verified
                                     </span>

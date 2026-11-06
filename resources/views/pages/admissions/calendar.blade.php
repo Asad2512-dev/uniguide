@@ -9,7 +9,7 @@
         
         <!-- Header Strip -->
         <header class="bg-surface border-b border-border-default/80">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
                         ['label' => 'Admissions', 'url' => route('admissions.index')],
@@ -79,14 +79,14 @@
         </header>
 
         <!-- Main Content -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
             
             <!-- Category Filter Strip & View Switcher -->
             <div class="bg-surface rounded-2xl border border-border-default p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 
                 <!-- Category Filter Pills -->
                 <div class="flex items-center gap-2 overflow-x-auto text-xs font-sans font-semibold">
-                    <span class="text-ink-400 font-medium mr-1 hidden md:inline">Event Type:</span>
+                    <span class="text-ink-600 font-medium mr-1 hidden md:inline">Event Type:</span>
                     <a 
                         href="{{ route('admissions.calendar', array_merge(request()->except(['category']))) }}"
                         class="px-3 py-1.5 rounded-lg border transition-smooth whitespace-nowrap {{ $selectedCategory === 'all' ? 'bg-ink-900 text-white border-ink-900 shadow-2xs' : 'bg-surface-subtle border-border-default text-ink-700 hover:bg-surface' }}"
@@ -151,7 +151,7 @@
                             <div class="flex items-start gap-4 sm:gap-5">
                                 <!-- Prominent Date Badge -->
                                 <div class="w-14 h-15 rounded-xl border flex flex-col items-center justify-center shrink-0 text-center {{ $event['type'] === 'deadline' ? 'bg-danger-50 border-danger-200/80 text-danger-800' : ($event['type'] === 'test' ? 'bg-brand-50 border-brand-200/80 text-brand-800' : ($event['type'] === 'scholarship' ? 'bg-success-50 border-success-200/80 text-success-800' : 'bg-warning-50 border-warning-200/80 text-warning-800')) }}">
-                                    <span class="text-[10px] font-mono font-bold uppercase tracking-wider block">
+                                    <span class="text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider block">
                                         {{ substr($event['month_name'], 0, 3) }}
                                     </span>
                                     <span class="font-heading font-extrabold text-xl leading-none block">
@@ -161,7 +161,7 @@
 
                                 <div class="space-y-1">
                                     <div class="flex flex-wrap items-center gap-2">
-                                        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider {{ $event['type'] === 'deadline' ? 'bg-danger-50 text-danger-700 border border-danger-200/60' : ($event['type'] === 'test' ? 'bg-brand-50 text-brand-700 border border-brand-200/60' : ($event['type'] === 'scholarship' ? 'bg-success-50 text-success-700 border border-success-200/60' : 'bg-warning-50 text-warning-700 border border-warning-200/60')) }}">
+                                        <span class="px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider {{ $event['type'] === 'deadline' ? 'bg-danger-50 text-danger-700 border border-danger-200/60' : ($event['type'] === 'test' ? 'bg-brand-50 text-brand-700 border border-brand-200/60' : ($event['type'] === 'scholarship' ? 'bg-success-50 text-success-700 border border-success-200/60' : 'bg-warning-50 text-warning-700 border border-warning-200/60')) }}">
                                             {{ $event['category'] }}
                                         </span>
                                         <span class="text-xs font-sans text-ink-500">
@@ -208,7 +208,7 @@
             @endif
 
             <!-- Calendar Subscription Notification Strip -->
-            <div class="p-6 rounded-2xl bg-surface-subtle border border-border-default flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface-subtle border border-border-default flex flex-col sm:flex-row items-center justify-between gap-4">
                 <div class="flex items-center gap-3.5">
                     <div class="w-11 h-11 rounded-xl bg-brand-50 text-brand-600 flex items-center justify-center shrink-0 border border-brand-200/60">
                         <x-icon name="bell-ring" class="w-5 h-5" />

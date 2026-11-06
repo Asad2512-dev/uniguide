@@ -36,7 +36,7 @@
             'pulse' => false,
             'icon' => 'refresh-cw',
         ],
-        'unverified' => [
+        'unknown', 'unverified' => [
             'label' => 'Pending Verification',
             'variant' => 'neutral',
             'pulse' => false,

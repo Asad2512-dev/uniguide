@@ -189,3 +189,192 @@ h1, h2, h3, h4, h5, h6, .font-heading {
         scroll-behavior: auto !important;
     }
 }
+
+/* Shared navigation geometry: fixed target height, flexible destination groups. */
+@layer components {
+    .public-nav-link {
+        @apply inline-flex min-h-11 shrink-0 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-3 text-sm font-semibold text-ink-700 transition-colors hover:bg-brand-50 hover:text-brand-700;
+    }
+    .public-nav-link[aria-current="page"], nav a[aria-current="page"] {
+        @apply bg-brand-50 text-brand-700;
+    }
+}
+
+[x-cloak] { display: none !important; }
+
+h1, h2, h3 { text-wrap: balance; }
+
+/* Mobile shell geometry is shared by navigation, sticky controls and chat. */
+:root { --public-header-height: calc(4rem + env(safe-area-inset-top, 0px)); }
+@media (min-width: 40rem) {
+    :root { --public-header-height: calc(4.5rem + env(safe-area-inset-top, 0px)); }
+}
+.public-header, .safe-area-top { padding-top: env(safe-area-inset-top, 0px); }
+.safe-area-bottom { padding-bottom: calc(var(--safe-bottom-padding, 0.75rem) + env(safe-area-inset-bottom, 0px)); }
+.chat-workspace { min-height: 0; }
+:root[data-keyboard-open] .student-bottom-nav { display: none; }
+
+@media (max-width: 39.999rem) {
+    input:not([type="checkbox"]):not([type="radio"]):not([type="hidden"]), select, textarea {
+        font-size: 1rem;
+    }
+    .mobile-management-table { display: block; table-layout: auto; }
+    .mobile-management-table thead {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip-path: inset(50%);
+    }
+    .mobile-management-table tbody { display: grid; gap: 0.75rem; padding: 0.75rem; }
+    .mobile-management-table tbody tr {
+        display: grid;
+        border: 1px solid var(--color-border-default);
+        border-radius: 0.875rem;
+        background: var(--color-surface);
+        overflow-wrap: anywhere;
+    }
+    .mobile-management-table tbody td, .mobile-management-table tbody th {
+        display: block;
+        padding: 0.75rem;
+        border: 0;
+        width: auto;
+        min-width: 0;
+        white-space: normal;
+        text-align: left;
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+    .mobile-management-table tbody td + td { border-top: 1px solid var(--color-border-subtle); }
+    .mobile-management-table tbody :is(td, th)::before {
+        display: block;
+        margin-bottom: 0.25rem;
+        content: attr(data-label);
+        color: var(--color-ink-500);
+        font-size: 0.75rem;
+        font-weight: 600;
+    }
+    .mobile-management-table tbody :is(td, th) > * { min-width: 0; }
+    .mobile-management-table tbody tr[data-summary-row] td { display: block; }
+    .mobile-management-table tbody tr[data-summary-row] td::before { content: none; }
+    .mobile-management-table :is(button, a) { min-height: 2.75rem; }
+}
+@media (pointer: coarse) {
+    button, [role="button"] { min-height: 2.75rem; min-width: 2.75rem; }
+}
+
+.mobile-row-toggle { display: none; }
+@media (max-width: 39.999rem) {
+    .mobile-row-toggle { display: inline-flex; align-items: center; }
+    .mobile-management-table tr:not([data-expanded]) td:nth-child(n+4):not([data-mobile-essential]) { display: none; }
+}
+
+@media (max-width: 22.499rem) {
+    .public-header [data-country-badge] { display: none; }
+}
+
+@media (max-width: 39.999rem) {
+    .mobile-management-table td .whitespace-nowrap { white-space: normal; }
+    .mobile-management-table td :is(.flex, .inline-flex) { flex-wrap: wrap; }
+}
+
+/* Full-width canvas across public pages and portal shells. */
+.app-shell {
+    width: 100%;
+    margin-inline: auto;
+}
+
+/* Landing & marketing page container: 80% of screen width, centered. */
+.landing-container {
+    width: 80%;
+    max-width: 80vw;
+    margin-inline: auto;
+}
+
+
+/* UniGuide Counselor: a focused research workspace with editorial answers. */
+@layer components {
+    .counselor-icon-button {
+        @apply inline-flex size-11 shrink-0 items-center justify-center rounded-xl text-ink-600 transition-colors hover:bg-surface-subtle hover:text-ink-950 disabled:cursor-not-allowed disabled:opacity-40;
+    }
+    .counselor-text-button {
+        @apply inline-flex min-h-11 items-center rounded-lg px-2 text-xs font-medium text-ink-500 transition-colors hover:bg-surface-subtle hover:text-ink-900 disabled:opacity-50;
+    }
+    .counselor-menu-action {
+        @apply flex min-h-11 w-full items-center rounded-lg px-3 text-left text-sm text-ink-700 hover:bg-surface-subtle;
+    }
+    .counselor-starter {
+        @apply flex min-h-20 items-center gap-3 rounded-2xl border border-border-default bg-surface px-4 py-3 text-left text-sm font-semibold text-ink-800 transition-colors hover:border-brand-300 hover:bg-brand-50/30;
+    }
+    .counselor-message-user {
+        @apply ml-auto max-w-[92%] rounded-2xl border border-border-subtle bg-canvas px-4 py-4 sm:max-w-[85%] sm:px-5;
+    }
+    .counselor-message-assistant { @apply min-w-0 py-2; }
+}
+.counselor-workspace { min-height: 0; }
+.counselor-prose { font-size: 0.9375rem; line-height: 1.85; overflow-wrap: anywhere; color: var(--color-ink-800); }
+.counselor-prose > :first-child { margin-top: 0; }
+.counselor-prose :is(h1, h2, h3, h4) { margin: 1.6em 0 0.65em; font-weight: 700; line-height: 1.5; color: var(--color-ink-950); }
+.counselor-prose h1, .counselor-prose h2 { font-size: 1.125rem; }
+.counselor-prose h3, .counselor-prose h4 { font-size: 0.9375rem; }
+.counselor-prose p { margin-block: 0.85em; }
+.counselor-prose :is(ul, ol) { margin-block: 0.85em; padding-left: 1.4rem; }
+.counselor-prose ul { list-style: disc; }
+.counselor-prose ol { list-style: decimal; }
+.counselor-prose li { margin-block: 0.4em; padding-left: 0.2rem; }
+.counselor-prose a { color: var(--color-brand-700); text-decoration: underline; text-underline-offset: 3px; }
+.counselor-prose code { border-radius: 0.3rem; background: var(--color-surface-subtle); padding: 0.15rem 0.35rem; font-size: 0.85em; }
+.counselor-prose pre { overflow: auto; border-radius: 0.75rem; background: var(--color-surface-subtle); padding: 1rem; }
+.counselor-prose pre code { padding: 0; }
+.counselor-prose blockquote { border-left: 2px solid var(--color-brand-200); margin-block: 1rem; padding-left: 1rem; color: var(--color-ink-600); }
+.counselor-prose table { display: block; max-width: 100%; overflow-x: auto; margin-block: 1rem; border-collapse: collapse; font-size: 0.8125rem; }
+.counselor-prose :is(th, td) { padding: 0.65rem; border: 1px solid var(--color-border-default); text-align: left; }
+.counselor-composer textarea:focus { outline: none; box-shadow: none; }
+@media (max-width: 39.999rem) {
+    .counselor-prose { font-size: 0.875rem; line-height: 1.8; }
+    .counselor-welcome { padding-top: 0.5rem; }
+}
+
+/* Keep discovery compact on phones without compressing the desktop layout. */
+@media (max-width: 47.999rem) {
+    .public-header > div { padding-inline: 1rem; }
+    .public-header > div > div { gap: 0.5rem; }
+    .public-header [data-country-badge] { display: none; }
+}
+@media (max-width: 39.999rem) {
+    .home-discovery h1 { max-width: 20ch; margin-inline: auto; font-size: clamp(1.75rem, 7.5vw, 2.25rem); line-height: 1.15; text-wrap: balance; }
+    .home-search-tabs { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.25rem; }
+    .home-search-tabs > button { min-width: 0; padding-inline: 0.25rem; justify-content: center; font-size: 0.75rem; }
+    .home-search-tabs > button:last-child { display: none; }
+    .home-search-tabs svg { display: none; }
+    .home-discovery input { min-width: 0; font-size: 1rem; }
+    .home-quick-filters > div { flex-wrap: nowrap; overflow-x: auto; max-width: 100%; padding-bottom: 0.25rem; }
+    .home-quick-filters > div > * { flex-shrink: 0; white-space: nowrap; }
+    .home-quick-filters > div > span { display: none; }
+    .home-quick-filters > a { display: none; }
+    .home-popular { display: none; }
+    .home-intro { max-width: 36ch; font-size: 0.875rem; line-height: 1.6; }
+    .home-shortcuts > a { padding: 1rem; min-width: 0; }
+    .home-shortcuts h3 { font-size: 0.875rem; line-height: 1.4; overflow-wrap: anywhere; }
+    .home-shortcuts p { display: none; }
+    .home-shortcuts > a > div > div { margin-bottom: 0.75rem; }
+    .home-shortcuts > a > span { margin-top: 0.75rem; font-size: 0.75rem; }
+}
+
+/* Portal pages share the document scroll instead of nesting content scrollbars. */
+.portal-workspace > aside { position: sticky; top: 0; height: 100dvh; min-height: 0; align-self: flex-start; overflow: hidden; }
+.portal-workspace > aside > .overflow-y-auto { overflow-y: auto; overscroll-behavior: contain; scrollbar-width: none; }
+.portal-workspace > aside > .overflow-y-auto::-webkit-scrollbar { display: none; }
+.portal-workspace main { overflow-wrap: anywhere; }
+@media (min-width: 40rem) {
+    .portal-workspace table { table-layout: fixed; width: 100%; }
+    .portal-workspace :is(th, td) { white-space: normal; overflow-wrap: anywhere; }
+    .portal-workspace :is(th, td) .whitespace-nowrap { white-space: normal; }
+    .portal-workspace :is(th, td) .flex { min-width: 0; flex-wrap: wrap; }
+    .portal-workspace :is(th, td) { padding-inline: 0.75rem; }
+}
+.home-quick-filters > div { flex-wrap: wrap; overflow-x: visible; }
+
+@media (min-width: 40rem) {
+    .portal-workspace .registry-table th:first-child { width: 30%; }
+}

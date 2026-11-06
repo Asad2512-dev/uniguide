@@ -2,6 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\Admission;
+use App\Models\Scholarship;
+
 class AdmissionService
 {
     /**
@@ -858,7 +861,7 @@ class AdmissionService
      */
     public function getAdmissions(array $filters = [], string $sort = 'deadline_asc', int $perPage = 6, int $page = 1): array
     {
-        $items = collect($this->admissions);
+        $items = Admission::with(['university', 'campus'])->get()->map(fn (Admission $record): array => $this->presentAdmission($record));
 
         if (! empty($filters['q'])) {
             $q = strtolower(trim($filters['q']));
@@ -876,7 +879,7 @@ class AdmissionService
         }
 
         if (! empty($filters['province']) && $filters['province'] !== 'all') {
-            $items = $items->filter(fn ($a) => $a['province'] === $filters['province'] || $a['province'] === 'multi');
+            $items = $items->filter(fn ($a) => app(RegionCatalog::class)->normalizeRegion($a['province']) === app(RegionCatalog::class)->normalizeRegion($filters['province']));
         }
 
         if (! empty($filters['degree_level']) && $filters['degree_level'] !== 'all') {
@@ -921,7 +924,20 @@ class AdmissionService
      */
     public function getAdmissionBySlug(string $slug): ?array
     {
-        return collect($this->admissions)->firstWhere('slug', $slug);
+        $record = Admission::with(['university', 'campus'])->where('slug', $slug)->first();
+
+        return $record ? $this->presentAdmission($record) : null;
+    }
+
+    private function presentAdmission(Admission $record): array
+    {
+        return array_replace(collect($this->admissions)->firstWhere('slug', $record->slug) ?? [], $record->toArray(), [
+            'university_slug' => $record->university->slug, 'university_name' => $record->university->name,
+            'university_acronym' => $record->university->acronym ?? '', 'city' => $record->campus->city,
+            'province' => app(RegionCatalog::class)->normalizeRegion($record->campus->province),
+            'campuses' => [$record->campus->name], 'entry_test' => $record->entry_test_requirement ?? 'Not verified',
+            'deadline_date' => $record->deadline_date?->toDateString(),
+        ]);
     }
 
     /**
@@ -929,296 +945,19 @@ class AdmissionService
      */
     public function getCalendarEvents(int $year = 2026, ?int $month = null): array
     {
-        $events = [
-            [
-                'id' => 101,
-                'title' => 'GIKI Admission Application Deadline',
-                'university' => 'GIKI Topi',
-                'university_slug' => 'giki',
-                'category' => 'Deadline',
-                'type' => 'deadline',
-                'date' => '2026-06-20',
-                'day' => '20',
-                'month_name' => 'June',
-                'month_num' => 6,
-                'year' => 2026,
-                'status' => 'closing_soon',
-                'time' => '11:59 PM PST',
-                'admission_slug' => 'giki-fall-2026',
-            ],
-            [
-                'id' => 102,
-                'title' => 'Aga Khan University MBBS Final Deadline',
-                'university' => 'AKU Karachi',
-                'university_slug' => 'aku',
-                'category' => 'Deadline',
-                'type' => 'deadline',
-                'date' => '2026-06-25',
-                'day' => '25',
-                'month_name' => 'June',
-                'month_num' => 6,
-                'year' => 2026,
-                'status' => 'closing_soon',
-                'time' => '05:00 PM PST',
-                'admission_slug' => 'aku-mbbs-fall-2026',
-            ],
-            [
-                'id' => 103,
-                'title' => 'LUMS Final Undergraduate Application Deadline',
-                'university' => 'LUMS Lahore',
-                'university_slug' => 'lums',
-                'category' => 'Deadline',
-                'type' => 'deadline',
-                'date' => '2026-06-30',
-                'day' => '30',
-                'month_name' => 'June',
-                'month_num' => 6,
-                'year' => 2026,
-                'status' => 'closing_soon',
-                'time' => '05:00 PM PST',
-                'admission_slug' => 'lums-fall-2026',
-            ],
-            [
-                'id' => 104,
-                'title' => 'FAST-NUCES Fall 2026 Registration Deadline',
-                'university' => 'FAST-NUCES (All Campuses)',
-                'university_slug' => 'fast-nuces',
-                'category' => 'Deadline',
-                'type' => 'deadline',
-                'date' => '2026-07-05',
-                'day' => '05',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '11:59 PM PST',
-                'admission_slug' => 'fast-nuces-fall-2026',
-            ],
-            [
-                'id' => 105,
-                'title' => 'FAST-NUCES NU Computer-Based Tests Begin',
-                'university' => 'FAST-NUCES',
-                'university_slug' => 'fast-nuces',
-                'category' => 'Entry Test',
-                'type' => 'test',
-                'date' => '2026-07-08',
-                'day' => '08',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => 'Morning & Afternoon Batches',
-                'admission_slug' => 'fast-nuces-fall-2026',
-            ],
-            [
-                'id' => 106,
-                'title' => 'FAST Qarz-e-Hasna Financial Aid Application Cutoff',
-                'university' => 'FAST-NUCES',
-                'university_slug' => 'fast-nuces',
-                'category' => 'Scholarship',
-                'type' => 'scholarship',
-                'date' => '2026-07-10',
-                'day' => '10',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '04:00 PM PST',
-                'admission_slug' => 'fast-nuces-fall-2026',
-            ],
-            [
-                'id' => 107,
-                'title' => 'IBA Karachi Undergraduate Round 2 Deadline',
-                'university' => 'IBA Karachi',
-                'university_slug' => 'iba-karachi',
-                'category' => 'Deadline',
-                'type' => 'deadline',
-                'date' => '2026-07-12',
-                'day' => '12',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '11:59 PM PST',
-                'admission_slug' => 'iba-karachi-fall-2026',
-            ],
-            [
-                'id' => 108,
-                'title' => 'NUST Fall 2026 Undergraduate Registration Closes',
-                'university' => 'NUST Islamabad',
-                'university_slug' => 'nust',
-                'category' => 'Deadline',
-                'type' => 'deadline',
-                'date' => '2026-07-15',
-                'day' => '15',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '11:59 PM PST',
-                'admission_slug' => 'nust-fall-2026',
-            ],
-            [
-                'id' => 109,
-                'title' => 'UET Lahore Combined Engineering Application Deadline',
-                'university' => 'UET Lahore',
-                'university_slug' => 'uet-lahore',
-                'category' => 'Deadline',
-                'type' => 'deadline',
-                'date' => '2026-07-18',
-                'day' => '18',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'upcoming',
-                'time' => '05:00 PM PST',
-                'admission_slug' => 'uet-lahore-fall-2026',
-            ],
-            [
-                'id' => 110,
-                'title' => 'IBA Karachi Round 2 Aptitude Examination',
-                'university' => 'IBA Karachi',
-                'university_slug' => 'iba-karachi',
-                'category' => 'Entry Test',
-                'type' => 'test',
-                'date' => '2026-07-21',
-                'day' => '21',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '10:00 AM PST',
-                'admission_slug' => 'iba-karachi-fall-2026',
-            ],
-            [
-                'id' => 111,
-                'title' => 'FAST-NUCES 1st Merit List Announcement',
-                'university' => 'FAST-NUCES',
-                'university_slug' => 'fast-nuces',
-                'category' => 'Merit List',
-                'type' => 'merit',
-                'date' => '2026-07-25',
-                'day' => '25',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '06:00 PM PST',
-                'admission_slug' => 'fast-nuces-fall-2026',
-            ],
-            [
-                'id' => 112,
-                'title' => 'Quaid-i-Azam University (QAU) Application Cutoff',
-                'university' => 'QAU Islamabad',
-                'university_slug' => 'qau',
-                'category' => 'Deadline',
-                'type' => 'deadline',
-                'date' => '2026-07-28',
-                'day' => '28',
-                'month_name' => 'July',
-                'month_num' => 7,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '04:00 PM PST',
-                'admission_slug' => 'qau-fall-2026',
-            ],
-            [
-                'id' => 113,
-                'title' => 'NUST 1st National Merit List for Engineering & Computing',
-                'university' => 'NUST Islamabad',
-                'university_slug' => 'nust',
-                'category' => 'Merit List',
-                'type' => 'merit',
-                'date' => '2026-08-05',
-                'day' => '05',
-                'month_name' => 'August',
-                'month_num' => 8,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '02:00 PM PST',
-                'admission_slug' => 'nust-fall-2026',
-            ],
-            [
-                'id' => 114,
-                'title' => 'PEEF Special Quota Scholarship Deadline',
-                'university' => 'Punjab Educational Endowment Fund',
-                'university_slug' => 'peef',
-                'category' => 'Scholarship',
-                'type' => 'scholarship',
-                'date' => '2026-08-20',
-                'day' => '20',
-                'month_name' => 'August',
-                'month_num' => 8,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '05:00 PM PST',
-                'admission_slug' => null,
-            ],
-            [
-                'id' => 115,
-                'title' => 'HEC Need-Based Undergraduate Scholarship Deadline',
-                'university' => 'Higher Education Commission',
-                'university_slug' => 'hec',
-                'category' => 'Scholarship',
-                'type' => 'scholarship',
-                'date' => '2026-08-30',
-                'day' => '30',
-                'month_name' => 'August',
-                'month_num' => 8,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '11:59 PM PST',
-                'admission_slug' => null,
-            ],
-            [
-                'id' => 116,
-                'title' => 'Balochistan Education Endowment Fund (BEEF) Cutoff',
-                'university' => 'Government of Balochistan',
-                'university_slug' => 'beef',
-                'category' => 'Scholarship',
-                'type' => 'scholarship',
-                'date' => '2026-09-10',
-                'day' => '10',
-                'month_name' => 'September',
-                'month_num' => 9,
-                'year' => 2026,
-                'status' => 'upcoming',
-                'time' => '05:00 PM PST',
-                'admission_slug' => null,
-            ],
-            [
-                'id' => 117,
-                'title' => 'Ehsaas Undergraduate Scholarship National Deadline',
-                'university' => 'BISP & HEC',
-                'university_slug' => 'ehsaas',
-                'category' => 'Scholarship',
-                'type' => 'scholarship',
-                'date' => '2026-09-15',
-                'day' => '15',
-                'month_name' => 'September',
-                'month_num' => 9,
-                'year' => 2026,
-                'status' => 'open',
-                'time' => '11:59 PM PST',
-                'admission_slug' => null,
-            ],
-        ];
-
-        $collection = collect($events);
-
-        if ($month !== null) {
-            $collection = $collection->filter(fn ($e) => $e['month_num'] === $month && $e['year'] === $year);
-        }
-
-        return $collection->sortBy('date')->values()->all();
+        return Admission::with('university')->whereYear('deadline_date', $year)
+            ->when($month, fn ($q) => $q->whereMonth('deadline_date', $month))->get()->map(fn (Admission $a): array => [
+                'id' => $a->id, 'title' => $a->title, 'university' => $a->university->name,
+                'university_slug' => $a->university->slug, 'category' => 'Deadline', 'type' => 'deadline',
+                'date' => $a->deadline_date->toDateString(), 'day' => $a->deadline_date->format('d'),
+                'month_name' => $a->deadline_date->format('F'), 'month_num' => $a->deadline_date->month,
+                'year' => $year, 'status' => $a->status, 'time' => 'Confirm with institution', 'admission_slug' => $a->slug,
+            ])->all();
     }
 
-    /**
-     * Get filtered scholarships with pagination.
-     */
     public function getScholarships(array $filters = [], string $sort = 'deadline_asc', int $perPage = 6, int $page = 1): array
     {
-        $items = collect($this->scholarships);
+        $items = Scholarship::with(['university', 'campus', 'regions'])->get()->map(fn (Scholarship $record): array => $this->presentScholarship($record));
 
         if (! empty($filters['q'])) {
             $q = strtolower(trim($filters['q']));
@@ -1267,7 +1006,19 @@ class AdmissionService
      */
     public function getScholarshipBySlug(string $slug): ?array
     {
-        return collect($this->scholarships)->firstWhere('slug', $slug);
+        $record = Scholarship::with(['regions', 'university', 'campus'])->where('slug', $slug)->first();
+
+        return $record ? $this->presentScholarship($record) : null;
+    }
+
+    private function presentScholarship(Scholarship $record): array
+    {
+        return array_replace(collect($this->scholarships)->firstWhere('slug', $record->slug) ?? [], $record->toArray(), [
+            'target_provinces' => $record->regions->filter(fn ($p) => app(RegionCatalog::class)->allowsRegion($p->slug))->pluck('name')->all(),
+            'applicable_universities' => $record->campus?->name ?? $record->university?->name ?? 'Eligible institutions in Punjab and Islamabad',
+            'universities_scope' => $record->campus?->name ?? $record->university?->name ?? 'Punjab and Islamabad',
+            'deadline_date' => $record->deadline_date?->toDateString(),
+        ]);
     }
 
     /**
@@ -1421,15 +1172,7 @@ class AdmissionService
     public function getFilterOptions(): array
     {
         return [
-            'provinces' => [
-                'all' => 'All Provinces & Territories',
-                'ict' => 'Islamabad Capital Territory (Federal)',
-                'punjab' => 'Punjab',
-                'sindh' => 'Sindh',
-                'kpk' => 'Khyber Pakhtunkhwa',
-                'balochistan' => 'Balochistan',
-                'multi' => 'Multi-Campus National',
-            ],
+            'provinces' => ['all' => 'All covered regions'] + app(RegionCatalog::class)->regions(),
             'statuses' => [
                 'all' => 'All Statuses',
                 'open' => 'Admissions Open',

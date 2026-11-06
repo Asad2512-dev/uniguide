@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\EligibilityRulesEngine;
+use App\Services\RegionCatalog;
 use App\Services\StudentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -37,10 +38,7 @@ class EligibilityController extends Controller
                 'Computer Science & AI', 'Software Engineering', 'Electrical Engineering',
                 'Mechanical Engineering', 'Business Administration (BBA)', 'Medical & Allied Health (MBBS/DPT)',
             ],
-            'locations' => [
-                'All Pakistan', 'Islamabad / Rawalpindi', 'Punjab (Lahore, FSD, Taxila)',
-                'Sindh (Karachi, Jamshoro)', 'Khyber Pakhtunkhwa (Peshawar, Topi)',
-            ],
+            'locations' => app(RegionCatalog::class)->regions(),
             'entryTests' => [
                 ['id' => 'net', 'name' => 'NUST Entry Test (NET)', 'max' => 200, 'typical' => 145],
                 ['id' => 'fast', 'name' => 'FAST-NU Computing Test', 'max' => 100, 'typical' => 70],

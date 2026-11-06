@@ -30,7 +30,7 @@
     </x-ui.page-header>
 
     <!-- Profile Completeness & Notice Strip -->
-    <div class="mb-8 p-6 rounded-2xl bg-surface border border-border-default shadow-card">
+    <div class="mb-8 p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div class="flex items-center gap-4">
                 <div class="relative w-16 h-16 shrink-0 flex items-center justify-center rounded-2xl bg-brand-50 border border-brand-200/80">
@@ -84,9 +84,9 @@
         <div class="flex items-center justify-between mb-4">
             <div>
                 <h3 class="font-heading font-bold text-base text-ink-950">Recommended Administrative Actions</h3>
-                <p class="text-xs text-ink-500 font-sans">Time-sensitive admissions workflows and HEC compliance tasks.</p>
+                <p class="text-xs text-ink-500 font-sans">Time-sensitive admissions workflows and compliance tasks.</p>
             </div>
-            <span class="text-xs font-mono text-ink-400">3 Priority Tasks</span>
+            <span class="text-xs font-mono text-ink-600">3 Priority Tasks</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -97,7 +97,7 @@
                             <div class="w-8 h-8 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center">
                                 <x-icon :name="$act['icon']" class="w-4 h-4" />
                             </div>
-                            <span class="text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded {{ $act['priority'] === 'high' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-surface-subtle text-ink-600' }}">
+                            <span class="text-xs sm:text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded {{ $act['priority'] === 'high' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-surface-subtle text-ink-600' }}">
                                 {{ $act['priority'] }} Priority
                             </span>
                         </div>
@@ -153,15 +153,15 @@
 
                         <div class="grid grid-cols-3 gap-3 pt-3 border-t border-border-subtle text-xs font-sans">
                             <div>
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Intake Capacity</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Intake Capacity</span>
                                 <span class="font-bold text-ink-900 font-mono">{{ number_format($ses['seats']) }} Seats</span>
                             </div>
                             <div>
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Applications</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Applications</span>
                                 <span class="font-bold text-brand-600 font-mono">{{ number_format($ses['applications_count']) }} Received</span>
                             </div>
                             <div>
-                                <span class="text-[10px] text-ink-400 uppercase font-mono block">Deadline</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Deadline</span>
                                 <span class="font-bold text-ink-900 font-mono">{{ $ses['deadline'] }}</span>
                             </div>
                         </div>
@@ -188,7 +188,7 @@
                             </div>
                             <div class="min-w-0 flex-1">
                                 <p class="text-xs font-medium text-ink-900 leading-snug">{{ $act['action'] }}</p>
-                                <div class="flex items-center gap-2 text-[10px] text-ink-400 font-mono mt-1">
+                                <div class="flex items-center gap-2 text-xs sm:text-[10px] text-ink-400 font-mono mt-1">
                                     <span>{{ $act['user'] }}</span>
                                     <span>•</span>
                                     <span>{{ $act['timestamp'] }}</span>

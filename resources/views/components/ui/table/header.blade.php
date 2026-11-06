@@ -16,7 +16,7 @@
     @if($sortable)
         <button type="button" class="inline-flex items-center gap-1.5 hover:text-ink-900 group cursor-pointer focus:outline-none">
             <span>{{ $slot }}</span>
-            <span class="text-ink-400 group-hover:text-ink-700">
+            <span class="text-ink-600 group-hover:text-ink-700">
                 @if($sorted === 'asc')
                     <x-icon name="chevron-up" class="w-3.5 h-3.5 text-brand-600" />
                 @elseif($sorted === 'desc')

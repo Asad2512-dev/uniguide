@@ -1,7 +1,7 @@
 <x-layouts.public title="UniGuide Pakistan — Frontend Architecture & Living Design System">
     <!-- Top Announcement Banner -->
     <div class="bg-gradient-to-r from-brand-900 via-brand-800 to-indigo-950 text-white py-3 px-4 sm:px-6">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs font-sans">
+        <div class="landing-container mx-auto flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs font-sans">
             <div class="flex items-center gap-2.5">
                 <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-white/20 text-white uppercase tracking-wider">
                     Phase Foundation Complete
@@ -19,7 +19,7 @@
 
     <!-- Design System Hero Header -->
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-8">
                 <div class="space-y-4 max-w-3xl">
                     <div class="flex items-center gap-2.5">
@@ -60,7 +60,7 @@
                             Univ. Admin
                         </x-ui.button>
                         <x-ui.button variant="outline" size="xs" :href="route('preview.national_admin')" icon="shield-check" class="w-full justify-start">
-                            HEC National
+                            Superadmin
                         </x-ui.button>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+    <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
 
         <!-- ========================================== -->
         <!-- SECTION 1: FOUNDATIONS & DESIGN TOKENS -->
@@ -222,6 +222,10 @@
                         <x-ui.button variant="soft">Soft Tint</x-ui.button>
                         <x-ui.button variant="ghost">Ghost Link</x-ui.button>
                         <x-ui.button variant="destructive">Destructive</x-ui.button>
+                        <div class="p-2 rounded-xl bg-brand-900 inline-flex items-center gap-2">
+                            <x-ui.button variant="white" size="sm">Solid White</x-ui.button>
+                            <x-ui.button variant="outline-white" size="sm">Outline White</x-ui.button>
+                        </div>
                     </div>
                 </div>
 
@@ -365,7 +369,7 @@
                         />
                         <x-form.toggle 
                             name="hec_sync" 
-                            label="Auto-verify with NADRA & HEC" 
+                            label="Auto-verify with identity records" 
                             description="Instantly fetch CNIC and educational certificates" 
                         />
                     </div>
@@ -374,7 +378,7 @@
                         <x-form.checkbox 
                             name="need_scholarship" 
                             label="Include Need-Based Scholarship Options" 
-                            description="Automatically matches HEC and Ehsaas grant criteria"
+                            description="Automatically matches Ehsaas grant criteria"
                             checked="true" 
                         />
                         <x-form.checkbox 
@@ -449,7 +453,7 @@
                             Official Source Citations
                         </h4>
                         <x-domain.source-citation 
-                            source="HEC National University Directory 2026"
+                            source="Superadmin University Directory 2026"
                             reference="Federal Register Item #44 • Page 12"
                             verifiedDate="Verified 03 Nov 2026"
                         />
@@ -476,7 +480,7 @@
             <!-- University Cards Grid -->
             <div>
                 <h3 class="text-sm font-bold font-heading text-ink-950 uppercase tracking-wider mb-4">
-                    University Discovery Cards (HEC Recognized Pakistan Institutions)
+                    University Discovery Cards (University Registry Pakistan Institutions)
                 </h3>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($universities as $uni)
@@ -559,7 +563,7 @@
                 :prompts="[
                     'What aggregate is needed for FAST BS Artificial Intelligence?',
                     'Calculate fee payment installments for LUMS SDSB',
-                    'Show HEC need-based scholarship application deadline'
+                    'Show need-based scholarship application deadline'
                 ]"
             >
                 <p>
@@ -595,7 +599,7 @@
                     <tr>
                         <x-ui.table.header :sortable="true" sorted="asc">Institution Name</x-ui.table.header>
                         <x-ui.table.header :sortable="true">Location</x-ui.table.header>
-                        <x-ui.table.header>HEC Ranking</x-ui.table.header>
+                        <x-ui.table.header>Ranking</x-ui.table.header>
                         <x-ui.table.header>Estimated Fee</x-ui.table.header>
                         <x-ui.table.header align="right">Admissions</x-ui.table.header>
                     </tr>
@@ -712,7 +716,7 @@
                             Trigger Warning Toast
                         </x-ui.button>
 
-                        <x-ui.button variant="outline" size="xs" icon="info" @click="$store.toasts.add({ title: 'New Merit Circular', message: 'HEC has revised minimum eligibility criteria.', type: 'info' })">
+                        <x-ui.button variant="outline" size="xs" icon="info" @click="$store.toasts.add({ title: 'New Merit Circular', message: 'has revised minimum eligibility criteria.', type: 'info' })">
                             Trigger Info Toast
                         </x-ui.button>
                     </div>
@@ -742,7 +746,7 @@
                 <div class="space-y-2">
                     <span class="text-xs font-bold font-sans text-ink-500 uppercase tracking-wider">Graceful Error State</span>
                     <x-ui.error-state 
-                        title="HEC Data Sync Offline"
+                        title="Source Sync Offline"
                         message="Federal registry connection timed out."
                         code="HEC_SYNC_504"
                     />
@@ -806,7 +810,7 @@
     <x-ui.modal id="demo-modal" title="Candidate Merit Verification" description="Official verification against Board of Intermediate & Secondary Education (BISE) data.">
         <div class="space-y-4">
             <p class="text-xs text-ink-600 font-sans leading-relaxed">
-                This verification check connects to the federal HEC data exchange and provincial BISE boards to validate academic marks.
+                This verification check connects to the federal data exchange and provincial BISE boards to validate academic marks.
             </p>
             <x-form.input name="bise_roll" label="Intermediate Roll Number" placeholder="e.g. 542198" value="542198" />
             <x-form.select name="bise_board" label="BISE Examination Board" :options="['bise_lahore' => 'BISE Lahore', 'bise_fbise' => 'Federal Board (FBISE) Islamabad', 'bise_karachi' => 'BISE Karachi', 'bise_peshawar' => 'BISE Peshawar']" selected="bise_fbise" />
@@ -825,8 +829,8 @@
     <x-ui.drawer id="demo-drawer" title="Advanced University Filters" description="Filter 248 institutions by statutory parameters.">
         <div class="space-y-5">
             <x-form.select name="filter_province" label="Provincial Jurisdiction" :options="['all' => 'All Provinces', 'ict' => 'Islamabad Capital Territory', 'punjab' => 'Punjab', 'sindh' => 'Sindh', 'kpk' => 'KPK', 'balochistan' => 'Balochistan']" />
-            <x-form.toggle name="hec_w" label="Category W Only" description="Filter for institutions in HEC's highest tier" checked="true" />
-            <x-form.toggle name="need_aid" label="Has HEC Need-Based Aid" description="Offers university endowment or Ehsaas grants" checked="true" />
+            <x-form.toggle name="hec_w" label="Category W Only" description="Filter for institutions in highest tier" checked="true" />
+            <x-form.toggle name="need_aid" label="Has Need-Based Aid" description="Offers university endowment or Ehsaas grants" checked="true" />
             <x-form.input name="max_tuition" label="Maximum Semester Fee (PKR)" placeholder="200000" value="200,000" />
         </div>
         <x-slot:footer>

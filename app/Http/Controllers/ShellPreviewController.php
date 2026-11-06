@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ShellPreviewController extends Controller
@@ -80,4 +79,3 @@ class ShellPreviewController extends Controller
         ]);
     }
 }
-

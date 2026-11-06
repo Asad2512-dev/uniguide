@@ -35,19 +35,23 @@ class ComparisonAndEligibilityPhaseTest extends TestCase
         $defaultResponse->assertStatus(200);
         $defaultResponse->assertSee('Side-by-Side Institutional Benchmark');
 
-        // Test explicit parameters
-        $response = $this->get('/compare/results?unis=nust,fast-nuces,giki');
+        // Test explicit parameters with allowed regional universities
+        $response = $this->get('/compare/results?unis=nust,fast-nuces,uet-lahore');
         $response->assertStatus(200);
         $response->assertSee('Side-by-Side Institutional Benchmark');
         $response->assertSee('Highlight Differences');
         $response->assertSee('NUST');
         $response->assertSee('FAST-NUCES');
-        $response->assertSee('GIKI');
+        $response->assertSee('UET Lahore');
         $response->assertSee('Verified Tuition &amp; Fees', false);
         $response->assertSee('Admission Policy &amp; Entry Tests', false);
         $response->assertSee('Financial Aid &amp; Endowment Support', false);
         $response->assertSee('Campus Life, Hostels &amp; Location', false);
         $response->assertSee('Official Statutory Reference &amp; Audit', false);
+
+        // Test out-of-scope selection exclusion
+        $outsideResponse = $this->get('/compare/results?unis=giki,iba-karachi');
+        $outsideResponse->assertStatus(404);
     }
 
     /**

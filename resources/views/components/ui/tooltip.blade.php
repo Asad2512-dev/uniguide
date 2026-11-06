@@ -16,6 +16,7 @@
     @mouseleave="show = false"
     @focusin="show = true" 
     @focusout="show = false"
+    @keydown.escape.stop="show = false"
     class="relative inline-block"
 >
     {{ $slot }}
@@ -29,7 +30,7 @@
         x-transition:leave="transition ease-in duration-75"
         x-transition:leave-start="opacity-100 scale-100"
         x-transition:leave-end="opacity-0 scale-95"
-        class="absolute {{ $posClasses }} z-50 px-2.5 py-1 text-[11px] font-sans font-medium text-white bg-ink-950 rounded-md shadow-lg whitespace-nowrap pointer-events-none"
+        class="absolute {{ $posClasses }} z-50 px-2.5 py-1 text-xs sm:text-[11px] font-sans font-medium text-white bg-ink-950 rounded-md shadow-lg w-max max-w-[min(16rem,calc(100vw-2rem))] whitespace-normal text-center pointer-events-none"
         role="tooltip"
     >
         {{ $text }}

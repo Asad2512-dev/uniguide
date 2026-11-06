@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class MarketingController extends Controller
@@ -202,7 +202,6 @@ class MarketingController extends Controller
             'message' => ['required', 'string', 'min:20', 'max:2000'],
         ]);
 
-        return redirect()->route('marketing.contact')->with('success', 'Your inquiry has been logged with UniGuide National Support (#UG-TKT-' . rand(10000, 99999) . '). Our admissions counselor will contact you within 24 hours.');
+        return redirect()->route('marketing.contact')->with('success', 'Your inquiry has been logged with UniGuide National Support (#UG-TKT-'.rand(10000, 99999).'). Our admissions counselor will contact you within 24 hours.');
     }
 }
-

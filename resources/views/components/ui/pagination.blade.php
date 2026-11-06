@@ -38,14 +38,14 @@
     @if($totalPages > 1)
         <nav aria-label="Pagination" class="inline-flex items-center gap-1">
             @if($currentPage <= 1)
-                <span class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-ink-400 opacity-50 cursor-not-allowed">
+                <span class="inline-flex min-h-11 items-center justify-center px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-ink-600 opacity-50 cursor-not-allowed">
                     <x-icon name="chevron-left" class="w-4 h-4 mr-1" />
                     <span>Previous</span>
                 </span>
             @else
                 <a 
                     href="{{ request()->fullUrlWithQuery([$queryParam => $currentPage - 1]) }}" 
-                    class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-ink-700 hover:bg-surface-subtle transition-smooth"
+                    class="inline-flex min-h-11 items-center justify-center px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-ink-700 hover:bg-surface-subtle transition-smooth"
                     aria-label="Previous page"
                 >
                     <x-icon name="chevron-left" class="w-4 h-4 mr-1" />
@@ -56,7 +56,7 @@
             <div class="hidden sm:inline-flex items-center gap-1 px-1">
                 @foreach($pages as $page)
                     @if($page === '…')
-                        <span class="px-1 text-ink-400">…</span>
+                        <span class="px-1 text-ink-600">…</span>
                     @elseif($page == $currentPage)
                         <span class="w-8 h-8 rounded-lg bg-brand-600 text-white font-semibold flex items-center justify-center" aria-current="page">
                             {{ $page }}
@@ -73,14 +73,14 @@
             </div>
 
             @if($currentPage >= $totalPages)
-                <span class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-ink-400 opacity-50 cursor-not-allowed">
+                <span class="inline-flex min-h-11 items-center justify-center px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-ink-600 opacity-50 cursor-not-allowed">
                     <span>Next</span>
                     <x-icon name="chevron-right" class="w-4 h-4 ml-1" />
                 </span>
             @else
                 <a 
                     href="{{ request()->fullUrlWithQuery([$queryParam => $currentPage + 1]) }}" 
-                    class="inline-flex items-center justify-center px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-ink-700 hover:bg-surface-subtle transition-smooth"
+                    class="inline-flex min-h-11 items-center justify-center px-2.5 py-1.5 rounded-lg border border-border-default bg-surface text-ink-700 hover:bg-surface-subtle transition-smooth"
                     aria-label="Next page"
                 >
                     <span>Next</span>

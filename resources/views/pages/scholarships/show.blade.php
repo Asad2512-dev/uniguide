@@ -16,7 +16,7 @@
         
         <!-- Header Banner -->
         <header class="bg-surface border-b border-border-default/80">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -35,7 +35,7 @@
                                 <x-icon name="shield-check" class="w-3.5 h-3.5" />
                                 <span>Official Verified Grant</span>
                             </span>
-                            <span class="text-xs font-mono text-ink-400">
+                            <span class="text-xs font-mono text-ink-600">
                                 Verified: {{ $scholarship['verified_at'] }}
                             </span>
                         </div>
@@ -79,14 +79,14 @@
         </header>
 
         <!-- Main Body Grid -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <!-- Left 2 Cols: Scholarship Specifications -->
                 <div class="lg:col-span-2 space-y-8">
                     
                     <!-- High-Level Benefits Banner -->
-                    <div class="p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 shadow-2xs space-y-3">
+                    <div class="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 shadow-2xs space-y-3">
                         <span class="text-xs font-bold font-mono uppercase tracking-wider text-emerald-800">
                             Award Scope & Value
                         </span>
@@ -179,12 +179,12 @@
                 <aside class="space-y-6">
                     
                     <!-- Deadline Card -->
-                    <div class="bg-surface rounded-2xl border border-emerald-200 shadow-elevated p-6 space-y-4 ring-1 ring-emerald-500/10">
+                    <div class="bg-surface rounded-2xl border border-emerald-200 shadow-elevated p-4 sm:p-6 space-y-4 ring-1 ring-emerald-500/10">
                         <div class="flex items-center justify-between">
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-800 font-sans">
+                            <span class="text-xs sm:text-[11px] font-bold uppercase tracking-wider text-emerald-800 font-sans">
                                 Application Deadline
                             </span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
+                            <span class="px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200">
                                 {{ $scholarship['status'] === 'open' ? 'Active Cycle' : 'Upcoming' }}
                             </span>
                         </div>
@@ -220,13 +220,13 @@
                     </div>
 
                     <!-- Statutory Source Citation Box -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-3">
-                        <span class="text-xs font-semibold text-ink-400 uppercase tracking-wider font-sans">Verification Source</span>
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-3">
+                        <span class="text-xs font-semibold text-ink-600 uppercase tracking-wider font-sans">Verification Source</span>
                         <h4 class="font-heading font-bold text-sm text-ink-950">
                             {{ $scholarship['source_citation'] }}
                         </h4>
                         <p class="text-xs text-ink-500 font-sans leading-relaxed">
-                            Verified through official government gazettes, HEC Financial Aid Development rules, and university charter foundations.
+                            Verified through official government gazettes, Financial Aid Development rules, and university charter foundations.
                         </p>
                         <div class="pt-2">
                             <x-domain.source-citation 
@@ -238,8 +238,8 @@
                     </div>
 
                     <!-- Back to Explorer Shortcut -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-3">
-                        <span class="text-xs font-semibold text-ink-400 uppercase tracking-wider font-sans">More Opportunities</span>
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-3">
+                        <span class="text-xs font-semibold text-ink-600 uppercase tracking-wider font-sans">More Opportunities</span>
                         <p class="text-xs text-ink-600 font-sans">
                             Explore provincial endowments like PEEF and BEEF, as well as institutional study loans.
                         </p>

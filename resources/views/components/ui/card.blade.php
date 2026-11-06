@@ -1,6 +1,6 @@
 @props([
     'hover' => false,
-    'padding' => 'p-6',
+    'padding' => 'p-4 sm:p-6',
     'class' => '',
 ])
 
@@ -10,7 +10,7 @@
     $class
 ]) }}>
     @if(isset($header))
-        <div class="px-6 py-4 border-b border-border-subtle bg-surface-subtle/50">
+        <div class="px-4 sm:px-6 py-4 border-b border-border-subtle bg-surface-subtle/50">
             {{ $header }}
         </div>
     @endif
@@ -20,7 +20,7 @@
     </div>
 
     @if(isset($footer))
-        <div class="px-6 py-3.5 border-t border-border-subtle bg-surface-subtle/30">
+        <div class="px-4 sm:px-6 py-3.5 border-t border-border-subtle bg-surface-subtle/30">
             {{ $footer }}
         </div>
     @endif

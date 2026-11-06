@@ -1,7 +1,7 @@
 <x-layouts.public title="UniGuide Pakistan — National University Discovery & Admissions">
     <!-- Hero Section -->
     <section class="relative pt-12 pb-16 md:pt-20 md:pb-24 border-b border-border-default bg-gradient-to-b from-brand-50/30 via-canvas to-canvas">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mx-auto text-center space-y-6">
                 <!-- Eyebrow Pill -->
                 <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold font-sans bg-surface border border-brand-200 text-brand-700 shadow-2xs">
@@ -16,7 +16,7 @@
 
                 <!-- Subheading -->
                 <p class="text-base sm:text-lg text-ink-600 font-sans leading-relaxed max-w-2xl mx-auto">
-                    The authoritative national intelligence platform for 248+ HEC-recognized public and chartered institutions, 6,400+ degree programs, and official merit schedules.
+                    The authoritative national intelligence platform for 248+ listed public and chartered institutions, 6,400+ degree programs, and official merit schedules.
                 </p>
 
                 <!-- Search & Quick Filter Bar -->
@@ -61,10 +61,10 @@
     </section>
 
     <!-- University Discovery Showcase Section -->
-    <section class="py-16 md:py-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section class="py-16 md:py-20 landing-container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-8">
             <x-ui.section-header 
-                eyebrow="HEC Recognized Directory"
+                eyebrow="University Registry Directory"
                 title="Featured National Universities"
                 description="Explore accredited higher education institutions in Pakistan with gazetted tuition fees, closing merit cutoffs, and verified statutory recognition."
             />
@@ -114,7 +114,7 @@
             <x-domain.university-card 
                 name="FAST - National University of Computer & Emerging Sciences"
                 acronym="FAST"
-                location="Islamabad, Lahore & Karachi"
+                location="Islamabad and Lahore"
                 sector="Chartered Autonomous"
                 hecRank="#1 Computing & IT"
                 feeRange="PKR 145,000 – 165,000"
@@ -134,7 +134,7 @@
 
     <!-- AI Advisor Guidance Section -->
     <section class="py-16 bg-surface-subtle border-y border-border-default">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
                 <div class="lg:col-span-5 space-y-5">
                     <x-ui.section-header 

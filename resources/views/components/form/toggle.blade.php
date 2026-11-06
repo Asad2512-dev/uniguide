@@ -19,7 +19,7 @@
         <div class="flex flex-col">
             <span class="text-xs font-semibold text-ink-900 font-sans">{{ $label }}</span>
             @if($description)
-                <span class="text-[11px] text-ink-500 font-sans mt-0.5">{{ $description }}</span>
+                <span class="text-xs sm:text-[11px] text-ink-500 font-sans mt-0.5">{{ $description }}</span>
             @endif
         </div>
     @endif

@@ -17,18 +17,18 @@ class FrontendArchitectureTest extends TestCase
         // Header & Navigation
         $response->assertSee('UniGuide');
         $response->assertSee('PAKISTAN');
-        
+
         // Editorial Hero & Central Intelligent Search
-        $response->assertSee('Find the right university in Pakistan', false);
+        $response->assertSee('Find your university in Punjab or Islamabad', false);
         $response->assertSee('Calculate exact merit', false);
         $response->assertSee('By University');
         $response->assertSee('By Degree Program');
         $response->assertSee('By My Aggregate %');
 
         // Quick Access Entry Tiles
-        $response->assertSee('248+ HEC Universities');
-        $response->assertSee('6,400+ Degree Programs');
-        $response->assertSee('PKR 4.2B+ Scholarships');
+        $response->assertSee('Universities');
+        $response->assertSee('Degree Offerings');
+        $response->assertSee('Scholarship Opportunities');
 
         // Featured Universities Section
         $response->assertSee('Explore Verified Pakistani Universities');
@@ -150,7 +150,7 @@ class FrontendArchitectureTest extends TestCase
             'email' => 'ahmad.raza@student.uniguide.pk',
             'password' => 'StudentPass2026!',
         ]);
-        $postStudent->assertRedirect(route('preview.student'));
+        $postStudent->assertRedirect(route('student.dashboard'));
 
         // Test University Admin Login Submission
         $postUniv = $this->post(route('auth.login.submit'), [
@@ -158,7 +158,7 @@ class FrontendArchitectureTest extends TestCase
             'email' => 'admissions@nust.edu.pk',
             'password' => 'NustAdmin2026!',
         ]);
-        $postUniv->assertRedirect(route('preview.university_admin'));
+        $postUniv->assertRedirect(route('uni_admin.dashboard'));
 
         // Test HEC Admin Login Submission
         $postAdmin = $this->post(route('auth.login.submit'), [
@@ -166,7 +166,7 @@ class FrontendArchitectureTest extends TestCase
             'email' => 'regulatory@hec.gov.pk',
             'password' => 'HecFederal2026!',
         ]);
-        $postAdmin->assertRedirect(route('preview.national_admin'));
+        $postAdmin->assertRedirect(route('national_admin.dashboard'));
     }
 
     /**
@@ -180,10 +180,12 @@ class FrontendArchitectureTest extends TestCase
         $response->assertSee('Create Your Student Account');
         $response->assertSee('Intermediate Academic Stream');
 
+        $email = 'zainab.bibi.'.uniqid().'@gmail.com';
+
         // Test Successful Registration
         $postResponse = $this->post(route('auth.register.submit'), [
             'full_name' => 'Zainab Bibi',
-            'email' => 'zainab.bibi@gmail.com',
+            'email' => $email,
             'phone' => '03211234567',
             'stream' => 'fsc_pre_eng',
             'province' => 'punjab',
@@ -192,7 +194,7 @@ class FrontendArchitectureTest extends TestCase
             'terms' => '1',
         ]);
 
-        $postResponse->assertRedirect(route('preview.student'));
+        $postResponse->assertRedirect(route('student.onboarding'));
     }
 
     /**
@@ -222,5 +224,27 @@ class FrontendArchitectureTest extends TestCase
         $this->get(route('preview.student'))->assertStatus(200);
         $this->get(route('preview.university_admin'))->assertStatus(200);
         $this->get(route('preview.national_admin'))->assertStatus(200);
+    }
+
+    /**
+     * Test brand logo is linked as favicon and touch icon across pages.
+     */
+    public function test_pages_include_brand_favicon_and_assets_exist(): void
+    {
+        $response = $this->get('/');
+        $response->assertStatus(200);
+        $response->assertSee('favicon.svg');
+        $response->assertSee('favicon.ico');
+        $response->assertSee('apple-touch-icon.png');
+        $response->assertSee('site.webmanifest');
+
+        $this->assertFileExists(public_path('favicon.svg'));
+        $this->assertGreaterThan(0, filesize(public_path('favicon.svg')));
+
+        $this->assertFileExists(public_path('favicon.ico'));
+        $this->assertGreaterThan(0, filesize(public_path('favicon.ico')));
+
+        $this->assertFileExists(public_path('apple-touch-icon.png'));
+        $this->assertGreaterThan(0, filesize(public_path('apple-touch-icon.png')));
     }
 }

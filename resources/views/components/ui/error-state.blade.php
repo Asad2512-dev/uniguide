@@ -34,7 +34,7 @@
         </p>
 
         @if($code)
-            <span class="mt-2 text-[10px] font-mono text-ink-400 bg-surface px-2 py-0.5 rounded border border-border-default">
+            <span class="mt-2 text-xs sm:text-[10px] font-mono text-ink-600 bg-surface px-2 py-0.5 rounded border border-border-default">
                 Error Code: {{ $code }}
             </span>
         @endif

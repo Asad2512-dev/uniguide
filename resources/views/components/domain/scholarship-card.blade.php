@@ -1,5 +1,5 @@
 @props([
-    'title' => 'HEC Need-Based Undergraduate Scholarship',
+    'title' => 'Need-Based Undergraduate Scholarship',
     'provider' => 'Higher Education Commission of Pakistan',
     'coverage' => '100% Tuition Fee + PKR 6,000/mo Living Stipend',
     'eligibility' => 'Family income under PKR 45,000/mo • Enrolled in participating public university',
@@ -12,7 +12,7 @@
     <div>
         <div class="flex items-start justify-between gap-3 mb-2">
             <div>
-                <span class="inline-flex items-center text-[10px] font-semibold tracking-wider uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 mb-1.5 font-sans">
+                <span class="inline-flex items-center text-xs sm:text-[10px] font-semibold tracking-wider uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 mb-1.5 font-sans">
                     {{ $category }}
                 </span>
                 <h4 class="font-heading font-bold text-base text-ink-950 hover:text-brand-600 transition-colors">
@@ -32,7 +32,7 @@
                 <x-icon name="check" class="w-3.5 h-3.5 text-success-600 shrink-0 mt-0.5" />
                 <span class="font-semibold">{{ $coverage }}</span>
             </div>
-            <p class="text-[11px] text-ink-500 pl-5">
+            <p class="text-xs sm:text-[11px] text-ink-500 pl-5">
                 {{ $eligibility }}
             </p>
         </div>

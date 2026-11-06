@@ -73,7 +73,7 @@
                                     <span class="w-2 h-2 rounded-full bg-brand-600 shrink-0"></span>
                                 @endif
                                 @if(!empty($notif['urgent']))
-                                    <span class="text-[10px] font-mono font-bold text-error-700 bg-error-50 px-1.5 py-0.2 rounded">
+                                    <span class="text-xs sm:text-[10px] font-mono font-bold text-error-700 bg-error-50 px-1.5 py-0.2 rounded">
                                         Urgent
                                     </span>
                                 @endif
@@ -83,7 +83,7 @@
                                 {{ $notif['message'] }}
                             </p>
 
-                            <span class="text-[11px] text-ink-400 font-mono block pt-0.5">
+                            <span class="text-xs sm:text-[11px] text-ink-600 font-mono block pt-0.5">
                                 {{ $notif['time_ago'] }}
                             </span>
                         </div>

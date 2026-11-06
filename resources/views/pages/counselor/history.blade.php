@@ -2,11 +2,11 @@
     title="Counseling Sessions History — UniGuide Pakistan"
     description="Review, resume, and export your archived AI university counseling sessions and admission strategy consultations."
 >
-    <div class="min-h-screen bg-canvas pb-24">
+    <div x-data="{ deleteModalOpen: false, deleteActionUrl: '', deleteItemName: '' }" class="min-h-screen bg-canvas pb-24">
         
         <!-- Header Banner -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -69,12 +69,12 @@
         </section>
 
         <!-- Main Sessions Grid -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
                 @forelse($conversations as $conv)
                     <div class="p-5 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all flex flex-col justify-between">
                         <div>
-                            <div class="flex items-center justify-between text-[11px] text-ink-400 font-sans mb-2">
+                            <div class="flex items-center justify-between text-xs sm:text-[11px] text-ink-400 font-sans mb-2">
                                 <span class="font-bold text-brand-700 bg-brand-50 border border-brand-100 px-2 py-0.5 rounded">
                                     {{ $conv['topic_label'] ?? 'Counseling' }}
                                 </span>
@@ -90,16 +90,18 @@
                         </div>
 
                         <div class="pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                            <span class="text-ink-400 font-mono text-[11px]">{{ $conv['message_count'] ?? 2 }} messages</span>
+                            <span class="text-ink-600 font-mono text-xs sm:text-[11px]">{{ $conv['message_count'] ?? 2 }} messages</span>
 
                             <div class="flex items-center gap-3">
-                                <form action="{{ route('counselor.destroy', $conv['id']) }}" method="POST" onsubmit="return confirm('Remove this consultation from history?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-ink-400 hover:text-error-600 cursor-pointer p-1" title="Delete conversation">
-                                        <x-icon name="trash-2" class="w-3.5 h-3.5" />
-                                    </button>
-                                </form>
+                                <button 
+                                    type="button" 
+                                    @click="deleteActionUrl = '{{ route('counselor.destroy', $conv['id']) }}'; deleteItemName = '{{ addslashes($conv['title']) }}'; deleteModalOpen = true"
+                                    class="text-ink-400 hover:text-error-600 cursor-pointer p-1 transition-colors" 
+                                    title="Delete conversation"
+                                    aria-label="Delete consultation {{ $conv['title'] }}"
+                                >
+                                    <x-icon name="trash-2" class="w-3.5 h-3.5" />
+                                </button>
 
                                 <a 
                                     href="{{ route('counselor.chat', $conv['id']) }}"
@@ -133,6 +135,49 @@
                 @endforelse
             </div>
         </main>
+
+        <!-- Delete Confirmation Modal -->
+        <template x-teleport="body">
+            <div 
+                x-show="deleteModalOpen" 
+                x-cloak 
+                class="fixed inset-0 z-50 overflow-y-auto px-4 py-6 md:py-12"
+                role="dialog" 
+                aria-modal="true" 
+                aria-labelledby="delete-history-modal-title"
+                @keydown.escape.window="deleteModalOpen = false"
+            >
+                <div x-show="deleteModalOpen" x-transition.opacity class="fixed inset-0 bg-ink-950/40 backdrop-blur-xs" @click="deleteModalOpen = false"></div>
+                <div class="flex min-h-full items-center justify-center p-2 text-center sm:p-0">
+                    <div x-show="deleteModalOpen" x-transition class="relative transform overflow-hidden rounded-2xl bg-surface border border-border-default text-left shadow-modal w-full max-w-md p-6" @click.stop>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-error-50 text-error-600 border border-error-200">
+                                <x-icon name="trash-2" class="w-5 h-5" />
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-heading font-bold text-ink-950" id="delete-history-modal-title">Delete Consultation History?</h3>
+                                <p class="mt-1 text-xs text-ink-600 font-sans leading-relaxed">
+                                    Are you sure you want to remove <strong class="text-ink-950" x-text="deleteItemName"></strong>? All messages and recommendations from this session will be permanently deleted.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-border-subtle">
+                            <button type="button" @click="deleteModalOpen = false" class="inline-flex min-h-11 items-center justify-center px-4 py-2 text-xs font-semibold text-ink-700 hover:bg-surface-subtle rounded-lg border border-border-default transition-colors">
+                                Cancel
+                            </button>
+                            <form :action="deleteActionUrl" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex min-h-11 items-center justify-center gap-2 px-4 py-2 text-xs font-bold text-white bg-error-600 hover:bg-error-700 active:bg-error-800 rounded-lg shadow-xs transition-colors">
+                                    <x-icon name="trash-2" class="size-4" />
+                                    <span>Yes, Delete</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 </x-layouts.public>
 

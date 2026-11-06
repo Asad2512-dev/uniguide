@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\AdmissionService;
 use App\Services\DiscoveryService;
+use App\Services\RegionCatalog;
 use App\Services\StudentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -33,9 +34,7 @@ class StudentController extends Controller
                 ['id' => 'a_levels', 'name' => 'Cambridge A-Levels', 'desc' => 'Requires IBCC Equivalence Certificate', 'icon' => 'globe'],
                 ['id' => 'dae', 'name' => 'Diploma of Associate Engineering (DAE)', 'desc' => '3-Year Technical Board Diploma', 'icon' => 'wrench'],
             ],
-            'cities' => [
-                'Islamabad / Rawalpindi', 'Lahore', 'Karachi', 'Peshawar', 'Faisalabad', 'Taxila', 'Multan', 'Quetta',
-            ],
+            'cities' => array_values(app(RegionCatalog::class)->cities()),
             'disciplines' => [
                 'Computer Science & AI', 'Software Engineering', 'Data Science & Cyber Security', 'Electrical Engineering',
                 'Mechanical & Mechatronics', 'Business & Management (BBA)', 'Allied Health & Biosciences',
@@ -53,6 +52,7 @@ class StudentController extends Controller
             'matric_percentage' => 'required|numeric|min:50|max:100',
             'fsc_percentage' => 'required|numeric|min:50|max:100',
             'target_cities' => 'required|array|min:1',
+            'target_cities.*' => 'required|string',
             'target_disciplines' => 'required|array|min:1',
             'budget_max' => 'required|numeric',
         ]);
@@ -268,8 +268,7 @@ class StudentController extends Controller
     public function storeTracker(Request $request): RedirectResponse
     {
         $request->validate([
-            'university_name' => 'required|string|max:150',
-            'program_name' => 'required|string|max:150',
+            'program_id' => 'required|integer',
             'stage' => 'required|string',
         ]);
 

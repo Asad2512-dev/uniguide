@@ -1,15 +1,15 @@
-<x-layouts.national-admin title="National HEC Command — Executive Operational Overview">
+<x-layouts.national-admin title="Superadmin — Executive Operational Overview">
     <!-- Page Header -->
     <x-ui.page-header 
         title="National Operational Command"
         description="Federal oversight authority, chartered university coverage, automated crawler pipelines, and data verification status."
-        badge="HEC Command & Control"
+        badge="Superadmin & Control"
         badgeVariant="brand"
     >
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'National Command Overview']
                 ]"
             />
@@ -58,22 +58,22 @@
                 <x-icon name="shield-alert" class="w-4 h-4 text-amber-600" />
                 Federal Regulatory & Inspection Notices
             </h3>
-            <span class="text-xs font-mono text-ink-400">Live Telemetry</span>
+            <span class="text-xs font-mono text-ink-600">Live Telemetry</span>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             @foreach($system_alerts as $alert)
                 <div class="p-4 rounded-2xl border transition-all duration-200 {{ $alert['severity'] === 'critical' ? 'bg-rose-50/60 border-rose-200 text-rose-950' : ($alert['severity'] === 'warning' ? 'bg-amber-50/60 border-amber-200 text-amber-950' : 'bg-surface border-border-default text-ink-950') }}">
                     <div class="flex items-start justify-between gap-2 mb-2">
-                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono uppercase font-bold tracking-wider {{ $alert['severity'] === 'critical' ? 'bg-rose-100 text-rose-700 border border-rose-300' : ($alert['severity'] === 'warning' ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-brand-50 text-brand-700 border border-brand-200') }}">
+                        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono uppercase font-bold tracking-wider {{ $alert['severity'] === 'critical' ? 'bg-rose-100 text-rose-700 border border-rose-300' : ($alert['severity'] === 'warning' ? 'bg-amber-100 text-amber-800 border border-amber-300' : 'bg-brand-50 text-brand-700 border border-brand-200') }}">
                             <span class="w-1.5 h-1.5 rounded-full {{ $alert['severity'] === 'critical' ? 'bg-rose-600' : ($alert['severity'] === 'warning' ? 'bg-amber-600' : 'bg-brand-600') }}"></span>
                             {{ strtoupper($alert['severity']) }}
                         </span>
-                        <span class="text-[11px] font-mono text-ink-400">{{ $alert['timestamp'] }}</span>
+                        <span class="text-xs sm:text-[11px] font-mono text-ink-600">{{ $alert['timestamp'] }}</span>
                     </div>
                     <h4 class="font-heading font-bold text-xs leading-snug mb-1">{{ $alert['title'] }}</h4>
-                    <p class="text-[11px] text-ink-600 font-sans leading-relaxed mb-3">{{ $alert['desc'] }}</p>
-                    <a href="{{ route('national_admin.verification') }}" class="inline-flex items-center gap-1 text-[11px] font-semibold text-brand-700 hover:text-brand-900 transition-colors">
+                    <p class="text-xs sm:text-[11px] text-ink-600 font-sans leading-relaxed mb-3">{{ $alert['desc'] }}</p>
+                    <a href="{{ route('national_admin.verification') }}" class="inline-flex items-center gap-1 text-xs sm:text-[11px] font-semibold text-brand-700 hover:text-brand-900 transition-colors">
                         <span>{{ $alert['action_label'] }}</span>
                         <x-icon name="arrow-right" class="w-3 h-3" />
                     </a>
@@ -98,9 +98,9 @@
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse" aria-label="Provincial Jurisdiction & Data Coverage">
+                    <table data-mobile-table class="w-full text-left border-collapse" aria-label="Provincial Jurisdiction & Data Coverage">
                         <thead>
-                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                                 <th scope="col" class="py-3 px-4 font-semibold">Province / Region</th>
                                 <th scope="col" class="py-3 px-4 text-center font-semibold">Unis</th>
                                 <th scope="col" class="py-3 px-4 text-center font-semibold">Campuses</th>
@@ -128,7 +128,7 @@
                                             <div class="w-16 bg-surface-subtle h-2 rounded-full overflow-hidden border border-border-subtle">
                                                 <div class="bg-emerald-500 h-full rounded-full" style="width: {{ $reg['coverage'] }}%"></div>
                                             </div>
-                                            <span class="font-mono font-bold text-ink-800 text-[11px]">{{ $reg['coverage'] }}%</span>
+                                            <span class="font-mono font-bold text-ink-800 text-xs sm:text-[11px]">{{ $reg['coverage'] }}%</span>
                                         </div>
                                     </td>
                                 </tr>
@@ -160,10 +160,10 @@
                         <div class="flex-1 min-w-0">
                             <div class="flex items-center justify-between gap-2 mb-0.5">
                                 <h4 class="font-heading font-bold text-xs text-ink-950 truncate">{{ $ch['university'] }}</h4>
-                                <span class="text-[10px] font-mono text-ink-400 shrink-0">{{ $ch['timestamp'] }}</span>
+                                <span class="text-xs sm:text-[10px] font-mono text-ink-600 shrink-0">{{ $ch['timestamp'] }}</span>
                             </div>
                             <p class="text-xs text-ink-600 font-sans leading-relaxed">{{ $ch['change'] }}</p>
-                            <span class="text-[11px] font-mono text-brand-700 mt-1 block">By {{ $ch['user'] }}</span>
+                            <span class="text-xs sm:text-[11px] font-mono text-brand-700 mt-1 block">By {{ $ch['user'] }}</span>
                         </div>
                     </div>
                 @endforeach
@@ -172,10 +172,10 @@
     </div>
 
     <!-- Quick Operations Command Dock -->
-    <div class="p-6 rounded-2xl bg-gradient-to-br from-brand-950 via-brand-900 to-indigo-950 text-white shadow-elevated">
+    <div class="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-brand-950 via-brand-900 to-indigo-950 text-white shadow-elevated">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
             <div class="space-y-1">
-                <span class="text-[10px] font-mono uppercase tracking-widest text-brand-300 font-bold">Automated Federal Engine</span>
+                <span class="text-xs sm:text-[10px] font-mono uppercase tracking-widest text-brand-300 font-bold">Automated Federal Engine</span>
                 <h3 class="font-heading font-extrabold text-lg text-white">Central Verification & Scraping Control Active</h3>
                 <p class="text-xs text-brand-100/80 max-w-2xl font-sans leading-relaxed">
                     Continuous monitoring across 248 official university websites, PEC gazette feeds, and IBCC equivalence notices. High-confidence AI extractions are queued for human-in-the-loop validation.

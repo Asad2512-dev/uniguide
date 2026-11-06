@@ -4,7 +4,7 @@
 ])
 
 <x-layouts.base :title="$title" :description="$description">
-    <div class="flex h-screen overflow-hidden bg-canvas">
+    <div class="portal-workspace flex min-h-dvh w-full bg-canvas">
         <!-- Persistent Collapsible Sidebar -->
         <x-nav.sidebar 
             menuKey="student" 
@@ -18,7 +18,7 @@
         <x-nav.mobile-nav menuKey="student" roleLabel="Student Portal" />
 
         <!-- Main Workspace Shell -->
-        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <div class="flex-1 flex flex-col min-w-0">
             <!-- Dashboard Topbar -->
             <x-nav.topbar 
                 contextBadge="Fall 2026 Admission Cycle Active" 
@@ -28,11 +28,12 @@
             />
 
             <!-- Scrollable Content Canvas -->
-            <main id="main-content" class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-                <div class="max-w-7xl mx-auto">
+            <main id="main-content" class="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+                <div class="max-w-none mx-auto">
                     {{ $slot }}
                 </div>
             </main>
+            <x-nav.student-bottom-nav />
         </div>
     </div>
 </x-layouts.base>

@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\EligibilityRule;
+
 class EligibilityRulesEngine
 {
     public function __construct(
@@ -14,6 +16,26 @@ class EligibilityRulesEngine
      */
     public function getRulesRepository(): array
     {
+        $dbRules = EligibilityRule::all();
+        if ($dbRules->isNotEmpty()) {
+            $mapped = [];
+            foreach ($dbRules as $r) {
+                $mapped[$r->rule_key] = [
+                    'id' => $r->rule_key,
+                    'title' => $r->title,
+                    'authority' => $r->authority,
+                    'statutory_reference' => $r->statutory_reference,
+                    'category' => $r->category,
+                    'verified_date' => $r->verified_date,
+                    'summary' => $r->summary,
+                    'scope' => $r->scope,
+                    'formula_note' => $r->formula_note,
+                ];
+            }
+
+            return $mapped;
+        }
+
         return [
             'pec-eng-60' => [
                 'id' => 'pec-eng-60',
@@ -88,215 +110,196 @@ class EligibilityRulesEngine
      */
     public function evaluateEligibility(array $candidate): array
     {
-        $qualification = $candidate['qualification'] ?? 'fsc'; // fsc, ics, a_levels, dae
-        $group = $candidate['academic_group'] ?? 'pre_engineering'; // pre_engineering, ics, pre_medical, general_science
-        $matricPct = floatval($candidate['matric_percentage'] ?? 80.0);
-        $fscPct = floatval($candidate['fsc_percentage'] ?? 75.0);
-        $desiredProgram = $candidate['desired_program'] ?? 'computing'; // computing, engineering, business, medical
-        $location = $candidate['preferred_location'] ?? 'all';
-        $testType = $candidate['test_type'] ?? 'net';
-        $testScore = floatval($candidate['test_score'] ?? 145);
+        $catalog = app(RegionalStudentCatalog::class);
+        $preferredLocation = $candidate['preferred_location'] ?? '';
 
-        // Calculate statutory aggregates
+        if (! empty($preferredLocation) && $preferredLocation !== 'all' && $catalog->requestsOutsideCoverage($preferredLocation)) {
+            return [
+                'candidate' => $candidate + ['qualification' => 'fsc', 'academic_group' => 'Not specified', 'matric_percentage' => 0, 'fsc_percentage' => 0, 'desired_program' => 'Not specified', 'preferred_location' => 'Outside Coverage', 'test_type' => 'none', 'test_score' => 0],
+                'calculated_aggregates' => [],
+                'results' => ['eligible' => [], 'conditional' => [], 'ineligible' => []],
+                'counts' => ['eligible' => 0, 'conditional' => 0, 'ineligible' => 0, 'total' => 0],
+                'rules' => $this->getRulesRepository(),
+            ];
+        }
+
+        $fscPct = floatval($candidate['fsc_percentage'] ?? 0);
+        $matricPct = floatval($candidate['matric_percentage'] ?? 0);
+        $qualification = strtolower($candidate['qualification'] ?? 'fsc');
+        $group = strtolower($candidate['academic_group'] ?? '');
+        $desiredProgram = strtolower($candidate['desired_program'] ?? 'computing');
+        $testType = strtolower($candidate['test_type'] ?? 'net');
+        $testScore = floatval($candidate['test_score'] ?? 0);
+
+        // If no candidate academic details were submitted (empty profile query)
+        if ($fscPct === 0.0 && empty($candidate['qualification']) && empty($candidate['academic_group'])) {
+            $pending = [];
+            foreach ($catalog->suggestions() as $offering) {
+                $pending[] = $offering + [
+                    'closing_cutoff_ref' => 'Not verified',
+                    'council' => 'Not verified',
+                    'applied_rule' => null,
+                    'rule_title' => 'Current program requirements need verification',
+                    'verified_date' => 'Pending review',
+                    'source_url' => route('programs.show', $offering['program_slug']),
+                    'status' => 'conditional',
+                    'status_label' => 'Eligibility not yet verified',
+                    'condition_reason' => 'This offering is within the regional catalog. Enter your marks to calculate eligibility.',
+                    'rule_id' => null,
+                ];
+            }
+
+            return [
+                'candidate' => $candidate + ['qualification' => 'fsc', 'academic_group' => 'Not specified', 'matric_percentage' => 0, 'fsc_percentage' => 0, 'desired_program' => 'Not specified', 'preferred_location' => 'Punjab and Islamabad', 'test_type' => 'none', 'test_score' => 0],
+                'calculated_aggregates' => [],
+                'results' => ['eligible' => [], 'conditional' => $pending, 'ineligible' => []],
+                'counts' => ['eligible' => 0, 'conditional' => count($pending), 'ineligible' => 0, 'total' => count($pending)],
+                'rules' => $this->getRulesRepository(),
+            ];
+        }
+
+        // Calculate standard aggregates
         $netPct = min(100, max(0, ($testScore / 200) * 100));
         $nustAggregate = round(($netPct * 0.75) + ($fscPct * 0.15) + ($matricPct * 0.10), 2);
-
         $fastTestPct = min(100, max(0, ($testScore / 100) * 100));
         $fastAggregate = round(($fastTestPct * 0.50) + ($fscPct * 0.50), 2);
-
-        $comsatsNatPct = min(100, max(0, ($testScore / 100) * 100));
-        $comsatsAggregate = round(($comsatsNatPct * 0.50) + ($fscPct * 0.40) + ($matricPct * 0.10), 2);
-
-        $uetEcatPct = min(100, max(0, ($testScore / 400) * 100));
-        $uetAggregate = round(($uetEcatPct * 0.33) + ($fscPct * 0.67), 2);
+        $natPct = min(100, max(0, ($testScore / 100) * 100));
+        $comsatsAggregate = round(($natPct * 0.50) + ($fscPct * 0.40) + ($matricPct * 0.10), 2);
+        $ecatPct = min(100, max(0, ($testScore / 400) * 100));
+        $uetAggregate = round(($ecatPct * 0.33) + ($fscPct * 0.67), 2);
 
         $eligible = [];
         $conditional = [];
         $ineligible = [];
 
-        // --- 1. Evaluate Computing Programs ---
-        // NUST BS Computer Science (SEECS)
+        // In-scope flagship offerings
+        // NUST BS Computer Science (H-12 Islamabad)
         $nustCs = [
             'program' => 'BS Computer Science',
             'university' => 'National University of Sciences & Technology',
             'acronym' => 'NUST',
-            'campus' => 'SEECS, Islamabad (H-12)',
+            'campus' => 'Islamabad Main Campus (H-12)',
             'calculated_aggregate' => $nustAggregate,
-            'closing_cutoff_ref' => '79.24%',
+            'closing_cutoff_ref' => '79.24% (2025 Closing)',
             'fee_semester' => 'PKR 195,000',
             'council' => 'NCEAC Category W',
-            'applied_rule' => 'net-weightage-rule',
-            'rule_title' => 'NUST NET Formula (75% NET + 15% FSc + 10% Matric)',
-            'verified_date' => 'Verified May 2026',
-            'source_url' => route('counselor.evidence', 'nust-formula'),
+            'source_url' => route('universities.show', 'nust'),
         ];
 
+        // FAST-NUCES BS Computer Science (Islamabad Campus)
+        $fastCs = [
+            'program' => 'BS Computer Science',
+            'university' => 'FAST - National University of Computer & Emerging Sciences',
+            'acronym' => 'FAST-NUCES',
+            'campus' => 'FAST Islamabad Campus',
+            'calculated_aggregate' => $fastAggregate,
+            'closing_cutoff_ref' => '74.80% (2025 Closing)',
+            'fee_semester' => 'PKR 215,000',
+            'council' => 'NCEAC Category W',
+            'source_url' => route('universities.show', 'fast-nuces'),
+        ];
+
+        // Evaluate Computing
         if ($group === 'pre_medical') {
+            // HEC SRO 45(I)/2026 remedial math policy
             $conditional[] = array_merge($nustCs, [
                 'status' => 'conditional',
-                'status_label' => 'Conditional Eligibility (Pre-Medical to CS)',
-                'condition_reason' => 'Eligible under HEC Notification SRO 45(I)/2026. Must complete 2 deficiency mathematics courses in 1st year.',
+                'status_label' => 'Conditional / Action Required',
+                'condition_reason' => 'HEC SRO 45(I)/2026: Pre-Medical students are eligible for computing degrees subject to passing 6 credit hours of remedial mathematics courses in Semesters 1 and 2.',
+                'applied_rule' => 'hec-premed-cs',
+                'rule_title' => 'HEC Pre-Medical to Computing Deficiency Mathematics Policy (SRO 45(I)/2026)',
+                'verified_date' => '02 May 2026',
+                'rule_id' => 'hec-premed-cs',
+            ]);
+            $conditional[] = array_merge($fastCs, [
+                'status' => 'conditional',
+                'status_label' => 'Conditional / Action Required',
+                'condition_reason' => 'HEC SRO 45(I)/2026: Requires 2 deficiency math courses (Pre-Calculus & Remedial Algebra) during Year 1.',
+                'applied_rule' => 'hec-premed-cs',
+                'rule_title' => 'HEC Pre-Medical to Computing Deficiency Mathematics Policy (SRO 45(I)/2026)',
+                'verified_date' => '02 May 2026',
                 'rule_id' => 'hec-premed-cs',
             ]);
         } elseif ($fscPct >= 50.0) {
             $eligible[] = array_merge($nustCs, [
                 'status' => 'eligible',
                 'status_label' => 'Statutory Requirements Satisfied',
-                'eligibility_note' => 'Satisfies NCEAC 50% baseline & NUST 60% FSc threshold.',
-                'probability' => $nustAggregate >= 79.24 ? 'High Probability (Above 2025 Cutoff)' : 'Borderline / Reach Target',
+                'eligibility_note' => 'Intermediate aggregate >= 50.00% satisfies NCEAC Category W baseline.',
+                'applied_rule' => 'nceac-comp-50',
+                'rule_title' => 'NCEAC Minimum 50% Intermediate Baseline Rule',
+                'verified_date' => '12 January 2026',
+                'rule_id' => 'nceac-comp-50',
+            ]);
+            $eligible[] = array_merge($fastCs, [
+                'status' => 'eligible',
+                'status_label' => 'Statutory Requirements Satisfied',
+                'eligibility_note' => 'Meets NCEAC 50% baseline and FAST entrance test criteria.',
+                'applied_rule' => 'nceac-comp-50',
+                'rule_title' => 'NCEAC Minimum 50% Intermediate Baseline Rule',
+                'verified_date' => '12 January 2026',
+                'rule_id' => 'nceac-comp-50',
             ]);
         } else {
             $ineligible[] = array_merge($nustCs, [
                 'status' => 'ineligible',
-                'status_label' => 'Requirements Not Met',
-                'unmet_reason' => 'FSc score ('.$fscPct.'%) is below the minimum NCEAC threshold of 50.0%.',
+                'status_label' => 'Ineligible Under NCEAC Baseline',
+                'unmet_reason' => 'NCEAC requires minimum 50.00% in Intermediate.',
                 'rule_id' => 'nceac-comp-50',
             ]);
         }
 
-        // FAST-NUCES BS Software Engineering
-        $fastSe = [
-            'program' => 'BS Software Engineering',
-            'university' => 'FAST - National University of Computer & Emerging Sciences',
-            'acronym' => 'FAST-NUCES',
-            'campus' => 'Islamabad Campus (H-9)',
-            'calculated_aggregate' => $fastAggregate,
-            'closing_cutoff_ref' => '72.50%',
-            'fee_semester' => 'PKR 215,000',
-            'council' => 'NCEAC Category W / PEC',
-            'applied_rule' => 'nceac-comp-50',
-            'rule_title' => 'NCEAC Minimum 50% Intermediate Baseline',
-            'verified_date' => 'Verified April 2026',
-            'source_url' => route('counselor.evidence', 'nceac-ratings'),
-        ];
-
-        if ($fscPct >= 50.0) {
-            $eligible[] = array_merge($fastSe, [
-                'status' => 'eligible',
-                'status_label' => 'Statutory Requirements Satisfied',
-                'eligibility_note' => 'Calculated aggregate of '.$fastAggregate.'% clears the 2025 closing cutoff of 72.50%.',
-                'probability' => 'Strong Match (Likely Admitted)',
-            ]);
-        } else {
-            $ineligible[] = array_merge($fastSe, [
-                'status' => 'ineligible',
-                'status_label' => 'Requirements Not Met',
-                'unmet_reason' => 'Intermediate marks below 50.0% statutory NCEAC baseline.',
-                'rule_id' => 'nceac-comp-50',
-            ]);
-        }
-
-        // COMSATS BS Artificial Intelligence
-        $comsatsAi = [
-            'program' => 'BS Artificial Intelligence',
-            'university' => 'COMSATS University Islamabad',
-            'acronym' => 'CUI',
-            'campus' => 'Islamabad Main Campus (Park Road)',
-            'calculated_aggregate' => $comsatsAggregate,
-            'closing_cutoff_ref' => '82.10%',
-            'fee_semester' => 'PKR 142,000',
-            'council' => 'NCEAC Category W',
-            'applied_rule' => 'nceac-comp-50',
-            'rule_title' => 'CUI Syndicate Admission Regulation',
-            'verified_date' => 'Verified April 2026',
-            'source_url' => route('universities.show', 'comsats'),
-        ];
-
-        if ($fscPct >= 50.0) {
-            $eligible[] = array_merge($comsatsAi, [
-                'status' => 'eligible',
-                'status_label' => 'Statutory Requirements Satisfied',
-                'eligibility_note' => 'Calculated aggregate of '.$comsatsAggregate.'% matches the 82.10% cutoff.',
-                'probability' => 'High Probability',
-            ]);
-        }
-
-        // --- 2. Evaluate Engineering Programs (Strict 60% PEC Mandate) ---
-        // NUST BE Electrical Engineering
+        // Evaluate Engineering (PEC 60% rule)
         $nustEe = [
             'program' => 'BE Electrical Engineering',
             'university' => 'National University of Sciences & Technology',
             'acronym' => 'NUST',
-            'campus' => 'SEECS, Islamabad (H-12)',
+            'campus' => 'CEME Rawalpindi / SEECS Islamabad',
             'calculated_aggregate' => $nustAggregate,
-            'closing_cutoff_ref' => '71.50%',
+            'closing_cutoff_ref' => '71.50% (2025 Closing)',
             'fee_semester' => 'PKR 195,000',
-            'council' => 'PEC Washington Accord Level-II',
+            'council' => 'PEC Level-II (Washington Accord)',
             'applied_rule' => 'pec-eng-60',
             'rule_title' => 'PEC Minimum 60% FSc Pre-Engineering Mandate',
-            'verified_date' => 'Verified March 2026',
-            'source_url' => route('counselor.evidence', 'pec-accreditation'),
+            'verified_date' => '15 April 2026',
+            'source_url' => route('universities.show', 'nust'),
         ];
 
-        if ($group === 'pre_medical') {
-            $ineligible[] = array_merge($nustEe, [
-                'status' => 'ineligible',
-                'status_label' => 'Ineligible by Statutory Mandate',
-                'unmet_reason' => 'PEC Act strictly requires FSc Pre-Engineering with Mathematics for Bachelor of Engineering (BE). Pre-Medical without additional math is ineligible.',
-                'rule_id' => 'pec-eng-60',
-            ]);
-        } elseif ($fscPct >= 60.0) {
+        if ($fscPct >= 60.0 && $group === 'pre_engineering') {
             $eligible[] = array_merge($nustEe, [
                 'status' => 'eligible',
                 'status_label' => 'Statutory Requirements Satisfied',
-                'eligibility_note' => 'FSc percentage ('.$fscPct.'%) satisfies PEC 60% mandate. Aggregate of '.$nustAggregate.'% comfortably clears 71.50% cutoff.',
-                'probability' => 'Guaranteed Safety (>95% Likelihood)',
+                'eligibility_note' => 'FSc percentage satisfies PEC 60% mandate.',
+                'rule_id' => 'pec-eng-60',
             ]);
-        } else {
+        } elseif ($group === 'pre_medical') {
+            $ineligible[] = array_merge($nustEe, [
+                'status' => 'ineligible',
+                'status_label' => 'Ineligible for Engineering by PEC Law',
+                'unmet_reason' => 'PEC mandates Pre-Engineering with Physics and Mathematics. Pre-Medical students are not eligible for BE programs.',
+                'rule_id' => 'pec-eng-60',
+            ]);
+        } elseif ($fscPct < 60.0) {
             $ineligible[] = array_merge($nustEe, [
                 'status' => 'ineligible',
                 'status_label' => 'Ineligible by PEC Mandate',
-                'unmet_reason' => 'Your FSc marks ('.$fscPct.'%) are below the non-negotiable PEC statutory minimum of 60.00%.',
+                'unmet_reason' => 'FSc marks are below the non-negotiable PEC statutory minimum of 60.00%.',
                 'rule_id' => 'pec-eng-60',
             ]);
         }
 
-        // GIKI BS Computer Engineering
-        $gikiCe = [
-            'program' => 'BS Computer Engineering',
-            'university' => 'Ghulam Ishaq Khan Institute of Engineering Sciences and Technology',
-            'acronym' => 'GIKI',
-            'campus' => 'Topi, KPK',
-            'calculated_aggregate' => $nustAggregate - 1.2,
-            'closing_cutoff_ref' => 'Competitive Test Rank',
-            'fee_semester' => 'PKR 425,000',
-            'council' => 'PEC Washington Accord Level-II',
-            'applied_rule' => 'pec-eng-60',
-            'rule_title' => 'GIKI Charter & PEC Mandate',
-            'verified_date' => 'Verified Feb 2026',
-            'source_url' => route('universities.show', 'giki'),
-        ];
-
-        if ($fscPct >= 60.0 && $group !== 'pre_medical') {
-            $eligible[] = array_merge($gikiCe, [
-                'status' => 'eligible',
-                'status_label' => 'Statutory Requirements Satisfied',
-                'eligibility_note' => 'Satisfies PEC 60% rule and GIKI undergraduate entrance requirements.',
-                'probability' => 'Target Match',
-            ]);
-        } elseif ($group === 'pre_medical') {
-            $ineligible[] = array_merge($gikiCe, [
-                'status' => 'ineligible',
-                'status_label' => 'Ineligible for Engineering',
-                'unmet_reason' => 'Engineering requires Pre-Engineering with Mathematics.',
-                'rule_id' => 'pec-eng-60',
-            ]);
-        }
-
-        // --- 3. Cambridge A-Levels Conditionality Check ---
         if ($qualification === 'a_levels') {
             $conditional[] = [
                 'program' => 'All Recognized Degree Programs',
                 'university' => 'Inter Board Coordination Commission (IBCC)',
                 'acronym' => 'IBCC',
-                'campus' => 'Federal & Regional Chapters',
+                'campus' => 'Islamabad & Regional Chapters',
                 'calculated_aggregate' => $nustAggregate,
                 'closing_cutoff_ref' => 'Equivalence Threshold',
                 'fee_semester' => 'N/A',
                 'council' => 'IBCC Statutory Mandate',
                 'applied_rule' => 'ibcc-equivalence-rule',
                 'rule_title' => 'Cambridge O/A-Level IBCC Equivalence Certificate Requirement',
-                'verified_date' => 'Verified 2026',
+                'verified_date' => '20 March 2026',
                 'source_url' => route('counselor.evidence', 'hec-framework'),
                 'status' => 'conditional',
                 'status_label' => 'Pending IBCC Equivalence Document',
@@ -312,7 +315,7 @@ class EligibilityRulesEngine
                 'matric_percentage' => $matricPct,
                 'fsc_percentage' => $fscPct,
                 'desired_program' => ucfirst($desiredProgram),
-                'preferred_location' => ucfirst($location),
+                'preferred_location' => ucfirst($preferredLocation ?: 'all'),
                 'test_type' => strtoupper($testType),
                 'test_score' => $testScore,
             ],

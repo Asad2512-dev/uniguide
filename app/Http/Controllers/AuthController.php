@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\StudentProfile;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -25,19 +29,41 @@ class AuthController extends Controller
      */
     public function processLogin(Request $request): RedirectResponse
     {
-        $role = $request->input('role', 'student');
-
         $request->validate([
             'email' => ['required', 'string'],
             'password' => ['required', 'string', 'min:6'],
         ]);
 
-        // Demo redirect based on selected role
-        return match($role) {
-            'university' => redirect()->route('preview.university_admin')->with('toast_success', 'Welcome to NUST Institutional Console, Dr. Tariq Mahmood.'),
-            'admin' => redirect()->route('preview.national_admin')->with('toast_success', 'HEC National Regulatory Command authenticated.'),
-            default => redirect()->route('preview.student')->with('toast_success', 'Welcome back, Ahmad Raza Khan! Fall 2026 application cycle is active.'),
-        };
+        $credentials = [
+            'email' => $request->input('email'),
+            'password' => $request->input('password'),
+        ];
+
+        $remember = $request->boolean('remember', false);
+
+        if (Auth::attempt($credentials, $remember)) {
+            $request->session()->regenerate();
+            /** @var User $user */
+            $user = Auth::user();
+
+            session([
+                'uniguide_user_role' => $user->role,
+                'uniguide_admin_institution' => $user->institution_slug ?? 'nust',
+            ]);
+
+            return match ($user->role) {
+                'university_admin', 'university_staff' => redirect()->route('uni_admin.dashboard')
+                    ->with('toast_success', 'Welcome to '.($user->institution_slug ? strtoupper($user->institution_slug).' Institutional Console' : 'University Console').', '.$user->name.'.'),
+                'national_admin' => redirect()->route('national_admin.dashboard')
+                    ->with('toast_success', 'HEC National Regulatory Command authenticated. Welcome, '.$user->name.'.'),
+                default => redirect()->route('student.dashboard')
+                    ->with('toast_success', 'Welcome back, '.$user->name.'! Fall 2026 application cycle is active.'),
+            };
+        }
+
+        return back()
+            ->withInput($request->only('email', 'role'))
+            ->withErrors(['email' => 'These credentials do not match our verified records.']);
     }
 
     /**
@@ -53,9 +79,9 @@ class AuthController extends Controller
      */
     public function processRegister(Request $request): RedirectResponse
     {
-        $request->validate([
+        $validated = $request->validate([
             'full_name' => ['required', 'string', 'max:120'],
-            'email' => ['required', 'email', 'max:150'],
+            'email' => ['required', 'email', 'max:150', 'unique:users,email'],
             'phone' => ['required', 'string', 'max:25'],
             'stream' => ['required', 'string'],
             'province' => ['required', 'string'],
@@ -63,7 +89,33 @@ class AuthController extends Controller
             'terms' => ['accepted'],
         ]);
 
-        return redirect()->route('preview.student')->with('toast_success', 'Account registered successfully! Welcome to UniGuide Pakistan.');
+        $user = User::create([
+            'name' => $validated['full_name'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
+            'phone' => $validated['phone'],
+            'province' => $validated['province'],
+            'role' => 'student',
+            'status' => 'active',
+        ]);
+
+        // Create student profile
+        StudentProfile::create([
+            'user_id' => $user->id,
+            'applicant_id' => 'UG-2026-88'.str_pad($user->id, 2, '0', STR_PAD_LEFT),
+            'full_name' => $validated['full_name'],
+            'phone' => $validated['phone'],
+            'domicile_province' => $validated['province'],
+            'stream' => $validated['stream'],
+            'onboarding_completed' => false,
+        ]);
+
+        Auth::login($user);
+        $request->session()->regenerate();
+        session(['uniguide_user_role' => 'student']);
+
+        return redirect()->route('student.onboarding')
+            ->with('toast_success', 'Account registered successfully! Welcome to UniGuide Pakistan.');
     }
 
     /**
@@ -83,15 +135,18 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        return redirect()->route('auth.login')->with('toast_success', 'Password reset instructions sent to ' . $request->input('email') . '. Please check your inbox.');
+        return redirect()->route('auth.login')->with('toast_success', 'Password reset instructions sent to '.$request->input('email').'. Please check your inbox.');
     }
 
     /**
      * Log the user out and redirect to home.
      */
-    public function logout(): RedirectResponse
+    public function logout(Request $request): RedirectResponse
     {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
         return redirect()->route('home')->with('toast_info', 'You have been safely signed out of UniGuide Pakistan.');
     }
 }
-

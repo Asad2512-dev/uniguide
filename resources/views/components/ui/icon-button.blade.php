@@ -8,7 +8,7 @@
 ])
 
 @php
-    $baseStyles = "inline-flex items-center justify-center font-sans rounded-lg transition-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 shrink-0 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
+    $baseStyles = "inline-flex max-sm:min-h-11 max-sm:min-w-11 items-center justify-center font-sans rounded-lg transition-smooth focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 shrink-0 cursor-pointer disabled:cursor-not-allowed disabled:opacity-50";
 
     $sizeStyles = match($size) {
         'xs' => 'w-7 h-7 text-xs',

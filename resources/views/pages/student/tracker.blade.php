@@ -1,11 +1,14 @@
 <x-layouts.student 
     title="Admission Tracker — UniGuide Pakistan"
-    description="Manage your college application lifecycles from test registration to final fee challan deposit across Pakistani universities."
+    description="Manage your college application lifecycles from test registration to final fee challan deposit across Punjab and Islamabadi universities."
 >
     <div 
         x-data="{
             newModalOpen: false,
             editModalOpen: false,
+            deleteModalOpen: false,
+            deleteActionUrl: '',
+            deleteItemName: '',
             filterStage: 'all',
             activeApp: null,
 
@@ -79,7 +82,7 @@
             @forelse($applications as $app)
                 <div 
                     x-show="filterStage === 'all' || filterStage === '{{ $app['stage'] }}'"
-                    class="p-6 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all space-y-4"
+                    class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all space-y-4"
                 >
                     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-border-subtle">
                         <div class="flex items-center gap-3">
@@ -111,19 +114,19 @@
                     <!-- Application Details Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs font-sans">
                         <div class="p-3 rounded-xl bg-surface-subtle">
-                            <span class="text-[10px] text-ink-400 font-mono block">Reference / App ID</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-mono block">Reference / App ID</span>
                             <span class="font-bold text-ink-900 font-mono">{{ $app['application_ref'] }}</span>
                         </div>
                         <div class="p-3 rounded-xl bg-surface-subtle">
-                            <span class="text-[10px] text-ink-400 font-mono block">Application Deadline</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-mono block">Application Deadline</span>
                             <span class="font-semibold text-ink-800">{{ $app['deadline'] }}</span>
                         </div>
                         <div class="p-3 rounded-xl bg-surface-subtle">
-                            <span class="text-[10px] text-ink-400 font-mono block">Challan Status</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-mono block">Challan Status</span>
                             <span class="font-semibold text-ink-800">{{ $app['fee_challan_status'] }}</span>
                         </div>
                         <div class="p-3 rounded-xl bg-surface-subtle">
-                            <span class="text-[10px] text-ink-400 font-mono block">Test / Result</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-mono block">Test / Result</span>
                             <span class="font-semibold text-ink-800">{{ $app['test_date'] }}</span>
                         </div>
                     </div>
@@ -138,7 +141,7 @@
 
                     <!-- Actions -->
                     <div class="pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                        <span class="text-[11px] text-ink-400 font-mono">Updated {{ $app['last_updated'] }}</span>
+                        <span class="text-xs sm:text-[11px] text-ink-600 font-mono">Updated {{ $app['last_updated'] }}</span>
 
                         <div class="flex items-center gap-3">
                             <button 
@@ -149,13 +152,15 @@
                                 Edit Status & Notes
                             </button>
 
-                            <form action="{{ route('student.tracker.destroy', $app['id']) }}" method="POST" onsubmit="return confirm('Remove this application from tracker?')">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-ink-400 hover:text-error-600 cursor-pointer p-1">
-                                    <x-icon name="trash-2" class="w-3.5 h-3.5" />
-                                </button>
-                            </form>
+                            <button 
+                                type="button" 
+                                @click="deleteActionUrl = '{{ route('student.tracker.destroy', $app['id']) }}'; deleteItemName = '{{ addslashes($app['university']) }} ({{ addslashes($app['program']) }})'; deleteModalOpen = true"
+                                class="text-ink-400 hover:text-error-600 cursor-pointer p-1 transition-colors"
+                                title="Remove from tracker"
+                                aria-label="Remove {{ $app['university'] }} application from tracker"
+                            >
+                                <x-icon name="trash-2" class="w-3.5 h-3.5" />
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -176,43 +181,34 @@
         <!-- Add Application Modal -->
         <div 
             x-show="newModalOpen" 
+            x-modal-focus="newModalOpen"
+            role="dialog" aria-modal="true" aria-label="Add university application"
+            @keydown.escape.window="newModalOpen = false"
+
             x-cloak 
             class="fixed inset-0 z-50 bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
             <div 
                 @click.away="newModalOpen = false" 
-                class="bg-surface rounded-2xl border border-border-default shadow-modal max-w-lg w-full p-6 space-y-5"
+                class="bg-surface rounded-2xl border border-border-default shadow-modal max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto w-full p-4 sm:p-6 space-y-5"
             >
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Add University Application</h3>
-                    <button type="button" @click="newModalOpen = false" class="text-ink-400 hover:text-ink-700">
+                    <button type="button" @click="newModalOpen = false" aria-label="Close add university application" class="text-ink-400 hover:text-ink-700">
                         <x-icon name="x" class="w-5 h-5" />
                     </button>
                 </div>
 
                 <form action="{{ route('student.tracker.store') }}" method="POST" class="space-y-4 text-xs font-sans">
                     @csrf
-                    <div class="space-y-1">
-                        <label class="block font-semibold text-ink-800">University Full Name</label>
-                        <input type="text" name="university_name" placeholder="E.g. National University of Sciences & Technology" required class="w-full px-3 py-2 rounded-xl border border-border-default bg-surface" />
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-3">
-                        <div class="space-y-1">
-                            <label class="block font-semibold text-ink-800">Acronym</label>
-                            <input type="text" name="university_acronym" placeholder="NUST" required class="w-full px-3 py-2 rounded-xl border border-border-default bg-surface font-mono" />
-                        </div>
-                        <div class="space-y-1">
-                            <label class="block font-semibold text-ink-800">Campus</label>
-                            <input type="text" name="campus" placeholder="Islamabad (H-12)" class="w-full px-3 py-2 rounded-xl border border-border-default bg-surface" />
-                        </div>
-                    </div>
-
-                    <div class="space-y-1">
-                        <label class="block font-semibold text-ink-800">Degree Program</label>
-                        <input type="text" name="program_name" placeholder="BS Computer Science" required class="w-full px-3 py-2 rounded-xl border border-border-default bg-surface" />
-                    </div>
-
+                    <label class="block space-y-2"><span>University, campus and degree offering</span>
+                        <select name="program_id" required class="w-full rounded-xl border-border-default bg-surface p-3">
+                            <option value="">Select a recorded offering</option>
+                            @foreach($coveragePrograms as $offering)
+                                <option value="{{ $offering->id }}">{{ $offering->university->name }} — {{ $offering->campus->name }} — {{ $offering->name }}</option>
+                            @endforeach
+                        </select>
+                    </label>
                     <div class="grid grid-cols-2 gap-3">
                         <div class="space-y-1">
                             <label class="block font-semibold text-ink-800">Application Stage</label>
@@ -242,7 +238,7 @@
                     </div>
 
                     <div class="pt-3 border-t border-border-subtle flex items-center justify-end gap-2">
-                        <button type="button" @click="newModalOpen = false" class="px-4 py-2 rounded-xl border border-border-default bg-surface text-ink-700">
+                        <button type="button" @click="newModalOpen = false" aria-label="Close add university application" class="px-4 py-2 rounded-xl border border-border-default bg-surface text-ink-700">
                             Cancel
                         </button>
                         <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 text-white font-semibold">
@@ -256,16 +252,20 @@
         <!-- Edit Application Modal -->
         <div 
             x-show="editModalOpen" 
+            x-modal-focus="editModalOpen"
+            role="dialog" aria-modal="true" aria-label="Update application progress"
+            @keydown.escape.window="editModalOpen = false"
+
             x-cloak 
             class="fixed inset-0 z-50 bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
             <div 
                 @click.away="editModalOpen = false" 
-                class="bg-surface rounded-2xl border border-border-default shadow-modal max-w-lg w-full p-6 space-y-5"
+                class="bg-surface rounded-2xl border border-border-default shadow-modal max-w-lg max-h-[calc(100dvh-2rem)] overflow-y-auto w-full p-4 sm:p-6 space-y-5"
             >
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Update Application Progress</h3>
-                    <button type="button" @click="editModalOpen = false" class="text-ink-400 hover:text-ink-700">
+                    <button type="button" @click="editModalOpen = false" aria-label="Close update application progress" class="text-ink-400 hover:text-ink-700">
                         <x-icon name="x" class="w-5 h-5" />
                     </button>
                 </div>
@@ -309,7 +309,7 @@
                         </div>
 
                         <div class="pt-3 border-t border-border-subtle flex items-center justify-end gap-2">
-                            <button type="button" @click="editModalOpen = false" class="px-4 py-2 rounded-xl border border-border-default bg-surface text-ink-700">
+                            <button type="button" @click="editModalOpen = false" aria-label="Close update application progress" class="px-4 py-2 rounded-xl border border-border-default bg-surface text-ink-700">
                                 Cancel
                             </button>
                             <button type="submit" class="px-4 py-2 rounded-xl bg-brand-600 text-white font-semibold">
@@ -320,6 +320,49 @@
                 </template>
             </div>
         </div>
+
+        <!-- Delete Confirmation Modal -->
+        <template x-teleport="body">
+            <div 
+                x-show="deleteModalOpen" 
+                x-cloak 
+                class="fixed inset-0 z-50 overflow-y-auto px-4 py-6 md:py-12"
+                role="dialog" 
+                aria-modal="true" 
+                aria-labelledby="delete-tracker-modal-title"
+                @keydown.escape.window="deleteModalOpen = false"
+            >
+                <div x-show="deleteModalOpen" x-transition.opacity class="fixed inset-0 bg-ink-950/40 backdrop-blur-xs" @click="deleteModalOpen = false"></div>
+                <div class="flex min-h-full items-center justify-center p-2 text-center sm:p-0">
+                    <div x-show="deleteModalOpen" x-transition class="relative transform overflow-hidden rounded-2xl bg-surface border border-border-default text-left shadow-modal w-full max-w-md p-6" @click.stop>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-error-50 text-error-600 border border-error-200">
+                                <x-icon name="trash-2" class="w-5 h-5" />
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-heading font-bold text-ink-950" id="delete-tracker-modal-title">Remove Application?</h3>
+                                <p class="mt-1 text-xs text-ink-600 font-sans leading-relaxed">
+                                    Are you sure you want to remove <strong class="text-ink-950" x-text="deleteItemName"></strong> from your admission tracker?
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-border-subtle">
+                            <button type="button" @click="deleteModalOpen = false" class="inline-flex min-h-11 items-center justify-center px-4 py-2 text-xs font-semibold text-ink-700 hover:bg-surface-subtle rounded-lg border border-border-default transition-colors">
+                                Cancel
+                            </button>
+                            <form :action="deleteActionUrl" method="POST" class="inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="inline-flex min-h-11 items-center justify-center gap-2 px-4 py-2 text-xs font-bold text-white bg-error-600 hover:bg-error-700 active:bg-error-800 rounded-lg shadow-xs transition-colors">
+                                    <x-icon name="trash-2" class="size-4" />
+                                    <span>Yes, Remove</span>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 </x-layouts.student>
 

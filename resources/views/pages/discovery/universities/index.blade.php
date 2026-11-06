@@ -1,6 +1,6 @@
 <x-layouts.public 
-    title="National University Directory — UniGuide Pakistan"
-    description="Discover and compare 248+ HEC-recognized public and chartered private universities across Pakistan. Filter by province, discipline, merit cutoffs, and verified tuition fees."
+    title="University Directory — UniGuide Pakistan"
+    description="Discover and compare 248+ listed public and chartered private universities across Punjab and Islamabad. Filter by province, discipline, merit cutoffs, and verified tuition fees."
 >
     <div x-data="{ 
         mobileFilterOpen: false,
@@ -12,7 +12,7 @@
         
         <!-- Header Banner & Search -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
                         ['label' => 'National Directory', 'url' => route('universities.index')]
@@ -23,13 +23,13 @@
                     <div>
                         <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-brand-50 border border-brand-200/60 text-brand-700 text-xs font-semibold font-sans mb-3">
                             <x-icon name="shield-check" class="w-3.5 h-3.5 text-brand-600" />
-                            <span>HEC Recognized & Statutory Gazette Audited</span>
+                            <span>University Registry & Statutory Gazette Audited</span>
                         </div>
                         <h1 class="font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-ink-950 tracking-tight">
                             National University Directory
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
-                            Authoritative catalog of public sector and chartered higher education institutions in Pakistan, verified against official parliamentary charters and HEC standards.
+                            Authoritative catalog of public sector and chartered higher education institutions in Pakistan, verified against official parliamentary charters and standards.
                         </p>
                     </div>
 
@@ -37,12 +37,12 @@
                     <div class="flex items-center gap-4 bg-surface-subtle p-3.5 rounded-xl border border-border-subtle shrink-0">
                         <div class="text-center px-2">
                             <span class="block font-heading font-extrabold text-xl text-ink-950">{{ $results['total'] }}</span>
-                            <span class="text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Institutions</span>
+                            <span class="text-xs sm:text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Institutions</span>
                         </div>
                         <div class="h-8 w-px bg-border-default"></div>
                         <div class="text-center px-2">
-                            <span class="block font-heading font-extrabold text-xl text-success-700">100%</span>
-                            <span class="text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Chartered</span>
+                            <span class="block font-heading font-extrabold text-xl text-success-700">UniGuide</span>
+                            <span class="text-xs sm:text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Reference</span>
                         </div>
                     </div>
                 </div>
@@ -62,7 +62,7 @@
                                 type="text" 
                                 name="q" 
                                 value="{{ $filters['q'] }}" 
-                                placeholder="Search by university name, acronym (NUST, FAST, LUMS, GIKI), or campus city…"
+                                placeholder="Search by university name, acronym (NUST, FAST, LUMS), or campus city…"
                                 class="w-full bg-canvas/80 border border-border-default rounded-2xl pl-13 pr-32 py-3.5 text-sm sm:text-base text-ink-900 placeholder:text-ink-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-sans shadow-xs transition-smooth"
                             />
                             <div class="absolute right-2.5 flex items-center gap-2">
@@ -88,7 +88,7 @@
 
                     <!-- Popular Quick Queries -->
                     <div class="flex items-center flex-wrap gap-2 mt-3 text-xs font-sans text-ink-500">
-                        <span class="font-medium text-ink-400">Popular Searches:</span>
+                        <span class="font-medium text-ink-600">Popular Searches:</span>
                         <a href="{{ route('universities.index', ['q' => 'NUST']) }}" class="px-2.5 py-0.5 rounded-lg bg-surface-subtle border border-border-default hover:border-brand-300 hover:text-brand-600 transition-colors">NUST Islamabad</a>
                         <a href="{{ route('universities.index', ['q' => 'FAST']) }}" class="px-2.5 py-0.5 rounded-lg bg-surface-subtle border border-border-default hover:border-brand-300 hover:text-brand-600 transition-colors">FAST-NUCES</a>
                         <a href="{{ route('universities.index', ['q' => 'LUMS']) }}" class="px-2.5 py-0.5 rounded-lg bg-surface-subtle border border-border-default hover:border-brand-300 hover:text-brand-600 transition-colors">LUMS Lahore</a>
@@ -100,7 +100,7 @@
         </section>
 
         <!-- Main Body: Desktop Filter Sidebar + Results Viewport -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 
                 <!-- Desktop Sidebar Filters -->
@@ -220,24 +220,8 @@
                                 </select>
                             </div>
 
-                            <!-- HEC Category Tier -->
-                            <div>
-                                <label for="filter-hec" class="block text-xs font-semibold text-ink-700 font-sans mb-1.5">
-                                    HEC Accreditation Category
-                                </label>
-                                <select 
-                                    id="filter-hec" 
-                                    name="hec_category" 
-                                    onchange="document.getElementById('desktop-filter-form').submit()"
-                                    class="w-full text-xs font-sans rounded-xl border-border-default bg-surface-subtle py-2 px-3 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 text-ink-800"
-                                >
-                                    @foreach($filterOptions['hec_categories'] as $key => $label)
-                                        <option value="{{ $key }}" {{ $filters['hec_category'] === $key ? 'selected' : '' }}>
-                                            {{ $label }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <!-- Category Tier -->
+                            
 
                             <!-- Max Semester Tuition -->
                             <div>
@@ -264,7 +248,7 @@
                         </div>
 
                         <!-- Data Integrity Notice -->
-                        <div class="mt-4 p-3.5 rounded-xl bg-surface-subtle border border-border-subtle text-[11px] font-sans text-ink-500 space-y-1">
+                        <div class="mt-4 p-3.5 rounded-xl bg-surface-subtle border border-border-subtle text-xs sm:text-[11px] font-sans text-ink-500 space-y-1">
                             <div class="flex items-center gap-1.5 font-semibold text-ink-700">
                                 <x-icon name="shield-check" class="w-3.5 h-3.5 text-brand-600" />
                                 <span>Federal Gazette Verification</span>
@@ -292,7 +276,7 @@
                                 <x-icon name="sliders-horizontal" class="w-4 h-4 text-brand-600" />
                                 <span>Filters</span>
                                 @if(count($appliedFilters) > 0)
-                                    <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-[10px] flex items-center justify-center font-mono">
+                                    <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-xs sm:text-[10px] flex items-center justify-center font-mono">
                                         {{ count($appliedFilters) }}
                                     </span>
                                 @endif
@@ -321,7 +305,6 @@
                                     onchange="this.form.submit()"
                                     class="text-xs font-sans rounded-xl border-border-default bg-surface-subtle py-1.5 px-3 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 text-ink-800"
                                 >
-                                    <option value="rank" {{ $sort === 'rank' ? 'selected' : '' }}>HEC National Standing</option>
                                     <option value="name_asc" {{ $sort === 'name_asc' ? 'selected' : '' }}>University Name (A–Z)</option>
                                     <option value="fee_asc" {{ $sort === 'fee_asc' ? 'selected' : '' }}>Tuition: Lowest First</option>
                                     <option value="fee_desc" {{ $sort === 'fee_desc' ? 'selected' : '' }}>Tuition: Highest First</option>
@@ -398,13 +381,14 @@
                         <div x-show="viewMode === 'grid'" class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             @foreach($results['data'] as $uni)
                                 <x-domain.university-card 
+                                    :verification-status="$uni['verification_status'] ?? null"
                                     :name="$uni['name']"
                                     :acronym="$uni['acronym']"
                                     :location="$uni['city'] . ', ' . $uni['province_label']"
                                     :sector="$uni['charter_type']"
                                     :hecRank="$uni['hec_ranking']"
                                     :feeRange="$uni['fee_range']"
-                                    :programsCount="($uni['campuses'][0]['programs_offered_count'] ?? 25) . ' Programs'"
+                                    :programsCount="$uni['programs_count'] ? $uni['programs_count'] . ' Listed Programs' : 'Programs pending review'"
                                     :acceptanceRate="$uni['acceptance_rate']"
                                     :status="$uni['status']"
                                     :deadline="$uni['deadline']"
@@ -430,7 +414,7 @@
                                                     </a>
                                                 </h3>
                                                 @if($uni['featured'] ?? false)
-                                                    <span class="px-1.5 py-0.5 rounded text-[10px] font-semibold bg-brand-50 text-brand-700 border border-brand-200/60 uppercase font-mono">
+                                                    <span class="px-1.5 py-0.5 rounded text-xs sm:text-[10px] font-semibold bg-brand-50 text-brand-700 border border-brand-200/60 uppercase font-mono">
                                                         Top Tier
                                                     </span>
                                                 @endif
@@ -443,18 +427,18 @@
                                                 <span>•</span>
                                                 <span class="font-medium text-ink-700">{{ $uni['charter_type'] }}</span>
                                                 <span>•</span>
-                                                <span class="text-brand-700 font-semibold">{{ $uni['hec_ranking'] }}</span>
+                                                
                                                 <span>•</span>
-                                                <span>{{ count($uni['campuses'] ?? []) }} Campuses</span>
+                                                <span>{{ count($uni['campuses'] ?? []) }} Campuses recorded · {{ str_replace('_', ' ', $uni['verification_status']) }}</span>
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="flex items-center justify-between md:justify-end gap-6 pt-3 md:pt-0 border-t md:border-t-0 border-border-subtle shrink-0">
                                         <div class="text-left md:text-right">
-                                            <span class="block text-[11px] font-sans text-ink-500 font-medium">Estimated Tuition</span>
+                                            <span class="block text-xs sm:text-[11px] font-sans text-ink-500 font-medium">Estimated Tuition</span>
                                             <span class="font-mono font-bold text-xs sm:text-sm text-ink-900">{{ $uni['fee_range'] }}</span>
-                                            <span class="block text-[10px] text-ink-400 font-sans">per semester</span>
+                                            <span class="block text-xs sm:text-[10px] text-ink-600 font-sans">per semester</span>
                                         </div>
 
                                         <div class="flex items-center gap-2">
@@ -484,6 +468,10 @@
         <!-- Mobile Filter Drawer -->
         <div 
             x-show="mobileFilterOpen" 
+            x-modal-focus="mobileFilterOpen"
+            @keydown.escape.window="mobileFilterOpen = false"
+            @resize.window="if (window.innerWidth >= 1024) mobileFilterOpen = false"
+            aria-label="Filter universities"
             x-cloak
             class="fixed inset-0 z-50 overflow-hidden lg:hidden"
             role="dialog" 
@@ -501,7 +489,7 @@
                 @click="mobileFilterOpen = false"
             ></div>
 
-            <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
+            <div class="fixed inset-x-0 bottom-0 max-h-[90dvh] sm:inset-x-auto sm:inset-y-0 sm:right-0 sm:max-h-none max-w-full flex sm:pl-10">
                 <div 
                     x-show="mobileFilterOpen"
                     x-transition:enter="transform transition ease-in-out duration-300"
@@ -510,7 +498,7 @@
                     x-transition:leave="transform transition ease-in-out duration-200"
                     x-transition:leave-start="translate-x-0"
                     x-transition:leave-end="translate-x-full"
-                    class="w-screen max-w-md bg-surface border-l border-border-default shadow-modal p-6 overflow-y-auto flex flex-col justify-between"
+                    class="w-screen max-w-md max-h-[90dvh] sm:max-h-none bg-surface rounded-t-2xl sm:rounded-none border-l border-border-default shadow-modal p-4 sm:p-6 safe-area-bottom overflow-y-auto flex flex-col justify-between"
                 >
                     <div class="space-y-6">
                         <div class="flex items-center justify-between border-b border-border-subtle pb-4">
@@ -521,6 +509,7 @@
                             <button 
                                 type="button" 
                                 @click="mobileFilterOpen = false" 
+                                aria-label="Close filters"
                                 class="p-1.5 text-ink-400 hover:text-ink-700 rounded-lg hover:bg-surface-subtle"
                             >
                                 <x-icon name="x" class="w-5 h-5" />
@@ -568,14 +557,7 @@
                                 </select>
                             </div>
 
-                            <div>
-                                <label class="block text-xs font-semibold text-ink-700 font-sans mb-1.5">HEC Accreditation Category</label>
-                                <select name="hec_category" class="w-full text-xs font-sans rounded-xl border-border-default bg-surface-subtle py-2 px-3 text-ink-800">
-                                    @foreach($filterOptions['hec_categories'] as $key => $label)
-                                        <option value="{{ $key }}" {{ $filters['hec_category'] === $key ? 'selected' : '' }}>{{ $label }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            
 
                             <div class="pt-4 flex items-center gap-3">
                                 <a 

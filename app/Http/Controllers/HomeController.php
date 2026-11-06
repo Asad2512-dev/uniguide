@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Services\AdmissionService;
+use App\Services\DiscoveryService;
 use Illuminate\View\View;
 
 class HomeController extends Controller
@@ -236,6 +237,15 @@ class HomeController extends Controller
             ],
         ];
 
+        $discovery = app(DiscoveryService::class);
+        $featuredUniversities = array_map(fn ($u) => array_replace($u, [
+            'location' => $u['city'], 'hecRank' => '', 'feeRange' => 'Not verified',
+            'programsCount' => $u['programs_count'].' recorded offerings', 'acceptanceRate' => 'Not verified',
+            'category' => 'University', 'province' => $u['province_label'],
+        ]), $discovery->getUniversities([], 'name_asc', 6)['data']);
+        $popularPrograms = array_map(fn ($p) => ['slug' => $p['slug'], 'title' => $p['title'], 'university' => $p['university_name'], 'degreeLevel' => $p['degree_level_label'], 'duration' => $p['duration'], 'feePerSemester' => $p['fee_semester'], 'cutoffMerit' => 'Not verified', 'accreditation' => 'Not verified', 'status' => $p['status']], $discovery->getPrograms([], 'title_asc', 4)['data']);
+        $scholarships = app(AdmissionService::class)->getScholarships([], 'title_asc', 4)['data'];
+
         return view('pages.marketing.home', [
             'featuredUniversities' => $featuredUniversities,
             'popularPrograms' => $popularPrograms,
@@ -244,4 +254,3 @@ class HomeController extends Controller
         ]);
     }
 }
-

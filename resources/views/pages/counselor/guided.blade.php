@@ -18,20 +18,22 @@
             scholarshipNeed: 'yes',
 
             nextStep() {
+                if (!window.validateUniGuideStep(this.$root, this.step)) return;
                 if (this.step < this.totalSteps) {
                     this.step++;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
                 }
             },
             prevStep() {
                 if (this.step > 1) {
                     this.step--;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
                 }
             }
         }"
         class="min-h-screen bg-canvas pb-24"
     >
+        <div class="mx-4 mt-4 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm leading-relaxed text-warning-800" role="note">Planning illustration: this assessment uses existing preset calculations. It does not establish verified eligibility or guarantee admission. Confirm current requirements and financial-aid terms with the institution.</div>
         <!-- Header Strip -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -80,7 +82,7 @@
             <form action="{{ route('counselor.recommendations') }}" method="GET" class="space-y-8">
                 
                 <!-- STEP 1: Academic Qualifications -->
-                <div x-show="step === 1" x-transition class="space-y-6">
+                <div data-step="1" x-show="step === 1" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-brand-600 uppercase tracking-wider font-mono">Step 1 of 6</span>
@@ -107,9 +109,9 @@
                                         required
                                         class="w-full px-3.5 py-2.5 rounded-xl border border-border-default bg-surface text-ink-900 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-sans"
                                     />
-                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-400 font-mono">%</span>
+                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-600 font-mono">%</span>
                                 </div>
-                                <span class="text-[11px] text-ink-400 font-sans">If O-Level, input IBCC equivalence percentage.</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 font-sans">If O-Level, input IBCC equivalence percentage.</span>
                             </div>
 
                             <!-- FSc / A-Level -->
@@ -128,9 +130,9 @@
                                         required
                                         class="w-full px-3.5 py-2.5 rounded-xl border border-border-default bg-surface text-ink-900 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-sans"
                                     />
-                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-400 font-mono">%</span>
+                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-600 font-mono">%</span>
                                 </div>
-                                <span class="text-[11px] text-ink-400 font-sans">For Fall 2026 admissions, Part-1 marks are used for provisional merit.</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 font-sans">For Fall 2026 admissions, Part-1 marks are used for provisional merit.</span>
                             </div>
                         </div>
 
@@ -144,21 +146,21 @@
                                     <input type="radio" name="board_stream" value="pre_engineering" x-model="boardStream" class="text-brand-600 focus:ring-brand-500" />
                                     <div>
                                         <div class="text-xs font-bold text-ink-900">Pre-Engineering</div>
-                                        <div class="text-[11px] text-ink-500">Physics, Chem, Math</div>
+                                        <div class="text-xs sm:text-[11px] text-ink-500">Physics, Chem, Math</div>
                                     </div>
                                 </label>
                                 <label class="flex items-center gap-3 p-3 rounded-xl border border-border-default cursor-pointer hover:bg-surface-subtle transition-all" :class="boardStream === 'ics' ? 'border-brand-500 bg-brand-50/30' : ''">
                                     <input type="radio" name="board_stream" value="ics" x-model="boardStream" class="text-brand-600 focus:ring-brand-500" />
                                     <div>
                                         <div class="text-xs font-bold text-ink-900">ICS (Computer)</div>
-                                        <div class="text-[11px] text-ink-500">Physics, Comp, Math</div>
+                                        <div class="text-xs sm:text-[11px] text-ink-500">Physics, Comp, Math</div>
                                     </div>
                                 </label>
                                 <label class="flex items-center gap-3 p-3 rounded-xl border border-border-default cursor-pointer hover:bg-surface-subtle transition-all" :class="boardStream === 'pre_medical' ? 'border-brand-500 bg-brand-50/30' : ''">
                                     <input type="radio" name="board_stream" value="pre_medical" x-model="boardStream" class="text-brand-600 focus:ring-brand-500" />
                                     <div>
                                         <div class="text-xs font-bold text-ink-900">Pre-Medical</div>
-                                        <div class="text-[11px] text-ink-500">Bio, Chem, Physics</div>
+                                        <div class="text-xs sm:text-[11px] text-ink-500">Bio, Chem, Physics</div>
                                     </div>
                                 </label>
                             </div>
@@ -167,7 +169,7 @@
                 </div>
 
                 <!-- STEP 2: Preferred Discipline -->
-                <div x-show="step === 2" x-transition class="space-y-6">
+                <div data-step="2" x-show="step === 2" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-brand-600 uppercase tracking-wider font-mono">Step 2 of 6</span>
@@ -195,7 +197,7 @@
                                             <x-icon :name="$disc['icon']" class="w-4 h-4 text-brand-600" />
                                             <span class="text-xs font-bold text-ink-950">{{ $disc['name'] }}</span>
                                         </div>
-                                        <p class="text-[11px] text-ink-500 font-sans mt-1 leading-normal">{{ $disc['desc'] }}</p>
+                                        <p class="text-xs sm:text-[11px] text-ink-500 font-sans mt-1 leading-normal">{{ $disc['desc'] }}</p>
                                     </div>
                                 </label>
                             @endforeach
@@ -204,7 +206,7 @@
                 </div>
 
                 <!-- STEP 3: Location Preference -->
-                <div x-show="step === 3" x-transition class="space-y-6">
+                <div data-step="3" x-show="step === 3" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-brand-600 uppercase tracking-wider font-mono">Step 3 of 6</span>
@@ -238,7 +240,7 @@
                 </div>
 
                 <!-- STEP 4: Budget & Tuition Ceilings -->
-                <div x-show="step === 4" x-transition class="space-y-6">
+                <div data-step="4" x-show="step === 4" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-brand-600 uppercase tracking-wider font-mono">Step 4 of 6</span>
@@ -266,7 +268,7 @@
                                 class="w-full h-2 bg-surface-subtle rounded-lg appearance-none cursor-pointer accent-brand-600"
                             />
 
-                            <div class="flex items-center justify-between text-[11px] text-ink-400 font-mono">
+                            <div class="flex items-center justify-between text-xs sm:text-[11px] text-ink-400 font-mono">
                                 <span>PKR 60k (Public Subsidized)</span>
                                 <span>PKR 200k (National Chartered)</span>
                                 <span>PKR 450k+ (Premier Private)</span>
@@ -286,7 +288,7 @@
                 </div>
 
                 <!-- STEP 5: Entry-Test Profile -->
-                <div x-show="step === 5" x-transition class="space-y-6">
+                <div data-step="5" x-show="step === 5" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-brand-600 uppercase tracking-wider font-mono">Step 5 of 6</span>
@@ -315,7 +317,7 @@
                                         />
                                         <div class="mt-2">
                                             <div class="text-xs font-bold text-ink-950">{{ $et['name'] }}</div>
-                                            <div class="text-[11px] text-ink-400 font-mono">Max Marks: {{ $et['max'] }}</div>
+                                            <div class="text-xs sm:text-[11px] text-ink-400 font-mono">Max Marks: {{ $et['max'] }}</div>
                                         </div>
                                     </label>
                                 @endforeach
@@ -336,20 +338,20 @@
                                         class="w-full px-3.5 py-2.5 rounded-xl border border-border-default bg-surface text-ink-900 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-sans"
                                     />
                                 </div>
-                                <span class="text-[11px] text-ink-400 font-sans">E.g., 148 for NUST NET, 72 for FAST NU Test, 280 for ECAT.</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 font-sans">E.g., 148 for NUST NET, 72 for FAST NU Test, 280 for ECAT.</span>
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- STEP 6: Scholarships & Financial Aid -->
-                <div x-show="step === 6" x-transition class="space-y-6">
+                <div data-step="6" x-show="step === 6" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-brand-600 uppercase tracking-wider font-mono">Step 6 of 6</span>
                             <h2 class="font-heading font-bold text-xl text-ink-950 mt-1">Financial Aid & Scholarship Eligibility</h2>
                             <p class="text-xs text-ink-500 font-sans mt-1">
-                                Check qualification for HEC Need-Based, Ehsaas, and provincial endowment funds.
+                                Check qualification for Need-Based, Ehsaas, and provincial endowment funds.
                             </p>
                         </div>
 
@@ -359,7 +361,7 @@
                                     Total Gross Monthly Household Income:
                                 </label>
                                 <div class="relative max-w-sm">
-                                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-400 font-mono">PKR</span>
+                                    <span class="absolute left-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-600 font-mono">PKR</span>
                                     <input 
                                         type="number" 
                                         name="monthly_income" 
@@ -370,7 +372,7 @@
                                         class="w-full pl-12 pr-4 py-2.5 rounded-xl border border-border-default bg-surface text-ink-900 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-sans"
                                     />
                                 </div>
-                                <span class="text-[11px] text-ink-400 font-sans">HEC Need-Based threshold is typically below PKR 45,000/month.</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 font-sans">Need-Based threshold is typically below PKR 45,000/month.</span>
                             </div>
 
                             <div class="p-4 rounded-xl bg-success-50/50 border border-success-200/60 text-xs text-success-800 font-sans space-y-1">

@@ -47,7 +47,7 @@
                             required 
                             class="w-full px-3.5 py-2.5 rounded-xl border border-border-default text-xs font-mono"
                         />
-                        <span class="text-[10px] text-ink-400 mt-1 block">Best score among NET-1, NET-2, NET-3, and NET-4 is automatically utilized.</span>
+                        <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Best score among NET-1, NET-2, NET-3, and NET-4 is automatically utilized.</span>
                     </div>
 
                     <div>
@@ -87,7 +87,7 @@
                             <span>Total Aggregate Sum:</span>
                             <span class="font-mono text-sm text-brand-600">100%</span>
                         </div>
-                        <p class="mt-2 text-[11px] text-ink-500">
+                        <p class="mt-2 text-xs sm:text-[11px] text-ink-500">
                             Last ratified under: {{ $eligibility['merit_weightage_formula']['last_amended'] }}.
                         </p>
                     </div>
@@ -111,7 +111,7 @@
             @foreach($eligibility['statutory_enforcements'] as $rule)
                 <div class="p-5 rounded-2xl bg-surface border border-border-default shadow-card space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-[10px] font-mono font-bold uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
+                        <span class="text-xs sm:text-[10px] font-mono font-bold uppercase text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded">
                             {{ $rule['authority'] }}
                         </span>
                         <x-icon name="lock" class="w-3.5 h-3.5 text-ink-400" />
@@ -123,11 +123,11 @@
                     </div>
 
                     <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle text-xs font-sans">
-                        <span class="text-[10px] text-ink-400 uppercase font-mono block">Enforced Baseline</span>
+                        <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Enforced Baseline</span>
                         <strong class="text-ink-900 font-semibold">{{ $rule['threshold'] }}</strong>
                     </div>
 
-                    <div class="text-[11px] text-ink-500 font-sans">
+                    <div class="text-xs sm:text-[11px] text-ink-500 font-sans">
                         Scope: {{ $rule['scope'] }}
                     </div>
                 </div>

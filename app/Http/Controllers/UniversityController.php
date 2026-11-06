@@ -29,7 +29,7 @@ class UniversityController extends Controller
 
         $sort = $request->query('sort', 'rank');
         $view = $request->query('view', 'grid'); // 'grid' or 'list'
-        $page = max(1, (int)$request->query('page', 1));
+        $page = max(1, (int) $request->query('page', 1));
         $perPage = 6;
 
         $results = $this->discoveryService->getUniversities($filters, $sort, $perPage, $page);
@@ -37,14 +37,14 @@ class UniversityController extends Controller
 
         // Calculate active applied filters
         $appliedFilters = [];
-        if (!empty($filters['q'])) {
-            $appliedFilters['q'] = ['label' => 'Query: "' . e($filters['q']) . '"', 'param' => 'q'];
+        if (! empty($filters['q'])) {
+            $appliedFilters['q'] = ['label' => 'Query: "'.e($filters['q']).'"', 'param' => 'q'];
         }
         if ($filters['province'] !== 'all' && isset($filterOptions['provinces'][$filters['province']])) {
             $appliedFilters['province'] = ['label' => $filterOptions['provinces'][$filters['province']], 'param' => 'province'];
         }
         if ($filters['city'] !== 'all' && isset($filterOptions['cities'][$filters['city']])) {
-            $appliedFilters['city'] = ['label' => 'City: ' . $filterOptions['cities'][$filters['city']], 'param' => 'city'];
+            $appliedFilters['city'] = ['label' => 'City: '.$filterOptions['cities'][$filters['city']], 'param' => 'city'];
         }
         if ($filters['sector'] !== 'all' && isset($filterOptions['sectors'][$filters['sector']])) {
             $appliedFilters['sector'] = ['label' => $filterOptions['sectors'][$filters['sector']], 'param' => 'sector'];
@@ -76,7 +76,7 @@ class UniversityController extends Controller
     {
         $university = $this->discoveryService->getUniversityBySlug($slug);
 
-        if (!$university) {
+        if (! $university) {
             abort(404, 'University not found in national registry');
         }
 
@@ -88,9 +88,9 @@ class UniversityController extends Controller
         $relatedResult = $this->discoveryService->getUniversities([
             'sector' => $university['sector'],
         ], 'rank', 3, 1);
-        
+
         $relatedUniversities = collect($relatedResult['data'])
-            ->filter(fn($u) => $u['slug'] !== $slug)
+            ->filter(fn ($u) => $u['slug'] !== $slug)
             ->take(3)
             ->values()
             ->all();
@@ -109,7 +109,7 @@ class UniversityController extends Controller
     {
         $campus = $this->discoveryService->getCampus($slug, $campusSlug);
 
-        if (!$campus) {
+        if (! $campus) {
             abort(404, 'Campus not found for this institution');
         }
 
@@ -121,4 +121,3 @@ class UniversityController extends Controller
         ]);
     }
 }
-

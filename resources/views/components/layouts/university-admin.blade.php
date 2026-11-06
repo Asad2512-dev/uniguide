@@ -1,11 +1,11 @@
 @props([
     'title' => 'Institutional Console — UniGuide Pakistan',
     'institutionName' => 'National University of Sciences & Technology (NUST)',
-    'institutionCode' => 'INST-HEC-PK-019',
+    'institutionCode' => 'INST-PK-019',
 ])
 
 <x-layouts.base :title="$title">
-    <div class="flex h-screen overflow-hidden bg-canvas">
+    <div class="portal-workspace flex min-h-dvh w-full bg-canvas">
         <!-- University Admin Sidebar -->
         <x-nav.sidebar 
             menuKey="university_admin" 
@@ -19,7 +19,7 @@
         <x-nav.mobile-nav menuKey="university_admin" roleLabel="University Admin" />
 
         <!-- Main Workspace Shell -->
-        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+        <div class="flex-1 flex flex-col min-w-0">
             <!-- Institutional Authority Topbar -->
             <x-nav.topbar 
                 contextBadge="{{ $institutionName }}" 
@@ -41,8 +41,8 @@
             </div>
 
             <!-- Scrollable Content Canvas -->
-            <main id="main-content" class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
-                <div class="max-w-7xl mx-auto">
+            <main id="main-content" class="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
+                <div class="max-w-none mx-auto">
                     {{ $slot }}
                 </div>
             </main>

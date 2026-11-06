@@ -8,7 +8,7 @@
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'AI Chatbot Config']
                 ]"
             />
@@ -34,7 +34,7 @@
             <!-- Left Column: Hyperparameters & Prompt (7 Cols) -->
             <div class="lg:col-span-7 space-y-6">
                 <!-- Hyperparameters Card -->
-                <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-5">
+                <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-5">
                     <h3 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
                         <x-icon name="sliders" class="w-4 h-4 text-brand-600" />
                         Model Hyperparameters
@@ -74,7 +74,7 @@
                                 value="{{ $config['temperature'] ?? 0.20 }}"
                                 class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono"
                             />
-                            <span class="text-[10px] text-ink-400 mt-1 block">Low temperature (0.20) guarantees strict factual grounding.</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Low temperature (0.20) guarantees strict factual grounding.</span>
                         </div>
 
                         <div>
@@ -88,19 +88,19 @@
                                 value="{{ $config['citation_threshold'] ?? 0.85 }}"
                                 class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono"
                             />
-                            <span class="text-[10px] text-ink-400 mt-1 block">Requires minimum 0.85 similarity to cite statutory gazettes.</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Requires minimum 0.85 similarity to cite statutory gazettes.</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- Master System Prompt Card -->
-                <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+                <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                     <div class="flex items-center justify-between">
                         <h3 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
                             <x-icon name="bot" class="w-4 h-4 text-brand-600" />
                             National Regulatory System Prompt
                         </h3>
-                        <span class="text-[11px] font-mono text-ink-400">Strict Persona Invariant</span>
+                        <span class="text-xs sm:text-[11px] font-mono text-ink-600">Strict Persona Invariant</span>
                     </div>
 
                     <textarea 
@@ -114,7 +114,7 @@
             <!-- Right Column: Statutory Guardrails & Save (5 Cols) -->
             <div class="lg:col-span-5 space-y-6">
                 <!-- Guardrails Injection Rules Card -->
-                <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+                <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                     <h3 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
                         <x-icon name="shield-check" class="w-4 h-4 text-emerald-600" />
                         Statutory Guardrail Injection
@@ -134,7 +134,7 @@
                             />
                             <div>
                                 <span class="text-xs font-semibold text-ink-950 block">PEC Washington Accord Ruleset</span>
-                                <span class="text-[11px] text-ink-500 block leading-relaxed">Prohibits claiming unaccredited programs possess international Washington Accord equivalence.</span>
+                                <span class="text-xs sm:text-[11px] text-ink-500 block leading-relaxed">Prohibits claiming unaccredited programs possess international Washington Accord equivalence.</span>
                             </div>
                         </label>
 
@@ -147,8 +147,8 @@
                                 class="mt-0.5 rounded border-border-default text-brand-600 focus:ring-brand-500"
                             />
                             <div>
-                                <span class="text-xs font-semibold text-ink-950 block">HEC Pre-Med to CS Remedial Policy (SRO 45)</span>
-                                <span class="text-[11px] text-ink-500 block leading-relaxed">Enforces 6-credit math deficiency course reminders for FSc Pre-Medical applicants.</span>
+                                <span class="text-xs font-semibold text-ink-950 block">Pre-Med to CS Remedial Policy (SRO 45)</span>
+                                <span class="text-xs sm:text-[11px] text-ink-500 block leading-relaxed">Enforces 6-credit math deficiency course reminders for FSc Pre-Medical applicants.</span>
                             </div>
                         </label>
 
@@ -162,7 +162,7 @@
                             />
                             <div>
                                 <span class="text-xs font-semibold text-ink-950 block">IBCC Equivalence Formulas</span>
-                                <span class="text-[11px] text-ink-500 block leading-relaxed">Computes official O/A Level marks conversion according to Federal Ministry tables.</span>
+                                <span class="text-xs sm:text-[11px] text-ink-500 block leading-relaxed">Computes official O/A Level marks conversion according to Federal Ministry tables.</span>
                             </div>
                         </label>
 
@@ -176,7 +176,7 @@
                             />
                             <div>
                                 <span class="text-xs font-semibold text-ink-950 block">Strict Citation Mandate</span>
-                                <span class="text-[11px] text-ink-500 block leading-relaxed">Suppresses any admission advice that lacks direct source links to verified prospectuses.</span>
+                                <span class="text-xs sm:text-[11px] text-ink-500 block leading-relaxed">Suppresses any admission advice that lacks direct source links to verified prospectuses.</span>
                             </div>
                         </label>
 
@@ -190,7 +190,7 @@
                             />
                             <div>
                                 <span class="text-xs font-semibold text-ink-950 block">Hallucination Circuit Breaker</span>
-                                <span class="text-[11px] text-ink-500 block leading-relaxed">Returns polite refusal if an institution has no verified public gazette on record.</span>
+                                <span class="text-xs sm:text-[11px] text-ink-500 block leading-relaxed">Returns polite refusal if an institution has no verified public gazette on record.</span>
                             </div>
                         </label>
                     </div>

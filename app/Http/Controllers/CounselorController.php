@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UniversitySourceRecord;
 use App\Services\CounselorService;
+use App\Services\CounselorWorkspace;
+use App\Services\RegionCatalog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -19,91 +22,66 @@ class CounselorController extends Controller
      */
     public function index(): View
     {
-        return view('pages.counselor.index', [
-            'suggestedCategories' => $this->counselorService->getSuggestedPrompts(),
-            'quickActions' => $this->counselorService->getQuickActions(),
-            'capabilities' => $this->counselorService->getCapabilitiesDisclosure(),
-            'recentConversations' => array_slice($this->counselorService->getConversationHistory(), 0, 4),
-        ]);
+        return $this->chat();
     }
 
-    /**
-     * AI Conversation Workspace: Chat interface with streaming simulation, message bubbles, cards.
-     */
     public function chat(?string $id = null): View
     {
-        $allConversations = $this->counselorService->getConversationHistory();
-        $activeConversation = null;
-
-        if ($id) {
-            $activeConversation = $this->counselorService->getConversationById($id);
-        }
-
-        if (! $activeConversation && count($allConversations) > 0) {
-            $activeConversation = $allConversations[0];
-        }
-
-        // If still empty, provide default initial conversation
-        if (! $activeConversation) {
-            $activeConversation = [
-                'id' => 'conv-new',
-                'title' => 'New Counseling Session',
-                'topic' => 'admissions',
-                'topic_label' => 'Admissions & Merit',
-                'created_at' => now()->format('Y-m-d H:i'),
-                'messages' => [],
-            ];
+        $workspace = app(CounselorWorkspace::class);
+        $before = request()->validate(['before' => 'nullable|integer|min:1'])['before'] ?? null;
+        $conversation = $id ? $workspace->owned($id) : null;
+        $active = $conversation ? $workspace->thread($conversation, $before ? (int) $before : null) : null;
+        $history = $workspace->history();
+        if ($conversation && ! collect($history)->contains('id', $conversation->id)) {
+            $history = array_merge([$workspace->summary($conversation)], array_slice($history, 0, 49));
         }
 
         return view('pages.counselor.chat', [
-            'activeConversation' => $activeConversation,
-            'conversations' => $allConversations,
-            'suggestedPrompts' => [
-                'What is the difference between NET-1, 2, 3 and 4?',
-                'Compare FAST vs NUST Software Engineering',
-                'What are the HEC Need-Based scholarship requirements?',
-                'Which public universities in Punjab offer BS Data Science?',
-            ],
+            'activeConversation' => $active,
+            'conversations' => $history,
         ]);
     }
 
-    /**
-     * Send message endpoint for conversation workspace (supports both AJAX and form submission).
-     */
     public function sendMessage(Request $request): JsonResponse|RedirectResponse
     {
-        $request->validate([
-            'message' => 'required|string|max:1000',
-            'conversation_id' => 'nullable|string',
-        ]);
+        if (! $request->user()) {
+            abort_if($request->expectsJson(), 401, 'Sign in to send and save a private conversation.');
 
-        $message = $request->input('message');
-        $conversationId = $request->input('conversation_id');
-
-        if ($conversationId && $conversationId !== 'conv-new') {
-            $result = $this->counselorService->sendMessage($conversationId, $message);
-        } else {
-            $conversation = $this->counselorService->createConversation($message);
-            $result = [
-                'conversation' => $conversation,
-                'ai_message' => end($conversation['messages']),
-            ];
+            return redirect()->route('auth.login');
         }
-
-        if ($request->wantsJson() || $request->ajax()) {
-            $userMessages = array_values(array_filter($result['conversation']['messages'], fn ($m) => $m['role'] === 'user'));
-            $lastUserMessage = count($userMessages) > 0 ? $userMessages[count($userMessages) - 1] : null;
-
+        $validated = $request->validate([
+            'message' => 'required|string|max:1000',
+            'conversation_id' => 'nullable|string|max:255',
+            'request_id' => 'nullable|uuid',
+        ]);
+        $id = $validated['conversation_id'] ?? null;
+        $result = app(CounselorWorkspace::class)->send(trim($validated['message']), $id === 'conv-new' ? null : $id, $validated['request_id'] ?? null);
+        if ($request->expectsJson()) {
             return response()->json([
-                'success' => true,
-                'conversation_id' => $result['conversation']['id'],
+                'success' => true, 'conversation_id' => $result['conversation']['id'],
                 'conversation_title' => $result['conversation']['title'],
-                'user_message' => $lastUserMessage,
+                'conversation' => $result['conversation'], 'user_message' => $result['user_message'],
                 'ai_message' => $result['ai_message'],
             ]);
         }
 
         return redirect()->route('counselor.chat', $result['conversation']['id']);
+    }
+
+    public function update(Request $request, string $id): JsonResponse
+    {
+        abort_unless($request->user(), 401);
+        $conversation = app(CounselorWorkspace::class)->owned($id, 'update');
+        $validated = $request->validate(['title' => 'sometimes|required|string|max:120', 'pinned' => 'sometimes|required|boolean']);
+        if (isset($validated['title'])) {
+            $conversation->title = $validated['title'];
+        }
+        if (array_key_exists('pinned', $validated)) {
+            $conversation->pinned_at = $validated['pinned'] ? now() : null;
+        }
+        $conversation->save();
+
+        return response()->json(['conversation' => app(CounselorWorkspace::class)->summary($conversation)]);
     }
 
     /**
@@ -119,13 +97,7 @@ class CounselorController extends Controller
                 ['id' => 'medical', 'name' => 'Allied Health & Biosciences', 'desc' => 'Biotechnology, Doctor of Physical Therapy (DPT), Pharmacy', 'icon' => 'heart-pulse'],
                 ['id' => 'social_sciences', 'name' => 'Social Sciences & Law', 'desc' => 'Economics, Public Administration, International Relations, LLB', 'icon' => 'scale'],
             ],
-            'locations' => [
-                ['id' => 'all', 'name' => 'All Pakistan (Open to Relocation)', 'icon' => 'globe'],
-                ['id' => 'islamabad', 'name' => 'Islamabad & Rawalpindi (ICT)', 'icon' => 'building-2'],
-                ['id' => 'punjab', 'name' => 'Punjab (Lahore, Faisalabad, Taxila)', 'icon' => 'map-pin'],
-                ['id' => 'sindh', 'name' => 'Sindh (Karachi, Jamshoro, Sukkur)', 'icon' => 'map-pin'],
-                ['id' => 'kpk', 'name' => 'KPK (Peshawar, Topi, Abbottabad)', 'icon' => 'mountain'],
-            ],
+            'locations' => collect(app(RegionCatalog::class)->regions())->map(fn ($name, $id) => ['id' => $id, 'name' => $name, 'icon' => 'map-pin'])->values()->all(),
             'entryTests' => [
                 ['id' => 'net', 'name' => 'NUST Entry Test (NET)', 'max' => 200, 'typical' => 145],
                 ['id' => 'ecat', 'name' => 'Punjab ECAT (UET)', 'max' => 400, 'typical' => 240],
@@ -193,21 +165,14 @@ class CounselorController extends Controller
      */
     public function evidence(?string $id = null): View
     {
-        $repository = $this->counselorService->getEvidenceRepository();
-        $selectedEvidence = null;
-
-        if ($id) {
-            $selectedEvidence = $this->counselorService->getEvidenceById($id);
+        abort_if($id !== null && ! ctype_digit($id), 404);
+        $query = UniversitySourceRecord::with(['university', 'dataSource'])->whereHas('dataSource', fn ($source) => $source->whereNotNull('source_url'));
+        if ($id !== null) {
+            $query->whereKey($id);
+            abort_unless((clone $query)->exists(), 404);
         }
 
-        if (! $selectedEvidence && count($repository) > 0) {
-            $selectedEvidence = $repository[0];
-        }
-
-        return view('pages.counselor.evidence', [
-            'evidenceList' => $repository,
-            'selectedEvidence' => $selectedEvidence,
-        ]);
+        return view('pages.counselor.evidence', ['records' => $query->latest('id')->paginate(20)]);
     }
 
     /**
@@ -215,35 +180,25 @@ class CounselorController extends Controller
      */
     public function history(Request $request): View
     {
-        $filter = $request->input('filter', 'all');
-        $search = $request->input('q', '');
+        $validated = $request->validate(['q' => 'nullable|string|max:120', 'filter' => 'nullable|in:all,admissions,comparisons,scholarships']);
+        $search = $validated['q'] ?? '';
 
-        $conversations = $this->counselorService->getConversationHistory($filter, $search);
-
-        return view('pages.counselor.history', [
-            'conversations' => $conversations,
-            'activeFilter' => $filter,
-            'searchTerm' => $search,
-            'filters' => [
-                'all' => 'All Topics',
-                'admissions' => 'Admissions & Merit',
-                'comparisons' => 'University Comparisons',
-                'scholarships' => 'Financial Aid & Scholarships',
-            ],
-        ]);
+        return view('pages.counselor.chat', ['activeConversation' => null, 'historySearch' => $search,
+            'conversations' => app(CounselorWorkspace::class)->history($search, $validated['filter'] ?? 'all')]);
     }
 
     /**
      * Delete a conversation from history.
      */
-    public function destroy(string $id): RedirectResponse
+    public function destroy(Request $request, string $id): JsonResponse|RedirectResponse
     {
-        $sessionConversations = session()->get('uniguide_counselor_conversations', []);
-        if (isset($sessionConversations[$id])) {
-            unset($sessionConversations[$id]);
-            session()->put('uniguide_counselor_conversations', $sessionConversations);
+        abort_unless($request->user(), 401);
+        $conversation = app(CounselorWorkspace::class)->owned($id, 'delete');
+        $conversation->delete();
+        if ($request->expectsJson()) {
+            return response()->json(['success' => true]);
         }
 
-        return redirect()->route('counselor.history')->with('status', 'Conversation removed from history.');
+        return redirect()->route('counselor.history')->with('toast_success', 'Conversation removed from history.')->with('status', 'Conversation removed from history.');
     }
 }

@@ -24,7 +24,7 @@
             @csrf
 
             <!-- 1. Profile Management -->
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
                 <div class="pb-3 border-b border-border-subtle">
                     <h2 class="font-heading font-bold text-base text-ink-950">Candidate Information</h2>
                     <p class="text-xs text-ink-500 font-sans mt-0.5">Primary contact details associated with your national applicant ID.</p>
@@ -50,7 +50,7 @@
                             disabled
                             class="w-full px-3.5 py-2.5 rounded-xl border border-border-default bg-surface-subtle text-ink-500 cursor-not-allowed font-mono"
                         />
-                        <span class="text-[10px] text-ink-400">Email changes require HEC identity verification.</span>
+                        <span class="text-xs sm:text-[10px] text-ink-600">Email changes require identity verification.</span>
                     </div>
 
                     <div class="space-y-1.5">
@@ -77,7 +77,7 @@
             </div>
 
             <!-- 2. Notification Preferences -->
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                 <div class="pb-3 border-b border-border-subtle">
                     <h2 class="font-heading font-bold text-base text-ink-950">Notification Preferences</h2>
                     <p class="text-xs text-ink-500 font-sans mt-0.5">Control how and when UniGuide alerts you about critical admission milestones.</p>
@@ -111,7 +111,7 @@
             </div>
 
             <!-- 3. Account Security -->
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                 <div class="pb-3 border-b border-border-subtle">
                     <h2 class="font-heading font-bold text-base text-ink-950">Security & Authentication</h2>
                     <p class="text-xs text-ink-500 font-sans mt-0.5">Safeguard your academic records and application access.</p>
@@ -135,7 +135,7 @@
                             <span>Two-Factor Authentication (2FA)</span>
                         </div>
                         <p class="text-ink-600">SMS OTP verification active for sensitive document downloads.</p>
-                        <span class="text-[10px] font-mono text-success-700 bg-success-50 px-2 py-0.5 rounded font-bold inline-block">
+                        <span class="text-xs sm:text-[10px] font-mono text-success-700 bg-success-50 px-2 py-0.5 rounded font-bold inline-block">
                             Enabled via +92 300 ***8841
                         </span>
                     </div>
@@ -143,7 +143,7 @@
             </div>
 
             <!-- 4. Privacy & Data Controls -->
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                 <div class="pb-3 border-b border-border-subtle">
                     <h2 class="font-heading font-bold text-base text-ink-950">Data Privacy & Archival</h2>
                     <p class="text-xs text-ink-500 font-sans mt-0.5">Download your verified records or manage account retention.</p>

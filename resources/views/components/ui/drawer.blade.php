@@ -21,6 +21,7 @@
 <div 
     x-data="{ show: false }" 
     x-show="show" 
+    x-modal-focus="show"
     x-cloak
     @open-drawer.window="if ($event.detail === '{{ $id }}') show = true"
     @close-drawer.window="if ($event.detail === '{{ $id }}') show = false"
@@ -28,6 +29,7 @@
     class="fixed inset-0 z-50 overflow-hidden"
     role="dialog" 
     aria-modal="true"
+    aria-label="{{ $title ?? 'Details' }}"
 >
     <!-- Backdrop Blur -->
     <div 
@@ -77,13 +79,13 @@
             </div>
 
             <!-- Drawer Body -->
-            <div class="flex-1 overflow-y-auto px-6 py-5">
+            <div class="min-h-0 flex-1 overflow-y-auto px-6 py-5">
                 {{ $slot }}
             </div>
 
             <!-- Drawer Footer -->
             @if(isset($footer))
-                <div class="px-6 py-4 bg-surface-subtle/60 border-t border-border-default flex items-center justify-end gap-2.5">
+                <div class="px-6 py-4 bg-surface-subtle/60 border-t border-border-default flex flex-wrap items-center justify-end gap-2.5">
                     {{ $footer }}
                 </div>
             @endif

@@ -49,19 +49,19 @@
                     <!-- Key Milestones Strip -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-xs font-sans">
                         <div class="p-4 rounded-xl bg-surface-subtle border border-border-subtle">
-                            <span class="text-[10px] text-ink-400 uppercase font-mono block">Online Deadline</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Online Deadline</span>
                             <span class="font-bold text-ink-950 font-mono text-sm">{{ $cyc['deadline_date'] }}</span>
                         </div>
                         <div class="p-4 rounded-xl bg-surface-subtle border border-border-subtle">
-                            <span class="text-[10px] text-ink-400 uppercase font-mono block">Entry Test Series</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Entry Test Series</span>
                             <span class="font-bold text-brand-700 font-sans truncate block">{{ $cyc['entry_tests'] }}</span>
                         </div>
                         <div class="p-4 rounded-xl bg-surface-subtle border border-border-subtle">
-                            <span class="text-[10px] text-ink-400 uppercase font-mono block">1st Merit List</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">1st Merit List</span>
                             <span class="font-bold text-ink-950 font-mono">{{ $cyc['merit_list_1'] }}</span>
                         </div>
                         <div class="p-4 rounded-xl bg-surface-subtle border border-border-subtle">
-                            <span class="text-[10px] text-ink-400 uppercase font-mono block">Total Seats / Candidates</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Total Seats / Candidates</span>
                             <span class="font-bold text-ink-950 font-mono">{{ number_format($cyc['total_seats']) }} / {{ number_format($cyc['applications_received']) }}</span>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                 <div class="p-3.5 rounded-xl border border-border-subtle bg-surface-subtle flex items-center justify-between text-xs font-sans">
                                     <div>
                                         <span class="font-semibold text-ink-900 block">{{ $q['category'] }}</span>
-                                        <span class="text-[10px] text-ink-400 font-mono">{{ $q['seats'] }} Allocated Seats</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 font-mono">{{ $q['seats'] }} Allocated Seats</span>
                                     </div>
                                     <span class="font-mono font-bold text-brand-700 bg-brand-50 px-2 py-0.5 rounded">
                                         {{ $q['percentage'] }}%
@@ -95,7 +95,7 @@
             x-cloak 
             class="fixed inset-0 z-50 overflow-y-auto bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
-            <div class="bg-surface rounded-2xl border border-border-default p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="editCycleModal = false">
+            <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 max-w-lg w-full shadow-elevated space-y-5" @click.outside="editCycleModal = false">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Update Cycle Milestones</h3>
                     <button type="button" @click="editCycleModal = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>

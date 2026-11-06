@@ -16,15 +16,16 @@
             testScore: 145,
 
             nextStep() {
+                if (!window.validateUniGuideStep(this.$root, this.step)) return;
                 if (this.step < this.totalSteps) {
                     this.step++;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
                 }
             },
             prevStep() {
                 if (this.step > 1) {
                     this.step--;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
                 }
             }
         }"
@@ -76,7 +77,7 @@
             <form action="{{ route('eligibility.results') }}" method="GET" class="space-y-8">
                 
                 <!-- STEP 1: Academic Qualification -->
-                <div x-show="step === 1" x-transition class="space-y-6">
+                <div data-step="1" x-show="step === 1" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 1 of 6</span>
@@ -98,7 +99,7 @@
                                             <x-icon :name="$qual['icon']" class="w-4 h-4 text-emerald-600" />
                                             <span class="text-xs font-bold text-ink-950">{{ $qual['name'] }}</span>
                                         </div>
-                                        <p class="text-[11px] text-ink-500 font-sans mt-0.5">{{ $qual['desc'] }}</p>
+                                        <p class="text-xs sm:text-[11px] text-ink-500 font-sans mt-0.5">{{ $qual['desc'] }}</p>
                                     </div>
                                 </label>
                             @endforeach
@@ -107,7 +108,7 @@
                 </div>
 
                 <!-- STEP 2: Academic Marks -->
-                <div x-show="step === 2" x-transition class="space-y-6">
+                <div data-step="2" x-show="step === 2" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 2 of 6</span>
@@ -133,7 +134,7 @@
                                         required
                                         class="w-full px-3.5 py-2.5 rounded-xl border border-border-default bg-surface text-ink-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
                                     />
-                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-400 font-mono">%</span>
+                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-600 font-mono">%</span>
                                 </div>
                             </div>
 
@@ -152,7 +153,7 @@
                                         required
                                         class="w-full px-3.5 py-2.5 rounded-xl border border-border-default bg-surface text-ink-900 text-sm focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
                                     />
-                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-400 font-mono">%</span>
+                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-600 font-mono">%</span>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +169,7 @@
                 </div>
 
                 <!-- STEP 3: Academic Group Stream -->
-                <div x-show="step === 3" x-transition class="space-y-6">
+                <div data-step="3" x-show="step === 3" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 3 of 6</span>
@@ -187,7 +188,7 @@
                                     <input type="radio" name="academic_group" value="{{ $grp['id'] }}" x-model="academicGroup" class="mt-1 text-emerald-600 focus:ring-emerald-500" />
                                     <div>
                                         <span class="text-xs font-bold text-ink-950 block">{{ $grp['name'] }}</span>
-                                        <p class="text-[11px] text-ink-500 font-sans mt-0.5">{{ $grp['desc'] }}</p>
+                                        <p class="text-xs sm:text-[11px] text-ink-500 font-sans mt-0.5">{{ $grp['desc'] }}</p>
                                     </div>
                                 </label>
                             @endforeach
@@ -196,7 +197,7 @@
                 </div>
 
                 <!-- STEP 4: Desired Program -->
-                <div x-show="step === 4" x-transition class="space-y-6">
+                <div data-step="4" x-show="step === 4" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 4 of 6</span>
@@ -231,7 +232,7 @@
                 </div>
 
                 <!-- STEP 5: Preferred Location -->
-                <div x-show="step === 5" x-transition class="space-y-6">
+                <div data-step="5" x-show="step === 5" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 5 of 6</span>
@@ -253,7 +254,7 @@
                 </div>
 
                 <!-- STEP 6: Entrance Test Information -->
-                <div x-show="step === 6" x-transition class="space-y-6">
+                <div data-step="6" x-show="step === 6" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider font-mono">Step 6 of 6</span>
@@ -271,7 +272,7 @@
                                         <input type="radio" name="test_type" value="{{ $et['id'] }}" x-model="testType" class="text-emerald-600" />
                                         <div class="mt-1">
                                             <div class="text-xs font-bold text-ink-950">{{ $et['name'] }}</div>
-                                            <div class="text-[10px] text-ink-400 font-mono">Max: {{ $et['max'] }}</div>
+                                            <div class="text-xs sm:text-[10px] text-ink-400 font-mono">Max: {{ $et['max'] }}</div>
                                         </div>
                                     </label>
                                 @endforeach

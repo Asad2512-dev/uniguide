@@ -2,6 +2,9 @@
 
 namespace Tests\Feature;
 
+use App\Models\AiConversation;
+use App\Models\User;
+use App\Services\CounselorWorkspace;
 use Tests\TestCase;
 
 class CounselorPhaseTest extends TestCase
@@ -13,11 +16,10 @@ class CounselorPhaseTest extends TestCase
     {
         $response = $this->get('/counselor');
         $response->assertStatus(200);
-        $response->assertSee('UniGuide National AI Admission Counselor');
-        $response->assertSee('Intelligent admission guidance');
-        $response->assertSee('Guided Merit');
-        $response->assertSee('Personalized Reach, Match');
-        $response->assertSee('Statutory Grounding');
+        $response->assertSee('Your future starts with');
+        $response->assertSee('Registry mode');
+        $response->assertSee('Compare two universities');
+        $response->assertSee('Guest transcripts are not saved');
     }
 
     /**
@@ -31,12 +33,11 @@ class CounselorPhaseTest extends TestCase
         $response->assertSee('Counseling Sessions');
         $response->assertSee('New Conversation');
 
-        // Seeded conversation thread
-        $responseConv = $this->get('/counselor/chat/conv-1');
-        $responseConv->assertStatus(200);
-        $responseConv->assertSee('BS Computer Science in Islamabad under PKR 200k');
-        $responseConv->assertSee('COMSATS University Islamabad');
-        $responseConv->assertSee('National University of Sciences & Technology', false);
+        $this->actingAs(User::factory()->create());
+        $thread = app(CounselorWorkspace::class)->send('NUML campus research')['conversation'];
+        $responseConv = $this->get(route('counselor.chat', $thread['id']));
+        $responseConv->assertOk();
+        $responseConv->assertSee('NUML campus research');
     }
 
     /**
@@ -44,10 +45,12 @@ class CounselorPhaseTest extends TestCase
      */
     public function test_send_message_post_endpoint_handles_web_and_json(): void
     {
+        $this->actingAs(User::factory()->create());
+        $thread = app(CounselorWorkspace::class)->send('Initial research')['conversation'];
         // 1. JSON AJAX submission
         $responseJson = $this->postJson('/counselor/chat/message', [
             'message' => 'How is NUST CS aggregate calculated?',
-            'conversation_id' => 'conv-1',
+            'conversation_id' => $thread['id'],
         ]);
 
         $responseJson->assertStatus(200);
@@ -141,19 +144,8 @@ class CounselorPhaseTest extends TestCase
      */
     public function test_statutory_evidence_viewer_renders_legal_acts_and_gazettes(): void
     {
-        // Main evidence index
-        $response = $this->get('/counselor/evidence');
-        $response->assertStatus(200);
-        $response->assertSee('Statutory Evidence');
-        $response->assertSee('HEC National Qualifications Framework');
-        $response->assertSee('Cryptographically Verified');
-        $response->assertSee('SHA-256 Match');
-
-        // Specific evidence slug
-        $responseItem = $this->get('/counselor/evidence/nceac-ratings');
-        $responseItem->assertStatus(200);
-        $responseItem->assertSee('NCEAC National Computing Education Accreditation Council Register');
-        $responseItem->assertSee('Category W: NUST, FAST Islamabad/Lahore, and COMSATS');
+        $this->get('/counselor/evidence')->assertOk()->assertSee('University source evidence');
+        $this->get('/counselor/evidence/nceac-ratings')->assertNotFound();
     }
 
     /**
@@ -161,20 +153,13 @@ class CounselorPhaseTest extends TestCase
      */
     public function test_chat_history_renders_and_supports_filtering_and_deletion(): void
     {
-        $response = $this->get('/counselor/history');
-        $response->assertStatus(200);
-        $response->assertSee('Consultation History');
-        $response->assertSee('All Topics');
-        $response->assertSee('BS Computer Science in Islamabad under PKR 200k');
+        $this->actingAs(User::factory()->create());
+        $thread = app(CounselorWorkspace::class)->send('FAST comparison research')['conversation'];
+        AiConversation::findOrFail($thread['id'])->update(['topic' => 'comparisons']);
 
-        // Filter by topic
-        $responseTopic = $this->get('/counselor/history?filter=comparisons');
-        $responseTopic->assertStatus(200);
-        $responseTopic->assertSee('FAST vs NUST Software Engineering Comparison');
-
-        // Delete action
-        $responseDelete = $this->delete('/counselor/history/conv-1');
-        $responseDelete->assertStatus(302);
-        $responseDelete->assertRedirect(route('counselor.history'));
+        $this->get('/counselor/history')->assertOk()->assertSee('FAST comparison research');
+        $this->get('/counselor/history?filter=comparisons')->assertOk()->assertSee('FAST comparison research');
+        $this->delete(route('counselor.destroy', $thread['id']))->assertRedirect(route('counselor.history'));
+        $this->assertNull(AiConversation::find($thread['id']));
     }
 }

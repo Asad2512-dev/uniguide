@@ -72,7 +72,8 @@ Route::prefix('eligibility')->name('eligibility.')->group(function () {
 Route::prefix('counselor')->name('counselor.')->group(function () {
     Route::get('/', [CounselorController::class, 'index'])->name('index');
     Route::get('/chat/{id?}', [CounselorController::class, 'chat'])->name('chat');
-    Route::post('/chat/message', [CounselorController::class, 'sendMessage'])->name('message');
+    Route::post('/chat/message', [CounselorController::class, 'sendMessage'])->middleware('throttle:counselor')->name('message');
+    Route::patch('/history/{id}', [CounselorController::class, 'update'])->middleware('throttle:counselor')->name('update');
     Route::get('/guided', [CounselorController::class, 'guided'])->name('guided');
     Route::get('/recommendations', [CounselorController::class, 'recommendations'])->name('recommendations');
     Route::get('/search', [CounselorController::class, 'search'])->name('search');

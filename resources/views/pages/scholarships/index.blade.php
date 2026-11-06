@@ -1,6 +1,6 @@
 <x-layouts.public 
     title="National Scholarship Directory — UniGuide Pakistan"
-    description="Discover verified higher education scholarships in Pakistan including HEC Need-Based, Ehsaas Undergraduate, PEEF, BEEF, LUMS NOP, and university endowment trust funds."
+    description="Discover verified higher education scholarships in Pakistan including Need-Based, Ehsaas Undergraduate, PEEF, BEEF, LUMS NOP, and university endowment trust funds."
 >
     <div x-data="{ 
         activeType: '{{ $filters['type'] }}',
@@ -9,7 +9,7 @@
         
         <!-- Header Banner & Search -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
                         ['label' => 'Scholarships', 'url' => route('scholarships.index')]
@@ -26,7 +26,7 @@
                             National Scholarship & Financial Aid Explorer
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
-                            Search government scholarships, provincial endowment funds, and university tuition waivers. Over PKR 18 Billion in financial assistance indexed nationwide.
+                            Search government scholarships, provincial endowment funds, and university tuition waivers. Availability depends on verified regional eligibility.
                         </p>
                     </div>
 
@@ -34,12 +34,12 @@
                     <div class="flex items-center gap-4 bg-surface-subtle p-3.5 rounded-xl border border-border-subtle shrink-0">
                         <div class="text-center px-2">
                             <span class="block font-heading font-extrabold text-xl text-ink-950">{{ $results['total'] }}</span>
-                            <span class="text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Scholarship Funds</span>
+                            <span class="text-xs sm:text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Scholarship Funds</span>
                         </div>
                         <div class="h-8 w-px bg-border-default"></div>
                         <div class="text-center px-2">
                             <span class="block font-heading font-extrabold text-xl text-emerald-700">100%</span>
-                            <span class="text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Verified</span>
+                            <span class="text-xs sm:text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Verified</span>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                                 type="text" 
                                 name="q" 
                                 value="{{ $filters['q'] }}" 
-                                placeholder="Search scholarships by provider (HEC, Ehsaas, PEEF, BEEF, LUMS, NUST), or benefits…"
+                                placeholder="Search scholarships by provider (Ehsaas, PEEF, BEEF, LUMS, NUST), or benefits…"
                                 class="w-full bg-canvas/80 border border-border-default rounded-2xl pl-13 pr-32 py-3.5 text-sm sm:text-base text-ink-900 placeholder:text-ink-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-sans shadow-xs transition-smooth"
                             />
                             <div class="absolute right-2.5 flex items-center gap-2">
@@ -104,7 +104,7 @@
         </section>
 
         <!-- Main Body: Results Grid -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
             
             <!-- Control Bar: Result Count, Status Filter, Sort -->
             <div class="bg-surface rounded-2xl border border-border-default p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
@@ -192,11 +192,11 @@
                 <!-- Scholarships Cards Grid -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                     @foreach($results['data'] as $sch)
-                        <div class="bg-surface rounded-2xl border border-border-default hover:border-emerald-300 hover:shadow-card p-6 transition-smooth flex flex-col justify-between space-y-4">
+                        <div class="bg-surface rounded-2xl border border-border-default hover:border-emerald-300 hover:shadow-card p-4 sm:p-6 transition-smooth flex flex-col justify-between space-y-4">
                             <div>
                                 <div class="flex items-start justify-between gap-3 mb-2.5">
                                     <div>
-                                        <span class="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 mb-1.5">
+                                        <span class="inline-flex items-center text-xs sm:text-[10px] font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200 mb-1.5">
                                             {{ $sch['type_label'] }}
                                         </span>
                                         <h3 class="font-heading font-bold text-base sm:text-lg text-ink-950 hover:text-brand-600 transition-colors">
@@ -220,7 +220,7 @@
                                         <x-icon name="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                                         <span>{{ $sch['coverage'] }}</span>
                                     </div>
-                                    <p class="text-[11px] text-ink-500 pl-6">
+                                    <p class="text-xs sm:text-[11px] text-ink-500 pl-6">
                                         Scope: <strong>{{ $sch['universities_scope'] }}</strong>
                                     </p>
                                 </div>
@@ -233,7 +233,7 @@
                             <!-- Footer Row: Deadline & Actions -->
                             <div class="pt-3 border-t border-border-subtle flex items-center justify-between gap-3 text-xs font-sans">
                                 <div>
-                                    <span class="block text-[11px] text-ink-400">Application Cutoff</span>
+                                    <span class="block text-xs sm:text-[11px] text-ink-600">Application Cutoff</span>
                                     <span class="font-bold text-ink-900">{{ $sch['deadline'] }}</span>
                                 </div>
 

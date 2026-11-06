@@ -4,7 +4,7 @@
 >
     <!-- Header -->
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
                 title="Admissions Support & Regional Desks"
                 description="Need assistance with university eligibility, aggregate discrepancies, or institutional verification? Our national admissions advisory desk is ready to help."
@@ -23,7 +23,7 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+    <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         <!-- Flash Alert if submitted -->
         @if(session('success'))
             <div class="p-4 rounded-xl border border-success-200 bg-success-50 text-success-800 text-xs font-sans flex items-center gap-3">
@@ -83,7 +83,7 @@
                                 :options="[
                                     'aggregate' => 'Aggregate Calculation / Merit Discrepancy',
                                     'bise_verification' => 'BISE / Intermediate Marks Verification',
-                                    'scholarship' => 'HEC / Ehsaas Scholarship Assistance',
+                                    'scholarship' => 'Ehsaas Scholarship Assistance',
                                     'university_access' => 'University Registrar / Admin Access',
                                     'unaccredited_report' => 'Report Fraudulent / Unaccredited Program',
                                     'other' => 'General Platform Question'
@@ -120,7 +120,7 @@
                         </div>
 
                         <div class="pt-2 flex items-center justify-between">
-                            <p class="text-[11px] text-ink-400 font-sans">
+                            <p class="text-xs sm:text-[11px] text-ink-600 font-sans">
                                 Response time: ~4 to 24 hours during peak admission cycles.
                             </p>
                             <x-ui.button type="submit" variant="primary" size="md" iconRight="arrow-right">
@@ -134,8 +134,8 @@
             <!-- Right: Regional Desks & Emergency Contacts (5 cols) -->
             <div class="lg:col-span-5 space-y-6">
                 <!-- Emergency Hotline Card -->
-                <div class="p-6 bg-gradient-to-br from-brand-900 to-indigo-950 text-white rounded-2xl shadow-card space-y-3">
-                    <span class="text-[10px] font-mono uppercase tracking-wider font-bold text-brand-200 bg-white/10 px-2 py-0.5 rounded">
+                <div class="p-4 sm:p-6 bg-gradient-to-br from-brand-900 to-indigo-950 text-white rounded-2xl shadow-card space-y-3">
+                    <span class="text-xs sm:text-[10px] font-mono uppercase tracking-wider font-bold text-brand-200 bg-white/10 px-2 py-0.5 rounded">
                         Fall 2026 Admissions Live Desk
                     </span>
                     <h4 class="font-heading font-bold text-lg text-white">Emergency Admissions Helpline</h4>

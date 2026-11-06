@@ -31,9 +31,9 @@
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse" aria-label="Authorized Administrative Staff Roster">
+                    <table data-mobile-table class="w-full text-left border-collapse" aria-label="Authorized Administrative Staff Roster">
                         <thead>
-                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                                 <th scope="col" class="py-3 px-4">Staff Member & Email</th>
                                 <th scope="col" class="py-3 px-4">Assigned Role</th>
                                 <th scope="col" class="py-3 px-4">Directorate / Office</th>
@@ -46,23 +46,23 @@
                                 <tr class="hover:bg-surface-subtle/80 transition-colors">
                                     <td class="py-3.5 px-4">
                                         <span class="font-bold text-ink-950 block font-heading">{{ $st['name'] }}</span>
-                                        <span class="text-[11px] font-mono text-ink-400">{{ $st['email'] }}</span>
+                                        <span class="text-xs sm:text-[11px] font-mono text-ink-600">{{ $st['email'] }}</span>
                                     </td>
                                     <td class="py-3.5 px-4">
                                         <span class="font-semibold text-ink-900 block">{{ $st['role'] }}</span>
-                                        <span class="text-[10px] font-mono text-brand-700 bg-brand-50 px-1.5 py-0.2 rounded border border-brand-200/60 inline-block mt-0.5">
+                                        <span class="text-xs sm:text-[10px] font-mono text-brand-700 bg-brand-50 px-1.5 py-0.2 rounded border border-brand-200/60 inline-block mt-0.5">
                                             {{ $st['role_badge'] }}
                                         </span>
                                     </td>
                                     <td class="py-3.5 px-4 text-ink-700">{{ $st['department'] }}</td>
                                     <td class="py-3.5 px-4">
                                         @if($st['two_factor_enabled'])
-                                            <span class="inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700">
+                                            <span class="inline-flex items-center gap-1 text-xs sm:text-[11px] font-semibold text-emerald-700">
                                                 <x-icon name="shield-check" class="w-3.5 h-3.5 text-emerald-600" />
                                                 <span>2FA Active</span>
                                             </span>
                                         @else
-                                            <span class="text-[11px] text-amber-700 font-medium">Pending Setup</span>
+                                            <span class="text-xs sm:text-[11px] text-amber-700 font-medium">Pending Setup</span>
                                         @endif
                                     </td>
                                     <td class="py-3.5 px-4 text-right">
@@ -91,7 +91,7 @@
                             <input type="checkbox" name="two_factor_required" value="1" {{ $settings['two_factor_required'] ? 'checked' : '' }} class="mt-0.5 text-brand-600 rounded" />
                             <div>
                                 <strong class="text-ink-900 block font-semibold">Enforce Mandatory Two-Factor Authentication (2FA)</strong>
-                                <span class="text-ink-500 text-[11px]">Require all admissions staff to verify login via hardware key or authenticator app.</span>
+                                <span class="text-ink-500 text-xs sm:text-[11px]">Require all admissions staff to verify login via hardware key or authenticator app.</span>
                             </div>
                         </label>
 
@@ -99,7 +99,7 @@
                             <input type="checkbox" name="auto_ai_scrape_notification" value="1" {{ $settings['auto_ai_scrape_notification'] ? 'checked' : '' }} class="mt-0.5 text-brand-600 rounded" />
                             <div>
                                 <strong class="text-ink-900 block font-semibold">Instant AI Scraper Alert Dispatches</strong>
-                                <span class="text-ink-500 text-[11px]">Send immediate notification whenever automated crawler detects prospectus discrepancies.</span>
+                                <span class="text-ink-500 text-xs sm:text-[11px]">Send immediate notification whenever automated crawler detects prospectus discrepancies.</span>
                             </div>
                         </label>
 
@@ -107,7 +107,7 @@
                             <input type="checkbox" name="weekly_inquiry_digest" value="1" {{ $settings['weekly_inquiry_digest'] ? 'checked' : '' }} class="mt-0.5 text-brand-600 rounded" />
                             <div>
                                 <strong class="text-ink-900 block font-semibold">Weekly Admissions Analytics Digest</strong>
-                                <span class="text-ink-500 text-[11px]">Weekly executive email summarizing inquiries volume and merit cutoffs trends.</span>
+                                <span class="text-ink-500 text-xs sm:text-[11px]">Weekly executive email summarizing inquiries volume and merit cutoffs trends.</span>
                             </div>
                         </label>
 
@@ -144,10 +144,10 @@
                             <div class="p-3.5 rounded-xl bg-surface-subtle border border-border-subtle space-y-1 text-xs">
                                 <div class="flex items-center justify-between">
                                     <span class="font-bold text-ink-900 font-sans">{{ $log['user'] }}</span>
-                                    <span class="font-mono text-[10px] text-ink-400">{{ $log['timestamp'] }}</span>
+                                    <span class="font-mono text-xs sm:text-[10px] text-ink-600">{{ $log['timestamp'] }}</span>
                                 </div>
                                 <p class="text-ink-700 leading-snug">{{ $log['action'] }}</p>
-                                <span class="text-[10px] font-mono text-ink-400 block pt-0.5">IP: {{ $log['ip'] }}</span>
+                                <span class="text-xs sm:text-[10px] font-mono text-ink-600 block pt-0.5">IP: {{ $log['ip'] }}</span>
                             </div>
                         @endforeach
                     </div>

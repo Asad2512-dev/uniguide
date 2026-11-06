@@ -12,7 +12,7 @@
                         <x-icon name="compass" class="w-3.5 h-3.5 text-brand-600" />
                         <span>Calibrated Strategy Plan</span>
                         <span class="text-ink-300">•</span>
-                        <span class="font-mono text-[11px] text-brand-800">Fall 2026 Intake</span>
+                        <span class="font-mono text-xs sm:text-[11px] text-brand-800">Fall 2026 Intake</span>
                     </div>
 
                     <h1 class="font-heading font-bold text-2xl sm:text-3xl text-ink-950 tracking-tight">
@@ -24,9 +24,9 @@
                 </div>
 
                 <div class="shrink-0 p-3.5 rounded-xl border border-border-default bg-surface shadow-2xs text-xs font-sans">
-                    <span class="text-[10px] text-ink-400 uppercase font-mono block">Profile Snapshot</span>
+                    <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Profile Snapshot</span>
                     <span class="font-bold text-ink-900 block mt-0.5">88% Matric • 81% FSc • NET 152</span>
-                    <span class="text-[11px] text-brand-700 font-mono block mt-0.5">Cap: PKR 200k/semester</span>
+                    <span class="text-xs sm:text-[11px] text-brand-700 font-mono block mt-0.5">Cap: PKR 200k/semester</span>
                 </div>
             </div>
 
@@ -34,14 +34,14 @@
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5 mt-8 pt-6 border-t border-border-subtle">
                 @foreach($aggregates as $key => $agg)
                     <div class="p-3.5 rounded-xl border border-brand-100 bg-surface shadow-2xs">
-                        <span class="text-[10px] uppercase tracking-wider text-ink-500 font-mono font-semibold block truncate">
+                        <span class="text-xs sm:text-[10px] uppercase tracking-wider text-ink-500 font-mono font-semibold block truncate">
                             {{ $agg['label'] }}
                         </span>
                         <div class="flex items-baseline gap-1 mt-1">
                             <span class="font-heading font-extrabold text-2xl text-brand-700">{{ $agg['score'] }}</span>
                             <span class="text-xs font-mono text-brand-600 font-bold">%</span>
                         </div>
-                        <span class="text-[10px] text-ink-400 font-sans block mt-1 truncate" title="{{ $agg['formula'] }}">
+                        <span class="text-xs sm:text-[10px] text-ink-600 font-sans block mt-1 truncate" title="{{ $agg['formula'] }}">
                             {{ $agg['formula'] }}
                         </span>
                     </div>
@@ -117,18 +117,18 @@
                             </div>
 
                             <div>
-                                <span class="text-[11px] text-ink-400 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
                                 <h3 class="font-heading font-bold text-base text-ink-950 mt-0.5">{{ $item['program'] }}</h3>
                                 <p class="text-xs text-ink-600 font-sans mt-1 line-clamp-2">{{ $item['rationale'] }}</p>
                             </div>
 
                             <div class="grid grid-cols-2 gap-2 pt-2 border-t border-border-subtle text-xs font-sans">
                                 <div>
-                                    <span class="text-[10px] text-ink-400 block font-mono">Calculated Aggregate</span>
+                                    <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Calculated Aggregate</span>
                                     <span class="font-bold text-amber-700 font-mono">{{ $item['calculated_aggregate'] }}%</span>
                                 </div>
                                 <div>
-                                    <span class="text-[10px] text-ink-400 block font-mono">Semester Tuition</span>
+                                    <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Semester Tuition</span>
                                     <span class="font-bold text-ink-900 font-mono">{{ $item['fee_semester'] }}</span>
                                 </div>
                             </div>
@@ -176,18 +176,18 @@
                             </div>
 
                             <div>
-                                <span class="text-[11px] text-ink-400 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
                                 <h3 class="font-heading font-bold text-base text-ink-950 mt-0.5">{{ $item['program'] }}</h3>
                                 <p class="text-xs text-ink-600 font-sans mt-1 line-clamp-2">{{ $item['rationale'] }}</p>
                             </div>
 
                             <div class="grid grid-cols-2 gap-2 pt-2 border-t border-border-subtle text-xs font-sans">
                                 <div>
-                                    <span class="text-[10px] text-ink-400 block font-mono">Calculated Aggregate</span>
+                                    <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Calculated Aggregate</span>
                                     <span class="font-bold text-brand-700 font-mono">{{ $item['calculated_aggregate'] }}%</span>
                                 </div>
                                 <div>
-                                    <span class="text-[10px] text-ink-400 block font-mono">Semester Tuition</span>
+                                    <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Semester Tuition</span>
                                     <span class="font-bold text-ink-900 font-mono">{{ $item['fee_semester'] }}</span>
                                 </div>
                             </div>
@@ -235,18 +235,18 @@
                             </div>
 
                             <div>
-                                <span class="text-[11px] text-ink-400 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
+                                <span class="text-xs sm:text-[11px] text-ink-600 uppercase font-mono font-semibold">{{ $item['acronym'] }} • {{ $item['campus'] }}</span>
                                 <h3 class="font-heading font-bold text-base text-ink-950 mt-0.5">{{ $item['program'] }}</h3>
                                 <p class="text-xs text-ink-600 font-sans mt-1 line-clamp-2">{{ $item['rationale'] }}</p>
                             </div>
 
                             <div class="grid grid-cols-2 gap-2 pt-2 border-t border-border-subtle text-xs font-sans">
                                 <div>
-                                    <span class="text-[10px] text-ink-400 block font-mono">Calculated Aggregate</span>
+                                    <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Calculated Aggregate</span>
                                     <span class="font-bold text-emerald-700 font-mono">{{ $item['calculated_aggregate'] }}%</span>
                                 </div>
                                 <div>
-                                    <span class="text-[10px] text-ink-400 block font-mono">Semester Tuition</span>
+                                    <span class="text-xs sm:text-[10px] text-ink-600 block font-mono">Semester Tuition</span>
                                     <span class="font-bold text-ink-900 font-mono">{{ $item['fee_semester'] }}</span>
                                 </div>
                             </div>

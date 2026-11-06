@@ -10,7 +10,7 @@
             matricPercentage: {{ $profile['matric']['percentage'] ?? 85.0 }},
             fscPercentage: {{ $profile['fsc']['percentage'] ?? 80.0 }},
             targetDisciplines: ['Computer Science & AI', 'Software Engineering'],
-            targetCities: ['Islamabad / Rawalpindi', 'Lahore'],
+            targetCities: ['Islamabad', 'Lahore'],
             budgetMax: 200000,
             scholarshipInterest: 'need_and_merit',
 
@@ -35,15 +35,16 @@
             },
 
             nextStep() {
+                if (!window.validateUniGuideStep(this.$root, this.step)) return;
                 if (this.step < this.totalSteps) {
                     this.step++;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
                 }
             },
             prevStep() {
                 if (this.step > 1) {
                     this.step--;
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                    window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
                 }
             }
         }" 
@@ -75,7 +76,7 @@
                 @csrf
 
                 <!-- STEP 1: Academic Qualification & Stream -->
-                <div x-show="step === 1" x-transition class="space-y-6">
+                <div data-step="1" x-show="step === 1" x-transition class="space-y-6">
                     <div>
                         <span class="text-xs font-mono font-bold text-brand-600 uppercase tracking-wider">Step 1 of 5</span>
                         <h1 class="font-heading font-bold text-2xl text-ink-950 mt-1">Select Your Academic Stream</h1>
@@ -110,7 +111,7 @@
                 </div>
 
                 <!-- STEP 2: Marks & Board Normalization -->
-                <div x-show="step === 2" x-transition class="space-y-6">
+                <div data-step="2" x-show="step === 2" x-transition class="space-y-6">
                     <div>
                         <span class="text-xs font-mono font-bold text-brand-600 uppercase tracking-wider">Step 2 of 5</span>
                         <h1 class="font-heading font-bold text-2xl text-ink-950 mt-1">Your Academic Marks & Percentages</h1>
@@ -119,7 +120,7 @@
                         </p>
                     </div>
 
-                    <div class="p-6 rounded-2xl bg-surface border border-border-default space-y-6 shadow-card">
+                    <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default space-y-6 shadow-card">
                         <div class="space-y-2">
                             <label class="block text-xs font-semibold text-ink-800 font-sans">
                                 Matriculation / O-Level Percentage (%)
@@ -135,9 +136,9 @@
                                     required
                                     class="w-full px-3.5 py-2.5 rounded-xl border border-border-default bg-surface text-ink-900 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                                 />
-                                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-400 font-mono">%</span>
+                                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-600 font-mono">%</span>
                             </div>
-                            <span class="text-[11px] text-ink-400 font-sans">If O-Level, enter your verified IBCC equivalent percentage.</span>
+                            <span class="text-xs sm:text-[11px] text-ink-600 font-sans">If O-Level, enter your verified IBCC equivalent percentage.</span>
                         </div>
 
                         <div class="space-y-2">
@@ -155,15 +156,15 @@
                                     required
                                     class="w-full px-3.5 py-2.5 rounded-xl border border-border-default bg-surface text-ink-900 text-sm focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500"
                                 />
-                                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-400 font-mono">%</span>
+                                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs text-ink-600 font-mono">%</span>
                             </div>
-                            <span class="text-[11px] text-ink-400 font-sans">Used for preliminary merit rankings during Summer cycles.</span>
+                            <span class="text-xs sm:text-[11px] text-ink-600 font-sans">Used for preliminary merit rankings during Summer cycles.</span>
                         </div>
                     </div>
                 </div>
 
                 <!-- STEP 3: Preferred Degrees & Disciplines -->
-                <div x-show="step === 3" x-transition class="space-y-6">
+                <div data-step="3" x-show="step === 3" x-transition class="space-y-6">
                     <div>
                         <span class="text-xs font-mono font-bold text-brand-600 uppercase tracking-wider">Step 3 of 5</span>
                         <h1 class="font-heading font-bold text-2xl text-ink-950 mt-1">Preferred Degree Programs</h1>
@@ -197,7 +198,7 @@
                 </div>
 
                 <!-- STEP 4: Preferred Geographic Cities -->
-                <div x-show="step === 4" x-transition class="space-y-6">
+                <div data-step="4" x-show="step === 4" x-transition class="space-y-6">
                     <div>
                         <span class="text-xs font-mono font-bold text-brand-600 uppercase tracking-wider">Step 4 of 5</span>
                         <h1 class="font-heading font-bold text-2xl text-ink-950 mt-1">Target University Locations</h1>
@@ -231,7 +232,7 @@
                 </div>
 
                 <!-- STEP 5: Tuition Budget & Scholarships -->
-                <div x-show="step === 5" x-transition class="space-y-6">
+                <div data-step="5" x-show="step === 5" x-transition class="space-y-6">
                     <div>
                         <span class="text-xs font-mono font-bold text-brand-600 uppercase tracking-wider">Step 5 of 5</span>
                         <h1 class="font-heading font-bold text-2xl text-ink-950 mt-1">Tuition Budget & Scholarship Interest</h1>
@@ -240,7 +241,7 @@
                         </p>
                     </div>
 
-                    <div class="p-6 rounded-2xl bg-surface border border-border-default space-y-6 shadow-card">
+                    <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default space-y-6 shadow-card">
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-semibold text-ink-800">Max Semester Tuition:</span>
@@ -259,7 +260,7 @@
                                 class="w-full h-2 bg-surface-subtle rounded-lg appearance-none cursor-pointer accent-brand-600"
                             />
 
-                            <div class="flex items-center justify-between text-[11px] text-ink-400 font-mono">
+                            <div class="flex items-center justify-between text-xs sm:text-[11px] text-ink-400 font-mono">
                                 <span>PKR 50k (Public)</span>
                                 <span>PKR 200k (Chartered)</span>
                                 <span>PKR 400k+ (Private)</span>
@@ -273,14 +274,14 @@
                                     <input type="radio" name="scholarship_interest" value="need_and_merit" x-model="scholarshipInterest" class="text-brand-600" />
                                     <div class="mt-1">
                                         <div class="text-xs font-bold text-ink-950">Need & Merit Scholarships</div>
-                                        <div class="text-[11px] text-ink-500">HEC Need-Based, Ehsaas, PEEF, Institutional</div>
+                                        <div class="text-xs sm:text-[11px] text-ink-500">Need-Based, Ehsaas, PEEF, Institutional</div>
                                     </div>
                                 </label>
                                 <label class="p-3 rounded-xl border border-border-default cursor-pointer hover:bg-surface-subtle transition-all" :class="scholarshipInterest === 'none' ? 'border-brand-500 bg-brand-50/20' : ''">
                                     <input type="radio" name="scholarship_interest" value="none" x-model="scholarshipInterest" class="text-brand-600" />
                                     <div class="mt-1">
                                         <div class="text-xs font-bold text-ink-950">Self-Financed Only</div>
-                                        <div class="text-[11px] text-ink-500">Regular fee payment without financial aid</div>
+                                        <div class="text-xs sm:text-[11px] text-ink-500">Regular fee payment without financial aid</div>
                                     </div>
                                 </label>
                             </div>
@@ -319,7 +320,7 @@
                         class="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-card transition-smooth cursor-pointer flex items-center gap-2 ml-auto"
                     >
                         <x-icon name="sparkles" class="w-4 h-4" />
-                        <span>Complete Profile & Open Dashboard</span>
+                        <span>Complete Profile</span>
                     </button>
                 </div>
             </form>

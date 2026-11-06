@@ -1,6 +1,6 @@
 <x-layouts.public 
     title="Admission Explorer — UniGuide Pakistan"
-    description="Discover active Pakistani university admissions, application deadlines, national entry test schedules, and HEC verified intake sessions."
+    description="Discover active Pakistani university admissions, application deadlines, national entry test schedules, and verified intake sessions."
 >
     <div x-data="{ 
         mobileFilterOpen: false,
@@ -11,7 +11,7 @@
         
         <!-- Header Banner & Tools Strip -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumb -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -29,7 +29,7 @@
                             National University Admission Explorer
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
-                            Track verified admission campaigns, registration deadlines, and entrance test criteria across Pakistan’s top public and chartered institutions.
+                            Track verified admission campaigns, registration deadlines, and entrance test criteria across Punjab and Islamabad’s top public and chartered institutions.
                         </p>
                     </div>
 
@@ -67,7 +67,7 @@
                                 type="text" 
                                 name="q" 
                                 value="{{ $filters['q'] }}" 
-                                placeholder="Search by university (NUST, FAST, LUMS, GIKI), entrance test (NET, NAT, MDCAT), or city…"
+                                placeholder="Search by university (NUST, FAST, LUMS), entrance test (NET, NAT, MDCAT), or city…"
                                 class="w-full bg-canvas/80 border border-border-default rounded-2xl pl-13 pr-32 py-3.5 text-sm sm:text-base text-ink-900 placeholder:text-ink-400 focus:outline-none focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500 font-sans shadow-xs transition-smooth"
                             />
                             <div class="absolute right-2.5 flex items-center gap-2">
@@ -131,7 +131,7 @@
         </section>
 
         <!-- Main Body: Desktop Filter Sidebar + Results Viewport -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 
                 <!-- Desktop Sidebar Filters -->
@@ -253,7 +253,7 @@
                         </div>
 
                         <!-- Gazette Integrity Notice -->
-                        <div class="mt-4 p-3.5 rounded-xl bg-surface-subtle border border-border-subtle text-[11px] font-sans text-ink-500 space-y-1">
+                        <div class="mt-4 p-3.5 rounded-xl bg-surface-subtle border border-border-subtle text-xs sm:text-[11px] font-sans text-ink-500 space-y-1">
                             <div class="flex items-center gap-1.5 font-semibold text-ink-700">
                                 <x-icon name="shield-check" class="w-3.5 h-3.5 text-brand-600" />
                                 <span>Direct University Source Auditing</span>
@@ -279,7 +279,7 @@
                                 <x-icon name="sliders-horizontal" class="w-4 h-4 text-brand-600" />
                                 <span>Filters</span>
                                 @if(count($appliedFilters) > 0)
-                                    <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-[10px] flex items-center justify-center font-mono">
+                                    <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-xs sm:text-[10px] flex items-center justify-center font-mono">
                                         {{ count($appliedFilters) }}
                                     </span>
                                 @endif
@@ -356,12 +356,12 @@
                         <!-- Admission Campaign Cards -->
                         <div class="space-y-4">
                             @foreach($results['data'] as $adm)
-                                <div class="bg-surface rounded-2xl border border-border-default hover:border-brand-300 hover:shadow-card p-6 transition-smooth flex flex-col justify-between gap-5">
+                                <div class="bg-surface rounded-2xl border border-border-default hover:border-brand-300 hover:shadow-card p-4 sm:p-6 transition-smooth flex flex-col justify-between gap-5">
                                     <div>
                                         <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-3 mb-3">
                                             <div>
                                                 <div class="flex flex-wrap items-center gap-2 mb-1.5">
-                                                    <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase bg-brand-50 text-brand-700 border border-brand-200/60">
+                                                    <span class="px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono font-bold uppercase bg-brand-50 text-brand-700 border border-brand-200/60">
                                                         {{ $adm['session'] }}
                                                     </span>
                                                     <x-domain.admission-status :status="$adm['status']" size="sm" />
@@ -383,7 +383,7 @@
 
                                             <div class="flex items-center gap-2 self-start sm:self-auto shrink-0">
                                                 <div class="text-left sm:text-right">
-                                                    <span class="block text-[11px] font-sans text-ink-400 font-medium">Application Deadline</span>
+                                                    <span class="block text-xs sm:text-[11px] font-sans text-ink-600 font-medium">Application Deadline</span>
                                                     <span class="font-heading font-extrabold text-sm text-ink-900 block">{{ $adm['deadline'] }}</span>
                                                 </div>
                                             </div>
@@ -396,15 +396,15 @@
                                         <!-- Meta Details Strip -->
                                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 p-3 rounded-xl bg-surface-subtle border border-border-subtle text-xs font-sans text-ink-600">
                                             <div>
-                                                <span class="block text-[10px] uppercase font-bold text-ink-400">Entry Test Required</span>
+                                                <span class="block text-xs sm:text-[10px] uppercase font-bold text-ink-600">Entry Test Required</span>
                                                 <span class="font-semibold text-ink-900">{{ $adm['entry_test'] }}</span>
                                             </div>
                                             <div>
-                                                <span class="block text-[10px] uppercase font-bold text-ink-400">Application Processing Fee</span>
+                                                <span class="block text-xs sm:text-[10px] uppercase font-bold text-ink-600">Application Processing Fee</span>
                                                 <span class="font-mono font-semibold text-ink-900">{{ $adm['application_fee'] }}</span>
                                             </div>
                                             <div>
-                                                <span class="block text-[10px] uppercase font-bold text-ink-400">Merit Announcement</span>
+                                                <span class="block text-xs sm:text-[10px] uppercase font-bold text-ink-600">Merit Announcement</span>
                                                 <span class="font-semibold text-brand-700">{{ $adm['merit_date'] }}</span>
                                             </div>
                                         </div>
@@ -454,6 +454,10 @@
         <!-- Mobile Filter Drawer -->
         <div 
             x-show="mobileFilterOpen" 
+            x-modal-focus="mobileFilterOpen"
+            @keydown.escape.window="mobileFilterOpen = false"
+            @resize.window="if (window.innerWidth >= 1024) mobileFilterOpen = false"
+            aria-label="Filter admissions"
             x-cloak
             class="fixed inset-0 z-50 overflow-hidden lg:hidden"
             role="dialog" 
@@ -465,8 +469,8 @@
                 @click="mobileFilterOpen = false"
             ></div>
 
-            <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
-                <div class="w-screen max-w-md bg-surface border-l border-border-default shadow-modal p-6 overflow-y-auto flex flex-col justify-between">
+            <div class="fixed inset-x-0 bottom-0 max-h-[90dvh] sm:inset-x-auto sm:inset-y-0 sm:right-0 sm:max-h-none max-w-full flex sm:pl-10">
+                <div class="w-screen max-w-md max-h-[90dvh] sm:max-h-none bg-surface rounded-t-2xl sm:rounded-none border-l border-border-default shadow-modal p-4 sm:p-6 safe-area-bottom overflow-y-auto flex flex-col justify-between">
                     <div class="space-y-6">
                         <div class="flex items-center justify-between border-b border-border-subtle pb-4">
                             <h2 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
@@ -476,6 +480,7 @@
                             <button 
                                 type="button" 
                                 @click="mobileFilterOpen = false" 
+                                aria-label="Close filters"
                                 class="p-1.5 text-ink-400 hover:text-ink-700 rounded-lg hover:bg-surface-subtle"
                             >
                                 <x-icon name="x" class="w-5 h-5" />

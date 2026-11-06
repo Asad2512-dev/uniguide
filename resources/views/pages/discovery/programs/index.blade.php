@@ -1,6 +1,6 @@
 <x-layouts.public 
     title="Academic Program Explorer — UniGuide Pakistan"
-    description="Discover undergraduate and postgraduate degrees across Pakistan. Compare closing merits, credit hours, semester fee structures, and professional accreditation councils."
+    description="Discover undergraduate and postgraduate degrees across Punjab and Islamabad. Compare closing merits, credit hours, semester fee structures, and professional accreditation councils."
 >
     <div x-data="{ 
         mobileFilterOpen: false,
@@ -9,7 +9,7 @@
         
         <!-- Header Banner & Search -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumb -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -27,7 +27,7 @@
                             Academic Degree Program Explorer
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
-                            Search accredited undergraduate and postgraduate curricula across Pakistan. Evaluate closing aggregates, council accreditations, and semester fee schedules.
+                            Search accredited undergraduate and postgraduate curricula across Punjab and Islamabad. Evaluate closing aggregates, council accreditations, and semester fee schedules.
                         </p>
                     </div>
 
@@ -35,12 +35,12 @@
                     <div class="flex items-center gap-4 bg-surface-subtle p-3.5 rounded-xl border border-border-subtle shrink-0">
                         <div class="text-center px-2">
                             <span class="block font-heading font-extrabold text-xl text-ink-950">{{ $results['total'] }}</span>
-                            <span class="text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Degrees</span>
+                            <span class="text-xs sm:text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Degrees</span>
                         </div>
                         <div class="h-8 w-px bg-border-default"></div>
                         <div class="text-center px-2">
                             <span class="block font-heading font-extrabold text-xl text-brand-700">Fall 2026</span>
-                            <span class="text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Admissions</span>
+                            <span class="text-xs sm:text-[11px] font-sans text-ink-500 uppercase tracking-wider font-semibold">Admissions</span>
                         </div>
                     </div>
                 </div>
@@ -106,7 +106,7 @@
         </section>
 
         <!-- Main Body: Desktop Filter Sidebar + Program Grid Viewport -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 
                 <!-- Desktop Sidebar Filters -->
@@ -213,7 +213,7 @@
                         </div>
 
                         <!-- Accreditation Integrity Notice -->
-                        <div class="mt-4 p-3.5 rounded-xl bg-surface-subtle border border-border-subtle text-[11px] font-sans text-ink-500 space-y-1">
+                        <div class="mt-4 p-3.5 rounded-xl bg-surface-subtle border border-border-subtle text-xs sm:text-[11px] font-sans text-ink-500 space-y-1">
                             <div class="flex items-center gap-1.5 font-semibold text-ink-700">
                                 <x-icon name="award" class="w-3.5 h-3.5 text-brand-600" />
                                 <span>Statutory Council Accreditations</span>
@@ -239,7 +239,7 @@
                                 <x-icon name="sliders-horizontal" class="w-4 h-4 text-brand-600" />
                                 <span>Filters</span>
                                 @if(count($appliedFilters) > 0)
-                                    <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-[10px] flex items-center justify-center font-mono">
+                                    <span class="w-5 h-5 rounded-full bg-brand-600 text-white text-xs sm:text-[10px] flex items-center justify-center font-mono">
                                         {{ count($appliedFilters) }}
                                     </span>
                                 @endif
@@ -348,6 +348,10 @@
         <!-- Mobile Filter Drawer -->
         <div 
             x-show="mobileFilterOpen" 
+            x-modal-focus="mobileFilterOpen"
+            @keydown.escape.window="mobileFilterOpen = false"
+            @resize.window="if (window.innerWidth >= 1024) mobileFilterOpen = false"
+            aria-label="Filter programs"
             x-cloak
             class="fixed inset-0 z-50 overflow-hidden lg:hidden"
             role="dialog" 
@@ -359,8 +363,8 @@
                 @click="mobileFilterOpen = false"
             ></div>
 
-            <div class="fixed inset-y-0 right-0 max-w-full flex pl-10">
-                <div class="w-screen max-w-md bg-surface border-l border-border-default shadow-modal p-6 overflow-y-auto flex flex-col justify-between">
+            <div class="fixed inset-x-0 bottom-0 max-h-[90dvh] sm:inset-x-auto sm:inset-y-0 sm:right-0 sm:max-h-none max-w-full flex sm:pl-10">
+                <div class="w-screen max-w-md max-h-[90dvh] sm:max-h-none bg-surface rounded-t-2xl sm:rounded-none border-l border-border-default shadow-modal p-4 sm:p-6 safe-area-bottom overflow-y-auto flex flex-col justify-between">
                     <div class="space-y-6">
                         <div class="flex items-center justify-between border-b border-border-subtle pb-4">
                             <h2 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
@@ -370,6 +374,7 @@
                             <button 
                                 type="button" 
                                 @click="mobileFilterOpen = false" 
+                                aria-label="Close filters"
                                 class="p-1.5 text-ink-400 hover:text-ink-700 rounded-lg hover:bg-surface-subtle"
                             >
                                 <x-icon name="x" class="w-5 h-5" />

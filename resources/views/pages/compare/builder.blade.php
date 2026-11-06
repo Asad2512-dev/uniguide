@@ -38,7 +38,7 @@
     >
         <!-- Header Strip -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -56,14 +56,14 @@
                             University Comparison Builder
                         </h1>
                         <p class="text-xs sm:text-sm text-ink-600 font-sans mt-2">
-                            Select up to four Pakistani universities to evaluate side-by-side across verified fee schedules, entry test formulas, and HEC statutory credentials.
+                            Select up to four Pakistani universities to evaluate side-by-side across verified fee schedules, entry test formulas, and statutory credentials.
                         </p>
                     </div>
 
                     <!-- Comparison Action Sticky Card -->
                     <div class="shrink-0 p-4 rounded-2xl bg-surface-subtle border border-border-default flex items-center gap-4 shadow-2xs">
                         <div>
-                            <span class="text-[10px] uppercase font-mono text-ink-400 block font-bold">Selected Options</span>
+                            <span class="text-xs sm:text-[10px] uppercase font-mono text-ink-600 block font-bold">Selected Options</span>
                             <span class="font-mono font-bold text-sm text-ink-900">
                                 <span x-text="selected.length"></span> of 4 Institutions
                             </span>
@@ -81,7 +81,7 @@
             </div>
         </section>
 
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-12">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-12">
             
             <!-- Curated Benchmark Presets -->
             <div>
@@ -103,7 +103,7 @@
                                     <div class="w-9 h-9 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center group-hover:bg-brand-600 group-hover:text-white transition-colors">
                                         <x-icon :name="$pre['icon']" class="w-4.5 h-4.5" />
                                     </div>
-                                    <span class="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full {{ match($pre['badge_color'] ?? 'brand') {
+                                    <span class="text-xs sm:text-[10px] font-mono font-bold px-2 py-0.5 rounded-full {{ match($pre['badge_color'] ?? 'brand') {
                                         'success' => 'bg-success-50 text-success-700 border border-success-200/60',
                                         'indigo' => 'bg-indigo-50 text-indigo-700 border border-indigo-200/60',
                                         'warning' => 'bg-warning-50 text-warning-700 border border-warning-200/60',
@@ -158,10 +158,10 @@
                             <div>
                                 <div class="flex items-center justify-between pb-2 mb-2 border-b border-border-subtle">
                                     <span class="font-heading font-bold text-xs text-ink-950" x-text="uni.acronym"></span>
-                                    <span class="text-[10px] font-mono text-ink-400" x-text="uni.ranking"></span>
+                                    
                                 </div>
                                 <h3 class="font-heading font-bold text-sm text-ink-900 truncate" x-text="uni.name"></h3>
-                                <p class="text-[11px] text-ink-500 font-sans mt-0.5">
+                                <p class="text-xs sm:text-[11px] text-ink-500 font-sans mt-0.5">
                                     <span x-text="uni.city"></span> • Sector: <span x-text="uni.sector"></span>
                                 </p>
                             </div>

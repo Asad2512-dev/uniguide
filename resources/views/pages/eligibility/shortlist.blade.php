@@ -6,7 +6,7 @@
         
         <!-- Header Strip -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -45,20 +45,20 @@
         </section>
 
         <!-- Main Shortlist Content -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @forelse($universities as $uni)
-                    <div class="p-6 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all flex flex-col justify-between">
+                    <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all flex flex-col justify-between">
                         <div class="space-y-4">
                             <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                                 <span class="font-heading font-bold text-xs uppercase px-2 py-0.5 rounded bg-brand-50 text-brand-700 font-mono">
-                                    {{ $uni['hec_ranking'] ?? 'HEC Recognized' }}
+                                    {{ $uni['hec_ranking'] ?? 'University Registry' }}
                                 </span>
-                                <span class="text-xs font-mono text-ink-400">{{ $uni['deadline'] ?? '15 July 2026' }}</span>
+                                <span class="text-xs font-mono text-ink-600">{{ $uni['deadline'] ?? '15 July 2026' }}</span>
                             </div>
 
                             <div>
-                                <span class="text-xs text-ink-400 uppercase font-mono font-semibold">{{ $uni['acronym'] }} • {{ $uni['city'] }}</span>
+                                <span class="text-xs text-ink-600 uppercase font-mono font-semibold">{{ $uni['acronym'] }} • {{ $uni['city'] }}</span>
                                 <h3 class="font-heading font-bold text-lg text-ink-950 mt-0.5">
                                     <a href="{{ route('universities.show', $uni['slug']) }}" class="hover:text-brand-600 transition-colors">
                                         {{ $uni['name'] }}

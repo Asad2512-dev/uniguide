@@ -48,7 +48,7 @@
         </span>
 
         @if($change !== null)
-            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[11px] font-semibold border {{ $changeBadge }}">
+            <span class="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs sm:text-[11px] font-semibold border {{ $changeBadge }}">
                 <x-icon :name="$changeIcon" class="w-3 h-3" />
                 <span>{{ $change }}</span>
             </span>
@@ -56,7 +56,7 @@
     </div>
 
     @if($period)
-        <p class="mt-1 text-xs text-ink-400 font-sans">
+        <p class="mt-1 text-xs text-ink-600 font-sans">
             {{ $period }}
         </p>
     @endif

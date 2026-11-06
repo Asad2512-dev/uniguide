@@ -43,19 +43,19 @@
                                 <div class="w-8 h-8 rounded-lg bg-brand-50 text-brand-700 flex items-center justify-center">
                                     <x-icon name="file-text" class="w-4 h-4" />
                                 </div>
-                                <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
+                                <span class="text-xs sm:text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded">
                                     {{ $idoc['verification_badge'] }}
                                 </span>
                             </div>
 
                             <div>
                                 <h4 class="font-heading font-bold text-sm text-ink-950 line-clamp-2">{{ $idoc['title'] }}</h4>
-                                <span class="text-[11px] font-mono text-ink-400 block mt-1">{{ $idoc['file_name'] }} • {{ $idoc['file_size'] }}</span>
+                                <span class="text-xs sm:text-[11px] font-mono text-ink-600 block mt-1">{{ $idoc['file_name'] }} • {{ $idoc['file_size'] }}</span>
                             </div>
                         </div>
 
                         <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
-                            <span class="text-[10px] text-ink-400 font-mono">{{ $idoc['uploaded_at'] }}</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-mono">{{ $idoc['uploaded_at'] }}</span>
                             <a href="#" class="font-bold text-brand-600 hover:text-brand-700 flex items-center gap-1">
                                 <span>Download</span>
                                 <x-icon name="download" class="w-3.5 h-3.5" />
@@ -77,9 +77,9 @@
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
                 <div class="overflow-x-auto">
-                    <table class="w-full text-left border-collapse" aria-label="Applicant Credential Submissions">
+                    <table data-mobile-table class="w-full text-left border-collapse" aria-label="Applicant Credential Submissions">
                         <thead>
-                            <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                            <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                                 <th scope="col" class="py-3 px-4">Applicant & ID</th>
                                 <th scope="col" class="py-3 px-4">Applied Program</th>
                                 <th scope="col" class="py-3 px-4">Credential Document</th>
@@ -93,13 +93,13 @@
                                 <tr class="hover:bg-surface-subtle/80 transition-colors">
                                     <td class="py-3.5 px-4">
                                         <span class="font-bold text-ink-950 block font-heading">{{ $sub['applicant_name'] }}</span>
-                                        <span class="text-[11px] font-mono text-ink-400">{{ $sub['applicant_id'] }}</span>
+                                        <span class="text-xs sm:text-[11px] font-mono text-ink-600">{{ $sub['applicant_id'] }}</span>
                                     </td>
                                     <td class="py-3.5 px-4 font-semibold text-ink-800">{{ $sub['program'] }}</td>
                                     <td class="py-3.5 px-4 text-ink-900 font-medium">{{ $sub['doc_name'] }}</td>
-                                    <td class="py-3.5 px-4 font-mono text-ink-500 text-[11px]">{{ $sub['submitted_at'] }}</td>
+                                    <td class="py-3.5 px-4 font-mono text-ink-500 text-xs sm:text-[11px]">{{ $sub['submitted_at'] }}</td>
                                     <td class="py-3.5 px-4">
-                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-mono font-bold {{ match($sub['status']) {
+                                        <span class="px-2 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold {{ match($sub['status']) {
                                             'verified' => 'bg-emerald-50 text-emerald-800 border border-emerald-200',
                                             'flagged' => 'bg-amber-50 text-amber-800 border border-amber-200',
                                             default => 'bg-brand-50 text-brand-700 border border-brand-200',
@@ -144,7 +144,7 @@
             x-cloak 
             class="fixed inset-0 z-50 overflow-y-auto bg-ink-950/40 backdrop-blur-xs flex items-center justify-center p-4"
         >
-            <div class="bg-surface rounded-2xl border border-border-default p-6 max-w-md w-full shadow-elevated space-y-5" @click.outside="uploadDocModal = false">
+            <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 max-w-md w-full shadow-elevated space-y-5" @click.outside="uploadDocModal = false">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h3 class="font-heading font-bold text-base text-ink-950">Upload Institutional Document</h3>
                     <button type="button" @click="uploadDocModal = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>
@@ -167,10 +167,10 @@
                         </select>
                     </div>
 
-                    <div class="p-6 rounded-xl border border-dashed border-border-default text-center space-y-2">
+                    <div class="p-4 sm:p-6 rounded-xl border border-dashed border-border-default text-center space-y-2">
                         <x-icon name="upload-cloud" class="w-6 h-6 text-brand-600 mx-auto" />
                         <span class="text-xs font-semibold text-ink-800 block">Select PDF Document (Max 50MB)</span>
-                        <span class="text-[10px] text-ink-400 font-sans block">Official documents must bear institutional seal</span>
+                        <span class="text-xs sm:text-[10px] text-ink-600 font-sans block">Official documents must bear institutional seal</span>
                     </div>
 
                     <div class="pt-3 border-t border-border-subtle flex items-center justify-end gap-2">

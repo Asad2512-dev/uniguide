@@ -28,7 +28,7 @@
         
         <!-- Header Banner -->
         <header class="bg-surface border-b border-border-default/80">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-6">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -48,7 +48,7 @@
                             <span class="text-xs font-sans text-ink-500">
                                 {{ $admission['province_label'] }}
                             </span>
-                            <span class="text-xs font-mono text-ink-400">
+                            <span class="text-xs font-mono text-ink-600">
                                 Verified: {{ $admission['verified_at'] }}
                             </span>
                         </div>
@@ -107,7 +107,7 @@
         </header>
 
         <!-- Main Body Grid -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 
                 <!-- Left 2 Cols: Comprehensive Admissions Dossier -->
@@ -120,28 +120,28 @@
                             <span class="font-heading font-extrabold text-base sm:text-lg text-ink-950 mt-0.5 block">
                                 {{ $admission['deadline'] }}
                             </span>
-                            <span class="text-[10px] text-brand-700 font-semibold font-sans">Strict Cutoff</span>
+                            <span class="text-xs sm:text-[10px] text-brand-700 font-semibold font-sans">Strict Cutoff</span>
                         </div>
                         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
                             <span class="block text-xs font-sans text-ink-500 font-medium">Entry Test Window</span>
                             <span class="font-heading font-extrabold text-xs sm:text-sm text-ink-950 mt-0.5 block truncate">
                                 {{ $admission['entry_test'] }}
                             </span>
-                            <span class="text-[10px] text-ink-400 font-sans">Required Examination</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans">Required Examination</span>
                         </div>
                         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
                             <span class="block text-xs font-sans text-ink-500 font-medium">Merit Announcement</span>
                             <span class="font-heading font-extrabold text-base sm:text-lg text-brand-700 mt-0.5 block">
                                 {{ $admission['merit_date'] }}
                             </span>
-                            <span class="text-[10px] text-ink-400 font-sans">First Merit List</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans">First Merit List</span>
                         </div>
                         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
                             <span class="block text-xs font-sans text-ink-500 font-medium">Term Commencement</span>
                             <span class="font-heading font-extrabold text-base sm:text-lg text-ink-950 mt-0.5 block">
                                 {{ $admission['classes_date'] }}
                             </span>
-                            <span class="text-[10px] text-ink-400 font-sans">Orientation & Classes</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans">Orientation & Classes</span>
                         </div>
                     </div>
 
@@ -179,7 +179,7 @@
                             @foreach($admission['timeline_steps'] as $step)
                                 <div class="relative">
                                     <div class="absolute -left-6 top-1 w-3.5 h-3.5 rounded-full border-2 border-brand-600 bg-surface"></div>
-                                    <span class="inline-block text-[11px] font-mono font-bold text-brand-700 uppercase tracking-wider mb-0.5">
+                                    <span class="inline-block text-xs sm:text-[11px] font-mono font-bold text-brand-700 uppercase tracking-wider mb-0.5">
                                         {{ $step['date'] }}
                                     </span>
                                     <h3 class="font-heading font-bold text-sm text-ink-950">
@@ -289,12 +289,12 @@
                 <aside class="space-y-6">
                     
                     <!-- Deadline Countdown Box -->
-                    <div class="bg-surface rounded-2xl border border-brand-200 shadow-elevated p-6 space-y-4 ring-1 ring-brand-500/10">
+                    <div class="bg-surface rounded-2xl border border-brand-200 shadow-elevated p-4 sm:p-6 space-y-4 ring-1 ring-brand-500/10">
                         <div class="flex items-center justify-between">
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-brand-700 font-sans">
+                            <span class="text-xs sm:text-[11px] font-bold uppercase tracking-wider text-brand-700 font-sans">
                                 Admission Cutoff
                             </span>
-                            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-brand-50 text-brand-700 border border-brand-200/60 uppercase">
+                            <span class="px-2 py-0.5 rounded text-xs sm:text-[10px] font-mono font-bold bg-brand-50 text-brand-700 border border-brand-200/60 uppercase">
                                 {{ $admission['session'] }}
                             </span>
                         </div>
@@ -330,7 +330,7 @@
                     </div>
 
                     <!-- Direct University Contact & Helpdesk -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-4">
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-4">
                         <h3 class="font-heading font-bold text-sm text-ink-950 flex items-center gap-2">
                             <x-icon name="phone-call" class="w-4 h-4 text-brand-600" />
                             <span>Institutional Admissions Desk</span>
@@ -338,17 +338,17 @@
 
                         <div class="space-y-3 text-xs font-sans text-ink-600">
                             <div>
-                                <span class="block text-[11px] text-ink-400 font-medium mb-0.5">Institution Address</span>
+                                <span class="block text-xs sm:text-[11px] text-ink-600 font-medium mb-0.5">Institution Address</span>
                                 <span class="text-ink-800">{{ $university['address'] ?? 'Official Admissions Secretariat' }}</span>
                             </div>
                             <div>
-                                <span class="block text-[11px] text-ink-400 font-medium mb-0.5">Helpline Telephone</span>
+                                <span class="block text-xs sm:text-[11px] text-ink-600 font-medium mb-0.5">Helpline Telephone</span>
                                 <a href="tel:{{ $university['phone'] ?? '' }}" class="font-mono text-brand-600 hover:underline">
                                     {{ $university['phone'] ?? '+92 51 9085 1000' }}
                                 </a>
                             </div>
                             <div>
-                                <span class="block text-[11px] text-ink-400 font-medium mb-0.5">Admissions Email Desk</span>
+                                <span class="block text-xs sm:text-[11px] text-ink-600 font-medium mb-0.5">Admissions Email Desk</span>
                                 <a href="mailto:{{ $university['email'] ?? 'admissions@university.edu.pk' }}" class="text-brand-600 hover:underline">
                                     {{ $university['email'] ?? 'admissions@university.edu.pk' }}
                                 </a>
@@ -357,13 +357,13 @@
                     </div>
 
                     <!-- View Parent Institutional Record -->
-                    <div class="bg-surface rounded-2xl border border-border-default p-6 shadow-2xs space-y-3">
-                        <span class="text-xs font-semibold text-ink-400 uppercase tracking-wider font-sans">University Registry</span>
+                    <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-3">
+                        <span class="text-xs font-semibold text-ink-600 uppercase tracking-wider font-sans">University Registry</span>
                         <h4 class="font-heading font-bold text-sm text-ink-950">
                             {{ $admission['university_name'] }}
                         </h4>
                         <p class="text-xs text-ink-600 font-sans">
-                            Review full fee breakdown, scholarship trusts, and HEC audit accreditations.
+                            Review full fee breakdown, scholarship trusts, and audit accreditations.
                         </p>
                         <x-ui.button variant="outline" size="sm" :href="route('universities.show', $admission['university_slug'])" class="w-full">
                             University Profile & Campuses
@@ -389,7 +389,7 @@
                 @click="reminderModalOpen = false"
             ></div>
 
-            <div class="mx-auto max-w-md transform rounded-2xl bg-surface border border-border-default shadow-modal p-6 transition-all relative z-10 space-y-5">
+            <div class="mx-auto max-w-md transform rounded-2xl bg-surface border border-border-default shadow-modal p-4 sm:p-6 transition-all relative z-10 space-y-5">
                 <div class="flex items-center justify-between border-b border-border-subtle pb-3">
                     <h3 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
                         <x-icon name="bell" class="w-4 h-4 text-brand-600" />

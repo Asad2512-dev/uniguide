@@ -17,8 +17,17 @@ class EnsureUniversityAdminAuthorized
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // Retrieve the authorized institution for the current session/user
-        $authorizedInstitution = session()->get('uniguide_admin_institution', 'nust');
+        $user = auth()->user();
+
+        if ($user) {
+            if (! in_array($user->role, ['university_admin', 'university_staff', 'national_admin', 'admin', 'super_admin'])) {
+                abort(403, 'Unauthorized Institutional Access: You do not possess university administrative clearance.');
+            }
+            $authorizedInstitution = $user->institution_slug ?? 'nust';
+        } else {
+            // Support session or default fallback for development and automated phase testing
+            $authorizedInstitution = session()->get('uniguide_admin_institution', 'nust');
+        }
 
         // Check if an explicit target institution is specified via request input or route parameter
         $targetInstitution = $request->route('institution')

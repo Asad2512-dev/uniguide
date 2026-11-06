@@ -25,7 +25,7 @@
             @if(isset($opt['count']))
                 <span 
                     :class="active === '{{ $opt['id'] }}' ? 'bg-brand-50 text-brand-700 font-bold' : 'bg-ink-100 text-ink-500'"
-                    class="px-1.5 py-0.2 rounded-full text-[10px] font-mono leading-none"
+                    class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono leading-none"
                 >
                     {{ $opt['count'] }}
                 </span>

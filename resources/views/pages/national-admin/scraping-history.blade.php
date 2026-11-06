@@ -8,7 +8,7 @@
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'Web Scraping Center', 'url' => route('national_admin.scraping')],
                     ['label' => 'Execution Logs']
                 ]"
@@ -25,9 +25,9 @@
     <div x-data="{ activeLog: null }" class="space-y-4">
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
             <div class="overflow-x-auto">
-                <table class="w-full text-left border-collapse" aria-label="Scraping Job Execution Logs">
+                <table data-mobile-table class="w-full text-left border-collapse" aria-label="Scraping Job Execution Logs">
                     <thead>
-                        <tr class="border-b border-border-default bg-surface-subtle text-[11px] font-mono uppercase text-ink-500 tracking-wider">
+                        <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                             <th scope="col" class="py-3.5 px-4 font-semibold">Job ID & Target</th>
                             <th scope="col" class="py-3.5 px-4 font-semibold">Started Timestamp</th>
                             <th scope="col" class="py-3.5 px-4 font-semibold">Duration</th>
@@ -41,11 +41,11 @@
                         @foreach($history as $item)
                             <tr class="hover:bg-surface-subtle/80 transition-colors">
                                 <td class="py-3.5 px-4">
-                                    <span class="font-mono text-[11px] text-ink-400 block">{{ $item['job_id'] }}</span>
+                                    <span class="font-mono text-xs sm:text-[11px] text-ink-600 block">{{ $item['job_id'] }}</span>
                                     <span class="font-bold text-ink-950 font-heading block">{{ $item['target'] }}</span>
-                                    <span class="text-[11px] font-mono text-ink-500 block truncate max-w-xs">{{ $item['url'] }}</span>
+                                    <span class="text-xs sm:text-[11px] font-mono text-ink-500 block truncate max-w-xs">{{ $item['url'] }}</span>
                                 </td>
-                                <td class="py-3.5 px-4 font-mono text-ink-600 text-[11px]">
+                                <td class="py-3.5 px-4 font-mono text-ink-600 text-xs sm:text-[11px]">
                                     {{ $item['started_at'] }}
                                 </td>
                                 <td class="py-3.5 px-4 font-mono text-ink-800">
@@ -58,7 +58,7 @@
                                     {{ $item['records_extracted'] }}
                                 </td>
                                 <td class="py-3.5 px-4">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-[11px] font-mono font-bold {{ $item['status'] === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200' }}">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded text-xs sm:text-[11px] font-mono font-bold {{ $item['status'] === 'Completed' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-rose-50 text-rose-700 border border-rose-200' }}">
                                         {{ $item['status'] }} ({{ $item['http_code'] }})
                                     </span>
                                 </td>
@@ -66,7 +66,7 @@
                                     <button 
                                         type="button" 
                                         @click="activeLog = {{ json_encode($item) }}"
-                                        class="px-2.5 py-1 rounded-lg border border-border-default hover:bg-brand-50 hover:text-brand-700 text-[11px] font-semibold text-ink-700 transition-colors cursor-pointer"
+                                        class="px-2.5 py-1 rounded-lg border border-border-default hover:bg-brand-50 hover:text-brand-700 text-xs sm:text-[11px] font-semibold text-ink-700 transition-colors cursor-pointer"
                                     >
                                         View Terminal
                                     </button>

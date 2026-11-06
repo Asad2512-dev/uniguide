@@ -14,12 +14,12 @@ class ComparisonService
      */
     public function getPresetComparisons(): array
     {
-        return [
+        $presets = [
             [
                 'id' => 'computing-leaders',
                 'title' => 'National Computing Big-4 Battle',
                 'description' => 'Direct comparison of Pakistan\'s top software engineering and CS powerhouses.',
-                'slugs' => ['nust', 'fast-nuces', 'giki', 'lums'],
+                'slugs' => ['nust', 'fast-nuces', 'lums', 'uet-lahore'],
                 'badge' => 'Most Popular',
                 'badge_color' => 'brand',
                 'icon' => 'laptop',
@@ -28,7 +28,7 @@ class ComparisonService
                 'id' => 'premier-engineering',
                 'title' => 'Top Engineering & Technology Charters',
                 'description' => 'Washington Accord Level-II accredited institutions with world-class faculty ratios.',
-                'slugs' => ['nust', 'giki', 'fast-nuces'],
+                'slugs' => ['nust', 'uet-lahore', 'fast-nuces'],
                 'badge' => 'PEC Level-II',
                 'badge_color' => 'success',
                 'icon' => 'cpu',
@@ -37,7 +37,7 @@ class ComparisonService
                 'id' => 'business-titans',
                 'title' => 'Premier Business & Management Schools',
                 'description' => 'Rigorous business curriculum, international exchange, and placement networks.',
-                'slugs' => ['lums', 'iba-karachi', 'nust'],
+                'slugs' => ['lums', 'nust', 'quaid-i-azam-university'],
                 'badge' => 'High Return',
                 'badge_color' => 'indigo',
                 'icon' => 'bar-chart-3',
@@ -46,12 +46,20 @@ class ComparisonService
                 'id' => 'healthcare-biosciences',
                 'title' => 'Medical & Allied Biosciences Benchmark',
                 'description' => 'World-ranked clinical teaching facilities and biomedical research hubs.',
-                'slugs' => ['aga-khan-university', 'nust'],
+                'slugs' => ['quaid-i-azam-university', 'nust'],
                 'badge' => 'Clinical Excellence',
                 'badge_color' => 'warning',
                 'icon' => 'heart-pulse',
             ],
         ];
+        $allowed = array_column($this->getSelectableUniversities(), 'slug');
+
+        return collect($presets)->map(function (array $preset) use ($allowed): array {
+            $preset['slugs'] = array_values(array_intersect($preset['slugs'], $allowed));
+            $preset['description'] = 'Compare recorded institutions serving Punjab and Islamabad.';
+
+            return $preset;
+        })->filter(fn (array $preset): bool => count($preset['slugs']) >= 2)->values()->all();
     }
 
     /**
@@ -59,7 +67,7 @@ class ComparisonService
      */
     public function getSelectableUniversities(): array
     {
-        $all = $this->discoveryService->getUniversities(['per_page' => 100])['data'] ?? [];
+        $all = $this->discoveryService->getUniversities([], 'name_asc', 500)['data'] ?? [];
 
         return array_map(fn ($u) => [
             'slug' => $u['slug'],
@@ -91,6 +99,8 @@ class ComparisonService
                 $universities[] = $this->enrichUniversityForComparison($uni);
             }
         }
+
+        abort_if(empty($universities), 404, 'No universities in the selection are within the active regional catalog.');
 
         // Build comparison metric sections
         $sections = [
@@ -182,92 +192,18 @@ class ComparisonService
      */
     protected function enrichUniversityForComparison(array $uni): array
     {
-        $slug = $uni['slug'];
-
-        $tuitionOverrides = [
-            'nust' => ['admission' => 'PKR 35,000', 'security' => 'PKR 10,000 (Refundable)', 'hostel' => 'PKR 48,000 / sem', 'sports' => 'Olympic Pool, Horse Riding, Indoor Gymnasium', 'sub' => '4 Campuses (Islamabad, RWP, Risalpur, KHI)'],
-            'fast-nuces' => ['admission' => 'PKR 25,000', 'security' => 'PKR 20,000 (Refundable)', 'hostel' => 'PKR 45,000 / sem (Limited Seats)', 'sports' => 'Futsal Turf, Cricket Nets, Table Tennis', 'sub' => '5 Campuses (Islamabad, LHR, KHI, Peshawar, FSD)'],
-            'lums' => ['admission' => 'PKR 65,000', 'security' => 'PKR 30,000 (Refundable)', 'hostel' => 'PKR 92,000 / sem (Guaranteed 1st Year)', 'sports' => 'Syed Babar Ali Sports Complex, FINA Pool', 'sub' => '1 Master Campus (DHA Phase-V, Lahore)'],
-            'giki' => ['admission' => 'PKR 55,000', 'security' => 'PKR 25,000 (Refundable)', 'hostel' => 'PKR 65,000 / sem (100% Residential)', 'sports' => 'Aga Khan Sports Complex, Boating, Hiking Trails', 'sub' => '1 Residential Campus (Topi, Swabi, KPK)'],
-            'iba-karachi' => ['admission' => 'PKR 40,000', 'security' => 'PKR 20,000 (Refundable)', 'hostel' => 'PKR 55,000 / sem', 'sports' => 'IBA Student Centre, Squash & Tennis Courts', 'sub' => '2 Campuses (Main University Road, City Campus)'],
-            'aga-khan-university' => ['admission' => 'PKR 85,000', 'security' => 'PKR 35,000 (Refundable)', 'hostel' => 'PKR 80,000 / sem (Guaranteed)', 'sports' => 'AKU Sports Centre, Olympic Gym, Tennis', 'sub' => 'Main Stadium Road Campus, Karachi'],
+        return $uni + [
+            'admission_fee_str' => 'Not verified', 'security_deposit_str' => 'Not verified',
+            'hostel_charges_str' => 'Not verified', 'sports_facilities' => 'Not verified',
+            'sub_campuses_count' => count($uni['campuses'] ?? []), 'accreditation_summary' => 'Not verified',
+            'scholarship_summary' => 'Not verified',
+            'entry_test_accepted' => 'Not verified', 'merit_formula' => 'Not verified',
+            'cutoff_indicator' => 'Not verified', 'hec_need_based_available' => 'Not verified',
+            'ehsaas_available' => 'Not verified', 'merit_waiver_policy' => 'Not verified',
+            'provincial_endowment_policy' => 'Not verified',
+            'city_region' => $uni['city'].' ('.$uni['province_label'].')',
+            'deadline_str' => 'Not verified', 'status_str' => 'Not verified',
+            'verified_date' => $uni['last_verified_at'] ?? 'Pending review',
         ];
-
-        $extra = $tuitionOverrides[$slug] ?? [
-            'admission' => 'PKR 25,000',
-            'security' => 'PKR 15,000',
-            'hostel' => 'PKR 40,000 / sem',
-            'sports' => 'Standard University Sports Facilities',
-            'sub' => '1 Campus',
-        ];
-
-        $uni['admission_fee_str'] = $extra['admission'];
-        $uni['security_deposit_str'] = $extra['security'];
-        $uni['hostel_charges_str'] = $extra['hostel'];
-        $uni['sports_facilities'] = $extra['sports'];
-        $uni['sub_campuses_count'] = $extra['sub'];
-
-        $uni['accreditation_summary'] = match ($slug) {
-            'nust' => 'PEC Washington Accord Level-II • NCEAC Category W',
-            'fast-nuces' => 'NCEAC Category W (Highest) • PEC Accredited',
-            'lums' => 'AACSB Accredited • NCEAC Category W • PEC Accredited',
-            'giki' => 'PEC Washington Accord Level-II • NCEAC Category W',
-            'iba-karachi' => 'AACSB & AMBA Member • NBEAC Tier-1',
-            'aga-khan-university' => 'PMDC Recognized • World Health Organization (WHO)',
-            default => 'HEC Chartered • Council Accredited',
-        };
-
-        $uni['entry_test_accepted'] = match ($slug) {
-            'nust' => 'NUST Entry Test (NET-1, 2, 3, 4) / SAT / ACT',
-            'fast-nuces' => 'FAST NU Admission Test / NTS-NAT (Computing)',
-            'lums' => 'LCAT (LUMS Common Admission Test) / SAT-I',
-            'giki' => 'GIKI Admissions Test / SAT-I & SAT-II',
-            'iba-karachi' => 'IBA Aptitude Test / SAT-I',
-            'aga-khan-university' => 'AKU Test + MDCAT + Structured Interview',
-            default => 'National Entry Test / University Test',
-        };
-
-        $uni['merit_formula'] = match ($slug) {
-            'nust' => '75% NET + 15% FSc + 10% Matric',
-            'fast-nuces' => '50% NU Test + 50% FSc (or 50% NAT + 50% FSc)',
-            'lums' => 'Holistic: LCAT/SAT + Academic Record + Personal Statement',
-            'giki' => 'Competitive GIKI Entry Test + FSc Equivalence',
-            'iba-karachi' => 'IBA Test Score + Interview + HSSC Cutoff',
-            'aga-khan-university' => 'AKU Test (Multiple Choice + Reason) + MDCAT + MMI Interview',
-            default => '50% Test + 40% FSc + 10% Matric',
-        };
-
-        $uni['cutoff_indicator'] = match ($slug) {
-            'nust' => 'BS CS: ~79.24% • BS SE: ~78.10%',
-            'fast-nuces' => 'BS CS: ~74.80% • BS SE: ~72.50%',
-            'lums' => 'Top 5% National Pool • SAT 1380+',
-            'giki' => 'Competitive Test Cutoff ~76%',
-            'iba-karachi' => 'Test Cutoff: ~68% in Aptitude Paper',
-            'aga-khan-university' => 'Highly Selective (< 5% acceptance)',
-            default => 'Merit 75%+',
-        };
-
-        $uni['hec_need_based_available'] = match ($slug) {
-            'nust', 'comsats', 'uet-lahore' => 'Yes (100% Tuition + Living Allowance)',
-            default => 'University Discretionary Quota',
-        };
-
-        $uni['ehsaas_available'] = 'Eligible for Qualified Candidates';
-
-        $uni['merit_waiver_policy'] = match ($slug) {
-            'nust' => 'Top 3 positions in NET receive 100% fee waiver for Semester 1',
-            'fast-nuces' => 'Top merit positions receive 50% to 100% concession',
-            'lums' => '100% Full Financial Aid via National Outreach Program (NOP)',
-            'giki' => 'Top 10 entrance test ranks receive full tuition waiver',
-            default => 'Semester GPA-based merit concessions (GPA > 3.8)',
-        };
-
-        $uni['provincial_endowment_policy'] = 'PEEF (Punjab), BEEF (Balochistan), SEEF (Sindh) Recognized';
-        $uni['city_region'] = ($uni['city'] ?? 'Islamabad').' ('.($uni['province_label'] ?? 'Pakistan').')';
-        $uni['deadline_str'] = $uni['deadline'] ?? '15 July 2026';
-        $uni['status_str'] = 'Fall 2026 Open';
-        $uni['verified_date'] = 'Verified May 2026';
-
-        return $uni;
     }
 }

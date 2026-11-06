@@ -40,7 +40,7 @@
             <span 
                 x-show="selected.length > 0" 
                 x-text="selected.length" 
-                class="px-1.5 py-0.2 bg-brand-600 text-white font-bold rounded-full text-[10px]"
+                class="px-1.5 py-0.2 bg-brand-600 text-white font-bold rounded-full text-xs sm:text-[10px]"
             ></span>
         </span>
         <x-icon name="chevron-down" class="w-3.5 h-3.5 text-ink-400 transition-transform duration-200" ::class="open ? 'rotate-180' : ''" />
@@ -81,12 +81,12 @@
                         />
                         <span class="text-ink-800" x-text="opt.name"></span>
                     </div>
-                    <span x-show="opt.count" class="text-[10px] text-ink-400 font-mono" x-text="opt.count"></span>
+                    <span x-show="opt.count" class="text-xs sm:text-[10px] text-ink-600 font-mono" x-text="opt.count"></span>
                 </label>
             </template>
         </div>
 
-        <div class="mt-2 pt-2 border-t border-border-subtle flex items-center justify-between text-[11px]">
+        <div class="mt-2 pt-2 border-t border-border-subtle flex items-center justify-between text-xs sm:text-[11px]">
             <button 
                 type="button" 
                 @click="clear()" 

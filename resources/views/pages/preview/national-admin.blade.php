@@ -1,14 +1,14 @@
-<x-layouts.national-admin title="HEC National Command — Regulatory Oversight & Registry">
+<x-layouts.national-admin title="Superadmin — Regulatory Oversight & Registry">
     <x-ui.page-header 
         title="National Higher Education Command Console"
         description="Federal oversight, institutional charter verification, regulatory compliance monitoring, and national student admissions intelligence."
-        badge="HEC Statutory Authority"
+        badge="Platform Administration"
         badgeVariant="brand"
     >
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'HEC National Command', 'url' => route('preview.national_admin')],
+                    ['label' => 'Superadmin', 'url' => route('preview.national_admin')],
                     ['label' => 'Federal University Registry']
                 ]"
             />
@@ -62,7 +62,7 @@
                     <tr>
                         <x-ui.table.header>Institution & Charter</x-ui.table.header>
                         <x-ui.table.header>Province / Jurisdiction</x-ui.table.header>
-                        <x-ui.table.header>HEC Category</x-ui.table.header>
+                        <x-ui.table.header>Category</x-ui.table.header>
                         <x-ui.table.header>Compliance Status</x-ui.table.header>
                         <x-ui.table.header align="right">Audit Record</x-ui.table.header>
                     </tr>
@@ -146,7 +146,7 @@
                     <span class="text-[11px] font-mono text-brand-600 font-semibold">1.84M Total</span>
                 </div>
                 <p class="text-xs text-ink-500 font-sans mb-4">
-                    Higher education student distribution across Pakistan's 5 territorial jurisdictions.
+                    Higher education student distribution across Punjab and Islamabad's 5 territorial jurisdictions.
                 </p>
 
                 <div class="h-60 w-full relative">
@@ -156,10 +156,10 @@
         </div>
     </div>
 
-    <!-- HEC Regulatory Warning Modal -->
+    <!-- Regulatory Warning Modal -->
     <x-ui.confirm-dialog 
         id="hec-alert-modal"
-        title="Issue Public HEC Regulatory Warning Notice"
+        title="Issue Public Regulatory Warning Notice"
         message="This notice will be published immediately on the national portal and flagged to all student applicants regarding unaccredited sub-campuses or unauthorized degree offerings."
         confirmText="Publish Public Notice"
         cancelText="Discard"

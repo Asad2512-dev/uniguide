@@ -1,5 +1,7 @@
 <div 
     x-data 
+    x-modal-focus="$store.commandPalette.open"
+    aria-label="Search UniGuide"
     x-show="$store.commandPalette.open" 
     x-cloak
     @keydown.escape.window="$store.commandPalette.close()"
@@ -31,7 +33,7 @@
                 placeholder="Search Pakistan universities, degree programs, scholarships, or press Enter…" 
                 class="w-full bg-transparent pl-12 pr-12 py-3.5 text-sm text-ink-900 placeholder:text-ink-400 focus:outline-none font-sans"
                 @keydown.escape="$store.commandPalette.close()"
-                autofocus
+                aria-label="Search universities, programs, and scholarships"
             />
             <button 
                 type="button" 
@@ -39,129 +41,129 @@
                 class="absolute right-3.5 top-3 text-ink-400 hover:text-ink-700 p-1"
                 aria-label="Close search"
             >
-                <kbd class="text-[10px] font-mono bg-surface-subtle border border-border-default px-1.5 py-0.5 rounded text-ink-500">ESC</kbd>
+                <kbd class="text-xs sm:text-[10px] font-mono bg-surface-subtle border border-border-default px-1.5 py-0.5 rounded text-ink-500">ESC</kbd>
             </button>
         </form>
 
-        <div class="p-3 max-h-96 overflow-y-auto space-y-4 text-xs font-sans">
+        <div class="p-3 max-h-[55dvh] overflow-y-auto space-y-4 text-xs font-sans">
             <div>
-                <p class="px-2 text-[10px] font-bold text-ink-400 uppercase tracking-wider mb-1">
+                <p class="px-2 text-xs sm:text-[10px] font-bold text-ink-600 uppercase tracking-wider mb-1">
                     Shell Workspaces & Portals
                 </p>
                 <div class="space-y-0.5">
-                    <a href="{{ route('universities.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('universities.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="building-2" class="w-4 h-4 text-brand-600" />
-                            <span>National University Directory</span>
+                            <span>University Directory</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/universities</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/universities</span>
                     </a>
-                    <a href="{{ route('programs.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('programs.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="graduation-cap" class="w-4 h-4 text-brand-600" />
                             <span>Academic Degree Program Explorer</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/programs</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/programs</span>
                     </a>
-                    <a href="{{ route('counselor.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('counselor.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="bot" class="w-4 h-4 text-brand-600" />
                             <span>AI University Counselor</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/counselor</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/counselor</span>
                     </a>
-                    <a href="{{ route('compare.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('compare.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="git-compare" class="w-4 h-4 text-brand-600" />
                             <span>University Comparison Tool</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/compare</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/compare</span>
                     </a>
-                    <a href="{{ route('eligibility.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('eligibility.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="calculator" class="w-4 h-4 text-brand-600" />
                             <span>Merit & Eligibility Checker</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/eligibility</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/eligibility</span>
                     </a>
-                    <a href="{{ route('admissions.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('admissions.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="calendar" class="w-4 h-4 text-brand-600" />
                             <span>Admissions & Deadlines Calendar</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/admissions</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/admissions</span>
                     </a>
-                    <a href="{{ route('scholarships.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('scholarships.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="award" class="w-4 h-4 text-brand-600" />
                             <span>National Scholarships Directory</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/scholarships</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/scholarships</span>
                     </a>
-                    <a href="{{ route('student.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('student.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="user" class="w-4 h-4 text-brand-600" />
                             <span>Student Command Center</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/student/dashboard</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/student/dashboard</span>
                     </a>
-                    <a href="{{ route('uni_admin.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('uni_admin.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="building-2" class="w-4 h-4 text-brand-600" />
                             <span>University Admin Console</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/admin/university</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/admin/university</span>
                     </a>
-                    <a href="{{ route('national_admin.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
+                    <a href="{{ route('national_admin.dashboard') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="shield-check" class="w-4 h-4 text-brand-600" />
-                            <span>HEC National Command Platform</span>
+                            <span>Superadmin Platform</span>
                         </span>
-                        <span class="text-[10px] font-mono text-ink-400">/admin/national</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/admin/national</span>
                     </a>
-                    <a href="{{ route('design-system') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-brand-700 bg-brand-50/60 font-semibold group">
+                    <a href="{{ route('design-system') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-brand-700 bg-brand-50/60 font-semibold group">
                         <span class="flex items-center gap-2.5">
                             <x-icon name="sparkles" class="w-4 h-4 text-brand-600" />
                             <span>Design System Living Catalog</span>
                         </span>
-                        <span class="text-[10px] font-mono text-brand-600">/design-system</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-brand-600">/design-system</span>
                     </a>
                 </div>
             </div>
 
             <div>
-                <p class="px-2 text-[10px] font-bold text-ink-400 uppercase tracking-wider mb-1">
+                <p class="px-2 text-xs sm:text-[10px] font-bold text-ink-600 uppercase tracking-wider mb-1">
                     Quick University Searches
                 </p>
                 <div class="space-y-0.5">
-                    <a href="{{ route('universities.show', 'nust') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-700 hover:bg-surface-subtle">
+                    <a href="{{ route('universities.show', 'nust') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-700 hover:bg-surface-subtle">
                         <span class="flex items-center gap-2.5">
                             <x-icon name="building" class="w-4 h-4 text-ink-400" />
                             <span>National University of Sciences & Technology (NUST)</span>
                         </span>
-                        <span class="text-[10px] bg-brand-50 text-brand-700 px-1.5 py-0.2 rounded font-mono font-semibold">HEC #1</span>
+                        <span class="text-xs sm:text-[10px] bg-brand-50 text-brand-700 px-1.5 py-0.2 rounded font-mono font-semibold">University</span>
                     </a>
-                    <a href="{{ route('universities.show', 'lums') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-700 hover:bg-surface-subtle">
+                    <a href="{{ route('universities.show', 'lums') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-700 hover:bg-surface-subtle">
                         <span class="flex items-center gap-2.5">
                             <x-icon name="building" class="w-4 h-4 text-ink-400" />
                             <span>Lahore University of Management Sciences (LUMS)</span>
                         </span>
-                        <span class="text-[10px] bg-surface-subtle text-ink-600 px-1.5 py-0.2 rounded font-mono">Lahore</span>
+                        <span class="text-xs sm:text-[10px] bg-surface-subtle text-ink-600 px-1.5 py-0.2 rounded font-mono">Lahore</span>
                     </a>
-                    <a href="{{ route('universities.show', 'fast-nuces') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between px-3 py-2 rounded-lg text-ink-700 hover:bg-surface-subtle">
+                    <a href="{{ route('universities.show', 'fast-nuces') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-700 hover:bg-surface-subtle">
                         <span class="flex items-center gap-2.5">
                             <x-icon name="building" class="w-4 h-4 text-ink-400" />
                             <span>FAST-NUCES (National University of Computer & Emerging Sciences)</span>
                         </span>
-                        <span class="text-[10px] bg-surface-subtle text-ink-600 px-1.5 py-0.2 rounded font-mono">Islamabad</span>
+                        <span class="text-xs sm:text-[10px] bg-surface-subtle text-ink-600 px-1.5 py-0.2 rounded font-mono">Islamabad</span>
                     </a>
                 </div>
             </div>
         </div>
 
-        <div class="px-4 py-2.5 bg-surface-subtle border-t border-border-default flex items-center justify-between text-[11px] text-ink-400 font-sans">
+        <div class="px-4 py-2.5 bg-surface-subtle border-t border-border-default flex items-center justify-between text-xs sm:text-[11px] text-ink-400 font-sans">
             <div class="flex items-center gap-2">
-                <span>Navigate <kbd class="font-mono bg-surface border px-1 rounded">↑</kbd><kbd class="font-mono bg-surface border px-1 rounded">↓</kbd></span>
+                <span>Navigate with Tab</span>
                 <span>Select <kbd class="font-mono bg-surface border px-1 rounded">↵</kbd></span>
             </div>
             <span>Press <kbd class="font-mono bg-surface border px-1 rounded">ESC</kbd> to dismiss</span>

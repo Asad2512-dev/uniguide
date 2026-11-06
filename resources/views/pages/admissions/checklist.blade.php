@@ -4,6 +4,7 @@
 >
     <div x-data="{ 
         checkedItems: {},
+        resetModalOpen: false,
         totalItems: {{ collect($checklist)->sum(fn($cat) => count($cat['items'])) }},
         toggleItem(id) {
             this.checkedItems[id] = !this.checkedItems[id];
@@ -16,7 +17,8 @@
         },
         resetAll() {
             this.checkedItems = {};
-            $store.toasts.add('Document checklist reset.', 'info');
+            this.resetModalOpen = false;
+            $store.toasts.add({ title: 'Checklist Reset', message: 'Document checklist has been reset.', type: 'info' });
         },
         printChecklist() {
             window.print();
@@ -25,7 +27,7 @@
         
         <!-- Header Strip -->
         <header class="bg-surface border-b border-border-default/80">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
                         ['label' => 'Admissions', 'url' => route('admissions.index')],
@@ -43,7 +45,7 @@
                             Admission Document & Attestation Checklist
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
-                            Complete roadmap of certified academic transcripts, NADRA identification, IBCC equivalence, and attestation protocols required across all HEC chartered universities.
+                            Complete roadmap of certified academic transcripts, NADRA identification, IBCC equivalence, and attestation protocols required across all registered universities.
                         </p>
                     </div>
 
@@ -59,9 +61,9 @@
                                 :style="'width: ' + progressPercentage + '%'"
                             ></div>
                         </div>
-                        <div class="flex items-center justify-between text-[11px] text-ink-500 font-sans pt-1">
+                        <div class="flex items-center justify-between text-xs sm:text-[11px] text-ink-500 font-sans pt-1">
                             <span><strong class="text-ink-900" x-text="completedCount"></strong> of <strong class="text-ink-900" x-text="totalItems"></strong> items prepared</span>
-                            <button type="button" @click="resetAll()" class="text-brand-600 hover:underline cursor-pointer">Reset</button>
+                            <button type="button" @click="resetModalOpen = true" class="text-brand-600 hover:underline cursor-pointer">Reset</button>
                         </div>
                     </div>
                 </div>
@@ -88,7 +90,7 @@
         </header>
 
         <!-- Main Body -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-10">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-10">
             
             <!-- Document Categories -->
             @foreach($checklist as $cat)
@@ -140,15 +142,15 @@
 
                                 <div class="space-y-2 pt-2 border-t border-border-subtle text-xs font-sans">
                                     <div class="flex items-center justify-between text-ink-600">
-                                        <span class="text-ink-400">Attestation Rule:</span>
+                                        <span class="text-ink-600">Attestation Rule:</span>
                                         <span class="font-medium text-ink-800 text-right">{{ $item['attestation'] }}</span>
                                     </div>
                                     <div class="flex items-center justify-between text-ink-600">
-                                        <span class="text-ink-400">Recommended Copies:</span>
+                                        <span class="text-ink-600">Recommended Copies:</span>
                                         <span class="font-semibold text-brand-700">{{ $item['required_copies'] }}</span>
                                     </div>
                                     @if(!empty($item['tips']))
-                                        <p class="text-[11px] text-ink-500 bg-surface-subtle p-2 rounded-lg leading-relaxed mt-1">
+                                        <p class="text-xs sm:text-[11px] text-ink-500 bg-surface-subtle p-2 rounded-lg leading-relaxed mt-1">
                                             💡 {{ $item['tips'] }}
                                         </p>
                                     @endif
@@ -192,6 +194,44 @@
 
         </main>
 
+        <!-- Reset Confirmation Modal -->
+        <template x-teleport="body">
+            <div 
+                x-show="resetModalOpen" 
+                x-cloak 
+                class="fixed inset-0 z-50 overflow-y-auto px-4 py-6 md:py-12"
+                role="dialog" 
+                aria-modal="true" 
+                aria-labelledby="reset-checklist-modal-title"
+                @keydown.escape.window="resetModalOpen = false"
+            >
+                <div x-show="resetModalOpen" x-transition.opacity class="fixed inset-0 bg-ink-950/40 backdrop-blur-xs" @click="resetModalOpen = false"></div>
+                <div class="flex min-h-full items-center justify-center p-2 text-center sm:p-0">
+                    <div x-show="resetModalOpen" x-transition class="relative transform overflow-hidden rounded-2xl bg-surface border border-border-default text-left shadow-modal w-full max-w-md p-6" @click.stop>
+                        <div class="flex items-start gap-4">
+                            <div class="w-10 h-10 rounded-full flex items-center justify-center shrink-0 bg-amber-50 text-amber-600 border border-amber-200">
+                                <x-icon name="rotate-ccw" class="w-5 h-5" />
+                            </div>
+                            <div class="flex-1">
+                                <h3 class="text-base font-heading font-bold text-ink-950" id="reset-checklist-modal-title">Reset Checklist Progress?</h3>
+                                <p class="mt-1 text-xs text-ink-600 font-sans leading-relaxed">
+                                    Are you sure you want to uncheck all marked documents? Your current progress on this checklist will be cleared.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="mt-6 flex items-center justify-end gap-3 pt-4 border-t border-border-subtle">
+                            <button type="button" @click="resetModalOpen = false" class="inline-flex min-h-11 items-center justify-center px-4 py-2 text-xs font-semibold text-ink-700 hover:bg-surface-subtle rounded-lg border border-border-default transition-colors">
+                                Keep Progress
+                            </button>
+                            <button type="button" @click="resetAll()" class="inline-flex min-h-11 items-center justify-center gap-2 px-4 py-2 text-xs font-bold text-white bg-error-600 hover:bg-error-700 active:bg-error-800 rounded-lg shadow-xs transition-colors">
+                                <x-icon name="rotate-ccw" class="size-4" />
+                                <span>Yes, Reset Checklist</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
     </div>
 </x-layouts.public>
 

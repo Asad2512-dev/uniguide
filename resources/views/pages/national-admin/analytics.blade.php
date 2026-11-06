@@ -1,14 +1,14 @@
 <x-layouts.national-admin title="National Higher Education Analytics & Reports">
     <x-ui.page-header 
         title="National Higher Education Analytics & Reports"
-        description="Macro insights into student discipline demand shifts, inter-provincial applicant migration flows, and tuition fee inflation benchmarks across Pakistan."
-        badge="HEC Strategic Intelligence"
+        description="Macro insights into student discipline demand shifts, inter-provincial applicant migration flows, and tuition fee inflation benchmarks across Punjab and Islamabad."
+        badge="Platform Analytics"
         badgeVariant="brand"
     >
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
-                    ['label' => 'Federal Oversight', 'url' => route('national_admin.dashboard')],
+                    ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
                     ['label' => 'National Analytics']
                 ]"
             />
@@ -21,7 +21,7 @@
                 icon="file-down"
                 @click="$store.toasts?.add({ title: 'Federal Report Dispatched', message: 'Annual Higher Education Trends 2026 PDF dispatched to your inbox.', type: 'success' })"
             >
-                Download Annual HEC Report
+                Download Annual Report
             </x-ui.button>
         </x-slot:actions>
     </x-ui.page-header>
@@ -40,13 +40,13 @@
 
     <div class="space-y-8">
         <!-- Visual Discipline Demand Breakdown & Chart -->
-        <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
+        <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                 <div>
                     <h3 class="font-heading font-bold text-base text-ink-950">Undergraduate Discipline Applicant Demand (Fall 2026)</h3>
-                    <p class="text-xs text-ink-500 font-sans">Percentage of total first-preference applications submitted nationwide.</p>
+                    <p class="text-xs text-ink-500 font-sans">Percentage of total first-preference applications submitted within current regional coverage.</p>
                 </div>
-                <span class="text-xs font-mono text-ink-400">240,000 Total Candidates Sample</span>
+                <span class="text-xs font-mono text-ink-600">240,000 Total Candidates Sample</span>
             </div>
 
             <!-- Chart.js Visualization Canvas -->
@@ -58,9 +58,9 @@
                 @foreach($discipline_demand as $d)
                     <div class="p-4 rounded-xl bg-surface-subtle border border-border-subtle flex flex-col justify-between">
                         <div>
-                            <span class="text-[11px] font-mono text-ink-500 uppercase block mb-1">{{ $d['name'] }}</span>
+                            <span class="text-xs sm:text-[11px] font-mono text-ink-500 uppercase block mb-1">{{ $d['name'] }}</span>
                             <span class="font-heading font-extrabold text-2xl text-ink-950 block">{{ $d['share'] }}%</span>
-                            <span class="text-[11px] font-mono text-brand-700 mt-0.5 block">{{ number_format($d['candidates']) }} applicants</span>
+                            <span class="text-xs sm:text-[11px] font-mono text-brand-700 mt-0.5 block">{{ number_format($d['candidates']) }} applicants</span>
                         </div>
                         <div class="w-full bg-border-subtle h-2 rounded-full overflow-hidden mt-3">
                             <div class="bg-brand-600 h-full rounded-full" style="width: {{ $d['share'] }}%"></div>
@@ -72,13 +72,13 @@
 
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
             <!-- Provincial Migration Inflow (7 Cols) -->
-            <div class="lg:col-span-7 p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+            <div class="lg:col-span-7 p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
                         <h3 class="font-heading font-bold text-base text-ink-950">Inter-Provincial Student Migration Flow</h3>
                         <p class="text-xs text-ink-500 font-sans">Net student outflow towards major federal education hubs.</p>
                     </div>
-                    <span class="text-xs font-mono text-ink-400">Mobility Trends</span>
+                    <span class="text-xs font-mono text-ink-600">Mobility Trends</span>
                 </div>
 
                 <div class="space-y-3 pt-2">
@@ -90,7 +90,7 @@
                                 </div>
                                 <div>
                                     <span class="font-heading font-bold text-xs text-ink-950 block">{{ $flow['from'] }}</span>
-                                    <span class="text-[11px] text-ink-500 block font-sans">Destination: {{ $flow['destination'] }}</span>
+                                    <span class="text-xs sm:text-[11px] text-ink-500 block font-sans">Destination: {{ $flow['destination'] }}</span>
                                 </div>
                             </div>
                             <span class="font-mono font-bold text-xs text-ink-800">
@@ -102,13 +102,13 @@
             </div>
 
             <!-- Fee Inflation Index (5 Cols) with Trend Chart -->
-            <div class="lg:col-span-5 p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+            <div class="lg:col-span-5 p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                 <div class="flex items-center justify-between">
                     <div>
                         <h3 class="font-heading font-bold text-base text-ink-950">Annual Tuition Inflation Index</h3>
                         <p class="text-xs text-ink-500 font-sans">Public vs Private semester averages (PKR).</p>
                     </div>
-                    <span class="text-xs font-mono text-ink-400">PKR Benchmark</span>
+                    <span class="text-xs font-mono text-ink-600">PKR Benchmark</span>
                 </div>
 
                 <!-- Inflation Chart Canvas -->
@@ -118,15 +118,15 @@
 
                 <div class="rounded-xl border border-border-default overflow-hidden">
                     <div class="overflow-x-auto">
-                        <table class="w-full text-left border-collapse text-xs" aria-label="Annual Tuition Inflation Index">
+                        <table data-mobile-table class="w-full text-left border-collapse text-xs" aria-label="Annual Tuition Inflation Index">
                             <thead>
-                                <tr class="bg-surface-subtle border-b border-border-default text-[10px] font-mono uppercase text-ink-500">
+                                <tr class="bg-surface-subtle border-b border-border-default text-xs sm:text-[10px] font-mono uppercase text-ink-500">
                                     <th scope="col" class="py-2.5 px-3">Year</th>
                                     <th scope="col" class="py-2.5 px-3">Public Avg</th>
                                     <th scope="col" class="py-2.5 px-3 text-right">Private Avg</th>
                                 </tr>
                             </thead>
-                            <tbody class="divide-y divide-border-subtle font-mono text-[11px]">
+                            <tbody class="divide-y divide-border-subtle font-mono text-xs sm:text-[11px]">
                                 @foreach($fee_inflation_index as $row)
                                     <tr class="hover:bg-surface-subtle/60">
                                         <td class="py-2.5 px-3 font-bold text-ink-950">{{ $row['year'] }}</td>

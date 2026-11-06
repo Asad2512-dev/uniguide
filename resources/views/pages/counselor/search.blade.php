@@ -6,7 +6,7 @@
         
         <!-- Header & Search Input Section -->
         <section class="border-b border-border-default/80 bg-surface">
-            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
+            <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
@@ -51,7 +51,7 @@
 
                     <!-- Sample Queries -->
                     <div class="flex flex-wrap items-center gap-2 mt-3 text-xs">
-                        <span class="text-ink-400 font-medium">Examples:</span>
+                        <span class="text-ink-600 font-medium">Examples:</span>
                         @foreach($sampleQueries as $sample)
                             <a 
                                 href="{{ route('counselor.search', ['q' => $sample]) }}"
@@ -66,7 +66,7 @@
         </section>
 
         <!-- Search Results & Interpreted Criteria Grid -->
-        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+        <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
                 
                 <!-- Left Sidebar: Interpreted Query Breakdown -->
@@ -79,28 +79,28 @@
 
                         <div class="space-y-3 text-xs font-sans">
                             <div>
-                                <span class="text-[10px] text-ink-400 font-mono uppercase block">Target Discipline</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 font-mono uppercase block">Target Discipline</span>
                                 <span class="font-bold text-ink-900 bg-surface-subtle px-2 py-1 rounded border border-border-default block mt-0.5">
                                     {{ $criteria['discipline'] }}
                                 </span>
                             </div>
 
                             <div>
-                                <span class="text-[10px] text-ink-400 font-mono uppercase block">Location Match</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 font-mono uppercase block">Location Match</span>
                                 <span class="font-bold text-ink-900 bg-surface-subtle px-2 py-1 rounded border border-border-default block mt-0.5">
                                     {{ $criteria['location'] }}
                                 </span>
                             </div>
 
                             <div>
-                                <span class="text-[10px] text-ink-400 font-mono uppercase block">Tuition Constraint</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 font-mono uppercase block">Tuition Constraint</span>
                                 <span class="font-bold text-brand-700 bg-brand-50 px-2 py-1 rounded border border-brand-200 block mt-0.5">
                                     {{ $criteria['budget_ceiling'] }}
                                 </span>
                             </div>
 
                             <div>
-                                <span class="text-[10px] text-ink-400 font-mono uppercase block">Identified Amenities</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 font-mono uppercase block">Identified Amenities</span>
                                 <div class="space-y-1 mt-1">
                                     @foreach($criteria['amenities_requested'] as $amenity)
                                         <div class="flex items-center gap-1.5 text-ink-700">
@@ -129,7 +129,7 @@
                             <x-icon name="shield-check" class="w-3.5 h-3.5 text-success-600" />
                             <span>Statutory Verification</span>
                         </div>
-                        <p>All institutions verified under HEC Charter & Syndicate Gazette Records.</p>
+                        <p>All institutions verified under Charter & Syndicate Gazette Records.</p>
                     </div>
                 </aside>
 
@@ -144,7 +144,7 @@
                             <div class="space-y-1 text-xs font-sans text-ink-700 leading-relaxed">
                                 <div class="font-heading font-bold text-sm text-ink-950 flex items-center gap-2">
                                     <span>AI Counselor Analysis</span>
-                                    <span class="text-[10px] font-mono text-brand-800 bg-brand-100 px-1.5 py-0.2 rounded font-bold">
+                                    <span class="text-xs sm:text-[10px] font-mono text-brand-800 bg-brand-100 px-1.5 py-0.2 rounded font-bold">
                                         {{ count($matches) }} Matches Found
                                     </span>
                                 </div>
@@ -193,15 +193,15 @@
                                 <!-- Criteria Fit Indicators -->
                                 <div class="grid grid-cols-3 gap-2 text-xs font-sans">
                                     <div class="p-2 rounded-lg bg-canvas border border-border-subtle">
-                                        <span class="text-[10px] text-ink-400 font-mono block">Field Alignment</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 font-mono block">Field Alignment</span>
                                         <span class="font-semibold text-ink-800">{{ $m['criteria_fit']['discipline'] }}</span>
                                     </div>
                                     <div class="p-2 rounded-lg bg-canvas border border-border-subtle">
-                                        <span class="text-[10px] text-ink-400 font-mono block">Location Match</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 font-mono block">Location Match</span>
                                         <span class="font-semibold text-ink-800">{{ $m['criteria_fit']['location'] }}</span>
                                     </div>
                                     <div class="p-2 rounded-lg bg-canvas border border-border-subtle">
-                                        <span class="text-[10px] text-ink-400 font-mono block">Accreditation</span>
+                                        <span class="text-xs sm:text-[10px] text-ink-600 font-mono block">Accreditation</span>
                                         <span class="font-semibold text-ink-800 truncate block">{{ $m['criteria_fit']['accreditation'] }}</span>
                                     </div>
                                 </div>

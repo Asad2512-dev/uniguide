@@ -1,14 +1,14 @@
 <x-layouts.public 
     title="About UniGuide Pakistan — National Higher Education Intelligence Portal"
-    description="Learn about UniGuide Pakistan's mission, statutory data verification protocols, HEC regulatory compliance, and academic governance."
+    description="Learn about UniGuide Pakistan's mission, statutory data verification protocols, regulatory compliance, and academic governance."
 >
     <!-- Header -->
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
                 title="About UniGuide Pakistan"
                 description="Pakistan's national intelligence platform for university discovery, verified merit calculations, and transparent higher education opportunities."
-                badge="HEC Statutory Alignment"
+                badge="University Discovery"
                 badgeVariant="brand"
             >
                 <x-slot:breadcrumbs>
@@ -23,7 +23,7 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
+    <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-16">
         <!-- Mission & Editorial Narrative -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-7 space-y-5">
@@ -66,7 +66,7 @@
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-ink-600">Regulatory Oversight:</span>
-                            <span class="font-mono text-emerald-700 font-semibold">HEC Ordinance 2002</span>
+                            <span class="font-mono text-emerald-700 font-semibold">University source records</span>
                         </div>
                     </div>
                     <div class="pt-2">
@@ -81,7 +81,7 @@
             <x-ui.section-header 
                 eyebrow="Our Verification Standard"
                 title="The UniGuide Zero-Hallucination & Transparency Protocol"
-                description="We operate with rigorous data standards to ensure candidate safety across Pakistan."
+                description="We operate with rigorous data standards to ensure candidate safety across Punjab and Islamabad."
             />
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -127,7 +127,7 @@
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                 @foreach($charterMilestones as $ms)
-                    <div class="p-6 bg-surface rounded-2xl border border-border-default space-y-2">
+                    <div class="p-4 sm:p-6 bg-surface rounded-2xl border border-border-default space-y-2">
                         <span class="text-xs font-mono font-bold text-brand-600 bg-brand-50 px-2.5 py-1 rounded-md border border-brand-200">
                             {{ $ms['year'] }}
                         </span>
@@ -155,7 +155,7 @@
                         <div>
                             <h4 class="font-heading font-bold text-base text-ink-950">{{ $leader['name'] }}</h4>
                             <p class="text-xs font-semibold text-brand-700 font-sans mt-0.5">{{ $leader['role'] }}</p>
-                            <p class="text-[11px] text-ink-500 font-sans mt-2 leading-relaxed">{{ $leader['credentials'] }}</p>
+                            <p class="text-xs sm:text-[11px] text-ink-500 font-sans mt-2 leading-relaxed">{{ $leader['credentials'] }}</p>
                         </div>
                     </x-ui.card>
                 @endforeach

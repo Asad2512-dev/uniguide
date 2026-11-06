@@ -30,10 +30,10 @@
             @csrf
 
             <!-- 1. Candidate Personal & Identity Details -->
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <h2 class="font-heading font-bold text-base text-ink-950">Candidate Identification</h2>
-                    <span class="text-xs text-ink-400 font-mono">CNIC: {{ $profile['cnic'] }}</span>
+                    <span class="text-xs text-ink-600 font-mono">CNIC: {{ $profile['cnic'] }}</span>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
@@ -75,13 +75,13 @@
             <!-- 2. Secondary & Higher Secondary Board Qualifications -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- Matric / SSC Card -->
-                <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+                <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                     <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-brand-600"></span>
                             <h3 class="font-heading font-bold text-sm text-ink-950">Matriculation / O-Level</h3>
                         </div>
-                        <span class="text-[10px] font-mono text-success-700 bg-success-50 px-2 py-0.5 rounded font-bold">
+                        <span class="text-xs sm:text-[10px] font-mono text-success-700 bg-success-50 px-2 py-0.5 rounded font-bold">
                             {{ $profile['matric']['grade'] }}
                         </span>
                     </div>
@@ -122,20 +122,20 @@
                             </div>
                         </div>
 
-                        <div class="p-3 rounded-xl bg-surface-subtle text-[11px] text-ink-500 font-sans">
+                        <div class="p-3 rounded-xl bg-surface-subtle text-xs sm:text-[11px] text-ink-500 font-sans">
                             Official Sanad verified against FBISE National Database.
                         </div>
                     </div>
                 </div>
 
                 <!-- FSc / HSSC Card -->
-                <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+                <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                     <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                         <div class="flex items-center gap-2">
                             <span class="w-2.5 h-2.5 rounded-full bg-brand-600"></span>
                             <h3 class="font-heading font-bold text-sm text-ink-950">FSc Pre-Engineering / HSSC</h3>
                         </div>
-                        <span class="text-[10px] font-mono text-brand-700 bg-brand-50 px-2 py-0.5 rounded font-bold">
+                        <span class="text-xs sm:text-[10px] font-mono text-brand-700 bg-brand-50 px-2 py-0.5 rounded font-bold">
                             {{ $profile['fsc']['grade'] }}
                         </span>
                     </div>
@@ -176,7 +176,7 @@
                             </div>
                         </div>
 
-                        <div class="p-3 rounded-xl bg-surface-subtle text-[11px] text-ink-500 font-sans">
+                        <div class="p-3 rounded-xl bg-surface-subtle text-xs sm:text-[11px] text-ink-500 font-sans">
                             Part-1 result verified: {{ $profile['fsc']['obtained_marks'] }} / {{ $profile['fsc']['total_marks'] }} Marks.
                         </div>
                     </div>
@@ -184,13 +184,13 @@
             </div>
 
             <!-- 3. Standardized Entry Test Score Records -->
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-5">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-5">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <div>
                         <h2 class="font-heading font-bold text-base text-ink-950">Standardized Entry Test Scores</h2>
                         <p class="text-xs text-ink-500 font-sans">Institutional entrance exams verified for Fall 2026 admissions.</p>
                     </div>
-                    <span class="text-xs font-mono text-ink-400">{{ count($profile['entry_tests']) }} Tests on Record</span>
+                    <span class="text-xs font-mono text-ink-600">{{ count($profile['entry_tests']) }} Tests on Record</span>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -198,16 +198,16 @@
                         <div class="p-4 rounded-xl border border-border-default bg-surface-subtle space-y-2">
                             <div class="flex items-center justify-between">
                                 <span class="font-heading font-bold text-xs text-ink-950">{{ $test['name'] }}</span>
-                                <span class="text-[10px] font-mono font-bold text-success-700 bg-success-50 px-1.5 py-0.2 rounded">
+                                <span class="text-xs sm:text-[10px] font-mono font-bold text-success-700 bg-success-50 px-1.5 py-0.2 rounded">
                                     {{ $test['status'] }}
                                 </span>
                             </div>
                             <div class="flex items-baseline gap-1 mt-1">
                                 <span class="font-heading font-bold text-2xl text-brand-700">{{ $test['score'] }}</span>
-                                <span class="text-xs font-mono text-ink-400">/ {{ $test['max_score'] }}</span>
+                                <span class="text-xs font-mono text-ink-600">/ {{ $test['max_score'] }}</span>
                                 <span class="text-xs font-mono font-bold text-ink-600 ml-auto">({{ $test['percentage'] }}%)</span>
                             </div>
-                            <div class="text-[11px] text-ink-400 font-mono">
+                            <div class="text-xs sm:text-[11px] text-ink-400 font-mono">
                                 Roll: {{ $test['roll_number'] }} • {{ $test['test_date'] }}
                             </div>
                         </div>
@@ -216,11 +216,11 @@
             </div>
 
             <!-- 4. Verified Document Locker Strip -->
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                 <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
                     <div>
                         <h2 class="font-heading font-bold text-base text-ink-950">Admission Documents Locker</h2>
-                        <p class="text-xs text-ink-500 font-sans">Attested certificates required for provincial and HEC verification.</p>
+                        <p class="text-xs text-ink-500 font-sans">Attested certificates required for provincial and verification.</p>
                     </div>
                 </div>
 
@@ -231,11 +231,11 @@
                                 <x-icon name="file-text" class="w-4 h-4 text-brand-600 shrink-0" />
                                 <div>
                                     <span class="font-semibold text-ink-900">{{ $doc['title'] }}</span>
-                                    <span class="text-[11px] text-ink-400 font-mono block">{{ $doc['file_name'] }} • Uploaded {{ $doc['uploaded_at'] }}</span>
+                                    <span class="text-xs sm:text-[11px] text-ink-600 font-mono block">{{ $doc['file_name'] }} • Uploaded {{ $doc['uploaded_at'] }}</span>
                                 </div>
                             </div>
 
-                            <span class="text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full {{ $doc['status'] === 'verified' ? 'bg-success-50 text-success-700 border border-success-200' : 'bg-warning-50 text-warning-700 border border-warning-200' }}">
+                            <span class="text-xs sm:text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full {{ $doc['status'] === 'verified' ? 'bg-success-50 text-success-700 border border-success-200' : 'bg-warning-50 text-warning-700 border border-warning-200' }}">
                                 {{ $doc['status_label'] }}
                             </span>
                         </div>

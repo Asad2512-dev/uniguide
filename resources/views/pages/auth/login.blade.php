@@ -1,6 +1,6 @@
 <x-layouts.public 
     title="Sign In — UniGuide Pakistan Admissions Gateway"
-    description="Sign in to your UniGuide student admission locker, university administration console, or federal HEC regulatory portal."
+    description="Sign in to your UniGuide student admission locker, university administration console, or UniGuide superadmin workspace."
 >
     <div class="min-h-[calc(100vh-14rem)] flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
         <div class="max-w-md w-full space-y-6">
@@ -40,7 +40,7 @@
             >
                 <!-- Role Switcher Segmented Control -->
                 <div>
-                    <label class="block text-[11px] font-bold text-ink-400 uppercase tracking-wider font-sans mb-2 text-center">
+                    <label class="block text-xs sm:text-[11px] font-bold text-ink-600 uppercase tracking-wider font-sans mb-2 text-center">
                         Select Workspace Account Type
                     </label>
                     <div class="grid grid-cols-3 gap-1 bg-surface-subtle p-1 rounded-xl border border-border-default text-xs font-sans">
@@ -66,7 +66,7 @@
                             :class="role === 'admin' ? 'bg-surface text-brand-700 font-bold shadow-2xs' : 'text-ink-600 hover:text-ink-950'"
                             class="py-1.5 rounded-lg transition-smooth cursor-pointer text-center"
                         >
-                            HEC Admin
+                            Superadmin
                         </button>
                     </div>
                 </div>
@@ -75,14 +75,14 @@
                 <div class="p-3 bg-brand-50/60 rounded-xl border border-brand-200/60 flex items-center justify-between text-xs font-sans">
                     <span class="text-brand-900 font-medium">Demo login:</span>
                     <div class="flex items-center gap-1.5">
-                        <button type="button" @click="setDemo('student')" class="px-2 py-0.5 rounded bg-surface text-brand-700 border border-brand-200 hover:bg-brand-100 font-medium text-[11px] cursor-pointer">
+                        <button type="button" @click="setDemo('student')" class="px-2 py-0.5 rounded bg-surface text-brand-700 border border-brand-200 hover:bg-brand-100 font-medium text-xs sm:text-[11px] cursor-pointer">
                             Student
                         </button>
-                        <button type="button" @click="setDemo('university')" class="px-2 py-0.5 rounded bg-surface text-brand-700 border border-brand-200 hover:bg-brand-100 font-medium text-[11px] cursor-pointer">
+                        <button type="button" @click="setDemo('university')" class="px-2 py-0.5 rounded bg-surface text-brand-700 border border-brand-200 hover:bg-brand-100 font-medium text-xs sm:text-[11px] cursor-pointer">
                             NUST Admin
                         </button>
-                        <button type="button" @click="setDemo('admin')" class="px-2 py-0.5 rounded bg-surface text-brand-700 border border-brand-200 hover:bg-brand-100 font-medium text-[11px] cursor-pointer">
-                            HEC Node
+                        <button type="button" @click="setDemo('admin')" class="px-2 py-0.5 rounded bg-surface text-brand-700 border border-brand-200 hover:bg-brand-100 font-medium text-xs sm:text-[11px] cursor-pointer">
+                            Superadmin
                         </button>
                     </div>
                 </div>
@@ -96,7 +96,7 @@
                         <label for="email" class="block text-xs font-semibold text-ink-800 font-sans mb-1.5">
                             <span x-show="role === 'student'">Email or BISE Roll Number</span>
                             <span x-show="role === 'university'">Official Institutional Email (.edu.pk)</span>
-                            <span x-show="role === 'admin'">Federal HEC Regulatory Identity</span>
+                            <span x-show="role === 'admin'">Superadmin Email</span>
                         </label>
                         <input 
                             type="text" 

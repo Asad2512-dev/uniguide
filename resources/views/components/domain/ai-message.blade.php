@@ -16,16 +16,16 @@
             <div>
                 <div class="flex items-center gap-2">
                     <span class="font-heading font-bold text-sm text-ink-950">{{ $advisorName }}</span>
-                    <span class="text-[10px] uppercase font-mono font-bold bg-brand-100 text-brand-800 px-1.5 py-0.2 rounded">
-                        HEC Verified Data
+                    <span class="text-xs sm:text-[10px] uppercase font-mono font-bold bg-brand-100 text-brand-800 px-1.5 py-0.2 rounded">
+                        Source information
                     </span>
                 </div>
-                <span class="text-[11px] text-ink-400 font-sans">{{ $timestamp }}</span>
+                <span class="text-xs sm:text-[11px] text-ink-600 font-sans">{{ $timestamp }}</span>
             </div>
         </div>
 
         <div class="flex items-center gap-2">
-            <span class="hidden sm:inline-flex items-center gap-1 text-[11px] font-sans text-success-700 bg-success-50 px-2 py-0.5 rounded-full border border-success-200/60 font-medium">
+            <span class="hidden sm:inline-flex items-center gap-1 text-xs sm:text-[11px] font-sans text-success-700 bg-success-50 px-2 py-0.5 rounded-full border border-success-200/60 font-medium">
                 <x-icon name="shield-check" class="w-3 h-3 text-success-600" />
                 {{ $confidence }}
             </span>
@@ -43,7 +43,7 @@
     <!-- Official Citations -->
     @if(count($citations) > 0)
         <div class="mt-4 pt-3.5 border-t border-border-subtle">
-            <div class="text-[11px] font-semibold text-ink-500 uppercase tracking-wider mb-2 font-sans flex items-center gap-1.5">
+            <div class="text-xs sm:text-[11px] font-semibold text-ink-500 uppercase tracking-wider mb-2 font-sans flex items-center gap-1.5">
                 <x-icon name="file-text" class="w-3 h-3 text-brand-600" />
                 Official Statutory & University Citations
             </div>
@@ -62,7 +62,7 @@
     <!-- Suggested Follow-up Actions -->
     @if(count($prompts) > 0)
         <div class="mt-4 pt-3 border-t border-border-subtle flex flex-wrap items-center gap-2">
-            <span class="text-xs font-medium text-ink-400">Ask next:</span>
+            <span class="text-xs font-medium text-ink-600">Ask next:</span>
             @foreach($prompts as $prompt)
                 <button 
                     type="button" 

@@ -54,7 +54,7 @@
                                 disabled 
                                 class="w-full px-3.5 py-2.5 rounded-xl border border-border-subtle bg-surface-subtle text-ink-500 text-xs font-mono cursor-not-allowed"
                             />
-                            <span class="text-[10px] text-ink-400 mt-1 block">Locked by HEC Federal Registry</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Locked by UniGuide Registry</span>
                         </div>
 
                         <div>
@@ -172,7 +172,7 @@
 
         <!-- Right 4 Cols: Accreditations & Statutory Standing -->
         <div class="lg:col-span-4 space-y-6">
-            <div class="p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                 <div class="flex items-center gap-2 pb-3 border-b border-border-subtle">
                     <x-icon name="shield-check" class="w-4 h-4 text-emerald-600" />
                     <h3 class="font-heading font-bold text-sm text-ink-950">Statutory Accreditations</h3>
@@ -182,23 +182,23 @@
                     @foreach($profile['accreditations'] as $acc)
                         <div class="p-3.5 rounded-xl bg-surface-subtle border border-border-subtle flex items-center justify-between">
                             <span class="text-xs font-semibold text-ink-900">{{ $acc }}</span>
-                            <span class="text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded">
+                            <span class="text-xs sm:text-[10px] font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2 py-0.5 rounded">
                                 Active
                             </span>
                         </div>
                     @endforeach
                 </div>
 
-                <div class="pt-3 border-t border-border-subtle text-[11px] text-ink-500 font-sans leading-relaxed">
-                    Accreditation changes require statutory gazette attestation through the HEC National Command portal.
+                <div class="pt-3 border-t border-border-subtle text-xs sm:text-[11px] text-ink-500 font-sans leading-relaxed">
+                    Accreditation changes require statutory gazette attestation through the Superadmin portal.
                 </div>
             </div>
 
             <!-- Verification Metadata Card -->
-            <div class="p-6 rounded-2xl bg-surface-subtle border border-border-default space-y-3">
-                <span class="text-[10px] font-mono font-bold text-ink-400 uppercase block">Audit Verification</span>
+            <div class="p-4 sm:p-6 rounded-2xl bg-surface-subtle border border-border-default space-y-3">
+                <span class="text-xs sm:text-[10px] font-mono font-bold text-ink-600 uppercase block">Audit Verification</span>
                 <div class="text-xs font-sans text-ink-700">
-                    Last audited by HEC Inspection Directorate on <strong class="text-ink-900">{{ $profile['verified_date'] }}</strong>.
+                    Last audited by Inspection Directorate on <strong class="text-ink-900">{{ $profile['verified_date'] }}</strong>.
                 </div>
             </div>
         </div>

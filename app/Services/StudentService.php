@@ -2,6 +2,14 @@
 
 namespace App\Services;
 
+use App\Models\Notification;
+use App\Models\Program;
+use App\Models\SavedItem;
+use App\Models\StudentApplication;
+use App\Models\StudentProfile;
+use App\Models\User;
+use Illuminate\Validation\ValidationException;
+
 class StudentService
 {
     public function __construct(
@@ -10,8 +18,18 @@ class StudentService
         protected CounselorService $counselorService
     ) {}
 
+    protected function getCurrentStudent(): ?User
+    {
+        $user = auth()->user();
+        if ($user && $user->role === 'student') {
+            return $user;
+        }
+
+        return null;
+    }
+
     /**
-     * Retrieve the current student profile (session-backed with rich defaults).
+     * Retrieve the current student profile (database-backed with rich defaults).
      */
     public function getProfile(): array
     {
@@ -146,17 +164,80 @@ class StudentService
             ],
         ];
 
+        $student = $this->getCurrentStudent();
+        if ($student) {
+            $dbProfile = StudentProfile::where('user_id', $student->id)->first();
+            if ($dbProfile) {
+                $merged = $defaultProfile;
+                $merged['full_name'] = $dbProfile->full_name ?? $student->name ?? $defaultProfile['full_name'];
+                $merged['applicant_id'] = $dbProfile->applicant_id ?? $defaultProfile['applicant_id'];
+                $merged['email'] = $student->email ?? $defaultProfile['email'];
+                $merged['phone'] = $dbProfile->phone ?? $student->phone ?? $defaultProfile['phone'];
+                $merged['city'] = $dbProfile->city ?? $defaultProfile['city'];
+                $merged['domicile_province'] = $dbProfile->domicile_province ?? $defaultProfile['domicile_province'];
+                $merged['domicile_label'] = $dbProfile->domicile_label ?? $defaultProfile['domicile_label'];
+                $merged['cnic'] = $dbProfile->cnic ?? $defaultProfile['cnic'];
+                $merged['gender'] = $dbProfile->gender ?? $defaultProfile['gender'];
+                $merged['stream'] = $dbProfile->stream ?? $defaultProfile['stream'];
+                $merged['stream_label'] = $dbProfile->stream_label ?? $defaultProfile['stream_label'];
+                $merged['monthly_household_income'] = $dbProfile->monthly_household_income ?? $defaultProfile['monthly_household_income'];
+                $merged['onboarding_completed'] = (bool) $dbProfile->onboarding_completed;
+
+                if (! empty($dbProfile->matric_data)) {
+                    $merged['matric'] = array_merge($defaultProfile['matric'], $dbProfile->matric_data);
+                }
+                if (! empty($dbProfile->fsc_data)) {
+                    $merged['fsc'] = array_merge($defaultProfile['fsc'], $dbProfile->fsc_data);
+                }
+                if (! empty($dbProfile->entry_tests_data)) {
+                    $merged['entry_tests'] = $dbProfile->entry_tests_data;
+                }
+                if (! empty($dbProfile->preferences)) {
+                    $merged['preferences'] = array_merge($defaultProfile['preferences'], $dbProfile->preferences);
+                }
+
+                // Session overrides if present
+                $sessionOverrides = session()->get('uniguide_student_profile', []);
+
+                return array_replace_recursive($merged, $sessionOverrides);
+            }
+        }
+
         return session()->get('uniguide_student_profile', $defaultProfile);
     }
 
     /**
-     * Save updated student profile into session.
+     * Save updated student profile into database and session.
      */
     public function updateProfile(array $data): array
     {
         $current = $this->getProfile();
         $updated = array_replace_recursive($current, $data);
         session()->put('uniguide_student_profile', $updated);
+
+        $student = $this->getCurrentStudent();
+        if ($student) {
+            StudentProfile::updateOrCreate(
+                ['user_id' => $student->id],
+                [
+                    'full_name' => $updated['full_name'] ?? $student->name,
+                    'phone' => $updated['phone'] ?? $student->phone,
+                    'city' => $updated['city'] ?? 'Rawalpindi',
+                    'domicile_province' => $updated['domicile_province'] ?? 'ict',
+                    'domicile_label' => $updated['domicile_label'] ?? null,
+                    'cnic' => $updated['cnic'] ?? null,
+                    'gender' => $updated['gender'] ?? 'Male',
+                    'stream' => $updated['stream'] ?? 'pre_engineering',
+                    'stream_label' => $updated['stream_label'] ?? null,
+                    'monthly_household_income' => $updated['monthly_household_income'] ?? null,
+                    'matric_data' => $updated['matric'] ?? [],
+                    'fsc_data' => $updated['fsc'] ?? [],
+                    'entry_tests_data' => $updated['entry_tests'] ?? [],
+                    'preferences' => $updated['preferences'] ?? [],
+                    'onboarding_completed' => true,
+                ]
+            );
+        }
 
         return $updated;
     }
@@ -192,7 +273,8 @@ class StudentService
         }
 
         // Documents check
-        $verifiedDocs = count(array_filter($profile['documents'], fn ($d) => $d['status'] === 'verified'));
+        $docs = $profile['documents'] ?? [];
+        $verifiedDocs = count(array_filter($docs, fn ($d) => ($d['status'] ?? '') === 'verified'));
         if ($verifiedDocs >= 3) {
             $score += 20;
         } else {
@@ -214,124 +296,61 @@ class StudentService
     }
 
     /**
-     * Retrieve student's personal admission tracker applications.
+     * Retrieve student's personal admission tracker applications from database.
      */
     public function getTrackerApplications(): array
     {
-        $defaultApplications = [
-            [
-                'id' => 'app-1',
-                'university_name' => 'National University of Sciences & Technology',
-                'university_acronym' => 'NUST',
-                'university_slug' => 'nust',
-                'program_name' => 'BS Computer Science (SEECS)',
-                'campus' => 'Islamabad Main Campus (H-12)',
-                'stage' => 'applied', // interested, preparing, applied, test_scheduled, awaiting_result, offer_received, closed
-                'stage_label' => 'Applied',
-                'badge_color' => 'brand',
-                'application_ref' => 'NUST-2026-UG-09412',
-                'deadline' => '15 July 2026',
-                'deadline_date' => '2026-07-15',
-                'fee_challan_status' => 'Paid & Verified (PKR 5,000)',
-                'test_date' => 'NET-4: 02 July 2026',
-                'calculated_aggregate' => 77.95,
-                'closing_cutoff_ref' => '79.24% (2025)',
-                'notes' => 'NET-2 score of 152 logged. Target for NET-4 is 156+ to secure 1st merit list closing.',
-                'last_updated' => '2 days ago',
-            ],
-            [
-                'id' => 'app-2',
-                'university_name' => 'FAST - National University of Computer & Emerging Sciences',
-                'university_acronym' => 'FAST-NUCES',
-                'university_slug' => 'fast-nuces',
-                'program_name' => 'BS Software Engineering',
-                'campus' => 'Islamabad Campus (H-9)',
-                'stage' => 'test_scheduled',
-                'stage_label' => 'Test Scheduled',
-                'badge_color' => 'warning',
-                'application_ref' => 'FAST-ISB-2026-4819',
-                'deadline' => '05 July 2026',
-                'deadline_date' => '2026-07-05',
-                'fee_challan_status' => 'Challan Paid at Faysal Bank (PKR 3,500)',
-                'test_date' => '08 July 2026 (Slot: 10:00 AM)',
-                'calculated_aggregate' => 75.50,
-                'closing_cutoff_ref' => '74.80% (2025)',
-                'notes' => 'Admit slip downloaded. Revise advanced mathematics negative marking rules (-0.25).',
-                'last_updated' => 'Yesterday',
-            ],
-            [
-                'id' => 'app-3',
-                'university_name' => 'COMSATS University Islamabad',
-                'university_acronym' => 'CUI',
-                'university_slug' => 'comsats',
-                'program_name' => 'BS Artificial Intelligence',
-                'campus' => 'Islamabad Main Campus (Park Road)',
-                'stage' => 'preparing',
-                'stage_label' => 'Preparing Application',
-                'badge_color' => 'neutral',
-                'application_ref' => 'Draft # CUI-2026-DRAFT',
-                'deadline' => '20 July 2026',
-                'deadline_date' => '2026-07-20',
-                'fee_challan_status' => 'Pending Fee Challan Generation (PKR 2,500)',
-                'test_date' => 'NTS-NAT Score (78/100) on record',
-                'calculated_aggregate' => 83.60,
-                'closing_cutoff_ref' => '82.10% (2025)',
-                'notes' => 'Very high probability of 1st list admission based on 78 NAT score.',
-                'last_updated' => '3 days ago',
-            ],
-            [
-                'id' => 'app-4',
-                'university_name' => 'Information Technology University',
-                'university_acronym' => 'ITU Lahore',
-                'university_slug' => 'itu-lahore',
-                'program_name' => 'BS Computer Science',
-                'campus' => 'Arfa Software Technology Park, Lahore',
-                'stage' => 'offer_received',
-                'stage_label' => 'Provisional Offer Received',
-                'badge_color' => 'success',
-                'application_ref' => 'ITU-ADM-2026-0042',
-                'deadline' => 'Fee Submission by 10 August 2026',
-                'deadline_date' => '2026-08-10',
-                'fee_challan_status' => 'Admission Fee Challan Issued (PKR 165,000)',
-                'test_date' => 'ITU Admissions Test cleared',
-                'calculated_aggregate' => 84.10,
-                'closing_cutoff_ref' => 'Rank #42 in Merit Cohort',
-                'notes' => 'Provisional admission offer received under Early Decision round. Hold as prime safety.',
-                'last_updated' => '4 hours ago',
-            ],
-            [
-                'id' => 'app-5',
-                'university_name' => 'Ghulam Ishaq Khan Institute of Engineering Sciences and Technology',
-                'university_acronym' => 'GIKI',
-                'university_slug' => 'giki',
-                'program_name' => 'BS Computer Engineering',
-                'campus' => 'Topi, Khyber Pakhtunkhwa',
-                'stage' => 'interested',
-                'stage_label' => 'Interested Shortlist',
-                'badge_color' => 'indigo',
-                'application_ref' => 'Not yet submitted',
-                'deadline' => '10 June 2026',
-                'deadline_date' => '2026-06-10',
-                'fee_challan_status' => 'Application Fee PKR 4,000',
-                'test_date' => 'GIKI Test: 28 June 2026',
-                'calculated_aggregate' => 76.40,
-                'closing_cutoff_ref' => 'High Test Weightage',
-                'notes' => 'Full residential campus. Exploring GIKI Alumni need-based full scholarship scheme.',
-                'last_updated' => '5 days ago',
-            ],
-        ];
+        $student = $this->getCurrentStudent();
+        if ($student) {
+            $dbApps = StudentApplication::where('user_id', $student->id)->get();
+            if ($dbApps->isNotEmpty()) {
+                $mapped = [];
+                foreach ($dbApps as $app) {
+                    $mapped[] = [
+                        'id' => (string) $app->id,
+                        'university_name' => $app->university_name,
+                        'university_acronym' => $app->university_acronym ?? 'HEC',
+                        'university_slug' => $app->university_slug ?? 'uni',
+                        'program_name' => $app->program_name,
+                        'campus' => $app->campus ?? 'Main Campus',
+                        'stage' => $app->stage,
+                        'stage_label' => Program::whereKey($app->program_id)->exists() ? ($app->stage_label ?? ucfirst(str_replace('_', ' ', $app->stage))) : 'Archived — outside current coverage',
+                        'badge_color' => match ($app->stage) {
+                            'offer_received' => 'success',
+                            'test_scheduled' => 'warning',
+                            'applied' => 'brand',
+                            default => 'neutral',
+                        },
+                        'application_ref' => $app->application_ref,
+                        'deadline' => $app->deadline ?? 'Open',
+                        'deadline_date' => $app->deadline_date?->format('Y-m-d') ?? null,
+                        'fee_challan_status' => $app->fee_challan_status ?? 'Unpaid',
+                        'test_date' => $app->test_date ?? 'TBD',
+                        'calculated_aggregate' => floatval($app->calculated_aggregate ?? 0.0),
+                        'closing_cutoff_ref' => $app->closing_cutoff_ref ?? 'Merit Archive',
+                        'notes' => $app->notes ?? '',
+                        'last_updated' => $app->updated_at?->diffForHumans() ?? 'Recently',
+                    ];
+                }
 
-        return session()->get('uniguide_student_tracker', $defaultApplications);
+                return $mapped;
+            }
+        }
+
+        return [];
     }
 
     /**
-     * Add a new application to the student tracker.
+     * Add an application to the student admission tracker.
      */
     public function addTrackerApplication(array $data): array
     {
-        $apps = $this->getTrackerApplications();
-        $id = 'app-'.uniqid();
-
+        abort_unless($this->getCurrentStudent(), 401);
+        $program = Program::with(['university', 'campus'])->find($data['program_id'] ?? 0);
+        if (! $program) {
+            throw ValidationException::withMessages(['program_id' => 'Select a recorded offering at a campus in Punjab or Islamabad.']);
+        }
+        $data = array_replace($data, ['university_id' => $program->university_id, 'program_id' => $program->id, 'university_name' => $program->university->name, 'university_acronym' => $program->university->acronym, 'university_slug' => $program->university->slug, 'program_name' => $program->name, 'campus' => $program->campus->name]);
         $stageLabels = [
             'interested' => 'Interested Shortlist',
             'preparing' => 'Preparing Application',
@@ -342,36 +361,55 @@ class StudentService
             'closed' => 'Application Closed',
         ];
 
-        $newApp = [
-            'id' => $id,
+        $stage = $data['stage'] ?? 'interested';
+        $stageLabel = $stageLabels[$stage] ?? 'Interested';
+        $student = $this->getCurrentStudent();
+
+        $app = StudentApplication::create([
+            'university_id' => $program->university_id, 'program_id' => $program->id,
+            'user_id' => $student?->id,
+            'application_ref' => $data['application_ref'] ?? ('APP-'.strtoupper(substr(md5(uniqid()), 0, 8))),
             'university_name' => $data['university_name'] ?? 'University of the Punjab',
             'university_acronym' => $data['university_acronym'] ?? 'PU',
             'university_slug' => $data['university_slug'] ?? 'punjab-university',
             'program_name' => $data['program_name'] ?? 'BS Computer Science',
             'campus' => $data['campus'] ?? 'Main Campus, Lahore',
-            'stage' => $data['stage'] ?? 'interested',
-            'stage_label' => $stageLabels[$data['stage'] ?? 'interested'] ?? 'Interested',
-            'badge_color' => match ($data['stage'] ?? 'interested') {
-                'offer_received' => 'success',
-                'test_scheduled' => 'warning',
-                'applied' => 'brand',
-                default => 'neutral',
-            },
-            'application_ref' => $data['application_ref'] ?? 'Pending Submission',
+            'stage' => $stage,
+            'stage_label' => $stageLabel,
             'deadline' => $data['deadline'] ?? '30 July 2026',
-            'deadline_date' => $data['deadline_date'] ?? '2026-07-30',
+            'deadline_date' => ! empty($data['deadline_date']) ? $data['deadline_date'] : null,
             'fee_challan_status' => $data['fee_challan_status'] ?? 'Unpaid',
             'test_date' => $data['test_date'] ?? 'TBD',
             'calculated_aggregate' => floatval($data['calculated_aggregate'] ?? 78.5),
             'closing_cutoff_ref' => $data['closing_cutoff_ref'] ?? 'Merit Archive',
             'notes' => $data['notes'] ?? 'Manual admission entry added by student.',
+        ]);
+
+        return [
+            'id' => (string) $app->id,
+            'university_name' => $app->university_name,
+            'university_acronym' => $app->university_acronym,
+            'university_slug' => $app->university_slug,
+            'program_name' => $app->program_name,
+            'campus' => $app->campus,
+            'stage' => $app->stage,
+            'stage_label' => $app->stage_label,
+            'badge_color' => match ($app->stage) {
+                'offer_received' => 'success',
+                'test_scheduled' => 'warning',
+                'applied' => 'brand',
+                default => 'neutral',
+            },
+            'application_ref' => $app->application_ref,
+            'deadline' => $app->deadline,
+            'deadline_date' => $app->deadline_date?->format('Y-m-d'),
+            'fee_challan_status' => $app->fee_challan_status,
+            'test_date' => $app->test_date,
+            'calculated_aggregate' => floatval($app->calculated_aggregate),
+            'closing_cutoff_ref' => $app->closing_cutoff_ref,
+            'notes' => $app->notes,
             'last_updated' => 'Just now',
         ];
-
-        $apps[] = $newApp;
-        session()->put('uniguide_student_tracker', $apps);
-
-        return $newApp;
     }
 
     /**
@@ -379,41 +417,58 @@ class StudentService
      */
     public function updateTrackerApplication(string $id, array $data): ?array
     {
-        $apps = $this->getTrackerApplications();
-        $updatedApp = null;
+        $student = $this->getCurrentStudent();
+        $numericId = (int) str_replace('app-', '', $id);
 
-        foreach ($apps as $key => $app) {
-            if ($app['id'] === $id) {
-                $stageLabels = [
-                    'interested' => 'Interested Shortlist',
-                    'preparing' => 'Preparing Application',
-                    'applied' => 'Applied',
-                    'test_scheduled' => 'Test Scheduled',
-                    'awaiting_result' => 'Awaiting Merit List',
-                    'offer_received' => 'Offer Received',
-                    'closed' => 'Application Closed',
-                ];
+        $app = StudentApplication::where('id', $numericId)
+            ->orWhere('application_ref', $id)
+            ->first();
 
-                if (isset($data['stage'])) {
-                    $data['stage_label'] = $stageLabels[$data['stage']] ?? 'Updated';
-                    $data['badge_color'] = match ($data['stage']) {
-                        'offer_received' => 'success',
-                        'test_scheduled' => 'warning',
-                        'applied' => 'brand',
-                        default => 'neutral',
-                    };
-                }
+        if ($app) {
+            $stageLabels = [
+                'interested' => 'Interested Shortlist',
+                'preparing' => 'Preparing Application',
+                'applied' => 'Applied',
+                'test_scheduled' => 'Test Scheduled',
+                'awaiting_result' => 'Awaiting Merit List',
+                'offer_received' => 'Offer Received',
+                'closed' => 'Application Closed',
+            ];
 
-                $data['last_updated'] = 'Just now';
-                $apps[$key] = array_merge($app, $data);
-                $updatedApp = $apps[$key];
-                break;
+            if (isset($data['stage'])) {
+                $data['stage_label'] = $stageLabels[$data['stage']] ?? 'Updated';
             }
+
+            $app->update($data);
+
+            return [
+                'id' => (string) $app->id,
+                'university_name' => $app->university_name,
+                'university_acronym' => $app->university_acronym,
+                'university_slug' => $app->university_slug,
+                'program_name' => $app->program_name,
+                'campus' => $app->campus,
+                'stage' => $app->stage,
+                'stage_label' => $app->stage_label,
+                'badge_color' => match ($app->stage) {
+                    'offer_received' => 'success',
+                    'test_scheduled' => 'warning',
+                    'applied' => 'brand',
+                    default => 'neutral',
+                },
+                'application_ref' => $app->application_ref,
+                'deadline' => $app->deadline,
+                'deadline_date' => $app->deadline_date?->format('Y-m-d'),
+                'fee_challan_status' => $app->fee_challan_status,
+                'test_date' => $app->test_date,
+                'calculated_aggregate' => floatval($app->calculated_aggregate),
+                'closing_cutoff_ref' => $app->closing_cutoff_ref,
+                'notes' => $app->notes,
+                'last_updated' => 'Just now',
+            ];
         }
 
-        session()->put('uniguide_student_tracker', $apps);
-
-        return $updatedApp;
+        return null;
     }
 
     /**
@@ -421,94 +476,90 @@ class StudentService
      */
     public function deleteTrackerApplication(string $id): bool
     {
-        $apps = $this->getTrackerApplications();
-        $filtered = array_values(array_filter($apps, fn ($a) => $a['id'] !== $id));
-        session()->put('uniguide_student_tracker', $filtered);
+        $numericId = (int) str_replace('app-', '', $id);
+        $deleted = StudentApplication::where('id', $numericId)
+            ->orWhere('application_ref', $id)
+            ->delete();
 
-        return count($filtered) < count($apps);
+        return $deleted > 0;
     }
 
     /**
-     * Retrieve student's saved universities collection.
+     * Retrieve student's saved universities collection from database.
      */
     public function getSavedUniversities(string $sort = 'rank'): array
     {
-        $defaultSaved = [
-            [
-                'slug' => 'nust',
-                'name' => 'National University of Sciences & Technology',
-                'acronym' => 'NUST',
-                'city' => 'Islamabad',
-                'province_label' => 'Islamabad (ICT)',
-                'sector' => 'public',
-                'hec_ranking' => '#1 Overall Engineering',
-                'fee_range' => 'PKR 195,000 / sem',
-                'fee_numeric' => 195000,
-                'deadline' => '15 July 2026',
-                'deadline_date' => '2026-07-15',
-                'status' => 'open',
-                'match_tier' => 'Reach (NET 155+ Target)',
-                'saved_at' => '2026-10-18',
-            ],
-            [
-                'slug' => 'fast-nuces',
-                'name' => 'FAST - National University of Computer & Emerging Sciences',
-                'acronym' => 'FAST-NUCES',
-                'city' => 'Islamabad',
-                'province_label' => 'Islamabad (ICT)',
-                'sector' => 'chartered',
-                'hec_ranking' => '#1 Computing & AI',
-                'fee_range' => 'PKR 215,000 / sem',
-                'fee_numeric' => 215000,
-                'deadline' => '05 July 2026',
-                'deadline_date' => '2026-07-05',
-                'status' => 'open',
-                'match_tier' => 'Target Match (75.5% vs 74.8% Cutoff)',
-                'saved_at' => '2026-10-20',
-            ],
-            [
-                'slug' => 'comsats',
-                'name' => 'COMSATS University Islamabad',
-                'acronym' => 'CUI',
-                'city' => 'Islamabad',
-                'province_label' => 'Islamabad (ICT)',
-                'sector' => 'public',
-                'hec_ranking' => 'Top 5 National',
-                'fee_range' => 'PKR 142,000 / sem',
-                'fee_numeric' => 142000,
-                'deadline' => '20 July 2026',
-                'deadline_date' => '2026-07-20',
-                'status' => 'open',
-                'match_tier' => 'Solid Safety (83.6% NAT Aggregate)',
-                'saved_at' => '2026-10-22',
-            ],
-            [
-                'slug' => 'lums',
-                'name' => 'Lahore University of Management Sciences',
-                'acronym' => 'LUMS',
-                'city' => 'Lahore',
-                'province_label' => 'Punjab',
-                'sector' => 'private',
-                'hec_ranking' => '#1 Business & Premier Private',
-                'fee_range' => 'PKR 540,000 / sem (NOP Aid Available)',
-                'fee_numeric' => 540000,
-                'deadline' => '30 January 2026',
-                'deadline_date' => '2026-01-30',
-                'status' => 'closed',
-                'match_tier' => 'Reach (NOP Aid Qualified)',
-                'saved_at' => '2026-09-15',
-            ],
-        ];
+        $student = $this->getCurrentStudent();
+        $items = [];
 
-        $saved = session()->get('uniguide_student_saved_unis', $defaultSaved);
+        if ($student) {
+            $saved = SavedItem::where('user_id', $student->id)
+                ->where('item_type', 'university')
+                ->get();
 
-        if ($sort === 'fee_low') {
-            usort($saved, fn ($a, $b) => ($a['fee_numeric'] ?? 0) <=> ($b['fee_numeric'] ?? 0));
-        } elseif ($sort === 'deadline') {
-            usort($saved, fn ($a, $b) => strcmp($a['deadline_date'] ?? '', $b['deadline_date'] ?? ''));
+            foreach ($saved as $item) {
+                if (! empty($item->metadata)) {
+                    $items[] = $item->metadata;
+                }
+            }
         }
 
-        return $saved;
+        if (empty($items)) {
+            $defaultSaved = [
+                [
+                    'slug' => 'nust',
+                    'name' => 'National University of Sciences & Technology',
+                    'acronym' => 'NUST',
+                    'city' => 'Islamabad',
+                    'province_label' => 'Islamabad (ICT)',
+                    'sector' => 'public',
+                    'hec_ranking' => '#1 Overall Engineering',
+                    'fee_range' => 'PKR 195,000 / sem',
+                    'fee_numeric' => 195000,
+                    'deadline' => '15 July 2026',
+                    'deadline_date' => '2026-07-15',
+                    'status' => 'open',
+                    'match_tier' => 'Reach (NET 155+ Target)',
+                    'saved_at' => '2026-10-18',
+                ],
+                [
+                    'slug' => 'fast-nuces',
+                    'name' => 'FAST - National University of Computer & Emerging Sciences',
+                    'acronym' => 'FAST-NUCES',
+                    'city' => 'Islamabad',
+                    'province_label' => 'Islamabad (ICT)',
+                    'sector' => 'chartered',
+                    'hec_ranking' => '#1 Computing & AI',
+                    'fee_range' => 'PKR 215,000 / sem',
+                    'fee_numeric' => 215000,
+                    'deadline' => '05 July 2026',
+                    'deadline_date' => '2026-07-05',
+                    'status' => 'open',
+                    'match_tier' => 'Target Match (75.5% vs 74.8% Cutoff)',
+                    'saved_at' => '2026-10-20',
+                ],
+                [
+                    'slug' => 'lums',
+                    'name' => 'Lahore University of Management Sciences',
+                    'acronym' => 'LUMS',
+                    'city' => 'Lahore',
+                    'province_label' => 'Punjab',
+                    'sector' => 'private',
+                    'hec_ranking' => '#1 Business & Economics',
+                    'fee_range' => 'PKR 485,000 / sem',
+                    'fee_numeric' => 485000,
+                    'deadline' => '30 January 2026',
+                    'deadline_date' => '2026-01-30',
+                    'status' => 'closed',
+                    'match_tier' => 'Reach (LCAT / SAT Competitive)',
+                    'saved_at' => '2026-10-22',
+                ],
+            ];
+
+            $items = session()->get('uniguide_student_saved_unis', $defaultSaved);
+        }
+
+        return app(RegionalStudentCatalog::class)->activeSaved($items, 'university');
     }
 
     /**
@@ -516,62 +567,75 @@ class StudentService
      */
     public function removeSavedUniversity(string $slug): void
     {
-        $saved = $this->getSavedUniversities();
-        $filtered = array_values(array_filter($saved, fn ($u) => $u['slug'] !== $slug));
+        $student = $this->getCurrentStudent();
+        if ($student) {
+            SavedItem::where('user_id', $student->id)
+                ->where('item_type', 'university')
+                ->where('item_slug', $slug)
+                ->delete();
+        }
+
+        $saved = session()->get('uniguide_student_saved_unis', []);
+        $filtered = array_values(array_filter($saved, fn ($u) => ($u['slug'] ?? '') !== $slug));
         session()->put('uniguide_student_saved_unis', $filtered);
     }
 
     /**
-     * Retrieve student's saved programs collection.
+     * Retrieve student's saved programs collection from database.
      */
     public function getSavedPrograms(): array
     {
-        $defaultPrograms = [
-            [
-                'slug' => 'bs-computer-science-nust',
-                'name' => 'BS Computer Science',
-                'university_acronym' => 'NUST',
-                'university_name' => 'National University of Sciences & Technology',
-                'university_slug' => 'nust',
-                'campus' => 'SEECS, Islamabad (H-12)',
-                'duration' => '4 Years (8 Semesters)',
-                'fee_semester' => 'PKR 195,000',
-                'calculated_aggregate' => 77.95,
-                'closing_merit_ref' => '79.24%',
-                'accreditation' => 'NCEAC Category W',
-                'saved_at' => '18 Oct 2026',
-            ],
-            [
-                'slug' => 'bs-software-engineering-fast',
-                'name' => 'BS Software Engineering',
-                'university_acronym' => 'FAST-NUCES',
-                'university_name' => 'FAST - National University of Computer & Emerging Sciences',
-                'university_slug' => 'fast-nuces',
-                'campus' => 'Islamabad Campus (H-9)',
-                'duration' => '4 Years (8 Semesters)',
-                'fee_semester' => 'PKR 215,000',
-                'calculated_aggregate' => 75.50,
-                'closing_merit_ref' => '74.80%',
-                'accreditation' => 'NCEAC Category W / PEC',
-                'saved_at' => '20 Oct 2026',
-            ],
-            [
-                'slug' => 'bs-artificial-intelligence-comsats',
-                'name' => 'BS Artificial Intelligence',
-                'university_acronym' => 'CUI',
-                'university_name' => 'COMSATS University Islamabad',
-                'university_slug' => 'comsats',
-                'campus' => 'Park Road, Islamabad',
-                'duration' => '4 Years (8 Semesters)',
-                'fee_semester' => 'PKR 142,000',
-                'calculated_aggregate' => 83.60,
-                'closing_merit_ref' => '82.10%',
-                'accreditation' => 'NCEAC Category W',
-                'saved_at' => '22 Oct 2026',
-            ],
-        ];
+        $student = $this->getCurrentStudent();
+        $items = [];
 
-        return session()->get('uniguide_student_saved_programs', $defaultPrograms);
+        if ($student) {
+            $saved = SavedItem::where('user_id', $student->id)
+                ->where('item_type', 'program')
+                ->get();
+
+            foreach ($saved as $item) {
+                if (! empty($item->metadata)) {
+                    $items[] = $item->metadata;
+                }
+            }
+        }
+
+        if (empty($items)) {
+            $defaultPrograms = [
+                [
+                    'slug' => 'nust-bs-computer-science',
+                    'name' => 'BS Computer Science',
+                    'university_acronym' => 'NUST',
+                    'university_name' => 'National University of Sciences & Technology',
+                    'university_slug' => 'nust',
+                    'campus' => 'SEECS, Islamabad (H-12)',
+                    'duration' => '4 Years (8 Semesters)',
+                    'fee_semester' => 'PKR 195,000',
+                    'calculated_aggregate' => 77.95,
+                    'closing_merit_ref' => '79.24%',
+                    'accreditation' => 'NCEAC Category W',
+                    'saved_at' => '18 Oct 2026',
+                ],
+                [
+                    'slug' => 'fast-bs-software-engineering',
+                    'name' => 'BS Software Engineering',
+                    'university_acronym' => 'FAST-NUCES',
+                    'university_name' => 'FAST - National University of Computer & Emerging Sciences',
+                    'university_slug' => 'fast-nuces',
+                    'campus' => 'Islamabad Campus (H-9)',
+                    'duration' => '4 Years (8 Semesters)',
+                    'fee_semester' => 'PKR 215,000',
+                    'calculated_aggregate' => 75.50,
+                    'closing_merit_ref' => '74.80%',
+                    'accreditation' => 'NCEAC Category W',
+                    'saved_at' => '20 Oct 2026',
+                ],
+            ];
+
+            $items = session()->get('uniguide_student_saved_programs', $defaultPrograms);
+        }
+
+        return app(RegionalStudentCatalog::class)->activeSaved($items, 'program');
     }
 
     /**
@@ -579,53 +643,75 @@ class StudentService
      */
     public function removeSavedProgram(string $slug): void
     {
-        $saved = $this->getSavedPrograms();
-        $filtered = array_values(array_filter($saved, fn ($p) => $p['slug'] !== $slug));
+        $student = $this->getCurrentStudent();
+        if ($student) {
+            SavedItem::where('user_id', $student->id)
+                ->where('item_type', 'program')
+                ->where('item_slug', $slug)
+                ->delete();
+        }
+
+        $saved = session()->get('uniguide_student_saved_programs', []);
+        $filtered = array_values(array_filter($saved, fn ($p) => ($p['slug'] ?? '') !== $slug));
         session()->put('uniguide_student_saved_programs', $filtered);
     }
 
     /**
-     * Retrieve student's saved scholarships.
+     * Retrieve student's saved scholarships from database.
      */
     public function getSavedScholarships(): array
     {
-        $defaultScholarships = [
-            [
-                'slug' => 'hec-need-based',
-                'name' => 'HEC Need-Based Undergraduate Scholarship 2026',
-                'authority' => 'Higher Education Commission of Pakistan',
-                'coverage' => '100% Full Tuition Fee + PKR 6,000 / month living stipend',
-                'eligibility_status' => 'Highly Likely (Household Income PKR 45,000 < PKR 45,000 Ceiling)',
-                'badge' => 'Verified Need Match',
-                'badge_color' => 'success',
-                'deadline' => '31 August 2026',
-                'saved_at' => '18 Oct 2026',
-            ],
-            [
-                'slug' => 'ehsaas-undergraduate',
-                'name' => 'Ehsaas Undergraduate Scholarship Project',
-                'authority' => 'Benazir Income Support Programme (BISP) & HEC',
-                'coverage' => 'Full Tuition Fee + PKR 5,000 stipend + Book Allowance',
-                'eligibility_status' => 'Eligible Under National Poverty Scorecard',
-                'badge' => 'Fully Funded',
-                'badge_color' => 'success',
-                'deadline' => '15 September 2026',
-                'saved_at' => '25 Oct 2026',
-            ],
-            [
-                'slug' => 'peef-scholarship',
-                'name' => 'Punjab Educational Endowment Fund (PEEF)',
-                'authority' => 'Government of the Punjab',
-                'coverage' => '100% Tuition Fee + Boarding Subsidy',
-                'eligibility_status' => 'Eligible for Punjab & Rawalpindi Domicile',
-                'badge' => 'Provincial Endowment',
-                'badge_color' => 'indigo',
-                'deadline' => '30 September 2026',
-                'saved_at' => '01 Nov 2026',
-            ],
-        ];
+        $student = $this->getCurrentStudent();
+        $items = [];
 
-        return session()->get('uniguide_student_saved_scholarships', $defaultScholarships);
+        if ($student) {
+            $saved = SavedItem::where('user_id', $student->id)
+                ->where('item_type', 'scholarship')
+                ->get();
+
+            foreach ($saved as $item) {
+                if (! empty($item->metadata)) {
+                    $items[] = $item->metadata;
+                }
+            }
+        }
+
+        if (empty($items)) {
+            $defaultScholarships = [
+                [
+                    'slug' => 'hec-need-based',
+                    'name' => 'HEC Need-Based Undergraduate Scholarship 2026',
+                    'provider' => 'Higher Education Commission (HEC)',
+                    'type' => 'Need-Based Full Tuition + Monthly Stipend',
+                    'coverage' => '100% Tuition + PKR 6,000 / month living stipend',
+                    'coverage_numeric' => 195000,
+                    'status' => 'Eligible & Recommended',
+                    'eligibility_status' => 'Eligible & Recommended',
+                    'badge' => 'National Merit',
+                    'badge_color' => 'success',
+                    'deadline' => '25 July 2026',
+                    'saved_at' => '22 Oct 2026',
+                ],
+                [
+                    'slug' => 'peef-special-quota',
+                    'name' => 'Punjab Educational Endowment Fund (PEEF) Master Grant',
+                    'provider' => 'Government of the Punjab',
+                    'type' => 'Provincial Need & Merit Quota',
+                    'coverage' => '100% Tuition Subsidy + Boarding Facility',
+                    'coverage_numeric' => 150000,
+                    'status' => 'Eligible for Punjab & Rawalpindi Domicile',
+                    'eligibility_status' => 'Eligible for Punjab & Rawalpindi Domicile',
+                    'badge' => 'Provincial Endowment',
+                    'badge_color' => 'indigo',
+                    'deadline' => '30 September 2026',
+                    'saved_at' => '01 Nov 2026',
+                ],
+            ];
+
+            $items = session()->get('uniguide_student_saved_scholarships', $defaultScholarships);
+        }
+
+        return app(RegionalStudentCatalog::class)->activeSaved($items, 'scholarship');
     }
 
     /**
@@ -633,20 +719,57 @@ class StudentService
      */
     public function removeSavedScholarship(string $slug): void
     {
-        $saved = $this->getSavedScholarships();
-        $filtered = array_values(array_filter($saved, fn ($s) => $s['slug'] !== $slug));
+        $student = $this->getCurrentStudent();
+        if ($student) {
+            SavedItem::where('user_id', $student->id)
+                ->where('item_type', 'scholarship')
+                ->where('item_slug', $slug)
+                ->delete();
+        }
+
+        $saved = session()->get('uniguide_student_saved_scholarships', []);
+        $filtered = array_values(array_filter($saved, fn ($s) => ($s['slug'] ?? '') !== $slug));
         session()->put('uniguide_student_saved_scholarships', $filtered);
     }
 
     /**
-     * Retrieve student notifications.
+     * Retrieve student notifications from database.
      */
     public function getNotifications(string $filter = 'all'): array
     {
+        $student = $this->getCurrentStudent();
+        $items = [];
+
+        if ($student) {
+            $query = Notification::where('user_id', $student->id)->latest('dispatched_at');
+            if ($filter !== 'all') {
+                $query->where('category', $filter);
+            }
+
+            $dbNotifs = $query->get();
+            if ($dbNotifs->isNotEmpty()) {
+                foreach ($dbNotifs as $n) {
+                    $items[] = [
+                        'id' => (string) $n->id,
+                        'type' => $n->category ?? 'general',
+                        'title' => $n->title,
+                        'message' => $n->message ?? '',
+                        'link' => route('student.dashboard'),
+                        'time_ago' => $n->dispatched_at?->diffForHumans() ?? 'Recently',
+                        'read' => ! empty($n->read_at),
+                        'urgent' => ($n->category === 'deadline'),
+                    ];
+                }
+
+                return $items;
+            }
+        }
+
+        // Fallback session/default
         $defaultNotifications = [
             [
                 'id' => 'notif-1',
-                'type' => 'deadline', // deadline, merit, scholarship, system
+                'type' => 'deadline',
                 'title' => 'NUST NET-4 Registration Closes in 5 Days',
                 'message' => 'Online registration for NET Series 4 closes on 15 July 2026. Submit your application challan to confirm test slot.',
                 'link' => route('admissions.show', 'nust-fall-2026'),
@@ -664,35 +787,9 @@ class StudentService
                 'read' => false,
                 'urgent' => false,
             ],
-            [
-                'id' => 'notif-3',
-                'type' => 'scholarship',
-                'title' => 'HEC Need-Based Scholarship Fall 2026 Cycle Open',
-                'message' => 'Participating universities including NUST and COMSATS have begun accepting need-based financial aid forms.',
-                'link' => route('scholarships.show', 'hec-need-based'),
-                'time_ago' => '3 days ago',
-                'read' => true,
-                'urgent' => false,
-            ],
-            [
-                'id' => 'notif-4',
-                'type' => 'system',
-                'title' => 'Aggregate Calibrated: 77.95% for NUST SEECS',
-                'message' => 'Your target aggregate was recalculated using your newly verified NET-2 score of 152.',
-                'link' => route('counselor.chat', 'conv-1'),
-                'time_ago' => '5 days ago',
-                'read' => true,
-                'urgent' => false,
-            ],
         ];
 
-        $notifications = session()->get('uniguide_student_notifications', $defaultNotifications);
-
-        if ($filter !== 'all') {
-            $notifications = array_values(array_filter($notifications, fn ($n) => $n['type'] === $filter));
-        }
-
-        return $notifications;
+        return session()->get('uniguide_student_notifications', $defaultNotifications);
     }
 
     /**
@@ -700,14 +797,13 @@ class StudentService
      */
     public function markNotificationRead(string $id): void
     {
-        $notifications = $this->getNotifications();
-        foreach ($notifications as &$n) {
-            if ($n['id'] === $id) {
-                $n['read'] = true;
-                break;
-            }
+        $student = $this->getCurrentStudent();
+        if ($student) {
+            $numericId = (int) str_replace('notif-', '', $id);
+            Notification::where('user_id', $student->id)
+                ->where('id', $numericId)
+                ->update(['read_at' => now()]);
         }
-        session()->put('uniguide_student_notifications', $notifications);
     }
 
     /**
@@ -715,11 +811,12 @@ class StudentService
      */
     public function markAllNotificationsRead(): void
     {
-        $notifications = $this->getNotifications();
-        foreach ($notifications as &$n) {
-            $n['read'] = true;
+        $student = $this->getCurrentStudent();
+        if ($student) {
+            Notification::where('user_id', $student->id)
+                ->whereNull('read_at')
+                ->update(['read_at' => now()]);
         }
-        session()->put('uniguide_student_notifications', $notifications);
     }
 
     /**

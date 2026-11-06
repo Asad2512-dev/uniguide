@@ -8,6 +8,7 @@
 <div 
     x-data="{ show: false }" 
     x-show="show" 
+    x-modal-focus="show"
     x-cloak
     @open-modal.window="if ($event.detail === '{{ $id }}') show = true"
     @close-modal.window="if ($event.detail === '{{ $id }}') show = false"
@@ -72,7 +73,7 @@
             </div>
 
             @if(isset($footer))
-                <div class="px-6 py-3.5 bg-surface-subtle/50 border-t border-border-subtle flex items-center justify-end gap-2.5">
+                <div class="px-6 py-3.5 bg-surface-subtle/50 border-t border-border-subtle flex flex-wrap items-center justify-end gap-2.5">
                     {{ $footer }}
                 </div>
             @endif

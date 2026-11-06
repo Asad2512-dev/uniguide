@@ -4,7 +4,7 @@
 >
     <!-- Header -->
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
                 title="How Admissions Work on UniGuide"
                 description="A transparent, step-by-step roadmap for Pakistani students from intermediate exams to verified university enrollment."
@@ -23,11 +23,11 @@
         </div>
     </section>
 
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
+    <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-20">
         <!-- 4 Core Steps Detailed -->
         <div class="space-y-12">
             @foreach($workflowSteps as $st)
-                <div class="p-8 bg-surface rounded-3xl border border-border-default shadow-card grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="p-4 sm:p-8 bg-surface rounded-3xl border border-border-default shadow-card grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                     <div class="lg:col-span-2 flex flex-col items-start lg:items-center">
                         <span class="text-4xl sm:text-5xl font-heading font-extrabold text-brand-600 bg-brand-50 px-4 py-2 rounded-2xl border border-brand-200">
                             {{ $st['step'] }}
@@ -35,7 +35,7 @@
                     </div>
 
                     <div class="lg:col-span-6 space-y-3">
-                        <span class="text-xs font-mono font-bold text-ink-400 uppercase tracking-wider">
+                        <span class="text-xs font-mono font-bold text-ink-600 uppercase tracking-wider">
                             {{ $st['subtitle'] }}
                         </span>
                         <h3 class="text-xl sm:text-2xl font-heading font-bold text-ink-950">
@@ -108,7 +108,7 @@
                     </div>
                     <div>
                         <h4 class="font-heading font-bold text-base text-ink-950">FAST-NUCES (NU Test)</h4>
-                        <p class="text-xs text-ink-500 font-sans mt-0.5">Islamabad, Lahore, Karachi, Peshawar, Chiniot</p>
+                        <p class="text-xs text-ink-500 font-sans mt-0.5">Islamabad and Lahore, Peshawar, Chiniot</p>
                     </div>
                     <div class="p-3 bg-surface-subtle rounded-xl border border-border-subtle space-y-1.5 text-xs font-sans">
                         <div class="flex justify-between text-ink-700">
@@ -157,7 +157,7 @@
         </section>
 
         <!-- Final CTA -->
-        <div class="p-8 bg-surface rounded-2xl border border-border-default text-center space-y-4 max-w-2xl mx-auto shadow-card">
+        <div class="p-4 sm:p-8 bg-surface rounded-2xl border border-border-default text-center space-y-4 max-w-2xl mx-auto shadow-card">
             <h3 class="text-xl font-heading font-bold text-ink-950">Ready to calculate your real aggregate?</h3>
             <p class="text-xs sm:text-sm text-ink-600 font-sans leading-relaxed">
                 Log into the student portal to compute your chances across all top Pakistani universities in 30 seconds.

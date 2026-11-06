@@ -40,16 +40,16 @@ class SearchController extends Controller
 
         $results = $this->discoveryService->search($query, 'all');
 
-        $universities = collect($results['universities'])->take(5)->map(fn($u) => [
-            'title' => $u['name'] . ' (' . $u['acronym'] . ')',
-            'subtitle' => $u['city'] . ' • ' . $u['hec_ranking'],
+        $universities = collect($results['universities'])->take(5)->map(fn ($u) => [
+            'title' => $u['name'].' ('.$u['acronym'].')',
+            'subtitle' => $u['city'].' • '.$u['hec_ranking'],
             'url' => route('universities.show', $u['slug']),
             'type' => 'University',
         ]);
 
-        $programs = collect($results['programs'])->take(5)->map(fn($p) => [
+        $programs = collect($results['programs'])->take(5)->map(fn ($p) => [
             'title' => $p['title'],
-            'subtitle' => $p['university_name'] . ' • ' . $p['fee_semester'],
+            'subtitle' => $p['university_name'].' • '.$p['fee_semester'],
             'url' => route('programs.show', $p['slug']),
             'type' => 'Program',
         ]);
@@ -60,4 +60,3 @@ class SearchController extends Controller
         ]);
     }
 }
-

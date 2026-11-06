@@ -15,16 +15,19 @@ class EnsureNationalAdminAuthorized
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $role = session()->get('uniguide_user_role', 'admin');
+        $user = auth()->user();
+        $role = $user ? $user->role : session()->get('uniguide_user_role', 'admin');
 
         // Check if explicit role parameter is provided (e.g., student attempting to access national admin)
         $requestedRole = $request->query('auth_role') ?? $request->input('auth_role');
 
-        if ($requestedRole && ! in_array($requestedRole, ['admin', 'super_admin', 'hec_regulator'])) {
+        $allowedRoles = ['admin', 'super_admin', 'hec_regulator', 'national_admin'];
+
+        if ($requestedRole && ! in_array($requestedRole, $allowedRoles)) {
             abort(403, 'Unauthorized Access: You do not possess Federal Regulatory Clearance for HEC National Command.');
         }
 
-        if (! in_array($role, ['admin', 'super_admin', 'hec_regulator'])) {
+        if (! in_array($role, $allowedRoles)) {
             abort(403, 'Unauthorized Access: You do not possess Federal Regulatory Clearance for HEC National Command.');
         }
 
