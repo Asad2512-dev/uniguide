@@ -1,11 +1,18 @@
 @props([
     'id' => 'confirm-dialog',
-    'title' => 'Confirm Action',
-    'message' => 'Are you sure you want to proceed? This action cannot be reversed.',
-    'confirmText' => 'Confirm',
-    'cancelText' => 'Cancel',
+    'title' => null,
+    'message' => null,
+    'confirmText' => null,
+    'cancelText' => null,
     'variant' => 'destructive', // destructive, primary
 ])
+
+@php
+    $title = $title ?? content('messages.dialogs.confirm_title', 'Confirm Action');
+    $message = $message ?? content('messages.dialogs.confirm_message', 'Are you sure you want to proceed? This action cannot be reversed.');
+    $confirmText = $confirmText ?? content('messages.dialogs.confirm_button', 'Confirm');
+    $cancelText = $cancelText ?? content('messages.dialogs.cancel_button', 'Cancel');
+@endphp
 
 <x-ui.modal :id="$id" maxWidth="max-w-md">
     <div class="flex items-start gap-4">

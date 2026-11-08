@@ -6,9 +6,9 @@
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
         <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
-                title="Admissions Support & Regional Desks"
-                description="Need assistance with university eligibility, aggregate discrepancies, or institutional verification? Our national admissions advisory desk is ready to help."
-                badge="National Helpdesk"
+                :title="content('contact.header.title', 'Admissions Support & Regional Desks')"
+                :description="content('contact.header.description', 'Need assistance with university eligibility, aggregate discrepancies, or institutional verification? Our national admissions advisory desk is ready to help.')"
+                :badge="content('contact.header.badge', 'National Helpdesk')"
                 badgeVariant="brand"
             >
                 <x-slot:breadcrumbs>

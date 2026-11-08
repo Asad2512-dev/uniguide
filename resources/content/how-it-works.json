@@ -1,0 +1,16 @@
+{
+  "header": {
+    "badge": "Admissions Protocol",
+    "title": "How Admissions Work on UniGuide",
+    "description": "A transparent, step-by-step roadmap for Pakistani students from intermediate exams to verified university enrollment."
+  },
+  "steps": {
+    "guarantees_heading": "Key Guarantees:"
+  },
+  "formulas": {
+    "eyebrow": "Formulas & Mathematics",
+    "title": "Standard Pakistani Aggregate Merit Formulas",
+    "description": "Each university evaluates candidate credentials differently. Here is how leading institutions calculate your final selection score."
+  }
+}
+

@@ -1,3 +1,5 @@
+@import './tokens.css';
+@import './typography.css';
 @import 'tailwindcss';
 
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
@@ -6,89 +8,89 @@
 
 @theme {
     /* Typographic Fonts */
-    --font-heading: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    --font-heading: var(--font-heading);
+    --font-sans: var(--font-sans);
+    --font-mono: var(--font-mono);
 
     /* Base Surfaces */
-    --color-canvas: #FAFBFD;
-    --color-surface: #FFFFFF;
-    --color-surface-subtle: #F5F7FB;
-    --color-surface-muted: #EEF2F6;
+    --color-canvas: var(--color-canvas);
+    --color-surface: var(--color-surface);
+    --color-surface-subtle: var(--color-surface-subtle);
+    --color-surface-muted: var(--color-surface-muted);
 
     /* Ink Hierarchy */
-    --color-ink-950: #0B0F19;
-    --color-ink-900: #111827;
-    --color-ink-800: #1F2937;
-    --color-ink-700: #374151;
-    --color-ink-600: #4B5565;
-    --color-ink-500: #667085;
-    --color-ink-400: #9CA3AF;
-    --color-ink-300: #D1D5DB;
-    --color-ink-200: #E5E7EB;
-    --color-ink-100: #F3F4F6;
-    --color-ink-50: #F9FAFB;
+    --color-ink-950: var(--color-ink-950);
+    --color-ink-900: var(--color-ink-900);
+    --color-ink-800: var(--color-ink-800);
+    --color-ink-700: var(--color-ink-700);
+    --color-ink-600: var(--color-ink-600);
+    --color-ink-500: var(--color-ink-500);
+    --color-ink-400: var(--color-ink-400);
+    --color-ink-300: var(--color-ink-300);
+    --color-ink-200: var(--color-ink-200);
+    --color-ink-100: var(--color-ink-100);
+    --color-ink-50: var(--color-ink-50);
 
     /* Brand Scale: Restrained Electric Blue & Indigo */
-    --color-brand-50: #EEF0FF;
-    --color-brand-100: #E0E4FE;
-    --color-brand-200: #C7CDFE;
-    --color-brand-300: #A5AFFC;
-    --color-brand-400: #7E87F9;
-    --color-brand-500: #5C67F5;
-    --color-brand-600: #4355E8;
-    --color-brand-700: #3542CE;
-    --color-brand-800: #303AB2;
-    --color-brand-900: #262E8A;
-    --color-brand-950: #171B55;
+    --color-brand-50: var(--color-brand-50);
+    --color-brand-100: var(--color-brand-100);
+    --color-brand-200: var(--color-brand-200);
+    --color-brand-300: var(--color-brand-300);
+    --color-brand-400: var(--color-brand-400);
+    --color-brand-500: var(--color-brand-500);
+    --color-brand-600: var(--color-brand-600);
+    --color-brand-700: var(--color-brand-700);
+    --color-brand-800: var(--color-brand-800);
+    --color-brand-900: var(--color-brand-900);
+    --color-brand-950: var(--color-brand-950);
 
     /* Semantic Emerald */
-    --color-success-50: #E8F7F2;
-    --color-success-100: #D1EFE5;
-    --color-success-200: #A4DFC8;
-    --color-success-500: #12866C;
-    --color-success-600: #0E6C57;
-    --color-success-700: #0B5343;
+    --color-success-50: var(--color-success-50);
+    --color-success-100: var(--color-success-100);
+    --color-success-200: var(--color-success-200);
+    --color-success-500: var(--color-success-500);
+    --color-success-600: var(--color-success-600);
+    --color-success-700: var(--color-success-700);
 
     /* Semantic Amber */
-    --color-warning-50: #FEF7EA;
-    --color-warning-100: #FDEED5;
-    --color-warning-200: #FBDDAC;
-    --color-warning-500: #C58B24;
-    --color-warning-600: #A4701B;
-    --color-warning-700: #815614;
+    --color-warning-50: var(--color-warning-50);
+    --color-warning-100: var(--color-warning-100);
+    --color-warning-200: var(--color-warning-200);
+    --color-warning-500: var(--color-warning-500);
+    --color-warning-600: var(--color-warning-600);
+    --color-warning-700: var(--color-warning-700);
 
     /* Semantic Crimson */
-    --color-error-50: #FDF1F1;
-    --color-error-100: #FCE2E3;
-    --color-error-200: #F8B5B7;
-    --color-error-500: #D94F55;
-    --color-error-600: #B8393F;
-    --color-error-700: #96292F;
+    --color-error-50: var(--color-error-50);
+    --color-error-100: var(--color-error-100);
+    --color-error-200: var(--color-error-200);
+    --color-error-500: var(--color-error-500);
+    --color-error-600: var(--color-error-600);
+    --color-error-700: var(--color-error-700);
 
     /* Semantic Lavender */
-    --color-lavender-50: #F5F3FF;
-    --color-lavender-100: #EDE9FE;
-    --color-lavender-500: #7C3AED;
-    --color-lavender-600: #6D28D9;
+    --color-lavender-50: var(--color-lavender-50);
+    --color-lavender-100: var(--color-lavender-100);
+    --color-lavender-500: var(--color-lavender-500);
+    --color-lavender-600: var(--color-lavender-600);
 
     /* Semantic Mint */
-    --color-mint-50: #F0FDFA;
-    --color-mint-100: #CCFBF1;
-    --color-mint-500: #0D9488;
-    --color-mint-600: #0F766E;
+    --color-mint-50: var(--color-mint-50);
+    --color-mint-100: var(--color-mint-100);
+    --color-mint-500: var(--color-mint-500);
+    --color-mint-600: var(--color-mint-600);
 
     /* Borders */
-    --color-border-subtle: #F1F4F9;
-    --color-border-default: #E6EAF0;
-    --color-border-strong: #D0D7E2;
+    --color-border-subtle: var(--color-border-subtle);
+    --color-border-default: var(--color-border-default);
+    --color-border-strong: var(--color-border-strong);
 
     /* Shadows */
-    --shadow-subtle: 0 1px 2px 0 rgba(16, 24, 40, 0.04);
-    --shadow-card: 0 1px 3px 0 rgba(16, 24, 40, 0.06), 0 1px 2px -1px rgba(16, 24, 40, 0.04);
-    --shadow-elevated: 0 4px 6px -1px rgba(16, 24, 40, 0.08), 0 2px 4px -2px rgba(16, 24, 40, 0.04);
-    --shadow-dropdown: 0 10px 15px -3px rgba(16, 24, 40, 0.08), 0 4px 6px -4px rgba(16, 24, 40, 0.03);
-    --shadow-modal: 0 20px 25px -5px rgba(16, 24, 40, 0.1), 0 8px 10px -6px rgba(16, 24, 40, 0.04);
+    --shadow-subtle: var(--shadow-subtle);
+    --shadow-card: var(--shadow-card);
+    --shadow-elevated: var(--shadow-elevated);
+    --shadow-dropdown: var(--shadow-dropdown);
+    --shadow-modal: var(--shadow-modal);
 }
 
 /* Base Document Styles */

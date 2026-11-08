@@ -20,23 +20,23 @@
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-600"></span>
                     </span>
-                    <span>Fall 2026 National University Admissions Cycle Live</span>
+                    <span>{{ content('homepage.hero.eyebrow', 'Fall 2026 National University Admissions Cycle Live') }}</span>
                     <span class="text-ink-300">•</span>
-                    <span class="text-ink-600 font-normal">{{ $coverageCounts['universities'] }} Listed Institutions</span>
+                    <span class="text-ink-600 font-normal">{{ content('homepage.hero.institutions_listed', $coverageCounts['universities'] . ' Listed Institutions', ['count' => $coverageCounts['universities']]) }}</span>
                 </div>
 
                 <!-- Main Editorial Headline -->
                 <h1 class="order-2 text-[1.875rem] sm:text-5xl md:text-6xl font-heading font-extrabold text-ink-950 tracking-tight leading-[1.1] sm:leading-[1.12]">
-                    Find your university in Punjab or Islamabad. <br class="hidden sm:inline" />
+                    {{ content('homepage.hero.headline_main', 'Find your university in Punjab or Islamabad.') }} <br class="hidden sm:inline" />
                     <span class="hidden sm:inline text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-brand-700 to-indigo-900">
-                        Calculate exact merit.
+                        {{ content('homepage.hero.headline_gradient', 'Calculate exact merit.') }}
                     </span> 
-                    <span class="hidden sm:inline">Apply with confidence.</span>
+                    <span class="hidden sm:inline">{{ content('homepage.hero.headline_end', 'Apply with confidence.') }}</span>
                 </h1>
 
                 <!-- Supporting Editorial Subtitle -->
                 <p class="home-intro order-4 sm:order-3 text-sm sm:text-lg text-ink-600 font-sans leading-relaxed max-w-2xl mx-auto">
-                    Discover universities and admission opportunities across Punjab and Islamabad.
+                    {{ content('homepage.hero.subtitle', 'Discover universities and admission opportunities across Punjab and Islamabad.') }}
                 </p>
 
                 <!-- ========================================================================= -->

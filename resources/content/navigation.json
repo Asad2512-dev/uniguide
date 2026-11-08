@@ -1,0 +1,217 @@
+{
+  "groups": {
+    "explore": "Explore",
+    "admissions": "Admissions",
+    "more": "More",
+    "intelligent_tools": "Intelligent Tools",
+    "platform": "Platform",
+    "main_workspace": "Main Workspace",
+    "governance_tools": "Governance & Tools",
+    "admin_controls": "Administrative Controls"
+  },
+  "public": {
+    "counselor": {
+      "label": "AI Counselor",
+      "badge": "Intelligent",
+      "description": "Personalized admission advisor, aggregate evaluation, and conversational search."
+    },
+    "universities": {
+      "label": "Explore Universities",
+      "description": "Browse 248+ listed public and chartered institutions across Pakistan."
+    },
+    "programs": {
+      "label": "Degree Programs",
+      "description": "Search undergraduate and graduate degrees with merit formulas and fee structures."
+    },
+    "admissions": {
+      "label": "Admissions & Deadlines",
+      "badge": "Fall 2026",
+      "description": "Track open intakes, national entry test dates, and application cutoffs."
+    },
+    "scholarships": {
+      "label": "Scholarships",
+      "description": "Discover need-based and merit scholarships including Ehsaas, and provincial endowments."
+    },
+    "compare": {
+      "label": "Compare Universities",
+      "badge": "Side-by-Side",
+      "description": "Compare up to 4 Pakistani universities across verified fees, merit formulas, and rankings."
+    },
+    "eligibility": {
+      "label": "Eligibility Checker",
+      "badge": "Rules Engine",
+      "description": "Check your eligibility against PEC, NCEAC, and university admission statutes."
+    },
+    "features": {
+      "label": "Platform Features",
+      "description": "Merit engine, cutoff forecaster, side-by-side comparison, and document vault."
+    },
+    "how_it_works": {
+      "label": "How It Works",
+      "description": "4-step guide from aggregate calculation to fee challan submission."
+    },
+    "about": {
+      "label": "About UniGuide",
+      "description": "Our national charter, data transparency, mission, and leadership."
+    },
+    "contact": {
+      "label": "Contact",
+      "description": "Direct communication channels to our institutional desk and support teams."
+    },
+    "admission_calendar": {
+      "label": "Admission Calendar"
+    },
+    "admission_checklist": {
+      "label": "Admission Checklist"
+    }
+  },
+  "student": {
+    "role_label": "Student Portal",
+    "main": {
+      "dashboard": {
+        "label": "Dashboard Overview"
+      },
+      "tracker": {
+        "label": "Admission Tracker",
+        "badge": "5 Active"
+      },
+      "recommendations": {
+        "label": "Recommendations",
+        "badge": "Tiers Ready"
+      },
+      "saved_universities": {
+        "label": "Saved Universities",
+        "badge": "4"
+      },
+      "saved_programs": {
+        "label": "Saved Programs",
+        "badge": "3"
+      },
+      "saved_scholarships": {
+        "label": "Saved Scholarships",
+        "badge": "3"
+      },
+      "counselor": {
+        "label": "AI Admission Advisor",
+        "badge": "Online"
+      }
+    },
+    "secondary": {
+      "profile": {
+        "label": "Academic Profile",
+        "badge": "88%"
+      },
+      "notifications": {
+        "label": "Notifications",
+        "badge": "2 New"
+      },
+      "settings": {
+        "label": "Account Settings"
+      }
+    }
+  },
+  "university_admin": {
+    "role_label": "University Portal",
+    "main": {
+      "dashboard": {
+        "label": "Institutional Console"
+      },
+      "profile": {
+        "label": "University Profile"
+      },
+      "campuses": {
+        "label": "Campus Management"
+      },
+      "departments": {
+        "label": "Academic Departments"
+      },
+      "programs": {
+        "label": "Programs & Degrees",
+        "badge": "42 Active"
+      },
+      "fees": {
+        "label": "Fee Schedules"
+      },
+      "admissions": {
+        "label": "Admission Cycles",
+        "badge": "Fall 2026"
+      },
+      "eligibility": {
+        "label": "Eligibility & Merit"
+      },
+      "scholarships": {
+        "label": "Scholarships & Aid"
+      }
+    },
+    "secondary": {
+      "ai_verification": {
+        "label": "AI Data Verification",
+        "badge": "4 Pending"
+      },
+      "inquiries": {
+        "label": "Student Inquiries",
+        "badge": "14 New"
+      },
+      "documents": {
+        "label": "Document Verification"
+      },
+      "settings": {
+        "label": "Staff & Settings"
+      }
+    }
+  },
+  "national_admin": {
+    "role_label": "Superadmin",
+    "main": {
+      "dashboard": {
+        "label": "National Operations"
+      },
+      "universities": {
+        "label": "University Registry",
+        "badge": "248 Chartered"
+      },
+      "approvals": {
+        "label": "Charter Approvals",
+        "badge": "3 Pending"
+      },
+      "programs": {
+        "label": "Program Registry"
+      },
+      "sources": {
+        "label": "Official Data Sources"
+      },
+      "scraping": {
+        "label": "Web Scraping Center",
+        "badge": "4 Active"
+      },
+      "ai_extraction": {
+        "label": "AI Extraction Review",
+        "badge": "4 Staged"
+      },
+      "verification": {
+        "label": "Data Verification"
+      },
+      "knowledge_base": {
+        "label": "Knowledge Base (RAG)"
+      }
+    },
+    "secondary": {
+      "chatbot_config": {
+        "label": "AI Chatbot Config"
+      },
+      "users": {
+        "label": "User Management"
+      },
+      "notifications": {
+        "label": "Regulatory Broadcasts"
+      },
+      "analytics": {
+        "label": "National Analytics"
+      },
+      "settings": {
+        "label": "Settings & Audit Logs"
+      }
+    }
+  }
+}
+

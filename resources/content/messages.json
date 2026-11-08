@@ -1,0 +1,39 @@
+{
+  "dialogs": {
+    "confirm_title": "Confirm Action",
+    "confirm_message": "Are you sure you want to proceed? This action cannot be undone.",
+    "cancel_button": "Cancel",
+    "confirm_button": "Confirm",
+    "delete_title": "Confirm Deletion",
+    "delete_message": "Are you sure you want to permanently delete this item? This action cannot be undone.",
+    "delete_button": "Delete",
+    "sign_out_title": "Sign Out Confirmation",
+    "sign_out_message": "Are you sure you want to sign out of your UniGuide workspace?",
+    "sign_out_button": "Sign Out"
+  },
+  "alerts": {
+    "success_default": "Operation completed successfully.",
+    "error_default": "An error occurred while processing your request. Please try again.",
+    "saved_success": "Item saved successfully to your admissions locker.",
+    "removed_success": "Item removed successfully.",
+    "contact_submitted": "Thank you! Your inquiry has been routed to our admissions advisory team.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "session_expired": "Your session has expired. Please sign in again."
+  },
+  "empty_states": {
+    "no_results": "No matching records found.",
+    "no_results_description": "Try adjusting your filters or expanding your search criteria.",
+    "no_saved_universities": "You have not saved any universities yet.",
+    "no_saved_programs": "You have not bookmarked any academic programs yet.",
+    "no_saved_scholarships": "You have not bookmarked any scholarship opportunities yet.",
+    "no_active_applications": "No active admission applications currently tracked.",
+    "no_notifications": "You have no new notifications at this time."
+  },
+  "states": {
+    "loading": "Loading data, please wait...",
+    "submitting": "Submitting...",
+    "processing": "Processing your request...",
+    "searching": "Searching registry..."
+  }
+}
+

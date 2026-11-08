@@ -1,0 +1,58 @@
+{
+  "hero": {
+    "eyebrow": "Fall 2026 National University Admissions Cycle Live",
+    "institutions_listed": ":count Listed Institutions",
+    "headline_main": "Find your university in Punjab or Islamabad.",
+    "headline_gradient": "Calculate exact merit.",
+    "headline_end": "Apply with confidence.",
+    "subtitle": "Discover universities and admission opportunities across Punjab and Islamabad.",
+    "search_placeholder": "Search by university name, program (e.g. BSCS, MBBS), or city...",
+    "search_button": "Explore Directory",
+    "tabs": {
+      "university": "By University",
+      "university_mobile": "Universities",
+      "program": "By Degree Program",
+      "program_mobile": "Programs",
+      "aggregate": "By Aggregate / FSC",
+      "aggregate_mobile": "Aggregate",
+      "location": "By Province / City",
+      "location_mobile": "Locations"
+    }
+  },
+  "stats": {
+    "institutions_value": "248+",
+    "institutions_title": "HEC Recognized",
+    "institutions_subtitle": "Chartered Institutions",
+    "fees_value": "100%",
+    "fees_title": "Verified Fee Structures",
+    "fees_subtitle": "Direct University Source",
+    "banking_value": "1-Bill",
+    "banking_title": "Banking Challans",
+    "banking_subtitle": "Instant Payment Sync",
+    "comparison_value": "18",
+    "comparison_title": "Comparison Metrics",
+    "comparison_subtitle": "Side-by-Side Analysis"
+  },
+  "sections": {
+    "admissions": {
+      "eyebrow": "Live Admission Deadlines",
+      "title": "Active Admissions & Upcoming Intakes",
+      "subtitle": "Never miss an entry test cutoff, early bird waiver, or final fee submission deadline.",
+      "view_all": "View All Active Intakes"
+    },
+    "universities": {
+      "eyebrow": "Provincial & National Registry",
+      "title": "Top Public & Chartered Universities in Punjab & Islamabad",
+      "subtitle": "Browse leading higher education institutions with verified accreditations, historical closing merits, and campus facilities.",
+      "view_all": "Browse All :count Universities"
+    },
+    "cta": {
+      "eyebrow": "Start Your Higher Education Journey",
+      "title": "Everything you need to secure university admission in Pakistan.",
+      "description": "Join over 340,000 students using UniGuide to calculate accurate merit aggregates, compare fee schedules, and track admission deadlines across Punjab and Islamabad.",
+      "primary_button": "Create Free Student Locker",
+      "secondary_button": "Talk to AI Counselor"
+    }
+  }
+}
+

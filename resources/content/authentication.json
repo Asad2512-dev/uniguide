@@ -1,0 +1,41 @@
+{
+  "login": {
+    "title": "Sign in to UniGuide",
+    "subtitle": "National Higher Education Gateway for Pakistani students & institutions",
+    "role_label": "Select Workspace Account Type",
+    "roles": {
+      "student": "Student",
+      "university": "University Registrar",
+      "admin": "Superadmin"
+    },
+    "email_label": "Email Address",
+    "password_label": "Password",
+    "remember_me": "Remember this device",
+    "forgot_password": "Forgot Password?",
+    "submit_button": "Sign in to Workspace",
+    "no_account": "Don't have an account?",
+    "create_account": "Create Free Student Account"
+  },
+  "register": {
+    "title": "Create Your Student Account",
+    "subtitle": "Join over 340,000 Pakistani candidates tracking Fall 2026 university admissions",
+    "full_name_label": "Full Legal Name",
+    "full_name_placeholder": "As registered with BISE / Cambridge Board",
+    "email_label": "Email Address",
+    "phone_label": "Mobile Number (WhatsApp)",
+    "stream_label": "Intermediate Academic Stream",
+    "password_label": "Password",
+    "password_confirmation_label": "Confirm Password",
+    "submit_button": "Create Free Admissions Locker",
+    "already_registered": "Already have an account?",
+    "sign_in_link": "Sign In Here"
+  },
+  "forgot_password": {
+    "title": "Reset Your Password",
+    "subtitle": "Enter your registered email address to receive password reset instructions.",
+    "email_label": "Registered Email Address",
+    "submit_button": "Send Password Reset Link",
+    "back_to_login": "Back to Sign In"
+  }
+}
+

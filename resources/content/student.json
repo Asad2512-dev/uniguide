@@ -1,0 +1,25 @@
+{
+  "dashboard": {
+    "cycle_badge": "Fall 2026 Cycle Active",
+    "welcome": "Welcome back, :name",
+    "completeness_title": "Profile Completeness",
+    "ready_badge": "Ready for Institutional Merit",
+    "pending_badge": "Pending Documents",
+    "update_link": "Update Credentials →"
+  },
+  "tracker": {
+    "title": "Active Admission Tracker",
+    "description": "Track your university applications, challan verification, entry test roll numbers, and merit list outcomes.",
+    "empty_title": "No Applications Tracked Yet",
+    "empty_description": "Explore degree programs and add them to your tracker to monitor deadlines and merit cutoffs."
+  },
+  "saved": {
+    "universities_title": "Saved Universities",
+    "universities_description": "Keep track of prospective institutions for upcoming admission cycles.",
+    "programs_title": "Bookmarked Programs",
+    "programs_description": "Compare fee structures, eligibility criteria, and merit formulas for your favorite programs.",
+    "scholarships_title": "Saved Scholarships",
+    "scholarships_description": "Monitor financial aid packages and application deadlines."
+  }
+}
+

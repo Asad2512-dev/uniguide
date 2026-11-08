@@ -1,0 +1,26 @@
+{
+  "header": {
+    "badge": "Verified Statutory Rules Engine",
+    "title": "Academic Eligibility & Aggregate Evaluator",
+    "description": "Multi-step eligibility rules engine verifying your academic marks against PEC engineering mandates, NCEAC computing guidelines, and university prospectuses."
+  },
+  "steps": {
+    "step_1": "Academic Qualification Level",
+    "step_2": "Matric / O-Level Credentials",
+    "step_3": "Intermediate / A-Level Marks",
+    "step_4": "Target Program & Discipline",
+    "step_5": "Entrance Test Results",
+    "step_6": "Review & Compute Aggregate"
+  },
+  "actions": {
+    "next_step": "Next Step",
+    "previous_step": "Previous Step",
+    "calculate": "Calculate Verified Eligibility"
+  },
+  "tiers": {
+    "eligible": "Fully Eligible",
+    "borderline": "Borderline / Competitive",
+    "not_eligible": "Does Not Meet Statutory Minimum"
+  }
+}
+

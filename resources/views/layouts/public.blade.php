@@ -20,10 +20,10 @@
                 <div class="md:col-span-2 space-y-4">
                     <x-brand.wordmark size="md" :href="route('home')" />
                     <p class="text-xs text-ink-600 font-sans max-w-sm leading-relaxed">
-                        Discover universities and admission opportunities across Punjab and Islamabad.
+                        {{ content('global.brand.description', config('brand.seo.default_description')) }}
                     </p>
                     <div class="flex items-center gap-2 pt-1">
-                        <x-domain.verification-badge type="hec_recognized" detail="National Registry Sync" size="sm" />
+                        <x-domain.verification-badge type="hec_recognized" :detail="content('global.brand.verification_badge', config('brand.legal.regulatory_sync'))" size="sm" />
                     </div>
                 </div>
 
@@ -73,14 +73,14 @@
             <!-- Bottom Disclaimer -->
             <div class="pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-sans text-ink-500">
                 <p>
-                    © {{ date('Y') }} UniGuide Pakistan. All rights reserved. Data verified against official provincial charters and gazetted fee schedules.
+                    {{ content('global.brand.copyright', config('brand.legal.copyright'), ['year' => date('Y')]) }}
                 </p>
                 <div class="flex items-center gap-4 text-[11px]">
-                    <a href="{{ route('marketing.about') }}" class="hover:text-ink-900 transition-colors">Data Transparency</a>
+                    <a href="{{ route('marketing.about') }}" class="hover:text-ink-900 transition-colors">{{ content('global.footer.data_transparency', 'Data Transparency') }}</a>
                     <span class="text-ink-300">•</span>
-                    <a href="{{ route('marketing.contact') }}" class="hover:text-ink-900 transition-colors">Institutional Inquiries</a>
+                    <a href="{{ route('marketing.contact') }}" class="hover:text-ink-900 transition-colors">{{ content('global.footer.institutional_inquiries', 'Institutional Inquiries') }}</a>
                     <span class="text-ink-300">•</span>
-                    <a href="{{ route('design-system') }}" class="hover:text-ink-900 transition-colors">Design System</a>
+                    <a href="{{ route('design-system') }}" class="hover:text-ink-900 transition-colors">{{ content('global.footer.design_system', 'Design System') }}</a>
                 </div>
             </div>
         </div>

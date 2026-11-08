@@ -1,0 +1,28 @@
+{
+  "dashboard": {
+    "title": "National Operational Command",
+    "description": "Federal oversight authority, chartered university coverage, automated crawler pipelines, and data verification status.",
+    "badge": "Superadmin & Control",
+    "sources_button": "Data Sources",
+    "crawler_button": "Crawler Health Monitor"
+  },
+  "sections": {
+    "scraping": {
+      "title": "Web Scraping & Ingestion Center",
+      "description": "Real-time monitoring of automated crawler pipelines extracting university announcements and fee circulars."
+    },
+    "sources": {
+      "title": "Official Statutory Data Sources",
+      "description": "Catalog of verified institutional portals, gazette publications, and provincial higher education charters."
+    },
+    "approvals": {
+      "title": "Charter Approvals & Staging Queue",
+      "description": "Review newly submitted degree programs and institutions awaiting national accreditation verification."
+    },
+    "verification": {
+      "title": "Zero-Hallucination Data Audit",
+      "description": "Multi-tier cross-examination of AI extracted entities against official source documents."
+    }
+  }
+}
+

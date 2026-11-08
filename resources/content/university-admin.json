@@ -1,0 +1,30 @@
+{
+  "dashboard": {
+    "title": "Institutional Command Dashboard",
+    "description": "Comprehensive admissions intelligence, program catalog authority, statutory compliance, and AI data review.",
+    "export_button": "Export Gazette Report",
+    "review_button": "Review AI Queue (:count)",
+    "completeness_title": "Institutional Profile Completeness",
+    "completeness_badge": "National Tier 1",
+    "completeness_description": "Your university profile is visible to over 240,000 Pakistani candidates. Complete pending items to maintain Priority Verification on the national portal."
+  },
+  "sections": {
+    "campuses": {
+      "title": "Campus Management",
+      "description": "Maintain verified records for your main campus and accredited regional sub-campuses."
+    },
+    "programs": {
+      "title": "Degree Programs & Curricula",
+      "description": "Manage undergraduate and postgraduate degree listings, credit requirements, and intake quotas."
+    },
+    "fees": {
+      "title": "Fee Schedules & Challans",
+      "description": "Upload official fee notifications and 1-Bill collection parameters."
+    },
+    "admissions": {
+      "title": "Admission Cycles & Intakes",
+      "description": "Schedule application windows, entry test rounds, and merit list publication dates."
+    }
+  }
+}
+

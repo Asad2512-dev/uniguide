@@ -1,0 +1,28 @@
+<svg viewBox="0 0 240 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+        <linearGradient id="ugBrandGrad" x1="2" y1="2" x2="38" y2="38" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#4355E8" />
+            <stop offset="0.65" stop-color="#303AB2" />
+            <stop offset="1" stop-color="#1E256C" />
+        </linearGradient>
+        <linearGradient id="ugAccentGrad" x1="16" y1="8" x2="28" y2="28" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#7E87F9" />
+            <stop offset="1" stop-color="#C7CDFE" />
+        </linearGradient>
+    </defs>
+    <!-- Logo Shield Mark -->
+    <g transform="translate(0, 0)">
+        <rect width="40" height="40" rx="10" fill="url(#ugBrandGrad)" />
+        <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="9.25" stroke="white" stroke-opacity="0.18" stroke-width="1.5" />
+        <path d="M20 9L29 27H23.5L20 18.5L16.5 27H11L20 9Z" fill="white" fill-opacity="0.95" />
+        <path d="M20 12L21.8 16.2L26 18L21.8 19.8L20 24L18.2 19.8L14 18L18.2 16.2L20 12Z" fill="url(#ugAccentGrad)" />
+        <circle cx="20" cy="30" r="1.75" fill="#EEF0FF" />
+    </g>
+    <!-- Text: UniGuide -->
+    <text x="50" y="24" font-family="'Plus Jakarta Sans', system-ui, sans-serif" font-weight="800" font-size="20" fill="#0B0F19" letter-spacing="-0.5">Uni<tspan fill="#4355E8">Guide</tspan></text>
+    <!-- Tagline: Pakistan -->
+    <rect x="145" y="11" width="56" height="15" rx="3" fill="#EEF0FF" stroke="#C7CDFE" stroke-width="0.8" />
+    <text x="173" y="22" font-family="'Inter', system-ui, sans-serif" font-weight="700" font-size="8.5" fill="#3542CE" letter-spacing="1" text-anchor="middle">PAKISTAN</text>
+    <text x="51" y="35" font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="9" fill="#667085" letter-spacing="0.2">National Higher Education Portal</text>
+</svg>
+

@@ -1,0 +1,43 @@
+{
+  "brand": {
+    "name": "UniGuide Pakistan",
+    "short_name": "UniGuide",
+    "tagline": "National Higher Education Discovery & Admissions Platform",
+    "description": "Discover universities and admission opportunities across Punjab and Islamabad.",
+    "verification_badge": "National Registry Sync",
+    "statutory_seal": "Federal Higher Education Registry",
+    "copyright": "© :year UniGuide Pakistan. All rights reserved. Data verified against official provincial charters and gazetted fee schedules."
+  },
+  "nav": {
+    "sign_in": "Sign In",
+    "get_started": "Get Started",
+    "search_placeholder": "Search universities and programs",
+    "skip_link": "Skip to main content",
+    "open_menu": "Open navigation menu",
+    "close_menu": "Close navigation menu"
+  },
+  "footer": {
+    "institutions_programs_title": "Institutions & Programs",
+    "student_guidance_title": "Student Guidance",
+    "platform_charters_title": "Platform & Charters",
+    "data_transparency": "Data Transparency",
+    "institutional_inquiries": "Institutional Inquiries",
+    "design_system": "Design System",
+    "university_directory": "University Directory",
+    "program_explorer": "Academic Program Explorer",
+    "admissions_deadlines": "Admissions & Deadlines",
+    "scholarships_directory": "National Scholarships Directory",
+    "comparison_matrix": "University Comparison Matrix",
+    "ai_counselor": "AI Admission Counselor",
+    "eligibility_checker": "Merit & Eligibility Checker",
+    "admission_calendar": "Admission Calendar",
+    "document_checklist": "Document Checklist",
+    "how_admissions_work": "How Admissions Work",
+    "about_uniguide": "About UniGuide",
+    "platform_capabilities": "Platform Capabilities",
+    "contact_desk": "Contact & Admissions Desk",
+    "uni_admin_console": "University Admin Console",
+    "superadmin": "Superadmin"
+  }
+}
+

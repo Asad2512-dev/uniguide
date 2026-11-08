@@ -1,10 +1,15 @@
 @props([
     'icon' => 'search',
-    'title' => 'No results found',
-    'description' => 'Try adjusting your search query, filter criteria, or exploring different provinces.',
+    'title' => null,
+    'description' => null,
     'actionLabel' => null,
     'actionHref' => null,
 ])
+
+@php
+    $title = $title ?? content('messages.empty_states.no_results', 'No results found');
+    $description = $description ?? content('messages.empty_states.no_results_description', 'Try adjusting your search query, filter criteria, or exploring different provinces.');
+@endphp
 
 <div {{ $attributes->merge(['class' => 'flex flex-col items-center justify-center p-8 md:p-12 text-center rounded-2xl border border-dashed border-border-default bg-surface/50']) }}>
     <div class="w-12 h-12 rounded-2xl bg-surface-subtle border border-border-default flex items-center justify-center text-ink-400 mb-4 shadow-2xs">

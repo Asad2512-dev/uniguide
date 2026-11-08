@@ -1,0 +1,19 @@
+{
+  "header": {
+    "badge": "National Academic Program Registry",
+    "title": "Academic Degree Program Explorer",
+    "description": "Search accredited undergraduate and postgraduate curricula across Punjab and Islamabad. Evaluate closing aggregates, council accreditations, and semester fee schedules.",
+    "counter_label": "Degrees",
+    "cycle_label": "Fall 2026 Admissions"
+  },
+  "search": {
+    "placeholder": "Search degree programs (e.g. Computer Science, MBBS, BBA)...",
+    "button": "Search Degrees"
+  },
+  "empty_state": {
+    "title": "No Programs Found",
+    "description": "Try searching with broader terms or clearing applied discipline filters.",
+    "reset_button": "Clear Filters"
+  }
+}
+

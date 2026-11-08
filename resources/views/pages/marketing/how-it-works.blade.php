@@ -6,9 +6,9 @@
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
         <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
-                title="How Admissions Work on UniGuide"
-                description="A transparent, step-by-step roadmap for Pakistani students from intermediate exams to verified university enrollment."
-                badge="Admissions Protocol"
+                :title="content('how-it-works.header.title', 'How Admissions Work on UniGuide')"
+                :description="content('how-it-works.header.description', 'A transparent, step-by-step roadmap for Pakistani students from intermediate exams to verified university enrollment.')"
+                :badge="content('how-it-works.header.badge', 'Admissions Protocol')"
                 badgeVariant="brand"
             >
                 <x-slot:breadcrumbs>

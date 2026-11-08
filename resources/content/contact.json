@@ -1,0 +1,38 @@
+{
+  "header": {
+    "badge": "National Helpdesk",
+    "title": "Admissions Support & Regional Desks",
+    "description": "Need assistance with university eligibility, aggregate discrepancies, or institutional verification? Our national admissions advisory desk is ready to help."
+  },
+  "form": {
+    "heading": "Submit an Admissions Inquiry",
+    "subtitle": "Tickets are reviewed by verified admissions counselors and assigned directly to the relevant regional desk.",
+    "name_label": "Your Full Name",
+    "name_placeholder": "e.g. Fatima Zahra",
+    "email_label": "Email Address",
+    "email_placeholder": "name@domain.com",
+    "phone_label": "WhatsApp / Phone Number",
+    "phone_placeholder": "0300-1234567",
+    "category_label": "Inquiry Category",
+    "subject_label": "Subject Summary",
+    "subject_placeholder": "e.g. Query regarding FAST Islamabad Fall 2026 CS Cutoff",
+    "message_label": "Detailed Message",
+    "message_placeholder": "Please describe your academic question, intermediate board, and marks...",
+    "submit_button": "Submit Support Ticket"
+  },
+  "regional_desks": {
+    "heading": "Regional Advisory Desks",
+    "islamabad": {
+      "city": "Islamabad",
+      "address": "Sector H-9/4, Federal Capital Area, Islamabad"
+    },
+    "lahore": {
+      "city": "Lahore",
+      "address": "Gulberg III, Main Boulevard, Lahore, Punjab"
+    },
+    "phone": "+92 (51) 9040-0000",
+    "email": "admissions@uniguide.pk",
+    "support_hours": "Monday to Friday, 09:00 - 17:00 PKT"
+  }
+}
+

@@ -1,0 +1,81 @@
+{
+  "default_title": "UniGuide Pakistan — Premium Higher Education Discovery & Admissions Platform",
+  "default_description": "UniGuide Pakistan is the national AI-powered platform for university discovery, verified admission merit calculation, degree program comparison, and scholarship tracking.",
+  "meta": {
+    "site_name": "UniGuide Pakistan",
+    "theme_color": "#4355E8",
+    "og_type": "website",
+    "twitter_card": "summary_large_image"
+  },
+  "pages": {
+    "home": {
+      "title": "UniGuide Pakistan — National University Discovery & Admissions Platform",
+      "description": "Discover universities and admission opportunities across Punjab and Islamabad."
+    },
+    "about": {
+      "title": "About UniGuide Pakistan — National Higher Education Intelligence Portal",
+      "description": "Learn about UniGuide Pakistan's mission, statutory data verification protocols, regulatory compliance, and academic governance."
+    },
+    "how_it_works": {
+      "title": "How Admissions Work — UniGuide Pakistan",
+      "description": "Understand the Pakistani university admission process: aggregate merit calculations, entry tests, merit list rounds, and fee challans."
+    },
+    "features": {
+      "title": "Platform Features — UniGuide Pakistan",
+      "description": "Explore the technological capabilities of UniGuide: multi-parameter search, aggregate calculator, side-by-side comparison, and document locker."
+    },
+    "contact": {
+      "title": "Contact & Admissions Support — UniGuide Pakistan",
+      "description": "Get in touch with UniGuide Pakistan's admissions advisory team, regional desks, or submit an institutional inquiry."
+    },
+    "universities": {
+      "title": "University Directory — UniGuide Pakistan",
+      "description": "Discover and compare 248+ listed public and chartered private universities across Punjab and Islamabad. Filter by province, discipline, merit cutoffs, and verified tuition fees."
+    },
+    "programs": {
+      "title": "Academic Program Explorer — UniGuide Pakistan",
+      "description": "Discover undergraduate and postgraduate degrees across Punjab and Islamabad. Compare closing merits, credit hours, semester fee structures, and professional accreditation councils."
+    },
+    "admissions": {
+      "title": "Admission Explorer — UniGuide Pakistan",
+      "description": "Discover active Pakistani university admissions, application deadlines, national entry test schedules, and verified intake sessions."
+    },
+    "scholarships": {
+      "title": "National Scholarship Directory — UniGuide Pakistan",
+      "description": "Discover verified higher education scholarships in Pakistan including Need-Based, Ehsaas Undergraduate, PEEF, BEEF, LUMS NOP, and university endowment trust funds."
+    },
+    "comparison": {
+      "title": "University Comparison Builder — UniGuide Pakistan",
+      "description": "Select and compare up to four Pakistani universities across verified fees, merit formulas, hostel charges, and statutory accreditations."
+    },
+    "eligibility": {
+      "title": "Academic Eligibility Checker — UniGuide Pakistan",
+      "description": "Multi-step eligibility rules engine verifying your academic marks against PEC engineering mandates, NCEAC computing guidelines, and university prospectuses."
+    },
+    "counselor": {
+      "title": "AI University Counselor — UniGuide Pakistan",
+      "description": "Intelligent Pakistani university admission guidance, statutory merit aggregate calculations, side-by-side program comparisons, and verified scholarship matching."
+    },
+    "login": {
+      "title": "Sign In — UniGuide Pakistan Admissions Gateway",
+      "description": "Sign in to your UniGuide student admission locker, university administration console, or UniGuide superadmin workspace."
+    },
+    "register": {
+      "title": "Create Free Student Account — UniGuide Pakistan",
+      "description": "Register for a free student admissions locker on UniGuide Pakistan to track admission deadlines, calculate merit aggregates, and unlock AI counseling."
+    },
+    "student_dashboard": {
+      "title": "Candidate Command Center — UniGuide Pakistan",
+      "description": "Personalized admissions overview, eligibility scorecards, active application tracker, and scholarship notifications."
+    },
+    "university_admin_dashboard": {
+      "title": "Institutional Command Dashboard — Admissions Directorate",
+      "description": "Comprehensive admissions intelligence, program catalog authority, statutory compliance, and AI data review."
+    },
+    "national_admin_dashboard": {
+      "title": "Superadmin — Executive Operational Overview",
+      "description": "Federal oversight authority, chartered university coverage, automated crawler pipelines, and data verification status."
+    }
+  }
+}
+

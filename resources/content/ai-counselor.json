@@ -1,0 +1,20 @@
+{
+  "header": {
+    "badge": "UniGuide National AI Admission Counselor",
+    "calibration": "Fall 2026 Calibrated",
+    "title": "Intelligent admission guidance,",
+    "title_gradient": "grounded in verified statutory data.",
+    "description": "Ask anything about Pakistani university merit formulas, closing cutoffs, tuition fees, entry-test weightages, and fully-funded scholarships."
+  },
+  "composer": {
+    "placeholder": "Ask about university cutoffs, merit calculation, fees, or scholarships...",
+    "submit_button": "Consult Counselor",
+    "disclaimer": "Counselor guidance is synthesized from gazetted institutional documents and official merit lists. Always verify final admission notices."
+  },
+  "suggestions_title": "Common Admission Queries",
+  "evidence": {
+    "title": "Statutory Source Citations",
+    "verified_label": "Direct Gazette Sync"
+  }
+}
+

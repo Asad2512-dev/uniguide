@@ -1,0 +1,36 @@
+{
+  "header": {
+    "badge": "University Discovery",
+    "title": "About UniGuide Pakistan",
+    "description": "Pakistan's national intelligence platform for university discovery, verified merit calculations, and transparent higher education opportunities."
+  },
+  "narrative": {
+    "badge": "The National Education Imperative",
+    "heading": "Eliminating the information asymmetry that prevents talented Pakistani students from reaching their potential.",
+    "paragraph_1": "Every year, over 1.2 million Pakistani students complete their Intermediate (HSSC / FSc / FA / ICS) and Cambridge A-Levels. Navigating the decentralized admissions landscape across 240+ institutions—each with unique entry tests, divergent aggregate weightage formulas, unpublished closing cutoffs, and confusing fee schedules—leads to missed deadlines, wasted application fees, and unfulfilled aspirations.",
+    "paragraph_2": "UniGuide Pakistan was established to provide a unified, authentic, and completely free national gateway. We do not sell promotional placements or accept paid ranking manipulations. Every statistic, fee figure, and merit formula is directly cross-referenced against official provincial assembly charters and gazetted university circulars."
+  },
+  "seal": {
+    "title": "Statutory Data Seal",
+    "subtitle": "Federal Higher Education Registry",
+    "total_universities_label": "Total Recognized Universities:",
+    "total_universities_value": "248 Institutions",
+    "curricula_label": "Accredited Curricula Monitored:",
+    "curricula_value": "6,420 Degrees",
+    "oversight_label": "Regulatory Oversight:",
+    "oversight_value": "University source records",
+    "badge": "Level-1 Verified Node"
+  },
+  "protocol": {
+    "eyebrow": "Our Verification Standard",
+    "title": "The UniGuide Zero-Hallucination & Transparency Protocol",
+    "description": "We operate with rigorous data standards to ensure candidate safety across Punjab and Islamabad.",
+    "step_1_title": "1. Statutory Charter Verification",
+    "step_1_desc": "An institution is only cataloged once verified against the official gazette of Pakistan or provincial assembly charter. Unaccredited sub-campuses are flagged with public warning alerts.",
+    "step_2_title": "2. Official Fee Schedule Validation",
+    "step_2_desc": "All tuition, admission, and hostel charges are extracted directly from institutional fee circulars signed by the University Treasurer or Registrar.",
+    "step_3_title": "3. Real-Time Intake Synchronization",
+    "step_3_desc": "Admission deadlines and entry test dates are monitored continuously via automated ingestion pipelines and direct institutional registrar feeds."
+  }
+}
+

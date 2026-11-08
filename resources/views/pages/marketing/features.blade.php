@@ -6,9 +6,9 @@
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
         <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
-                title="UniGuide Platform Capabilities"
-                description="Designed specifically for the realities of higher education in Pakistan: multiple examination boards, decentralized tests, and strict guidelines."
-                badge="SaaS-Scale Architecture"
+                :title="content('features.header.title', 'UniGuide Platform Capabilities')"
+                :description="content('features.header.description', 'Designed specifically for the realities of higher education in Pakistan: multiple examination boards, decentralized tests, and strict guidelines.')"
+                :badge="content('features.header.badge', 'SaaS-Scale Architecture')"
                 badgeVariant="brand"
             >
                 <x-slot:breadcrumbs>

@@ -54,7 +54,7 @@
         <!-- Main Section -->
         <div>
             <div x-show="!collapsed" class="px-2 mb-2 text-xs sm:text-[10px] font-bold text-ink-400 uppercase tracking-wider font-sans">
-                Main Workspace
+                {{ content('navigation.groups.main_workspace', 'Main Workspace') }}
             </div>
             <nav class="space-y-1" aria-label="Sidebar Main Navigation">
                 @foreach($mainItems as $item)
@@ -96,7 +96,7 @@
         @if(count($secondaryItems) > 0)
             <div>
                 <div x-show="!collapsed" class="px-2 mb-2 text-xs sm:text-[10px] font-bold text-ink-400 uppercase tracking-wider font-sans">
-                    Governance & Tools
+                    {{ content('navigation.groups.governance_tools', 'Governance & Tools') }}
                 </div>
                 <nav class="space-y-1" aria-label="Sidebar Secondary Navigation">
                     @foreach($secondaryItems as $item)

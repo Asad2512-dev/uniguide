@@ -1,0 +1,21 @@
+{
+  "header": {
+    "badge": "18-Parameter Matrix Engine",
+    "title": "Side-by-Side University Comparison",
+    "description": "Compare up to 4 Pakistani universities across official fees, statutory merit formulas, hostel charges, campus facilities, and accreditations."
+  },
+  "builder": {
+    "max_limit_warning": "You can compare a maximum of 4 universities simultaneously.",
+    "min_limit_warning": "Please keep at least 1 university to compare.",
+    "launch_button": "Launch Side-by-Side Matrix",
+    "empty_slot_title": "Add University to Compare",
+    "empty_slot_subtitle": "Choose from 248+ verified institutions",
+    "remove_button": "Remove"
+  },
+  "results": {
+    "title": "Comparative Analysis Matrix",
+    "subtitle": "Direct side-by-side comparison across 18 statutory indicators.",
+    "back_to_builder": "Modify Selection"
+  }
+}
+

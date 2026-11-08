@@ -1,0 +1,27 @@
+{
+  "header": {
+    "badge": "National Intake Intelligence • Fall 2026",
+    "title": "National University Admission Explorer",
+    "description": "Track verified admission campaigns, registration deadlines, and entrance test criteria across Punjab and Islamabad’s top public and chartered institutions."
+  },
+  "shortcuts": {
+    "calendar": "Deadline Calendar",
+    "checklist": "Document Checklist"
+  },
+  "calendar": {
+    "badge": "Intake Deadlines Schedule",
+    "title": "National Admissions Calendar",
+    "description": "Chronological schedule of registration cutoffs, entry test sessions, and merit list announcements across Pakistani institutions."
+  },
+  "checklist": {
+    "badge": "Candidate Preparation Guide",
+    "title": "National University Admissions Document Checklist",
+    "description": "Comprehensive verification requirements for Pakistani intermediate candidates, Cambridge A-Level applicants, and domicile quotas."
+  },
+  "empty_state": {
+    "title": "No Admissions Match Your Selection",
+    "description": "Try broadening your filters to explore admission cycles across other universities and provinces.",
+    "reset_button": "Reset Filters"
+  }
+}
+

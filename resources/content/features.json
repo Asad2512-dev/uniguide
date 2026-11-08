@@ -1,0 +1,21 @@
+{
+  "header": {
+    "badge": "SaaS-Scale Architecture",
+    "title": "UniGuide Platform Capabilities",
+    "description": "Designed specifically for the realities of higher education in Pakistan: multiple examination boards, decentralized tests, and strict guidelines."
+  },
+  "spotlight": {
+    "badge": "Institutional Payment Gateway",
+    "title": "Integrated with 1-Link, 1-Bill, and National Banking Systems",
+    "description": "Never stand in bank lines during admission cutoff rushes. Download official institutional fee challans with automatic 1-Bill reference codes payable through any mobile banking app (HBL, Meezan, Bank Alfalah, Easypaisa, Nayapay, or JazzCash).",
+    "highlight_1": "Instant Receipt Generation",
+    "highlight_2": "Direct University Portal Sync",
+    "card_title": "1-Bill National Integration",
+    "card_subtitle": "Automated challan verification for 240+ institutions",
+    "prefix_sample": "1-Bill Prefix: 100248-XXXX-XXXX"
+  },
+  "cta": {
+    "button": "Get Started with UniGuide"
+  }
+}
+

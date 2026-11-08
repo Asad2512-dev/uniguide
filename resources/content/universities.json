@@ -1,0 +1,28 @@
+{
+  "header": {
+    "badge": "University Registry & Statutory Gazette Audited",
+    "title": "National University Directory",
+    "description": "Authoritative catalog of public sector and chartered higher education institutions in Pakistan, verified against official parliamentary charters and standards.",
+    "counter_label": "Institutions",
+    "reference_badge": "UniGuide Reference"
+  },
+  "search": {
+    "placeholder": "Search universities by name, acronym, city, or province...",
+    "button": "Search"
+  },
+  "filters": {
+    "all_provinces": "All Provinces",
+    "all_sectors": "All Sectors",
+    "all_disciplines": "All Disciplines",
+    "punjab": "Punjab",
+    "islamabad": "Islamabad",
+    "public_sector": "Public Sector",
+    "private_sector": "Chartered Private"
+  },
+  "empty_state": {
+    "title": "No Universities Match Your Filters",
+    "description": "Try clearing selected filters or searching with a different term.",
+    "reset_button": "Reset All Filters"
+  }
+}
+

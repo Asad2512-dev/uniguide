@@ -6,6 +6,7 @@ use App\Models\Campus;
 use App\Models\Program;
 use App\Models\University;
 use App\Services\RegionCatalog;
+use App\Support\Content\ContentRepository;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
@@ -20,7 +21,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        require_once app_path('Support/helpers.php');
+
+        $this->app->singleton(ContentRepository::class, function () {
+            return new ContentRepository;
+        });
     }
 
     /**

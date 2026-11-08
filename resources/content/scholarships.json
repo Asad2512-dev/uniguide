@@ -1,0 +1,19 @@
+{
+  "header": {
+    "badge": "Verified National Financial Aid Repository",
+    "title": "National Scholarship & Financial Aid Explorer",
+    "description": "Search government scholarships, provincial endowment funds, and university tuition waivers. Availability depends on verified regional eligibility.",
+    "counter_label": "Scholarship Funds",
+    "verified_badge": "100% Verified"
+  },
+  "search": {
+    "placeholder": "Search scholarships by name, donor, or target university...",
+    "button": "Search Aid"
+  },
+  "empty_state": {
+    "title": "No Scholarships Match Your Criteria",
+    "description": "Try clearing scholarship type filters or exploring need-based financial aid programs.",
+    "reset_button": "Reset Filter"
+  }
+}
+

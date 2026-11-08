@@ -6,9 +6,9 @@
     <section class="pt-12 pb-14 border-b border-border-default bg-surface">
         <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
-                title="About UniGuide Pakistan"
-                description="Pakistan's national intelligence platform for university discovery, verified merit calculations, and transparent higher education opportunities."
-                badge="University Discovery"
+                :title="content('about.header.title', 'About UniGuide Pakistan')"
+                :description="content('about.header.description', 'Pakistan\'s national intelligence platform for university discovery, verified merit calculations, and transparent higher education opportunities.')"
+                :badge="content('about.header.badge', 'University Discovery')"
                 badgeVariant="brand"
             >
                 <x-slot:breadcrumbs>

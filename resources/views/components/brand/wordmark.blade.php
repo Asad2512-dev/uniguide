@@ -2,7 +2,7 @@
     'tagline' => true,
     'size' => 'md', // sm, md, lg
     'withBadge' => true,
-    'badgeText' => 'PAKISTAN',
+    'badgeText' => strtoupper(config('brand.country', 'PAKISTAN')),
     'href' => route('preview.public'),
 ])
 
@@ -41,7 +41,7 @@
         </div>
         @if($tagline)
         <span class="font-sans font-medium text-ink-500 tracking-normal mt-0.5 {{ $taglineSize }}">
-            National Higher Education Portal
+            {{ config('brand.subtitle', 'National Higher Education Portal') }}
         </span>
         @endif
     </div>
