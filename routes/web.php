@@ -20,46 +20,38 @@ use App\Http\Middleware\EnsureNationalAdminAuthorized;
 use App\Http\Middleware\EnsureUniversityAdminAuthorized;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes — UniGuide Pakistan
-|--------------------------------------------------------------------------
-|
-| Central routes for UniGuide Pakistan's marketing, discovery,
-| authentication, design system, and administrative shell previews.
-|
-*/
+// Each route connects a page address to a controller method.
 
-// Primary Marketing & University Discovery Homepage
+// Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
-// National University Directory & Campus Explorer (Phase 02)
+// University directory and campus details
 Route::get('/universities', [UniversityController::class, 'index'])->name('universities.index');
 Route::get('/universities/{slug}', [UniversityController::class, 'show'])->name('universities.show');
 Route::get('/universities/{slug}/campuses/{campusSlug}', [UniversityController::class, 'campus'])->name('universities.campuses.show');
 
-// Degree Program Catalog & Program Detail (Phase 02)
+// Program directory and details
 Route::get('/programs', [ProgramController::class, 'index'])->name('programs.index');
 Route::get('/programs/{slug}', [ProgramController::class, 'show'])->name('programs.show');
 
-// Admissions, Deadlines Calendar & Document Checklist (Phase 03)
+// Admissions, deadlines, and document checklist
 Route::get('/admissions', [AdmissionController::class, 'index'])->name('admissions.index');
 Route::get('/admissions/calendar', [AdmissionController::class, 'calendar'])->name('admissions.calendar');
 Route::get('/admissions/checklist', [AdmissionController::class, 'checklist'])->name('admissions.checklist');
 Route::get('/admissions/{slug}', [AdmissionController::class, 'show'])->name('admissions.show');
 
-// Scholarship Explorer & Detail (Phase 03)
+// Scholarships
 Route::get('/scholarships', [ScholarshipController::class, 'index'])->name('scholarships.index');
 Route::get('/scholarships/{slug}', [ScholarshipController::class, 'show'])->name('scholarships.show');
 
-// University Comparison Engine (Phase 06)
+// University comparison
 Route::prefix('compare')->name('compare.')->group(function () {
     Route::get('/', [ComparisonController::class, 'results'])->name('index');
     Route::get('/builder', [ComparisonController::class, 'builder'])->name('builder');
     Route::get('/results', [ComparisonController::class, 'results'])->name('results');
 });
 
-// Academic Eligibility Checker & Rules Engine (Phase 06)
+// Eligibility checks and shortlist
 Route::prefix('eligibility')->name('eligibility.')->group(function () {
     Route::get('/', [EligibilityController::class, 'wizard'])->name('index');
     Route::get('/results', [EligibilityController::class, 'results'])->name('results');
@@ -68,7 +60,7 @@ Route::prefix('eligibility')->name('eligibility.')->group(function () {
     Route::post('/shortlist', [EligibilityController::class, 'addToShortlist'])->name('shortlist.add');
 });
 
-// AI University Counselor Experience (Phase 04)
+// Counselor conversations and guidance
 Route::prefix('counselor')->name('counselor.')->group(function () {
     Route::get('/', [CounselorController::class, 'index'])->name('index');
     Route::get('/chat/{id?}', [CounselorController::class, 'chat'])->name('chat');
@@ -82,7 +74,7 @@ Route::prefix('counselor')->name('counselor.')->group(function () {
     Route::delete('/history/{id}', [CounselorController::class, 'destroy'])->name('destroy');
 });
 
-// Authenticated Student Experience (Phase 05)
+// Student pages and account actions
 Route::prefix('student')->name('student.')->group(function () {
     Route::get('/onboarding', [StudentController::class, 'onboarding'])->name('onboarding');
     Route::post('/onboarding', [StudentController::class, 'processOnboarding'])->name('onboarding.submit');
@@ -115,7 +107,7 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::post('/settings', [StudentController::class, 'updateSettings'])->name('settings.update');
 });
 
-// University Administration Portal (Phase 07)
+// University administration
 Route::prefix('admin/university')
     ->name('uni_admin.')
     ->middleware(EnsureUniversityAdminAuthorized::class)
@@ -178,7 +170,7 @@ Route::prefix('admin/university')
         Route::post('/settings', [UniversityAdminController::class, 'updateSettings'])->name('settings.update');
     });
 
-// National Super Administration Platform (Phase 08)
+// National administration
 Route::prefix('admin/national')
     ->name('national_admin.')
     ->middleware(EnsureNationalAdminAuthorized::class)

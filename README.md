@@ -1,59 +1,72 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# UniGuide Pakistan
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+UniGuide helps students find universities, compare programs, check eligibility, explore scholarships, and track admissions. It includes a counselor workspace and separate student, university administrator, and national administrator areas. The current regional catalog focuses on Punjab and Islamabad Capital Territory.
 
-## About Laravel
+## Start here
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+For everyday text, color, and branding changes, read the [non-coder guide](docs/NON_CODER_GUIDE.md). For text-file examples, read the [content editing guide](docs/CONTENT_EDITING_GUIDE.md).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## How the code fits together
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+A visit to a page follows this path:
 
-## Learning Laravel
+1. `routes/web.php` matches the page address to a controller method.
+2. `app/Http/Controllers/` receives the request and chooses what to show.
+3. `app/Services/` handles tasks such as finding programs or calculating eligibility.
+4. `app/Models/` reads and writes database records.
+5. `resources/views/pages/` turns the results into a page using shared components from `resources/views/components/`.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+For example, `/universities` uses `UniversityController::index()`, which asks `DiscoveryService` for directory data and renders `resources/views/pages/discovery/universities/index.blade.php`.
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+| Folder or file | Purpose |
+| --- | --- |
+| `resources/content/` | Editable text used by calls to the `content()` helper |
+| `config/brand.php` | Brand settings used by calls to `config('brand.…')` |
+| `config/navigation.php` | Menu destinations, grouping, and access settings |
+| `config/uniguide.php` | Regional coverage settings |
+| `resources/css/` | Colors, fonts, and page styling |
+| `resources/js/` | Browser interactions, counselor chat, mobile layout, and charts |
+| `public/` | Public images, icons, and the application entry point |
+| `database/migrations/` | Definitions of database tables and columns |
+| `database/seeders/` | Initial records and sample data; review before running |
+| `app/Policies/` and `app/Http/Middleware/` | Access checks |
+| `app/Jobs/` | Background tasks |
+| `tests/` | Automated checks |
+| `.env` | Private settings for this installation; keep out of version control |
 
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
+Some pages and services still contain sample records and text directly in code. A JSON edit changes only the places that read that JSON key. See the editing guides before changing a record or promising a live integration.
 
-## Agentic Development
+## Run locally
 
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
+You need PHP compatible with `composer.json` (the project is currently developed on PHP 8.5), Composer, and Node.js compatible with the installed Vite version.
+
+For a new local installation:
 
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+composer run setup
+composer run dev
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+The setup command installs dependencies, creates `.env` if missing, generates an application key, runs database migrations, and builds browser assets. Run it against a new local database. For an existing installation, preserve its `.env` and application key; install dependencies with `composer install` and `npm install --ignore-scripts` instead.
 
-## Contributing
+The default example configuration uses SQLite. If using MySQL through MAMP, set the database connection, host, port, database name, and credentials in `.env` before migrating. Use the address printed by the local development server.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Database migrations create tables. Seeders add records separately; they include sample data and should be reviewed before use on a shared database.
 
-## Code of Conduct
+## Check changes
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```bash
+php artisan test --compact
+node --test tests/Unit/*.test.mjs
+npm run build
+```
 
-## Security Vulnerabilities
+The PHP suite is configured to use `database/database.sqlite` with the testing environment. Keep this separate from valuable application data.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+After editing PHP, format changed files with:
 
-## License
+```bash
+vendor/bin/pint --dirty
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# uniguide
+Do not edit `vendor/`, `node_modules/`, or `public/build/` directly. Their contents are installed or generated.
