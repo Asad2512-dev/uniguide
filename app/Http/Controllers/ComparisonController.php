@@ -25,21 +25,21 @@ class ComparisonController extends Controller
         return view('pages.compare.builder', [
             'presets' => $presets,
             'availableUniversities' => $availableUnis,
-            'selectedSlugs' => ['nust', 'fast-nuces'],
+            'selectedSlugs' => [],
         ]);
     }
 
     /**
      * Screen 2: Side-by-Side Comparison Results Workspace.
      */
-    public function results(Request $request): View
+    public function results(Request $request)
     {
-        $unisParam = $request->input('unis', 'nust,fast-nuces');
+        $unisParam = $request->input('unis', '');
         $slugs = is_array($unisParam) ? $unisParam : explode(',', $unisParam);
         $slugs = array_filter(array_map('trim', $slugs));
 
         if (empty($slugs)) {
-            $slugs = ['nust', 'fast-nuces'];
+            return redirect()->route('compare.builder');
         }
 
         $comparison = $this->comparisonService->compare($slugs);

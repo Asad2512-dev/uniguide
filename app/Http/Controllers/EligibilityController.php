@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\University;
 use App\Services\EligibilityRulesEngine;
 use App\Services\RegionCatalog;
 use App\Services\StudentService;
@@ -116,37 +117,11 @@ class EligibilityController extends Controller
      */
     public function addToShortlist(Request $request): RedirectResponse
     {
-        $request->validate([
-            'slug' => 'required|string',
-            'name' => 'required|string',
-        ]);
+        abort_unless($request->user()?->isStudent(), 403);
+        $request->validate(['slug' => 'required|string']);
+        $university = University::where('slug', $request->input('slug'))->firstOrFail();
+        $request->user()->savedItems()->firstOrCreate(['item_type' => 'university', 'item_id' => $university->id], ['item_slug' => $university->slug]);
 
-        $saved = $this->studentService->getSavedUniversities();
-        $exists = false;
-        foreach ($saved as $s) {
-            if ($s['slug'] === $request->input('slug')) {
-                $exists = true;
-                break;
-            }
-        }
-
-        if (! $exists) {
-            $saved[] = [
-                'slug' => $request->input('slug'),
-                'name' => $request->input('name'),
-                'acronym' => $request->input('acronym', 'UNI'),
-                'city' => $request->input('city', 'Islamabad'),
-                'province_label' => 'Pakistan',
-                'sector' => 'chartered',
-                'hec_ranking' => 'Verified Institution',
-                'fee_range' => $request->input('fee', 'PKR 180,000 / sem'),
-                'deadline' => '15 July 2026',
-                'match_tier' => 'Eligible Target',
-                'saved_at' => now()->format('Y-m-d'),
-            ];
-            session()->put('uniguide_student_saved_unis', $saved);
-        }
-
-        return back()->with('toast_success', 'University added to your personalized shortlist!');
+        return back()->with('toast_success', 'University saved to your shortlist.');
     }
 }

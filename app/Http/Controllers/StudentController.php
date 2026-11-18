@@ -8,6 +8,9 @@ use App\Services\RegionCatalog;
 use App\Services\StudentService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class StudentController extends Controller
@@ -27,13 +30,7 @@ class StudentController extends Controller
 
         return view('pages.student.onboarding', [
             'profile' => $profile,
-            'streams' => [
-                ['id' => 'pre_engineering', 'name' => 'FSc Pre-Engineering', 'desc' => 'Mathematics, Physics, Chemistry', 'icon' => 'cpu'],
-                ['id' => 'ics', 'name' => 'ICS (Computer Science)', 'desc' => 'Mathematics, Physics, Computer Science', 'icon' => 'laptop'],
-                ['id' => 'pre_medical', 'name' => 'FSc Pre-Medical', 'desc' => 'Biology, Chemistry, Physics (Eligible for CS & Biotech)', 'icon' => 'heart-pulse'],
-                ['id' => 'a_levels', 'name' => 'Cambridge A-Levels', 'desc' => 'Requires IBCC Equivalence Certificate', 'icon' => 'globe'],
-                ['id' => 'dae', 'name' => 'Diploma of Associate Engineering (DAE)', 'desc' => '3-Year Technical Board Diploma', 'icon' => 'wrench'],
-            ],
+            'streams' => collect(config('academic_streams.options'))->map(fn ($option, $id) => ['id' => $id] + $option)->values()->all(),
             'cities' => array_values(app(RegionCatalog::class)->cities()),
             'disciplines' => [
                 'Computer Science & AI', 'Software Engineering', 'Data Science & Cyber Security', 'Electrical Engineering',
@@ -47,8 +44,11 @@ class StudentController extends Controller
      */
     public function processOnboarding(Request $request): RedirectResponse
     {
+        if (is_string($request->input('stream'))) {
+            $request->merge(['stream' => config('academic_streams.aliases.'.$request->input('stream'), $request->input('stream'))]);
+        }
         $request->validate([
-            'stream' => 'required|string',
+            'stream' => ['required', 'string', Rule::in(array_keys(config('academic_streams.options')))],
             'matric_percentage' => 'required|numeric|min:50|max:100',
             'fsc_percentage' => 'required|numeric|min:50|max:100',
             'target_cities' => 'required|array|min:1',
@@ -140,17 +140,17 @@ class StudentController extends Controller
             'city' => $request->input('city'),
             'matric' => [
                 'percentage' => floatval($request->input('matric_percentage')),
-                'board' => $request->input('matric_board', 'Federal Board (FBISE)'),
-                'roll_number' => $request->input('matric_roll', '284192'),
+                'board' => $request->input('matric_board', ''),
+                'roll_number' => $request->input('matric_roll', ''),
             ],
             'fsc' => [
                 'percentage' => floatval($request->input('fsc_percentage')),
-                'board' => $request->input('fsc_board', 'Federal Board (FBISE)'),
-                'roll_number' => $request->input('fsc_roll', '719204'),
+                'board' => $request->input('fsc_board', ''),
+                'roll_number' => $request->input('fsc_roll', ''),
             ],
         ]);
 
-        return redirect()->route('student.profile')->with('toast_success', 'Academic credentials and marks verified successfully.');
+        return redirect()->route('student.profile')->with('toast_success', 'Academic profile saved. Entered results have not been independently verified.');
     }
 
     /**
@@ -269,10 +269,10 @@ class StudentController extends Controller
     {
         $request->validate([
             'program_id' => 'required|integer',
-            'stage' => 'required|string',
+            'stage' => 'required|in:interested,preparing,applied,test_scheduled,awaiting_result,offer_received,closed',
         ]);
 
-        $this->studentService->addTrackerApplication($request->all());
+        $this->studentService->addTrackerApplication($request->only(['program_id', 'stage', 'notes', 'application_ref', 'test_date', 'fee_challan_status']));
 
         return redirect()->route('student.tracker')->with('toast_success', 'Application added to your admission tracker.');
     }
@@ -283,10 +283,10 @@ class StudentController extends Controller
     public function updateTracker(Request $request, string $id): RedirectResponse
     {
         $request->validate([
-            'stage' => 'required|string',
+            'stage' => 'required|in:interested,preparing,applied,test_scheduled,awaiting_result,offer_received,closed',
         ]);
 
-        $this->studentService->updateTrackerApplication($id, $request->all());
+        $this->studentService->updateTrackerApplication($id, $request->only(['program_id', 'stage', 'notes', 'application_ref', 'test_date', 'fee_challan_status']));
 
         return redirect()->route('student.tracker')->with('toast_success', 'Application status updated successfully.');
     }
@@ -367,9 +367,55 @@ class StudentController extends Controller
         $this->studentService->updateProfile([
             'full_name' => $request->input('full_name'),
             'phone' => $request->input('phone'),
-            'city' => $request->input('city', 'Rawalpindi'),
+            'city' => $request->input('city', ''),
+            'preferences' => ['deadline_reminders' => $request->boolean('deadline_reminders'), 'merit_updates' => $request->boolean('merit_updates'), 'scholarship_updates' => $request->boolean('scholarship_updates')],
         ]);
 
         return redirect()->route('student.settings')->with('toast_success', 'Account preferences and security settings saved.');
+    }
+
+    public function exportData(Request $request)
+    {
+        $user = $request->user();
+
+        return response()->streamDownload(function () use ($user) {
+            echo json_encode(['account' => $user->only(['name', 'email', 'phone', 'province']), 'profile' => $user->profile?->toArray(), 'applications' => $user->applications()->get()->toArray(), 'saved_items' => $user->savedItems()->get()->toArray()], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        }, 'uniguide-account.json', ['Content-Type' => 'application/json']);
+    }
+
+    public function uploadDocument(Request $request)
+    {
+        $data = $request->validate(['title' => 'required|string|max:200', 'document' => 'required|file|mimes:pdf,jpg,jpeg,png|max:10240']);
+        $this->studentService->updateProfile([]);
+        $profile = $request->user()->profile()->firstOrFail();
+        $file = $request->file('document');
+        $path = $file->store('student-documents/'.$request->user()->id, 'local');
+        $documents = $profile->documents_data ?? [];
+        $documents[] = ['id' => (string) Str::uuid(), 'title' => $data['title'], 'file_name' => $file->getClientOriginalName(), 'path' => $path, 'status' => 'pending', 'status_label' => 'Pending review', 'uploaded_at' => now()->toDateTimeString()];
+        $profile->update(['documents_data' => $documents]);
+
+        return back()->with('toast_success', 'Document uploaded privately.');
+    }
+
+    public function downloadDocument(Request $request, string $id)
+    {
+        $document = collect($request->user()->profile()->first()?->documents_data ?? [])->firstWhere('id', $id);
+        abort_unless($document, 404);
+
+        return Storage::disk('local')->download($document['path'], $document['file_name']);
+    }
+
+    public function storeEntryTest(Request $request)
+    {
+        $data = $request->validate(['name' => 'required|string|max:150', 'test_type' => 'required|string|max:50', 'score' => 'required|numeric|min:0', 'max_score' => 'required|numeric|min:1', 'test_date' => 'nullable|date']);
+        if ($data['score'] > $data['max_score']) {
+            return back()->withErrors(['score' => 'Score cannot exceed the maximum.']);
+        }
+        $profile = $this->studentService->getProfile();
+        $tests = $profile['entry_tests'];
+        $tests[] = $data + ['id' => (string) Str::uuid(), 'percentage' => round($data['score'] / $data['max_score'] * 100, 2), 'status' => 'Self-reported', 'roll_number' => ''];
+        $this->studentService->updateProfile(['entry_tests' => $tests]);
+
+        return back()->with('toast_success', 'Entry test result saved as self-reported.');
     }
 }

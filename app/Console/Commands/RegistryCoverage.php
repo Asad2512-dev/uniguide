@@ -14,7 +14,7 @@ class RegistryCoverage extends Command
 {
     protected $signature = 'registry:coverage';
 
-    protected $description = 'Write national inventories, source references and unresolved research coverage as JSON';
+    protected $description = 'Write inventories, source references and unresolved research coverage as JSON';
 
     public function handle(VerifiedSnapshotImporter $importer): int
     {
@@ -63,9 +63,9 @@ class RegistryCoverage extends Command
             'conflicts' => UniversitySourceRecord::withoutGlobalScope('regional_catalog')->where('verification_status', 'conflicting_information')->get()->toArray(),
             'limitations' => ['HEC-listed identity is distinct from independent campus recognition and current operational status.',
                 'Legacy records without registry keys are not counted as verified.',
-                'National websites and non-NUML campus inventories remain pending research.',
+                'websites and non-NUML campus inventories remain pending research.',
                 'Inventory includes preserved archives; active_catalog describes the current configured regional release.',
-                'Counts describe this source snapshot and local database, not guaranteed current national completeness.'],
+                'Counts describe this source snapshot and local database, not guaranteed current completeness.'],
         ];
         Storage::disk('local')->put('registry/coverage.json', json_encode($report, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE | JSON_THROW_ON_ERROR));
         $this->info('Coverage report: '.Storage::disk('local')->path('registry/coverage.json'));

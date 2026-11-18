@@ -1,7 +1,7 @@
 <x-layouts.national-admin title="Official Data Sources — Central University Repositories">
     <x-ui.page-header 
         title="Official Data Source Management"
-        description="Configuration and real-time health telemetry for authoritative institutional prospectuses, statutory council gazettes, and university admission portals."
+        description="Configuration and real-time health telemetry for authoritative institutional prospectuses, published council gazettes, and university admission portals."
         badge="Authoritative Ingestion Nodes"
         badgeVariant="brand"
     >
@@ -72,7 +72,7 @@
                     <option value="PDF">PDF Gazette Parser</option>
                     <option value="HTML">HTML Table Scraper</option>
                     <option value="API">REST JSON API Scraper</option>
-                    <option value="Statutory">Statutory Gazette Scraper</option>
+                    <option value="Listing">Listing Gazette Scraper</option>
                 </select>
             </div>
         </div>
@@ -193,7 +193,7 @@
                                 <option value="PDF Gazette Parser">PDF Gazette Parser</option>
                                 <option value="HTML Table Scraper">HTML Table Scraper</option>
                                 <option value="REST JSON API Scraper">REST JSON API Scraper</option>
-                                <option value="Statutory Gazette Scraper">Statutory Gazette Scraper</option>
+                                <option value="Listing Gazette Scraper">Listing Gazette Scraper</option>
                             </select>
                         </div>
                     </div>

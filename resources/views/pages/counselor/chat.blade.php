@@ -1,5 +1,6 @@
-<x-layouts.counselor :title="($activeConversation['title'] ?? 'Your future starts with the right questions') . ' — UniGuide Counselor'">
+<x-layouts.counselor :workspace="true" :title="($activeConversation['title'] ?? 'Your future starts with the right questions') . ' — UniGuide Counselor'">
     @php
+        $studentWorkspace = auth()->user()?->isStudent() ?? false;
         $workspaceConfig = [
             'active' => $activeConversation, 'conversations' => $conversations,
             'authenticated' => auth()->check(), 'csrf' => csrf_token(),
@@ -8,12 +9,15 @@
         ];
     @endphp
     <div x-data="counselorWorkspace(@js($workspaceConfig))" x-viewport-workspace
+        @if($studentWorkspace) data-workspace-bottom-selector=".student-bottom-nav" @endif
         @resize.window="viewportWidth = window.innerWidth; if (window.innerWidth >= 1024) historyOpen = false; if (window.innerWidth >= 1440) contextDrawerOpen = false"
         class="counselor-workspace flex h-dvh min-h-0 overflow-hidden border-x border-border-default bg-surface">
+        @unless($studentWorkspace)
         <aside class="hidden min-h-0 shrink-0 flex-col border-r border-border-default bg-canvas lg:flex" :class="sidebarCollapsed ? 'w-24' : 'w-64'" aria-label="Conversation navigation"><x-counselor.sidebar /></aside>
-        <main id="main-content" tabindex="-1" class="relative flex min-h-0 min-w-0 flex-1 flex-col">
+        @endunless
+        <section aria-label="Admission advisor" tabindex="-1" class="relative flex min-h-0 min-w-0 flex-1 flex-col">
             <header class="flex min-h-20 shrink-0 items-center gap-2 border-b border-border-subtle px-3 sm:px-6 safe-area-top">
-                <button type="button" @click="historyOpen = true" :aria-expanded="historyOpen.toString()" class="counselor-icon-button lg:hidden" aria-label="Open conversation history"><x-icon name="menu" class="size-5" /></button>
+                <button type="button" @click="historyOpen = true" :aria-expanded="historyOpen.toString()" class="counselor-icon-button {{ $studentWorkspace ? '' : 'lg:hidden' }}" aria-label="Open conversation history"><x-icon name="menu" class="size-5" /></button>
                 <div class="min-w-0 flex-1"><p class="mb-1 text-[11px] font-semibold uppercase tracking-wider text-brand-700">UniGuide Counselor</p><h1 class="truncate font-heading text-sm font-bold text-ink-950 sm:text-base" x-text="title"></h1></div>
                 <button type="button" x-show="hasContext" @click="toggleContext()" class="counselor-icon-button sm:w-auto sm:gap-2 sm:px-3" :aria-expanded="(viewportWidth >= 1440 ? contextOpen : contextDrawerOpen).toString()" aria-label="Show research context"><x-icon name="file-text" class="size-4" /><span class="hidden text-xs font-medium sm:inline" x-text="contextSources.length ? contextSources.length + ' sources' : 'Research context'"></span></button>
                 <x-ui.dropdown align="right" width="w-56">
@@ -25,7 +29,7 @@
             <div x-ref="feed" @scroll.passive="trackScroll()" class="min-h-0 flex-1 overflow-y-auto overscroll-contain px-4 py-6 sm:px-8 sm:py-8">
                 <div class="mx-auto w-full max-w-3xl">
                     <section x-show="!messages.length" x-cloak class="counselor-welcome py-5 sm:py-12">
-                        <div class="mb-6 flex size-12 items-center justify-center rounded-2xl border border-brand-200 bg-brand-50 text-brand-700"><x-icon name="sparkles" class="size-6" /></div>
+                        <div class="mb-6 flex size-12 items-center justify-center rounded-2xl border border-brand-200 bg-brand-50 text-brand-700"><x-icon name="message-circle" class="size-6" /></div>
                         <p class="mb-3 text-xs font-semibold uppercase tracking-[0.16em] text-brand-700">A little clarity. A better next step.</p>
                         <h2 class="max-w-xl font-heading text-3xl font-bold leading-tight tracking-tight text-ink-950 sm:text-4xl">Your future starts with<br class="hidden sm:block" /> the right questions.</h2>
                         <p class="mt-4 max-w-lg text-sm leading-7 text-ink-600 sm:text-base">Explore universities, compare campuses and understand what to check before you apply. Keep your research and its sources together.</p>
@@ -45,7 +49,7 @@
                     <div x-show="sending" x-cloak role="status" class="mt-7 flex items-center gap-3 pb-4 text-sm text-ink-500"><x-icon name="loader-2" class="size-4 animate-spin text-brand-600" />Looking up registry records…</div>
                 </div>
             </div>
-            <div class="pointer-events-none absolute inset-x-0 bottom-36 flex justify-center"><button type="button" x-show="!atBottom && messages.length" @click="scrollToLatest(true)" class="pointer-events-auto min-h-11 rounded-full border border-border-default bg-white px-4 text-xs font-semibold text-ink-700 shadow-dropdown">Latest message ↓</button></div>
+            <div class="pointer-events-none absolute inset-x-0 bottom-36 flex justify-center"><button type="button" x-show="!atBottom && messages.length" @click="scrollToLatest(true)" class="pointer-events-auto min-h-11 rounded-md border border-border-default bg-white px-4 text-xs font-semibold text-ink-700 shadow-dropdown">Latest message ↓</button></div>
             <div class="shrink-0 bg-surface px-3 pb-3 pt-2 sm:px-8 sm:pb-5 safe-area-bottom [--safe-bottom-padding:0.75rem] sm:[--safe-bottom-padding:1.25rem]">
                 <div class="mx-auto max-w-3xl">
                     <div x-show="error" x-cloak role="alert" class="mb-3 rounded-xl border border-error-200 bg-error-50 p-3 text-sm text-error-700"><p x-text="error"></p><button type="button" x-show="failed" :disabled="sending" @click="sendMessage(failed)" class="mt-1 min-h-11 font-semibold underline">Retry this message</button></div>
@@ -64,7 +68,7 @@
                     @guest<p class="mt-2 px-1 text-xs leading-5 text-ink-500">Explore freely. Sign in to send and retain private conversations. Guest transcripts are not saved.</p>@endguest
                 </div>
             </div>
-        </main>
+        </section>
         <aside x-show="hasContext && contextOpen" x-cloak class="hidden w-72 shrink-0 border-l border-border-default min-[1440px]:block" aria-label="Research context"><x-counselor.intelligence /></aside>
         <div x-show="historyOpen" x-cloak x-modal-focus="historyOpen" @keydown.escape.window="historyOpen = false" @click.self="historyOpen = false" role="dialog" aria-modal="true" aria-label="Conversation history" class="fixed inset-0 z-50 bg-ink-950/40"><div class="absolute inset-y-0 left-0 w-80 max-w-full bg-canvas safe-area-top"><x-counselor.sidebar :mobile="true" /></div></div>
         <div x-show="contextDrawerOpen" x-cloak x-modal-focus="contextDrawerOpen" @keydown.escape.window="contextDrawerOpen = false" @click.self="contextDrawerOpen = false" role="dialog" aria-modal="true" aria-label="Research source details" class="fixed inset-0 z-50 bg-ink-950/40"><div class="absolute inset-y-0 right-0 w-96 max-w-full bg-white safe-area-top"><x-counselor.intelligence /></div></div>

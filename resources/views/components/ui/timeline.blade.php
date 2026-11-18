@@ -1,7 +1,7 @@
 @props([
     'events' => [
         ['title' => 'Admission Portal Opened', 'date' => '01 June 2026', 'description' => 'Online application submissions active for Fall 2026 cycle.', 'status' => 'completed', 'icon' => 'check'],
-        ['title' => 'Entry Test (NET / NAT / ECAT)', 'date' => '12 July 2026', 'description' => 'Paper and computer-based national aptitude testing centers.', 'status' => 'current', 'icon' => 'clock'],
+        ['title' => 'Entry Test (NET / NAT / ECAT)', 'date' => '12 July 2026', 'description' => 'Paper and computer-based aptitude testing centers.', 'status' => 'current', 'icon' => 'clock'],
         ['title' => 'First Merit List Publication', 'date' => '01 August 2026', 'description' => 'Cutoff merit scores and initial fee challan generation.', 'status' => 'upcoming', 'icon' => 'list-ordered'],
         ['title' => 'Commencement of Classes', 'date' => '01 September 2026', 'description' => 'Orientation week and academic semester kickoff.', 'status' => 'upcoming', 'icon' => 'graduation-cap'],
     ],

@@ -1,4 +1,4 @@
-<x-layouts.public 
+<x-layouts.counselor
     title="Guided Merit & Fit Assessment — UniGuide Pakistan"
     description="6-step intelligent admission assessment. Calculate your exact statutory aggregates and get structured Reach, Match, and Safety university tiers."
 >
@@ -40,15 +40,15 @@
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
-                        ['label' => 'AI Counselor', 'url' => route('counselor.index')],
+                        ['label' => 'Admission Counselor', 'url' => route('counselor.index')],
                         ['label' => 'Guided Fit Assessment', 'url' => route('counselor.guided')]
                     ]" />
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
-                            <x-icon name="sparkles" class="w-3.5 h-3.5 text-brand-600" />
+                        <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
+                            <x-icon name="message-circle" class="w-3.5 h-3.5 text-brand-600" />
                             <span>Step-by-Step Strategic Assessment</span>
                         </div>
                         <h1 class="font-heading font-bold text-2xl sm:text-3xl text-ink-950 tracking-tight">
@@ -61,7 +61,7 @@
 
                     <!-- Step Progress Pill -->
                     <div class="shrink-0 flex items-center gap-2">
-                        <span class="text-xs font-mono font-bold text-brand-700 bg-brand-50 border border-brand-200 px-3 py-1 rounded-full">
+                        <span class="text-xs font-mono font-bold text-brand-700      ">
                             Step <span x-text="step"></span> of <span x-text="totalSteps"></span>
                         </span>
                     </div>
@@ -80,7 +80,7 @@
         <!-- Main Form Container -->
         <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <form action="{{ route('counselor.recommendations') }}" method="GET" class="space-y-8">
-                
+
                 <!-- STEP 1: Academic Qualifications -->
                 <div data-step="1" x-show="step === 1" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
@@ -253,7 +253,7 @@
                         <div class="space-y-4">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-semibold text-ink-700">Per Semester Budget Ceiling:</span>
-                                <span class="font-mono font-bold text-sm text-brand-700 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
+                                <span class="font-mono font-bold text-sm text-brand-700      ">
                                     PKR <span x-text="Number(budgetMax).toLocaleString()"></span> / semester
                                 </span>
                             </div>
@@ -270,7 +270,7 @@
 
                             <div class="flex items-center justify-between text-xs sm:text-[11px] text-ink-400 font-mono">
                                 <span>PKR 60k (Public Subsidized)</span>
-                                <span>PKR 200k (National Chartered)</span>
+                                <span>PKR 200k (Chartered)</span>
                                 <span>PKR 450k+ (Premier Private)</span>
                             </div>
                         </div>
@@ -292,7 +292,7 @@
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
                         <div>
                             <span class="text-xs font-bold text-brand-600 uppercase tracking-wider font-mono">Step 5 of 6</span>
-                            <h2 class="font-heading font-bold text-xl text-ink-950 mt-1">National & University Entry Tests</h2>
+                            <h2 class="font-heading font-bold text-xl text-ink-950 mt-1">University Entry Tests</h2>
                             <p class="text-xs text-ink-500 font-sans mt-1">
                                 Entry tests carry 50% to 75% weightage in major Pakistani university merit lists.
                             </p>
@@ -418,12 +418,12 @@
                         x-show="step === totalSteps"
                         class="px-7 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold font-sans shadow-card transition-smooth cursor-pointer flex items-center gap-2 ml-auto"
                     >
-                        <x-icon name="sparkles" class="w-4 h-4" />
+                        <x-icon name="message-circle" class="w-4 h-4" />
                         <span>Generate My Recommendation Tiers</span>
                     </button>
                 </div>
             </form>
         </main>
     </div>
-</x-layouts.public>
+</x-layouts.counselor>
 

@@ -30,7 +30,7 @@
                     @if(isset($tab['badge']))
                         <span 
                             :class="currentTab === '{{ $tab['id'] }}' ? 'bg-brand-50 text-brand-700' : 'bg-ink-100 text-ink-500'"
-                            class="px-2 py-0.5 rounded-full text-xs font-mono font-medium"
+                            class="   text-xs font-mono font-medium"
                         >
                             {{ $tab['badge'] }}
                         </span>

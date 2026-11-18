@@ -98,7 +98,7 @@
                         <label class="flex items-start gap-3 p-3 rounded-xl border border-border-subtle hover:bg-surface-subtle transition-all cursor-pointer">
                             <input type="checkbox" name="auto_ai_scrape_notification" value="1" {{ $settings['auto_ai_scrape_notification'] ? 'checked' : '' }} class="mt-0.5 text-brand-600 rounded" />
                             <div>
-                                <strong class="text-ink-900 block font-semibold">Instant AI Scraper Alert Dispatches</strong>
+                                <strong class="text-ink-900 block font-semibold">Website update notifications</strong>
                                 <span class="text-ink-500 text-xs sm:text-[11px]">Send immediate notification whenever automated crawler detects prospectus discrepancies.</span>
                             </div>
                         </label>

@@ -34,12 +34,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         RateLimiter::for('counselor', fn (Request $request) => Limit::perMinute(20)->by($request->user()?->id ? 'user:'.$request->user()->id : 'ip:'.$request->ip()));
-        View::composer('pages.*', function ($view): void {
-            $catalog = app(RegionCatalog::class);
-            $view->with('coverageRegions', $catalog->regions());
-            $view->with('coverageCities', $catalog->cities());
-            $view->with('coveragePrograms', Program::with(['university', 'campus'])->get());
+        // Static region choices are cheap; catalog queries belong only to views that render them.
+        View::composer('pages.auth.register', function ($view): void {
+            $view->with('coverageRegions', app(RegionCatalog::class)->regions());
+        });
+        View::composer(['pages.marketing.home', 'pages.marketing.about', 'pages.student.saved-universities'], function ($view): void {
             $view->with('coverageCounts', ['universities' => University::count(), 'campuses' => Campus::count(), 'programs' => Program::count()]);
+        });
+        View::composer('pages.student.tracker', function ($view): void {
+            $view->with('coveragePrograms', Program::select(['id', 'name', 'university_id', 'campus_id'])->with(['university:id,name', 'campus:id,name'])->orderBy('name')->get());
         });
         Blade::anonymousComponentPath(resource_path('views/layouts'), 'layouts');
     }

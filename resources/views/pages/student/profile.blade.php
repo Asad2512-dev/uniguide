@@ -3,11 +3,11 @@
     description="Manage your secondary board records, FSc marks, entry test scores, and attested documents for Pakistani university admissions."
 >
     <div class="space-y-8 pb-12">
-        
+
         <!-- Header Strip -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-default">
             <div>
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
+                <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
                     <x-icon name="user-check" class="w-3.5 h-3.5 text-brand-600" />
                     <span>Verified Academic Credentials</span>
                 </div>
@@ -15,12 +15,12 @@
                     Academic Profile & Qualifications
                 </h1>
                 <p class="text-xs sm:text-sm text-ink-600 font-sans mt-1">
-                    Your normalized educational marks, board roll numbers, and entrance test scores used for national merit formulas.
+                    Your normalized educational marks, board roll numbers, and entrance test scores used for merit formulas.
                 </p>
             </div>
 
             <div class="flex items-center gap-3">
-                <span class="text-xs font-mono font-bold px-3 py-1.5 rounded-full bg-brand-50 text-brand-700 border border-brand-200">
+                <span class="text-xs font-mono font-bold     text-brand-700  ">
                     Profile Completeness: {{ $completeness['percentage'] }}%
                 </span>
             </div>
@@ -123,7 +123,7 @@
                         </div>
 
                         <div class="p-3 rounded-xl bg-surface-subtle text-xs sm:text-[11px] text-ink-500 font-sans">
-                            Official Sanad verified against FBISE National Database.
+                            Official Sanad verified against FBISE Database.
                         </div>
                     </div>
                 </div>
@@ -231,11 +231,11 @@
                                 <x-icon name="file-text" class="w-4 h-4 text-brand-600 shrink-0" />
                                 <div>
                                     <span class="font-semibold text-ink-900">{{ $doc['title'] }}</span>
-                                    <span class="text-xs sm:text-[11px] text-ink-600 font-mono block">{{ $doc['file_name'] }} • Uploaded {{ $doc['uploaded_at'] }}</span>
+                                    <span class="text-xs sm:text-[11px] text-ink-600 font-mono block"><a data-download href="{{ route('student.documents.download', $doc['id']) }}" class="text-brand-700 underline">{{ $doc['file_name'] }}</a> • Uploaded {{ $doc['uploaded_at'] }}</span>
                                 </div>
                             </div>
 
-                            <span class="text-xs sm:text-[11px] font-mono font-bold px-2.5 py-0.5 rounded-full {{ $doc['status'] === 'verified' ? 'bg-success-50 text-success-700 border border-success-200' : 'bg-warning-50 text-warning-700 border border-warning-200' }}">
+                            <span class="text-xs sm:text-[11px] font-mono font-bold    {{ $doc['status'] === 'verified' ? 'bg-success-50 text-success-700 border border-success-200' : 'bg-warning-50 text-warning-700 border border-warning-200' }}">
                                 {{ $doc['status_label'] }}
                             </span>
                         </div>
@@ -255,5 +255,20 @@
             </div>
         </form>
     </div>
+    <form action="{{ route('student.documents.store') }}" method="POST" enctype="multipart/form-data" class="mt-6 rounded-xl border border-border-default p-5 space-y-4">
+        @csrf
+        <h2 class="text-lg font-semibold">Upload a document</h2>
+        <label class="block text-sm">Document title<input name="title" required maxlength="200" class="block mt-2 w-full rounded-lg border border-border-default p-3"></label>
+        <label class="block text-sm">PDF or image, up to 10 MB<input type="file" name="document" accept=".pdf,.jpg,.jpeg,.png" required class="block mt-2 w-full"></label>
+        <x-ui.button type="submit">Upload privately</x-ui.button>
+    </form>
+    <form action="{{ route('student.entry_tests.store') }}" method="POST" class="mt-6 rounded-xl border border-border-default p-5 space-y-4">
+        @csrf<h2 class="text-lg font-semibold">Add an entry test result</h2><p class="text-sm text-ink-500">Results are self-reported until reviewed by the institution.</p>
+        <label class="block text-sm">Test name<input name="name" required maxlength="150" class="mt-2 block w-full rounded-lg border border-border-default p-3"></label>
+        <label class="block text-sm">Test type<input name="test_type" required maxlength="50" class="mt-2 block w-full rounded-lg border border-border-default p-3"></label>
+        <div class="grid grid-cols-2 gap-4"><label class="block text-sm">Your score<input type="number" name="score" min="0" step="any" required class="mt-2 block w-full rounded-lg border border-border-default p-3"></label><label class="block text-sm">Maximum score<input type="number" name="max_score" min="1" step="any" required class="mt-2 block w-full rounded-lg border border-border-default p-3"></label></div>
+        <label class="block text-sm">Test date<input type="date" name="test_date" class="mt-2 block w-full rounded-lg border border-border-default p-3"></label>
+        <x-ui.button type="submit">Save test result</x-ui.button>
+    </form>
 </x-layouts.student>
 

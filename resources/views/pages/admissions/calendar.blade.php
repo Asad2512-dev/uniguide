@@ -1,12 +1,12 @@
 <x-layouts.public 
-    title="National Admission & Deadline Calendar — UniGuide Pakistan"
-    description="Synchronized master calendar of Pakistani university application deadlines, national entry test schedules, scholarship cutoffs, and merit list announcements."
+    title="Admission & Deadline Calendar — UniGuide Pakistan"
+    description="Synchronized master calendar of Pakistani university application deadlines, entry test schedules, scholarship cutoffs, and merit list announcements."
 >
     <div x-data="{ 
         viewStyle: 'agenda', // 'agenda' or 'cards'
         activeCategory: '{{ $selectedCategory }}'
     }" class="min-h-screen bg-canvas pb-24">
-        
+
         <!-- Header Strip -->
         <header class="bg-surface border-b border-border-default/80">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -19,15 +19,15 @@
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-brand-50 border border-brand-200/60 text-brand-700 text-xs font-semibold font-sans mb-3">
+                        <div class="inline-flex items-center gap-2       text-brand-700 text-xs font-semibold font-sans mb-3">
                             <x-icon name="calendar" class="w-3.5 h-3.5 text-brand-600" />
                             <span>Synchronized Intake Milestones</span>
                         </div>
                         <h1 class="font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-ink-950 tracking-tight">
-                            National Admission & Deadline Calendar
+                            Admission & Deadline Calendar
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
-                            Chronological timeline of university application cutoffs, NET/NAT/MDCAT test dates, scholarship submissions, and national merit list publications.
+                            Chronological timeline of university application cutoffs, NET/NAT/MDCAT test dates, scholarship submissions, and merit list publications.
                         </p>
                     </div>
 
@@ -80,10 +80,10 @@
 
         <!-- Main Content -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
-            
+
             <!-- Category Filter Strip & View Switcher -->
             <div class="bg-surface rounded-2xl border border-border-default p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                
+
                 <!-- Category Filter Pills -->
                 <div class="flex items-center gap-2 overflow-x-auto text-xs font-sans font-semibold">
                     <span class="text-ink-600 font-medium mr-1 hidden md:inline">Event Type:</span>
@@ -146,7 +146,7 @@
                 <div class="space-y-3">
                     @foreach($events as $event)
                         <div class="bg-surface rounded-2xl border border-border-default hover:border-brand-300 hover:shadow-card p-5 transition-smooth flex flex-col md:flex-row md:items-center justify-between gap-5">
-                            
+
                             <!-- Left: Date Box & Event Info -->
                             <div class="flex items-start gap-4 sm:gap-5">
                                 <!-- Prominent Date Badge -->

@@ -3,24 +3,24 @@
     description="Personalized admissions overview, eligibility scorecards, active application tracker, and scholarship notifications."
 >
     <div class="space-y-8 pb-12">
-        
+
         <!-- Welcome Hero & Status Strip -->
         <div class="rounded-2xl border border-brand-200/80 bg-gradient-to-r from-surface via-surface to-brand-50/40 p-6 sm:p-8 shadow-card relative overflow-hidden">
             <div class="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
                     <div class="flex items-center gap-2 mb-2">
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-success-50 border border-success-200/80 text-success-700 text-xs font-semibold">
+                        <span class="inline-flex items-center gap-1.5       text-success-700 text-xs font-semibold">
                             <span class="w-2 h-2 rounded-full bg-success-600 animate-pulse"></span>
                             <span>Fall 2026 Cycle Active</span>
                         </span>
                         <span class="text-xs font-mono text-ink-600">ID: {{ $profile['applicant_id'] }}</span>
                     </div>
-                    
+
                     <h1 class="font-heading font-bold text-2xl sm:text-3xl text-ink-950 tracking-tight">
                         Welcome back, {{ $profile['full_name'] }}
                     </h1>
                     <p class="text-xs sm:text-sm text-ink-600 font-sans mt-1">
-                        {{ $profile['stream_label'] }} • Target: Computing & Software Engineering • Islamabad
+                        {{ $profile['stream_label'] }} · {{ implode(', ', $profile['preferences']['target_cities']) }}
                     </p>
                 </div>
 
@@ -59,47 +59,16 @@
         </section>
 
         <!-- High-Priority Suggested Actions (Next Steps) -->
-        <div class="hidden md:grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="p-4 rounded-xl border border-warning-200 bg-warning-50/30 flex items-start gap-3">
-                <div class="w-8 h-8 rounded-lg bg-warning-100 text-warning-800 flex items-center justify-center shrink-0">
-                    <x-icon name="calendar-clock" class="w-4 h-4" />
-                </div>
-                <div class="space-y-1 text-xs font-sans">
-                    <span class="font-bold text-ink-950 block">FAST-NU Test Scheduled</span>
-                    <p class="text-ink-600">Admit Card Roll #NU-ISB-99201 generated for 08 July 2026.</p>
-                    <a href="{{ route('student.tracker') }}" class="text-brand-700 font-semibold underline block pt-0.5">View Admit Card Details</a>
-                </div>
-            </div>
-
-            <div class="p-4 rounded-xl border border-brand-200 bg-brand-50/20 flex items-start gap-3">
-                <div class="w-8 h-8 rounded-lg bg-brand-100 text-brand-800 flex items-center justify-center shrink-0">
-                    <x-icon name="award" class="w-4 h-4" />
-                </div>
-                <div class="space-y-1 text-xs font-sans">
-                    <span class="font-bold text-ink-950 block">Need-Based Aid Eligible</span>
-                    <p class="text-ink-600">Income < PKR 45,000 matches 100% full tuition subsidy criteria.</p>
-                    <a href="{{ route('student.saved.scholarships') }}" class="text-brand-700 font-semibold underline block pt-0.5">Check Document Checklist</a>
-                </div>
-            </div>
-
-            <div class="p-4 rounded-xl border border-border-default bg-surface flex items-start gap-3 shadow-2xs">
-                <div class="w-8 h-8 rounded-lg bg-surface-subtle text-ink-600 flex items-center justify-center shrink-0">
-                    <x-icon name="sparkles" class="w-4 h-4 text-brand-600" />
-                </div>
-                <div class="space-y-1 text-xs font-sans">
-                    <span class="font-bold text-ink-950 block">Target NET-4 Score Simulation</span>
-                    <p class="text-ink-600">A score of 156+ will place your NUST aggregate at 79.5%.</p>
-                    <a href="{{ route('counselor.chat', 'conv-1') }}" class="text-brand-700 font-semibold underline block pt-0.5">Ask AI Counselor</a>
-                </div>
-            </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            @foreach($notifications as $notification)<article class="rounded-xl border border-border-default p-4"><h2 class="text-sm font-semibold">{{ $notification['title'] }}</h2><p class="mt-2 text-xs text-ink-600">{{ $notification['message'] }}</p><a href="{{ $notification['link'] }}" class="mt-3 block text-xs text-brand-700">View notification</a></article>@endforeach
         </div>
 
         <!-- Two-Column Command Layout -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            
+
             <!-- Left 8 Cols: Admission Tracker & Calculated Aggregates -->
             <div class="lg:col-span-8 space-y-8">
-                
+
                 <!-- Admission Tracker Summary -->
                 <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-5">
                     <div class="flex items-center justify-between pb-3 border-b border-border-subtle">
@@ -136,7 +105,7 @@
                                 </div>
 
                                 <div class="shrink-0 flex sm:flex-col sm:items-end justify-between items-center gap-2">
-                                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold font-mono {{ match($app['stage']) {
+                                    <span class="   text-xs font-semibold font-mono {{ match($app['stage']) {
                                         'offer_received' => 'bg-success-50 text-success-700 border border-success-200/80',
                                         'test_scheduled' => 'bg-warning-50 text-warning-700 border border-warning-200/80',
                                         'applied' => 'bg-brand-50 text-brand-700 border border-brand-200/80',
@@ -164,29 +133,11 @@
                     </div>
 
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        <div class="p-3.5 rounded-xl bg-brand-50/20 border border-brand-100">
-                            <span class="text-xs sm:text-[10px] uppercase font-mono font-bold text-ink-500 block truncate">NUST SEECS</span>
-                            <div class="font-heading font-bold text-xl text-brand-700 mt-1">77.95%</div>
-                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans block mt-0.5">NET 152 • FSc 81%</span>
-                        </div>
-
-                        <div class="p-3.5 rounded-xl bg-brand-50/20 border border-brand-100">
-                            <span class="text-xs sm:text-[10px] uppercase font-mono font-bold text-ink-500 block truncate">FAST Islamabad</span>
-                            <div class="font-heading font-bold text-xl text-brand-700 mt-1">75.50%</div>
-                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans block mt-0.5">Test 74 • FSc 81%</span>
-                        </div>
-
-                        <div class="p-3.5 rounded-xl bg-brand-50/20 border border-brand-100">
-                            <span class="text-xs sm:text-[10px] uppercase font-mono font-bold text-ink-500 block truncate">COMSATS CUI</span>
-                            <div class="font-heading font-bold text-xl text-brand-700 mt-1">83.60%</div>
-                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans block mt-0.5">NAT 78 • Safe Match</span>
-                        </div>
-
-                        <div class="p-3.5 rounded-xl bg-brand-50/20 border border-brand-100">
-                            <span class="text-xs sm:text-[10px] uppercase font-mono font-bold text-ink-500 block truncate">UET Lahore</span>
-                            <div class="font-heading font-bold text-xl text-brand-700 mt-1">81.20%</div>
-                            <span class="text-xs sm:text-[10px] text-ink-600 font-sans block mt-0.5">FSc 81% + ECAT</span>
-                        </div>
+                        @forelse($recommendations['calculated_aggregates'] as $aggregate)
+                            <div class="p-3.5 rounded-xl border border-brand-100"><span class="text-xs text-ink-500">{{ $aggregate['label'] }}</span><p class="text-xl font-bold text-brand-700">{{ $aggregate['score'] }}%</p><p class="text-xs text-ink-500">{{ $aggregate['formula'] }}</p></div>
+                        @empty
+                            <p class="col-span-full text-sm text-ink-500">Add your academic results and entry test scores. Scores appear when the institution has a recorded formula.</p>
+                        @endforelse
                     </div>
                 </div>
 
@@ -207,7 +158,7 @@
                             <div class="p-5 rounded-2xl bg-surface border border-border-default hover:border-brand-300 hover:shadow-card transition-all flex flex-col justify-between">
                                 <div class="space-y-2">
                                     <div class="flex items-center justify-between">
-                                        
+
                                         <span class="text-xs sm:text-[11px] font-mono text-ink-600">{{ $uni['deadline'] }}</span>
                                     </div>
                                     <h3 class="font-heading font-bold text-base text-ink-950">
@@ -234,7 +185,7 @@
 
             <!-- Right 4 Cols: Deadlines, Scholarships & AI Shortcuts -->
             <div class="lg:col-span-4 space-y-6">
-                
+
                 <!-- Upcoming Deadlines Card -->
                 <div class="p-5 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                     <div class="flex items-center justify-between pb-2 border-b border-border-subtle">
@@ -289,28 +240,16 @@
                 <div class="p-5 rounded-2xl bg-surface border border-border-default shadow-card space-y-3">
                     <div class="flex items-center justify-between pb-2 border-b border-border-subtle">
                         <div class="flex items-center gap-2">
-                            <x-icon name="sparkles" class="w-4 h-4 text-brand-600" />
-                            <h3 class="font-heading font-bold text-sm text-ink-950">AI Counselor History</h3>
+                            <x-icon name="message-circle" class="w-4 h-4 text-brand-600" />
+                            <h3 class="font-heading font-bold text-sm text-ink-950">Admission Counselor History</h3>
                         </div>
                         <a href="{{ route('counselor.index') }}" class="text-xs sm:text-[11px] font-semibold text-brand-600">New Chat</a>
                     </div>
 
                     <div class="space-y-2">
-                        <a 
-                            href="{{ route('counselor.chat', 'conv-1') }}"
-                            class="block p-3 rounded-xl bg-surface-subtle hover:bg-brand-50/30 border border-border-subtle text-xs font-sans transition-colors"
-                        >
-                            <span class="font-bold text-ink-900 block truncate">BS CS in Islamabad under PKR 200k</span>
-                            <span class="text-xs sm:text-[10px] text-ink-600 block mt-0.5">NUST, COMSATS, FAST evaluated</span>
-                        </a>
-
-                        <a 
-                            href="{{ route('counselor.chat', 'conv-2') }}"
-                            class="block p-3 rounded-xl bg-surface-subtle hover:bg-brand-50/30 border border-border-subtle text-xs font-sans transition-colors"
-                        >
-                            <span class="font-bold text-ink-900 block truncate">FAST vs NUST Software Engineering</span>
-                            <span class="text-xs sm:text-[10px] text-ink-600 block mt-0.5">Industry hiring & curriculum compare</span>
-                        </a>
+                        @forelse(auth()->user()->conversations()->latest()->limit(3)->get() as $conversation)
+                            <a href="{{ route('counselor.chat',$conversation->id) }}" class="block rounded-lg border border-border-default p-3 text-sm">{{ $conversation->title }}</a>
+                        @empty<p class="text-xs text-ink-500">Your conversations will appear here.</p>@endforelse
                     </div>
                 </div>
             </div>

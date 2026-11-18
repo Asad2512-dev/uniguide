@@ -28,6 +28,8 @@
     @stack('styles')
 </head>
 <body class="min-h-full flex flex-col bg-canvas text-ink-900 font-sans selection:bg-brand-500/20 selection:text-brand-900">
+    <x-ui.progress />
+
     <!-- Screen Reader Skip Link (WCAG 2.2 AA) -->
     <a href="#main-content" class="skip-to-content sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2 focus:bg-brand-600 focus:text-white focus:rounded-lg focus:shadow-elevated">
         {{ content('global.nav.skip_link', 'Skip to main content') }}

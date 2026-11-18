@@ -12,7 +12,7 @@ class SearchController extends Controller
     ) {}
 
     /**
-     * Unified National Search Results view across universities & programs.
+     * Unified Search Results view across universities & programs.
      */
     public function index(Request $request)
     {

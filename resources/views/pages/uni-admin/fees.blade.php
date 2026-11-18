@@ -31,7 +31,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="font-heading font-bold text-base text-ink-950">Academic Program Tuition Schedules</h3>
-                    <p class="text-xs text-ink-500 font-sans">Official charges published on the national admissions discovery portal.</p>
+                    <p class="text-xs text-ink-500 font-sans">Official charges published on the admissions discovery portal.</p>
                 </div>
             </div>
 
@@ -88,7 +88,7 @@
         <div class="space-y-6 mb-10">
             <div>
                 <h3 class="font-heading font-bold text-base text-ink-950">On-Campus Hostels & Mess Tariffs</h3>
-                <p class="text-xs text-ink-500 font-sans">Sector H-12 residential hostels tariff schedule approved by Directorate of Administration.</p>
+                <p class="text-xs text-ink-500 font-sans">Recorded hostel tariffs for this institution.</p>
             </div>
 
             <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">

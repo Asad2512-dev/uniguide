@@ -1,23 +1,23 @@
-<x-layouts.public 
+<x-layouts.counselor
     title="Counseling Sessions History — UniGuide Pakistan"
     description="Review, resume, and export your archived AI university counseling sessions and admission strategy consultations."
 >
     <div x-data="{ deleteModalOpen: false, deleteActionUrl: '', deleteItemName: '' }" class="min-h-screen bg-canvas pb-24">
-        
+
         <!-- Header Banner -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
-                        ['label' => 'AI Counselor', 'url' => route('counselor.index')],
+                        ['label' => 'Admission Counselor', 'url' => route('counselor.index')],
                         ['label' => 'Archived Counseling Sessions', 'url' => route('counselor.history')]
                     ]" />
                 </div>
 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
+                        <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
                             <x-icon name="history" class="w-3.5 h-3.5 text-brand-600" />
                             <span>Advisory Transcripts Archive</span>
                         </div>
@@ -128,7 +128,7 @@
                             href="{{ route('counselor.chat') }}"
                             class="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-600 text-white text-xs font-semibold shadow-xs"
                         >
-                            <x-icon name="sparkles" class="w-3.5 h-3.5" />
+                            <x-icon name="message-circle" class="w-3.5 h-3.5" />
                             <span>Start First Advisory Consultation</span>
                         </a>
                     </div>
@@ -179,5 +179,5 @@
             </div>
         </template>
     </div>
-</x-layouts.public>
+</x-layouts.counselor>
 

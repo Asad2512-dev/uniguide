@@ -1,5 +1,5 @@
 <x-layouts.public 
-    title="National University Admission Document Checklist — UniGuide Pakistan"
+    title="University Admission Document Checklist — UniGuide Pakistan"
     description="Interactive document preparation and attestation checklist for Pakistani university admissions, BISE board verifications, IBCC equivalence, and financial aid dossiers."
 >
     <div x-data="{ 
@@ -24,7 +24,7 @@
             window.print();
         }
     }" class="min-h-screen bg-canvas pb-24">
-        
+
         <!-- Header Strip -->
         <header class="bg-surface border-b border-border-default/80">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -37,7 +37,7 @@
 
                 <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-brand-50 border border-brand-200/60 text-brand-700 text-xs font-semibold font-sans mb-3">
+                        <div class="inline-flex items-center gap-2       text-brand-700 text-xs font-semibold font-sans mb-3">
                             <x-icon name="clipboard-check" class="w-3.5 h-3.5 text-brand-600" />
                             <span>Official Pakistani Higher Education Verification Protocol</span>
                         </div>
@@ -91,7 +91,7 @@
 
         <!-- Main Body -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-10">
-            
+
             <!-- Document Categories -->
             @foreach($checklist as $cat)
                 <section class="space-y-4">
@@ -133,7 +133,7 @@
                                         >
                                             {{ $item['title'] }}
                                         </h3>
-                                        
+
                                         <p class="text-xs font-sans text-ink-500">
                                             <strong>Issuing Authority:</strong> {{ $item['issuer'] }}
                                         </p>

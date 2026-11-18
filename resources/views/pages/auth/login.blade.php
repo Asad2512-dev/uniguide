@@ -11,7 +11,7 @@
                     Sign in to UniGuide
                 </h1>
                 <p class="text-xs sm:text-sm text-ink-500 font-sans">
-                    National Higher Education Gateway for Pakistani students & institutions
+                    Find your next step with UniGuide
                 </p>
             </div>
 
@@ -20,19 +20,19 @@
                 x-data="{
                     role: '{{ $initialRole ?? 'student' }}',
                     showPassword: false,
-                    email: '',
+                    email: @js(old('email', '')),
                     password: '',
                     setDemo(r) {
                         this.role = r;
                         if (r === 'student') {
-                            this.email = 'ahmad.raza@student.uniguide.pk';
-                            this.password = 'StudentPass2026!';
+                            this.email = 'student@gmail.com';
+                            this.password = '12345678';
                         } else if (r === 'university') {
-                            this.email = 'admissions@nust.edu.pk';
-                            this.password = 'NustAdmin2026!';
+                            this.email = 'numl@gmail.com';
+                            this.password = '12345678';
                         } else if (r === 'admin') {
-                            this.email = 'regulatory@hec.gov.pk';
-                            this.password = 'HecFederal2026!';
+                            this.email = 'admin@gmail.com';
+                            this.password = '12345678';
                         }
                     }
                 }"
@@ -79,7 +79,7 @@
                             Student
                         </button>
                         <button type="button" @click="setDemo('university')" class="px-2 py-0.5 rounded bg-surface text-brand-700 border border-brand-200 hover:bg-brand-100 font-medium text-xs sm:text-[11px] cursor-pointer">
-                            NUST Admin
+                            NUML Multan
                         </button>
                         <button type="button" @click="setDemo('admin')" class="px-2 py-0.5 rounded bg-surface text-brand-700 border border-brand-200 hover:bg-brand-100 font-medium text-xs sm:text-[11px] cursor-pointer">
                             Superadmin
@@ -87,6 +87,10 @@
                     </div>
                 </div>
 
+                <p class="text-xs text-ink-500">Demo password: 12345678</p>
+                @if ($errors->any())
+                    <div role="alert" class="rounded-xl bg-red-50 p-3 text-sm text-red-800">{{ $errors->first() }}</div>
+                @endif
                 <!-- Form -->
                 <form action="{{ route('auth.login.submit') }}" method="POST" class="space-y-4">
                     @csrf
@@ -94,8 +98,8 @@
 
                     <div>
                         <label for="email" class="block text-xs font-semibold text-ink-800 font-sans mb-1.5">
-                            <span x-show="role === 'student'">Email or BISE Roll Number</span>
-                            <span x-show="role === 'university'">Official Institutional Email (.edu.pk)</span>
+                            <span x-show="role === 'student'">Email address</span>
+                            <span x-show="role === 'university'">University email address</span>
                             <span x-show="role === 'admin'">Superadmin Email</span>
                         </label>
                         <input 
@@ -143,7 +147,7 @@
                     <div class="flex items-center justify-between pt-1">
                         <label class="flex items-center gap-2 cursor-pointer text-xs font-sans text-ink-600">
                             <input type="checkbox" name="remember" class="w-4 h-4 rounded border-border-default text-brand-600 focus:ring-brand-500/20" />
-                            <span>Keep me signed in for 30 days</span>
+                            <span>Keep me signed in</span>
                         </label>
                     </div>
 
@@ -151,6 +155,7 @@
                         Sign In to Workspace
                     </x-ui.button>
                 </form>
+                <a href="{{ route('universities.join') }}" class="block text-center text-sm font-semibold text-brand-700">Represent a university? Join UniGuide →</a>
 
                 <div class="pt-4 border-t border-border-subtle text-center text-xs font-sans text-ink-600">
                     <span>Don't have a student account yet?</span>

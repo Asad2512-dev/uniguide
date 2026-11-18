@@ -27,16 +27,16 @@
         </defs>
         <!-- Shield Foundation -->
         <rect width="40" height="40" rx="10" fill="url(#ugBrandGrad)" />
-        
+
         <!-- Subtle Inner Border -->
         <rect x="0.75" y="0.75" width="38.5" height="38.5" rx="9.25" stroke="white" stroke-opacity="0.18" stroke-width="1.5" />
-        
+
         <!-- Architectural Portal / Compass Needle Motif -->
         <path d="M20 9L29 27H23.5L20 18.5L16.5 27H11L20 9Z" fill="white" fill-opacity="0.95" />
-        
-        <!-- National Starburst Diamond at Focal Zenith -->
+
+        <!-- Starburst Diamond at Focal Zenith -->
         <path d="M20 12L21.8 16.2L26 18L21.8 19.8L20 24L18.2 19.8L14 18L18.2 16.2L20 12Z" fill="url(#ugAccentGrad)" />
-        
+
         <!-- Precision Base Anchor -->
         <circle cx="20" cy="30" r="1.75" fill="#EEF0FF" />
     </svg>

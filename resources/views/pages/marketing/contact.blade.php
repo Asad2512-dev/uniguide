@@ -7,8 +7,8 @@
         <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
                 :title="content('contact.header.title', 'Admissions Support & Regional Desks')"
-                :description="content('contact.header.description', 'Need assistance with university eligibility, aggregate discrepancies, or institutional verification? Our national admissions advisory desk is ready to help.')"
-                :badge="content('contact.header.badge', 'National Helpdesk')"
+                :description="content('contact.header.description', 'Need assistance with university eligibility, aggregate discrepancies, or institutional verification? Our admissions advisory desk is ready to help.')"
+                :badge="content('contact.header.badge', 'Helpdesk')"
                 badgeVariant="brand"
             >
                 <x-slot:breadcrumbs>
@@ -39,7 +39,7 @@
                     <div>
                         <h3 class="font-heading font-bold text-lg text-ink-950">Submit an Admissions Inquiry</h3>
                         <p class="text-xs text-ink-500 font-sans mt-1">
-                            Tickets are reviewed by verified admissions counselors and assigned directly to the relevant regional desk.
+                            Messages are saved for the platform administration team.
                         </p>
                     </div>
 
@@ -52,7 +52,7 @@
                                 label="Your Full Name" 
                                 placeholder="e.g. Fatima Zahra" 
                                 value="{{ old('name') }}"
-                                required="true" 
+                                required="true"
                                 icon="user"
                                 :error="$errors->first('name')"
                             />
@@ -63,7 +63,7 @@
                                 label="Email Address" 
                                 placeholder="name@domain.com" 
                                 value="{{ old('email') }}"
-                                required="true" 
+                                required="true"
                                 :error="$errors->first('email')"
                             />
                         </div>
@@ -144,7 +144,7 @@
                     </p>
                     <div class="pt-1 flex items-center gap-3 font-mono font-bold text-sm text-white">
                         <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        <span>UAN: 051-111-UNI-GUIDE</span>
+                        <span>Submit your inquiry using this form</span>
                     </div>
                 </div>
 

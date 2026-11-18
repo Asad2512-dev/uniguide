@@ -1,4 +1,6 @@
 import Alpine from 'alpinejs';
+import { installProgress } from './progress.js';
+installProgress(window, document);
 import counselorWorkspace from './counselor-workspace.js';
 Alpine.data('counselorWorkspace', counselorWorkspace);
 import { workspaceHeight, validateStep } from './mobile-layout.js';
@@ -126,7 +128,10 @@ Alpine.directive('viewport-workspace', (element, bindings, { cleanup }) => {
         frame = requestAnimationFrame(() => {
             const height = viewport?.height ?? window.innerHeight;
             const top = Math.max(0, element.getBoundingClientRect().top - (viewport?.offsetTop ?? 0));
-            element.style.height = `${workspaceHeight(height, top)}px`;
+            const bottomSelector = element.dataset.workspaceBottomSelector;
+            const bottomNavigation = bottomSelector ? document.querySelector(bottomSelector) : null;
+            const bottomHeight = bottomNavigation?.getBoundingClientRect().height ?? 0;
+            element.style.height = `${workspaceHeight(height - bottomHeight, top)}px`;
             const editing = document.activeElement?.matches('input, textarea, select, [contenteditable="true"]');
             document.documentElement.toggleAttribute('data-keyboard-open', Boolean(editing && window.innerHeight - height > 150));
         });
@@ -150,13 +155,30 @@ window.Alpine = Alpine;
 Alpine.start();
 
 // Charts are requested only by screens that render them; callers do not consume a synchronous result.
-window.createUniGuideChart = async (...args) => {
+window.createUniGuideChart = async (canvasOrId, config) => {
+    const canvas = typeof canvasOrId === 'string' ? document.getElementById(canvasOrId) : canvasOrId;
+    if (!canvas) return null;
+    const finish = window.UniGuideProgress.start('Loading chart…');
+    canvas.setAttribute('aria-busy', 'true');
+    const placeholder = document.createElement('div');
+    placeholder.className = 'chart-loading-state';
+    placeholder.setAttribute('role', 'status');
+    placeholder.innerHTML = '<span class="progress-spinner" aria-hidden="true"></span><span>Loading chart…</span>';
+    const container = canvas.parentElement;
+    if (getComputedStyle(container).position === 'static') container.style.position = 'relative';
+    const timer = setTimeout(() => container.appendChild(placeholder), 120);
     try {
         const { createUniGuideChart } = await import('./charts.js');
-        return createUniGuideChart(...args);
+        const chart = createUniGuideChart(canvas, config);
+        placeholder.remove();
+        return chart;
     } catch (error) {
+        placeholder.textContent = 'Chart unavailable. Reload this page to try again.';
+        container.appendChild(placeholder);
         console.error('Unable to initialize UniGuide chart:', error);
         return null;
+    } finally {
+        clearTimeout(timer); canvas.removeAttribute('aria-busy'); finish();
     }
 };
 

@@ -27,6 +27,7 @@ class StudentProfile extends Model
         'matric_data',
         'fsc_data',
         'entry_tests_data',
+        'documents_data',
         'preferences',
         'onboarding_completed',
     ];
@@ -40,6 +41,7 @@ class StudentProfile extends Model
             'matric_data' => 'array',
             'fsc_data' => 'array',
             'entry_tests_data' => 'array',
+            'documents_data' => 'array',
             'preferences' => 'array',
         ];
     }

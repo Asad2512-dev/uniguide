@@ -1,5 +1,5 @@
-<x-layouts.public 
-    title="AI University Counselor — UniGuide Pakistan"
+<x-layouts.counselor
+    title="University Counselor — UniGuide Pakistan"
     description="Intelligent Pakistani university admission guidance, statutory merit aggregate calculations, side-by-side program comparisons, and verified scholarship matching."
 >
     <div x-data="{ 
@@ -25,18 +25,12 @@
                 <!-- Breadcrumb -->
                 <div class="flex justify-center mb-6">
                     <x-ui.breadcrumbs :items="[
-                        ['label' => 'AI Counselor', 'url' => route('counselor.index')]
+                        ['label' => 'Admission Counselor', 'url' => route('counselor.index')]
                     ]" />
                 </div>
 
-                <!-- National Intelligence Badge -->
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold font-sans mb-5 shadow-2xs">
-                    <span class="w-2 h-2 rounded-full bg-brand-600 animate-pulse"></span>
-                    <x-icon name="sparkles" class="w-3.5 h-3.5 text-brand-600" />
-                    <span>UniGuide National AI Admission Counselor</span>
-                    <span class="text-ink-300">•</span>
-                    <span class="font-mono text-xs sm:text-[11px] text-brand-800 font-bold">Fall 2026 Calibrated</span>
-                </div>
+                <!-- Intelligence Badge -->
+                <p class="text-xs font-semibold tracking-wider uppercase text-brand-700 mb-5">Your admission counselor</p>
 
                 <h1 class="font-heading font-bold text-3xl sm:text-4xl md:text-5xl text-ink-950 tracking-tight leading-tight mb-4">
                     Intelligent admission guidance, <br class="hidden sm:inline" />
@@ -105,28 +99,28 @@
                     <button 
                         type="button" 
                         @click="submitPrompt('How is NUST CS aggregate calculated with NET, FSc, and Matric?')"
-                        class="px-2.5 py-1 rounded-full bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
+                        class="px-2.5 py-1 rounded-md bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
                     >
                         NUST CS Aggregate Formula
                     </button>
                     <button 
                         type="button" 
                         @click="submitPrompt('Compare FAST Islamabad vs NUST SEECS for Software Engineering')"
-                        class="px-2.5 py-1 rounded-full bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
+                        class="px-2.5 py-1 rounded-md bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
                     >
                         FAST vs NUST SEECS
                     </button>
                     <button 
                         type="button" 
                         @click="submitPrompt('What are the eligibility criteria for Need-Based Scholarships?')"
-                        class="px-2.5 py-1 rounded-full bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
+                        class="px-2.5 py-1 rounded-md bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
                     >
                         Need-Based Aid
                     </button>
                     <button 
                         type="button" 
                         @click="submitPrompt('65% FSc Pre-Engineering options in Punjab')"
-                        class="px-2.5 py-1 rounded-full bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
+                        class="px-2.5 py-1 rounded-md bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth cursor-pointer font-sans"
                     >
                         65% FSc Options
                     </button>
@@ -139,11 +133,11 @@
             <!-- Guided Counseling Banner (High-Impact Recommendation Flow) -->
             <div class="mb-12 rounded-2xl border border-brand-200/80 bg-gradient-to-r from-brand-900 via-ink-950 to-brand-950 text-white p-6 sm:p-8 shadow-card relative overflow-hidden">
                 <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
-                
+
                 <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
                     <div class="max-w-2xl space-y-2">
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-white/10 backdrop-blur-xs border border-white/20 text-brand-200 text-xs font-semibold">
-                            <x-icon name="sparkles" class="w-3.5 h-3.5 text-brand-300" />
+                        <div class="inline-flex items-center gap-1.5     backdrop-blur-xs   text-brand-200 text-xs font-semibold">
+                            <x-icon name="message-circle" class="w-3.5 h-3.5 text-brand-300" />
                             <span>Recommended Evaluation Path</span>
                         </div>
                         <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white tracking-tight">
@@ -195,7 +189,7 @@
                                     <div class="w-10 h-10 rounded-xl bg-brand-50 border border-brand-100 flex items-center justify-center text-brand-700 group-hover:scale-105 group-hover:bg-brand-600 group-hover:text-white transition-all">
                                         <x-icon :name="$action['icon']" class="w-5 h-5" />
                                     </div>
-                                    <span class="text-xs sm:text-[10px] uppercase font-mono font-bold px-2 py-0.5 rounded-full bg-surface-subtle border border-border-default text-ink-600">
+                                    <span class="text-xs sm:text-[10px] uppercase font-mono font-bold       text-ink-600">
                                         {{ $action['badge'] }}
                                     </span>
                                 </div>
@@ -339,7 +333,7 @@
                     <div class="space-y-3">
                         <h4 class="font-heading font-bold text-ink-900 flex items-center gap-1.5">
                             <x-icon name="check-circle" class="w-4 h-4 text-success-600" />
-                            <span>What Our AI Counselor Computes & Verifies:</span>
+                            <span>What Our Admission Counselor Computes & Verifies:</span>
                         </h4>
                         <ul class="space-y-2 text-ink-600">
                             @foreach($capabilities['capabilities'] as $cap)
@@ -369,5 +363,5 @@
             </div>
         </main>
     </div>
-</x-layouts.public>
+</x-layouts.counselor>
 

@@ -1,6 +1,6 @@
 {
   "default_title": "UniGuide Pakistan — Premium Higher Education Discovery & Admissions Platform",
-  "default_description": "UniGuide Pakistan is the national AI-powered platform for university discovery, verified admission merit calculation, degree program comparison, and scholarship tracking.",
+  "default_description": "UniGuide Pakistan is the personalized platform for university discovery, verified admission merit calculation, degree program comparison, and scholarship tracking.",
   "meta": {
     "site_name": "UniGuide Pakistan",
     "theme_color": "#4355E8",
@@ -9,11 +9,11 @@
   },
   "pages": {
     "home": {
-      "title": "UniGuide Pakistan — National University Discovery & Admissions Platform",
+      "title": "UniGuide Pakistan — University Discovery & Admissions Platform",
       "description": "Discover universities and admission opportunities across Punjab and Islamabad."
     },
     "about": {
-      "title": "About UniGuide Pakistan — National Higher Education Intelligence Portal",
+      "title": "About UniGuide Pakistan — Higher Education Intelligence Portal",
       "description": "Learn about UniGuide Pakistan's mission, statutory data verification protocols, regulatory compliance, and academic governance."
     },
     "how_it_works": {
@@ -38,10 +38,10 @@
     },
     "admissions": {
       "title": "Admission Explorer — UniGuide Pakistan",
-      "description": "Discover active Pakistani university admissions, application deadlines, national entry test schedules, and verified intake sessions."
+      "description": "Discover active Pakistani university admissions, application deadlines, entry test schedules, and verified intake sessions."
     },
     "scholarships": {
-      "title": "National Scholarship Directory — UniGuide Pakistan",
+      "title": "Scholarship Directory — UniGuide Pakistan",
       "description": "Discover verified higher education scholarships in Pakistan including Need-Based, Ehsaas Undergraduate, PEEF, BEEF, LUMS NOP, and university endowment trust funds."
     },
     "comparison": {
@@ -53,7 +53,7 @@
       "description": "Multi-step eligibility rules engine verifying your academic marks against PEC engineering mandates, NCEAC computing guidelines, and university prospectuses."
     },
     "counselor": {
-      "title": "AI University Counselor — UniGuide Pakistan",
+      "title": "University Counselor — UniGuide Pakistan",
       "description": "Intelligent Pakistani university admission guidance, statutory merit aggregate calculations, side-by-side program comparisons, and verified scholarship matching."
     },
     "login": {
@@ -74,7 +74,7 @@
     },
     "national_admin_dashboard": {
       "title": "Superadmin — Executive Operational Overview",
-      "description": "Federal oversight authority, chartered university coverage, automated crawler pipelines, and data verification status."
+      "description": "Platform administration, chartered university coverage, automated crawler pipelines, and data verification status."
     }
   }
 }

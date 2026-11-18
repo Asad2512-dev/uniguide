@@ -115,14 +115,14 @@ class CounselorController extends Controller
     public function recommendations(Request $request): View
     {
         $profile = [
-            'matric_percentage' => floatval($request->input('matric_percentage', 82.5)),
-            'fsc_percentage' => floatval($request->input('fsc_percentage', 78.0)),
+            'matric_percentage' => floatval($request->input('matric_percentage', 0)),
+            'fsc_percentage' => floatval($request->input('fsc_percentage', 0)),
             'test_type' => $request->input('test_type', 'net'),
-            'test_score' => floatval($request->input('test_score', 145)),
+            'test_score' => floatval($request->input('test_score', 0)),
             'discipline' => $request->input('discipline', 'computing'),
             'location' => $request->input('location', 'islamabad'),
-            'budget_max' => floatval($request->input('budget_max', 200000)),
-            'monthly_income' => floatval($request->input('monthly_income', 55000)),
+            'budget_max' => floatval($request->input('budget_max', 0)),
+            'monthly_income' => floatval($request->input('monthly_income', 0)),
         ];
 
         $evaluation = $this->counselorService->evaluateStudent($profile);
@@ -142,7 +142,7 @@ class CounselorController extends Controller
      */
     public function search(Request $request): View
     {
-        $query = $request->input('q', 'Top CS universities in Islamabad under 200k with hostel');
+        $query = $request->input('q', '');
         $searchResult = $this->counselorService->searchConversational($query);
 
         return view('pages.counselor.search', [
@@ -153,7 +153,7 @@ class CounselorController extends Controller
             'sampleQueries' => [
                 'Top CS universities in Islamabad under 200k with hostel',
                 'Best engineering colleges in Lahore with low tuition fees',
-                'Which universities offer HEC need-based scholarships in Punjab?',
+                'Which universities offer need-based scholarships in Punjab?',
                 'Compare FAST vs NUST for Artificial Intelligence',
                 'BBA degrees in Karachi under 150k per semester',
             ],

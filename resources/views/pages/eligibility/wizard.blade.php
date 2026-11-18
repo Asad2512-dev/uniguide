@@ -43,7 +43,7 @@
 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs font-semibold mb-2">
+                        <div class="inline-flex items-center gap-1.5       text-emerald-700 text-xs font-semibold mb-2">
                             <x-icon name="check-circle" class="w-3.5 h-3.5 text-emerald-600" />
                             <span>Verified Statutory Rules Engine</span>
                         </div>
@@ -56,7 +56,7 @@
                     </div>
 
                     <div class="shrink-0 flex items-center gap-2">
-                        <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
+                        <span class="text-xs font-mono font-bold text-emerald-700      ">
                             Step <span x-text="step"></span> of <span x-text="totalSteps"></span>
                         </span>
                     </div>
@@ -75,7 +75,7 @@
         <!-- Main Wizard Container -->
         <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <form action="{{ route('eligibility.results') }}" method="GET" class="space-y-8">
-                
+
                 <!-- STEP 1: Academic Qualification -->
                 <div data-step="1" x-show="step === 1" x-transition class="space-y-6">
                     <div class="bg-surface rounded-2xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">

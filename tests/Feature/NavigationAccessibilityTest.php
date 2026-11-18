@@ -17,7 +17,7 @@ class NavigationAccessibilityTest extends TestCase
 
         $view->assertDontSee('Rules Engine');
         $view->assertDontSee('Side-by-Side');
-        $view->assertSee('Intelligent Tools');
+        $view->assertSee('Planning tools');
     }
 
     public function test_mobile_portals_include_secondary_account_and_management_links(): void

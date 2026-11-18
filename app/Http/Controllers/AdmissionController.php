@@ -89,7 +89,7 @@ class AdmissionController extends Controller
     public function calendar(Request $request)
     {
         $month = $request->query('month') !== null ? (int) $request->query('month') : null;
-        $year = (int) $request->query('year', 2026);
+        $year = (int) $request->query('year', now()->year);
         $filterCategory = $request->query('category', 'all'); // 'all', 'deadline', 'test', 'scholarship', 'merit'
 
         $allEvents = $this->admissionService->getCalendarEvents($year, $month);

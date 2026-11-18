@@ -12,7 +12,7 @@ class UniversityController extends Controller
     ) {}
 
     /**
-     * Display the National University Directory.
+     * Display the University Directory.
      */
     public function index(Request $request)
     {
@@ -77,7 +77,7 @@ class UniversityController extends Controller
         $university = $this->discoveryService->getUniversityBySlug($slug);
 
         if (! $university) {
-            abort(404, 'University not found in national registry');
+            abort(404, 'University not found in registry');
         }
 
         // Get programs for this university

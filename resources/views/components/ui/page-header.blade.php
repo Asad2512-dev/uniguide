@@ -19,11 +19,6 @@
                 <h1 class="text-2xl md:text-3xl font-heading font-bold text-ink-950 tracking-tight">
                     {{ $title }}
                 </h1>
-                @if($badge)
-                    <x-ui.badge :variant="$badgeVariant" size="sm">
-                        {{ $badge }}
-                    </x-ui.badge>
-                @endif
             </div>
 
             @if($description)

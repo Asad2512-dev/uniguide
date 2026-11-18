@@ -13,7 +13,7 @@ class AdmissionsPhaseTest extends TestCase
     {
         $response = $this->get('/admissions');
         $response->assertStatus(200);
-        $response->assertSee('National University Admission Explorer');
+        $response->assertSee('University Admission Explorer');
         $response->assertSee('NUST Fall 2026');
         $response->assertSee('FAST-NUCES');
 
@@ -63,7 +63,7 @@ class AdmissionsPhaseTest extends TestCase
     {
         $response = $this->get('/admissions/calendar');
         $response->assertStatus(200);
-        $response->assertSee('National Admission');
+        $response->assertSee('Admission');
         $response->assertSee('Deadline Calendar');
         $response->assertSee('chronological events');
 
@@ -98,7 +98,7 @@ class AdmissionsPhaseTest extends TestCase
     {
         $response = $this->get('/scholarships');
         $response->assertStatus(200);
-        $response->assertSee('National Scholarship');
+        $response->assertSee('Scholarship');
         $response->assertSee('HEC Need-Based');
         $response->assertSee('Ehsaas Undergraduate');
 

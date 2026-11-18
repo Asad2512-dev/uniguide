@@ -14,7 +14,7 @@ class DiscoveryPhaseTest extends TestCase
         $response = $this->get('/universities');
 
         $response->assertStatus(200);
-        $response->assertSee('National University Directory');
+        $response->assertSee('University Directory');
         $response->assertSee('NUST');
         $response->assertSee('FAST');
         $response->assertSee('LUMS');

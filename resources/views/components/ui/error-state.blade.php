@@ -1,7 +1,7 @@
 @props([
     'title' => 'Unable to load admission data',
-    'message' => 'The National Higher Education Registry connection timed out. Please check your network or try again.',
-    'code' => 'HEC_API_TIMEOUT_504',
+    'message' => 'The Higher Education Registry connection timed out. Please check your network or try again.',
+    'code' => 'UniGuide_API_TIMEOUT_504',
     'retryAction' => null,
     'banner' => false,
 ])

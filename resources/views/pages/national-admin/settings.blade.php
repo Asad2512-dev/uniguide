@@ -2,7 +2,7 @@
     <x-ui.page-header 
         title="System Settings and Audit Logs"
         description="Federal infrastructure limits, crawler concurrency parameters, immutable audit retention, and supervisory activity trails."
-        badge="Regulatory Compliance Tier"
+        badge="Platform Compliance Tier"
         badgeVariant="brand"
     >
         <x-slot:breadcrumbs>
@@ -35,7 +35,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="font-heading font-bold text-base text-ink-950">Federal Infrastructure & Concurrency Limits</h3>
-                    <p class="text-xs text-ink-500 font-sans">Throttle crawler workers and configure dual-approval statutory safeguards.</p>
+                    <p class="text-xs text-ink-500 font-sans">Throttle crawler workers and configure dual-approval published safeguards.</p>
                 </div>
                 <x-ui.button type="submit" variant="primary" size="sm" icon="save">
                     Save System Settings
@@ -80,8 +80,8 @@
                         class="rounded border-border-default text-brand-600 focus:ring-brand-500"
                     />
                     <div>
-                        <span class="text-xs font-semibold text-ink-950">Require Federal Commissioner Signature on Tuition Hikes > 15%</span>
-                        <span class="text-xs sm:text-[11px] text-ink-500 block">Enforces statutory approval before any fee increase exceeding national inflation benchmarks is displayed.</span>
+                        <span class="text-xs font-semibold text-ink-950">Require Platform Administrator Signature on Tuition Hikes > 15%</span>
+                        <span class="text-xs sm:text-[11px] text-ink-500 block">Enforces published approval before any fee increase exceeding inflation benchmarks is displayed.</span>
                     </div>
                 </label>
 
@@ -95,7 +95,7 @@
                     />
                     <div>
                         <span class="text-xs font-semibold text-ink-950">Immutable Federal Audit Logging (WORM Storage)</span>
-                        <span class="text-xs sm:text-[11px] text-ink-500 block">Logs every data mutation with cryptographic timestamping to ensure statutory integrity.</span>
+                        <span class="text-xs sm:text-[11px] text-ink-500 block">Logs every data mutation with cryptographic timestamping to ensure published integrity.</span>
                     </div>
                 </label>
             </div>
@@ -106,7 +106,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="font-heading font-bold text-base text-ink-950">Immutable Supervisory Audit Trail</h3>
-                    <p class="text-xs text-ink-500 font-sans">Tamper-evident chronological record of regulatory actions.</p>
+                    <p class="text-xs text-ink-500 font-sans">Tamper-evident chronological record of platform actions.</p>
                 </div>
                 <span class="text-xs font-mono text-ink-600">Section 14 Act</span>
             </div>
@@ -118,7 +118,7 @@
                             <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                                 <th scope="col" class="py-3.5 px-4 font-semibold">Timestamp (PKT)</th>
                                 <th scope="col" class="py-3.5 px-4 font-semibold">Actor & Role</th>
-                                <th scope="col" class="py-3.5 px-4 font-semibold">Regulatory Action</th>
+                                <th scope="col" class="py-3.5 px-4 font-semibold">Platform Action</th>
                                 <th scope="col" class="py-3.5 px-4 text-right font-semibold">Client IP</th>
                             </tr>
                         </thead>

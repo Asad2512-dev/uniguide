@@ -1,8 +1,8 @@
 @props([
     'contextBadge' => 'UniGuide Administration',
     'badgeType' => 'success',
-    'userName' => 'Ahmad Raza Khan',
-    'userRole' => 'Applicant #UG-2026-8841',
+    'userName' => '',
+    'userRole' => '',
     'avatarText' => 'AR',
 ])
 
@@ -60,27 +60,14 @@
                 </a>
                 <a href="{{ route('national_admin.dashboard') }}" class="flex items-center gap-2 px-3 py-2 text-xs font-sans text-ink-700 hover:bg-surface-subtle rounded-lg">
                     <x-icon name="shield-check" class="w-4 h-4 text-ink-400" />
-                    <span>National Administration</span>
+                    <span>Platform Administration</span>
                 </a>
                 <div class="my-1 border-t border-border-subtle"></div>
-                <a href="{{ route('design-system') }}" class="flex items-center gap-2 px-3 py-2 text-xs font-sans font-semibold text-brand-700 hover:bg-brand-50 rounded-lg">
-                    <x-icon name="sparkles" class="w-4 h-4 text-brand-600" />
-                    <span>Design System Catalog</span>
-                </a>
+
             </x-slot:content>
         </x-ui.dropdown>
 
-        <!-- Notification Bell -->
-        <button 
-            type="button" 
-            @click="$store.toasts.add({ title: 'Admissions Alert', message: 'NUST Merit list has been declared for Engineering programs.', type: 'info' })"
-            class="relative p-2 rounded-lg text-ink-600 hover:text-ink-950 hover:bg-surface-subtle transition-colors"
-            title="Notifications"
-            aria-label="View notifications"
-        >
-            <x-icon name="bell" class="w-5 h-5" />
-            <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-warning-500 ring-2 ring-surface"></span>
-        </button>
+        <x-nav.notifications />
 
         {{-- User Profile Dropdown --}}
         <div x-data="{ showSignOutModal: false }" class="relative">
@@ -94,8 +81,8 @@
                 </x-slot:trigger>
                 <x-slot:content>
                     <div class="px-3 py-2.5 border-b border-border-subtle">
-                        <p class="text-xs font-bold text-ink-950 truncate font-heading">{{ $userName }}</p>
-                        <p class="text-xs sm:text-[11px] text-ink-500 truncate font-sans">{{ $userRole }}</p>
+                        <p class="text-xs font-bold text-ink-950 truncate font-heading">{{ auth()->user()?->name ?? $userName }}</p>
+                        <p class="text-xs sm:text-[11px] text-ink-500 truncate font-sans">{{ auth()->user()?->role ? str_replace('_', ' ', auth()->user()->role) : $userRole }}</p>
                     </div>
                     <div class="p-1 space-y-0.5">
                         <a href="{{ route(request()->routeIs('uni_admin.*') ? 'uni_admin.settings' : (request()->routeIs('national_admin.*') ? 'national_admin.settings' : 'student.settings')) }}" class="flex min-h-11 items-center gap-2 px-2.5 py-1.5 text-xs text-ink-700 hover:bg-surface-subtle rounded-md">

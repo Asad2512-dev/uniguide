@@ -15,8 +15,8 @@
         </x-slot:breadcrumbs>
 
         <x-slot:actions>
-            <x-ui.button variant="outline" size="sm" icon="sparkles" href="{{ route('national_admin.ai_extraction') }}">
-                AI Extraction Workspace
+            <x-ui.button variant="outline" size="sm" icon="message-circle" href="{{ route('national_admin.ai_extraction') }}">
+                Extracted Data Workspace
             </x-ui.button>
         </x-slot:actions>
     </x-ui.page-header>
@@ -157,7 +157,7 @@
                             </button>
 
                             <div class="flex items-center gap-2">
-                                <form method="POST" :action="'/admin/national/verification/' + selectedItem.id" class="inline">
+                                <form method="POST" :action="'/admin/platform/verification/' + selectedItem.id" class="inline">
                                     @csrf
                                     <input type="hidden" name="action" value="flagged">
                                     <x-ui.button type="submit" variant="outline" size="sm" icon="alert-triangle" class="text-amber-700 hover:bg-amber-50 border-amber-200">
@@ -165,7 +165,7 @@
                                     </x-ui.button>
                                 </form>
 
-                                <form method="POST" :action="'/admin/national/verification/' + selectedItem.id" class="inline">
+                                <form method="POST" :action="'/admin/platform/verification/' + selectedItem.id" class="inline">
                                     @csrf
                                     <input type="hidden" name="action" value="approved">
                                     <x-ui.button type="submit" variant="primary" size="sm" icon="check">

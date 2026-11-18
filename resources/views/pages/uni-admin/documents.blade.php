@@ -31,7 +31,7 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h3 class="font-heading font-bold text-base text-ink-950">Official Institutional Documents Vault</h3>
-                    <p class="text-xs text-ink-500 font-sans">Statutory PDFs uploaded to the national public portal.</p>
+                    <p class="text-xs text-ink-500 font-sans">Statutory PDFs uploaded to the public portal.</p>
                 </div>
             </div>
 
@@ -56,7 +56,7 @@
 
                         <div class="mt-4 pt-3 border-t border-border-subtle flex items-center justify-between text-xs">
                             <span class="text-xs sm:text-[10px] text-ink-600 font-mono">{{ $idoc['uploaded_at'] }}</span>
-                            <a href="#" class="font-bold text-brand-600 hover:text-brand-700 flex items-center gap-1">
+                            <a data-download href="{{ route('uni_admin.documents.download', $idoc['id']) }}" class="font-bold text-brand-600 hover:text-brand-700 flex items-center gap-1">
                                 <span>Download</span>
                                 <x-icon name="download" class="w-3.5 h-3.5" />
                             </a>
@@ -99,7 +99,7 @@
                                     <td class="py-3.5 px-4 text-ink-900 font-medium">{{ $sub['doc_name'] }}</td>
                                     <td class="py-3.5 px-4 font-mono text-ink-500 text-xs sm:text-[11px]">{{ $sub['submitted_at'] }}</td>
                                     <td class="py-3.5 px-4">
-                                        <span class="px-2 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold {{ match($sub['status']) {
+                                        <span class="   text-xs sm:text-[10px] font-mono font-bold {{ match($sub['status']) {
                                             'verified' => 'bg-emerald-50 text-emerald-800 border border-emerald-200',
                                             'flagged' => 'bg-amber-50 text-amber-800 border border-amber-200',
                                             default => 'bg-brand-50 text-brand-700 border border-brand-200',
@@ -150,7 +150,7 @@
                     <button type="button" @click="uploadDocModal = false" class="text-ink-400 hover:text-ink-700 text-sm">✕</button>
                 </div>
 
-                <form action="{{ route('uni_admin.documents.upload') }}" method="POST" class="space-y-4">
+                <form action="{{ route('uni_admin.documents.upload') }}" method="POST" enctype="multipart/form-data" class="space-y-4">
                     @csrf
                     <div>
                         <label class="block text-xs font-semibold text-ink-800 mb-1">Document Title</label>
@@ -169,7 +169,7 @@
 
                     <div class="p-4 sm:p-6 rounded-xl border border-dashed border-border-default text-center space-y-2">
                         <x-icon name="upload-cloud" class="w-6 h-6 text-brand-600 mx-auto" />
-                        <span class="text-xs font-semibold text-ink-800 block">Select PDF Document (Max 50MB)</span>
+                        <label class="block text-sm">Select PDF document, up to 50 MB<input type="file" name="document" accept=".pdf" required class="mt-3 block w-full"></label>
                         <span class="text-xs sm:text-[10px] text-ink-600 font-sans block">Official documents must bear institutional seal</span>
                     </div>
 

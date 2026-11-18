@@ -1,7 +1,7 @@
 <x-layouts.national-admin title="Superadmin — Regulatory Oversight & Registry">
     <x-ui.page-header 
-        title="National Higher Education Command Console"
-        description="Federal oversight, institutional charter verification, regulatory compliance monitoring, and national student admissions intelligence."
+        title="Higher Education Command Console"
+        description="Federal oversight, institutional charter verification, regulatory compliance monitoring, and student admissions intelligence."
         badge="Platform Administration"
         badgeVariant="brand"
     >
@@ -41,7 +41,7 @@
         @endforeach
     </div>
 
-    <!-- National Registry Table & Provincial Enrollment Chart -->
+    <!-- Registry Table & Provincial Enrollment Chart -->
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
         <!-- Registry Table (8 cols) -->
         <div class="lg:col-span-8 space-y-4">
@@ -160,7 +160,7 @@
     <x-ui.confirm-dialog 
         id="hec-alert-modal"
         title="Issue Public Regulatory Warning Notice"
-        message="This notice will be published immediately on the national portal and flagged to all student applicants regarding unaccredited sub-campuses or unauthorized degree offerings."
+        message="This notice will be published immediately on the portal and flagged to all student applicants regarding unaccredited sub-campuses or unauthorized degree offerings."
         confirmText="Publish Public Notice"
         cancelText="Discard"
         variant="destructive"

@@ -1,7 +1,7 @@
-<x-layouts.national-admin title="User Management — National Directory & RBAC">
+<x-layouts.national-admin title="User Management — Directory & RBAC">
     <x-ui.page-header 
         title="Student and Admin User Management"
-        description="National role-based access control (RBAC), multi-factor enforcement, and identity management across candidates, university registrars, and federal commissioners."
+        description="role-based access control (RBAC), multi-factor enforcement, and identity management across candidates, university registrars, and federal commissioners."
         badge="Unified Identity Registry"
         badgeVariant="brand"
     >
@@ -74,7 +74,7 @@
                     class="text-xs rounded-xl border border-border-default bg-surface px-3 py-2 text-ink-700 focus:outline-none focus:ring-2 focus:ring-brand-500"
                 >
                     <option value="all">All Access Roles</option>
-                    <option value="Federal">Federal Commissioners</option>
+                    <option value="Federal">Platform Administrators</option>
                     <option value="University">University Administrators</option>
                     <option value="Applicant">Applicant Candidates</option>
                 </select>
@@ -84,7 +84,7 @@
         <!-- Users Table -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
             <div class="overflow-x-auto">
-                <table data-mobile-table class="w-full text-left border-collapse" aria-label="National User Directory">
+                <table data-mobile-table class="w-full text-left border-collapse" aria-label="User Directory">
                     <thead>
                         <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                             <th scope="col" class="py-3.5 px-4 font-semibold">User Identity & Email</th>
@@ -123,7 +123,7 @@
                                     {{ $usr['created_at'] }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs sm:text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="inline-flex items-center gap-1.5    text-xs sm:text-[11px] font-medium  text-emerald-700  ">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         {{ $usr['status'] }}
                                     </span>
@@ -175,7 +175,7 @@
                             type="email" 
                             name="email" 
                             required
-                            placeholder="name@hec.gov.pk or registrar@nust.edu.pk"
+                            placeholder="name@uniguide.pk or registrar@nust.edu.pk"
                             class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3.5 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono"
                         />
                     </div>
@@ -189,7 +189,7 @@
                                 class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
                             >
                                 <option value="University Administrator">University Administrator</option>
-                                <option value="Platform Administrator">Federal Commissioner</option>
+                                <option value="Platform Administrator">Platform Administrator</option>
                                 <option value="Charter Committee Auditor">Charter Committee Auditor</option>
                             </select>
                         </div>

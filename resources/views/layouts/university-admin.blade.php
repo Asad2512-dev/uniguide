@@ -4,14 +4,19 @@
     'institutionCode' => 'INST-PK-019',
 ])
 
+@php
+    $institution = app(\App\Services\UniversityAdminService::class)->getInstitution();
+    $institutionName = $institution['name'];
+    $institutionCode = $institution['code'];
+@endphp
 <x-layouts.base :title="$title">
     <div class="flex h-screen overflow-hidden bg-canvas">
         <!-- University Admin Sidebar -->
         <x-nav.sidebar 
             menuKey="university_admin" 
             roleLabel="Institutional Console" 
-            userName="Dr. Tariq Mahmood" 
-            userRole="Director of Admissions • NUST" 
+            :userName="auth()->user()?->name ?? 'University administrator'"
+            userRole="University administrator"
             userAvatar="TM" 
         />
 
@@ -23,7 +28,7 @@
             <!-- Institutional Authority Topbar -->
             <x-nav.topbar 
                 contextBadge="{{ $institutionName }}" 
-                userName="Dr. Tariq Mahmood" 
+                :userName="auth()->user()?->name ?? 'University administrator'"
                 userRole="Registrar Office • Verified" 
                 avatarText="TM" 
             />

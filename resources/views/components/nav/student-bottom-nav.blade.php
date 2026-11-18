@@ -2,7 +2,7 @@
     $destinations = [
         ['label' => 'Home', 'route' => 'student.dashboard', 'active' => 'student.dashboard', 'icon' => 'layout-dashboard'],
         ['label' => 'Explore', 'route' => 'universities.index', 'active' => 'universities.*', 'icon' => 'compass'],
-        ['label' => 'AI Counselor', 'route' => 'counselor.chat', 'active' => 'counselor.*', 'icon' => 'sparkles'],
+        ['label' => 'Admission Counselor', 'route' => 'counselor.chat', 'active' => 'counselor.*', 'icon' => 'sparkles'],
         ['label' => 'Saved', 'route' => 'student.saved.universities', 'active' => 'student.saved.*', 'icon' => 'bookmark'],
         ['label' => 'Profile', 'route' => 'student.profile', 'active' => 'student.profile*', 'icon' => 'user'],
     ];

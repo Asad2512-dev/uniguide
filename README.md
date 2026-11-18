@@ -55,26 +55,20 @@ Database migrations create tables. Seeders add records separately; they include 
 
 ## Demo logins
 
-Open `/login` and use one of these local demo accounts. These are application accounts, not credentials for the institutions' external websites.
+All three demo accounts use password `12345678`. The sign-in page includes buttons to fill these credentials.
 
-| Role | Email | Password |
-| --- | --- | --- |
-| Student | `ahmad.raza.khan@student.pk` | `Student@UniGuide2026!` |
-| Student (alternate) | `ahmad.raza@student.uniguide.pk` | `StudentPass2026!` |
-| University administrator (NUST) | `tariq.mahmood@nust.edu.pk` | `NustAdmin@2026!` |
-| University administrator (NUST, alternate) | `admissions@nust.edu.pk` | `NustAdmin2026!` |
-| University staff (NUST) | `registrar@nust.edu.pk` | `NustStaff@2026!` |
-| National administrator | `chairman@hec.gov.pk` | `HecFederal@2026!` |
-| National administrator (alternate) | `regulatory@hec.gov.pk` | `HecFederal2026!` |
-| National administrator (generic) | `admin@uniguide.pk` | `SuperAdmin@UniGuide2026!` |
+| Role | Email |
+| --- | --- |
+| Student | `student@gmail.com` |
+| NUML Multan university administrator | `numl@gmail.com` |
+| UniGuide platform administrator | `admin@gmail.com` |
 
-All eight accounts are defined in `database/seeders/UserSeeder.php`, which is included in `DatabaseSeeder`. To create or reset only these accounts without running the catalog seeders:
+The platform administrator is a UniGuide operator. Listing approval does not grant accreditation.
+The NUML account belongs to the existing NUML institution record, which includes its Multan campus.
 
-```bash
-php artisan db:seed --class=UserSeeder
-```
+Run `php artisan migrate` and `php artisan db:seed --class=UserSeeder` to install the new table and demo accounts. On a new database, run the catalog seeders first.
 
-This command updates accounts by email and resets their passwords to the values above. Use these publicly documented credentials only for local demonstrations.
+Universities can request a listing at `/universities/join`. Platform administrators review persisted submissions at `/admin/national/applications`; approval adds the institution to the public directory. Administrator accounts are provisioned separately.
 
 ## Check changes
 
@@ -93,3 +87,15 @@ vendor/bin/pint --dirty
 ```
 
 Do not edit `vendor/`, `node_modules/`, or `public/build/` directly. Their contents are installed or generated.
+
+## Database-backed operation
+
+Public catalogs and all three account workspaces read persisted records. Empty collections stay empty; there are no sample-profile or session-data fallbacks. The only seeded accounts are `numl@gmail.com`, `student@gmail.com`, and `admin@gmail.com`, each using `12345678` for local use. Registration can create new student accounts.
+
+Run `php artisan migrate` before starting the app. `php artisan db:seed` imports the source-backed university snapshots and the three accounts; retired sample seeders no longer generate data.
+
+`php artisan uniguide:retire-demo-data` privately backs up existing tables, disables extra accounts, and retires specifically identified old example records. Private backups are stored under the local storage disk's `backups/` directory. This cleanup has been applied to the current local database; existing registered-user data is preserved, with extra accounts inactive.
+
+Saved items, academic profiles, test results, notifications, admission tracking, institution data, settings, document metadata, and reviews persist in the database. Uploaded files are kept on private local storage with account-scoped download routes. Uploaded results are self-reported until reviewed.
+
+In-app reminders publish on the user's next visit; `php artisan schedule:work` also publishes due reminders in the background. There is no connected email delivery, external AI provider, embedding service, payment gateway, or live crawler. Those capabilities do not report fabricated success. Extraction review decisions are recorded; arbitrary extracted strings do not automatically overwrite catalog fields. Use the corresponding institution editor to publish checked changes.

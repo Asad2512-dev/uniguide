@@ -14,52 +14,7 @@ class ComparisonService
      */
     public function getPresetComparisons(): array
     {
-        $presets = [
-            [
-                'id' => 'computing-leaders',
-                'title' => 'National Computing Big-4 Battle',
-                'description' => 'Direct comparison of Pakistan\'s top software engineering and CS powerhouses.',
-                'slugs' => ['nust', 'fast-nuces', 'lums', 'uet-lahore'],
-                'badge' => 'Most Popular',
-                'badge_color' => 'brand',
-                'icon' => 'laptop',
-            ],
-            [
-                'id' => 'premier-engineering',
-                'title' => 'Top Engineering & Technology Charters',
-                'description' => 'Washington Accord Level-II accredited institutions with world-class faculty ratios.',
-                'slugs' => ['nust', 'uet-lahore', 'fast-nuces'],
-                'badge' => 'PEC Level-II',
-                'badge_color' => 'success',
-                'icon' => 'cpu',
-            ],
-            [
-                'id' => 'business-titans',
-                'title' => 'Premier Business & Management Schools',
-                'description' => 'Rigorous business curriculum, international exchange, and placement networks.',
-                'slugs' => ['lums', 'nust', 'quaid-i-azam-university'],
-                'badge' => 'High Return',
-                'badge_color' => 'indigo',
-                'icon' => 'bar-chart-3',
-            ],
-            [
-                'id' => 'healthcare-biosciences',
-                'title' => 'Medical & Allied Biosciences Benchmark',
-                'description' => 'World-ranked clinical teaching facilities and biomedical research hubs.',
-                'slugs' => ['quaid-i-azam-university', 'nust'],
-                'badge' => 'Clinical Excellence',
-                'badge_color' => 'warning',
-                'icon' => 'heart-pulse',
-            ],
-        ];
-        $allowed = array_column($this->getSelectableUniversities(), 'slug');
-
-        return collect($presets)->map(function (array $preset) use ($allowed): array {
-            $preset['slugs'] = array_values(array_intersect($preset['slugs'], $allowed));
-            $preset['description'] = 'Compare recorded institutions serving Punjab and Islamabad.';
-
-            return $preset;
-        })->filter(fn (array $preset): bool => count($preset['slugs']) >= 2)->values()->all();
+        return [];
     }
 
     /**
@@ -111,7 +66,7 @@ class ComparisonService
                     'Charter Authority' => array_column($universities, 'charter_type'),
                     'Establishment Year' => array_column($universities, 'established'),
                     'HEC Category' => array_column($universities, 'hec_category'),
-                    'National Rank' => array_column($universities, 'hec_ranking'),
+                    'Rank' => array_column($universities, 'hec_ranking'),
                     'Acceptance Rate' => array_column($universities, 'acceptance_rate'),
                 ],
             ],

@@ -62,6 +62,7 @@ export default function counselorWorkspace(config) {
             this.atBottom = feed.scrollHeight - feed.scrollTop - feed.clientHeight < 100;
         },
         async api(url, method, body) {
+            const finishProgress = window.UniGuideProgress?.start(method === 'POST' ? 'Looking up university records…' : 'Updating your conversation…');
             const controller = new AbortController();
             const timeout = setTimeout(() => controller.abort(), 45000);
             try {
@@ -71,7 +72,7 @@ export default function counselorWorkspace(config) {
                 const payload = await response.json().catch(() => ({}));
                 if (!response.ok) throw new Error(requestError(response.status, payload));
                 return payload;
-            } finally { clearTimeout(timeout); }
+            } finally { clearTimeout(timeout); finishProgress?.(); }
         },
         async sendMessage(retry = null) {
             if (!this.authenticated || this.sending) return;

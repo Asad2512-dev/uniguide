@@ -2,322 +2,70 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\Jobs\ProcessWebScrapeJob;
+use App\Models\AiExtraction;
+use App\Models\DataSource;
+use App\Models\Notification;
+use App\Models\SystemSetting;
+use App\Models\User;
+use App\Models\VerificationRequest;
+use Illuminate\Support\Facades\Queue;
+use Tests\DatabaseFeatureTestCase;
 
-class NationalAdminPhaseTest extends TestCase
+class NationalAdminPhaseTest extends DatabaseFeatureTestCase
 {
-    /**
-     * 1. National Overview Dashboard.
-     */
-    public function test_national_admin_dashboard_renders_kpis_and_regional_breakdown(): void
+    public function test_guests_and_students_cannot_open_platform_management(): void
     {
-        $response = $this->get('/admin/national/dashboard');
-
-        $response->assertStatus(200);
-        $response->assertSee('National Operational Command');
-        $response->assertSee('Total Indexed Universities');
-        $response->assertSee('Verified Institutions');
-        $response->assertSee('Provincial Jurisdiction');
-        $response->assertSee('Punjab');
-        $response->assertSee('Sindh');
-        $response->assertSee('Recent Data Ingestions');
+        $this->get('/admin/platform/dashboard')->assertRedirect();
+        $this->loginAs('student@gmail.com');
+        $this->get('/admin/platform/dashboard')->assertForbidden();
     }
 
-    /**
-     * 2. University Registry.
-     */
-    public function test_national_university_registry_renders_chartered_universities(): void
+    public function test_platform_management_pages_render_actual_records(): void
     {
-        $response = $this->get('/admin/national/universities');
-
-        $response->assertStatus(200);
-        $response->assertSee('National University Registry');
-        $response->assertSee('National University of Sciences & Technology', false);
-        $response->assertSee('FAST-NUCES');
-        $response->assertSee('Lahore University of Management Sciences');
-        $response->assertSee('Total Chartered');
+        $this->loginAs('admin@gmail.com');
+        foreach (['dashboard', 'universities', 'applications', 'programs', 'sources', 'scraping', 'scraping/history', 'ai-extraction', 'verification', 'knowledge-base', 'chatbot-config', 'users', 'notifications', 'analytics', 'settings'] as $path) {
+            $this->get('/admin/platform/'.$path)->assertOk();
+        }
+        $this->get('/admin/platform/users')->assertSee('numl@gmail.com')->assertDontSee('chairman@hec.gov.pk');
     }
 
-    /**
-     * 3. University Approval Center.
-     */
-    public function test_university_approval_center_renders_and_processes_charter_status(): void
+    public function test_source_creation_and_collection_queue_are_real(): void
     {
-        $response = $this->get('/admin/national/approvals');
-
-        $response->assertStatus(200);
-        $response->assertSee('University Approval Center');
-        $response->assertSee('FAST-NUCES (Proposed Multan Campus)');
-        $response->assertSee('Constituent Sub-Campus Endorsement');
-
-        // Process approval action
-        $processResponse = $this->post('/admin/national/approvals/appr-1', [
-            'action' => 'approved',
-        ]);
-
-        $processResponse->assertStatus(302);
-        $processResponse->assertSessionHas('toast_success');
+        $this->loginAs('admin@gmail.com');
+        $this->post('/admin/platform/sources', ['name' => 'Source test', 'institution' => 'NUML', 'base_url' => 'https://numl.edu.pk'])->assertRedirect();
+        $this->assertSame('pending', DataSource::withoutGlobalScopes()->where('name', 'Source test')->value('status'));
+        Queue::fake();
+        $this->post('/admin/platform/scraping/trigger', ['source_name' => 'Source test'])->assertRedirect();
+        Queue::assertPushed(ProcessWebScrapeJob::class);
     }
 
-    /**
-     * 4. Campus and Program Registry.
-     */
-    public function test_campus_and_program_registry_renders_accredited_programs(): void
+    public function test_extraction_and_verification_reviews_are_persisted(): void
     {
-        $response = $this->get('/admin/national/programs');
-
-        $response->assertStatus(200);
-        $response->assertSee('Campus and Program Registry');
-        $response->assertSee('BS Computer Science');
-        $response->assertSee('BE Electrical Engineering');
-        $response->assertSee('NCEAC Category W');
+        $this->loginAs('admin@gmail.com');
+        $e = AiExtraction::create(['extraction_code' => 'TEST-EX', 'university_name' => 'NUML', 'institution_slug' => 'numl', 'entity_type' => 'university', 'field_name' => 'phone', 'after_value' => '123', 'confidence_score' => 0, 'status' => 'pending']);
+        $this->post('/admin/platform/ai-extraction/'.$e->id, ['decision' => 'approved'])->assertRedirect();
+        $this->assertSame('approved', $e->fresh()->status);
+        $v = VerificationRequest::create(['queue_code' => 'TEST-V', 'institution_name' => 'NUML', 'institution_slug' => 'numl', 'entity_type' => 'university', 'field_name' => 'phone', 'status' => 'pending', 'priority' => 'normal']);
+        $this->post('/admin/platform/verification/'.$v->id, ['action' => 'approved'])->assertRedirect();
+        $this->assertSame('approved', $v->fresh()->status);
     }
 
-    /**
-     * 5. Official Data Source Management.
-     */
-    public function test_official_data_source_management_renders_authoritative_feeds(): void
+    public function test_in_app_broadcasts_reach_only_the_requested_users(): void
     {
-        $response = $this->get('/admin/national/sources');
-
-        $response->assertStatus(200);
-        $response->assertSee('Official Data Source Management');
-        $response->assertSee('NUST Official Admissions Portal');
-        $response->assertSee('FAST-NUCES Central University Portal');
-        $response->assertSee('Pakistan Engineering Council');
-
-        // Test registering a new authoritative source
-        $createResponse = $this->post('/admin/national/sources', [
-            'name' => 'QAU Admissions Prospectus Portal',
-            'institution' => 'Quaid-i-Azam University',
-            'base_url' => 'https://admissions.qau.edu.pk',
-            'endpoint' => '/fees',
-            'feed_type' => 'PDF Gazette Parser',
-            'crawl_frequency' => 'Daily',
-        ]);
-
-        $createResponse->assertStatus(302);
-        $createResponse->assertSessionHas('toast_success');
+        $this->loginAs('admin@gmail.com');
+        $this->post('/admin/platform/notifications', ['title' => 'Real update', 'message' => 'Please check your saved records.', 'category' => 'system', 'target_audience' => 'students'])->assertRedirect();
+        $this->assertSame(1, Notification::where('title', 'Real update')->count());
+        $this->assertSame(User::where('email', 'student@gmail.com')->value('id'), Notification::first()->user_id);
     }
 
-    /**
-     * 6. Web Scraping Control Center.
-     */
-    public function test_web_scraping_control_center_renders_and_triggers_crawls(): void
+    public function test_settings_survive_sessions_and_unconfigured_integrations_do_not_claim_success(): void
     {
-        $response = $this->get('/admin/national/scraping');
-
-        $response->assertStatus(200);
-        $response->assertSee('Web Scraping Control Center');
-        $response->assertSee('Active Crawlers');
-        $response->assertSee('Queue Depth');
-
-        // Trigger manual crawl
-        $triggerResponse = $this->post('/admin/national/scraping/trigger', [
-            'source_name' => 'NUST Islamabad Prospectus',
-        ]);
-
-        $triggerResponse->assertStatus(302);
-        $triggerResponse->assertSessionHas('toast_success');
-
-        // Retry failed crawls
-        $retryResponse = $this->post('/admin/national/scraping/retry-failed');
-        $retryResponse->assertStatus(302);
-        $retryResponse->assertSessionHas('toast_success');
-    }
-
-    /**
-     * 7. Scraping Job History.
-     */
-    public function test_scraping_job_history_renders_terminal_logs(): void
-    {
-        $response = $this->get('/admin/national/scraping/history');
-
-        $response->assertStatus(200);
-        $response->assertSee('Scraping Job History');
-        $response->assertSee('JOB-CRW-9842');
-        $response->assertSee('NUST Islamabad Central Admissions');
-    }
-
-    /**
-     * 8. AI Extraction Review Workspace.
-     */
-    public function test_ai_extraction_review_workspace_renders_and_records_decisions(): void
-    {
-        $response = $this->get('/admin/national/ai-extraction');
-
-        $response->assertStatus(200);
-        $response->assertSee('AI Extraction Review Workspace');
-        $response->assertSee('BS Artificial Intelligence Semester Tuition');
-        $response->assertSee('PKR 195,000');
-        $response->assertSee('PKR 180,000');
-
-        // Approve extraction
-        $actionResponse = $this->post('/admin/national/ai-extraction/ext-1', [
-            'action' => 'approved',
-        ]);
-
-        $actionResponse->assertStatus(302);
-        $actionResponse->assertSessionHas('toast_success');
-    }
-
-    /**
-     * 9. Data Verification Queue.
-     */
-    public function test_data_verification_queue_renders_staging_items(): void
-    {
-        $response = $this->get('/admin/national/verification');
-
-        $response->assertStatus(200);
-        $response->assertSee('Data Verification Queue');
-        $response->assertSee('NUST Islamabad');
-        $response->assertSee('Pending Review');
-
-        // Test processing verification queue item
-        $verifyResponse = $this->post('/admin/national/verification/vq-1', [
-            'action' => 'approved',
-        ]);
-
-        $verifyResponse->assertStatus(302);
-        $verifyResponse->assertSessionHas('toast_success');
-    }
-
-    /**
-     * 10. Knowledge Base Management.
-     */
-    public function test_knowledge_base_management_renders_and_triggers_reindexing(): void
-    {
-        $response = $this->get('/admin/national/knowledge-base');
-
-        $response->assertStatus(200);
-        $response->assertSee('Knowledge Base Management (RAG)');
-        $response->assertSee('Pakistan Engineering Council (PEC) Act', false);
-        $response->assertSee('Embedded Vectors');
-
-        // Reindex trigger
-        $reindexResponse = $this->post('/admin/national/knowledge-base/reindex');
-        $reindexResponse->assertStatus(302);
-        $reindexResponse->assertSessionHas('toast_success');
-    }
-
-    /**
-     * 11. AI Chatbot Configuration.
-     */
-    public function test_chatbot_config_renders_and_updates_statutory_hyperparameters(): void
-    {
-        $response = $this->get('/admin/national/chatbot-config');
-
-        $response->assertStatus(200);
-        $response->assertSee('AI Chatbot Configuration');
-        $response->assertSee('Temperature (Factual Precision)');
-        $response->assertSee('PEC Washington Accord Ruleset');
-
-        // Update configuration
-        $updateResponse = $this->post('/admin/national/chatbot-config', [
-            'model' => 'gemini-1.5-pro',
-            'temperature' => 0.25,
-            'max_tokens' => 2048,
-            'citation_threshold' => 0.88,
-            'system_prompt' => 'Updated national prompt for admissions counselor.',
-            'inject_pec_rules' => '1',
-            'enforce_strict_citations' => '1',
-        ]);
-
-        $updateResponse->assertStatus(302);
-        $updateResponse->assertSessionHas('toast_success');
-    }
-
-    /**
-     * 12. Student and Admin User Management.
-     */
-    public function test_student_and_admin_user_management_renders_directory(): void
-    {
-        $response = $this->get('/admin/national/users');
-
-        $response->assertStatus(200);
-        $response->assertSee('Student and Admin User Management');
-        $response->assertSee('Dr. Tariq Mahmood');
-        $response->assertSee('Prof. Dr. Mukhtar Ahmed');
-
-        // Test inviting a new administrator
-        $inviteResponse = $this->post('/admin/national/users/invite', [
-            'name' => 'Prof. Dr. Arshad Ali',
-            'email' => 'arshad.ali@hec.gov.pk',
-            'role' => 'Federal Oversight Commissioner',
-            'scope' => 'National Regulatory HEC',
-            'two_factor' => '1',
-        ]);
-
-        $inviteResponse->assertStatus(302);
-        $inviteResponse->assertSessionHas('toast_success');
-    }
-
-    /**
-     * 13. Notifications Management.
-     */
-    public function test_notifications_management_renders_and_dispatches_broadcasts(): void
-    {
-        $response = $this->get('/admin/national/notifications');
-
-        $response->assertStatus(200);
-        $response->assertSee('Regulatory Broadcasts');
-        $response->assertSee('Federal Directive: Pre-Medical to Computing');
-
-        // Dispatch new broadcast
-        $dispatchResponse = $this->post('/admin/national/notifications', [
-            'title' => 'Emergency Test Window Notice',
-            'category' => 'National Admissions Alert',
-            'target_audience' => 'All Chartered Universities & Candidates',
-        ]);
-
-        $dispatchResponse->assertStatus(302);
-        $dispatchResponse->assertSessionHas('toast_success');
-    }
-
-    /**
-     * 14. Analytics and Reports.
-     */
-    public function test_analytics_and_reports_renders_macro_intelligence(): void
-    {
-        $response = $this->get('/admin/national/analytics');
-
-        $response->assertStatus(200);
-        $response->assertSee('National Higher Education Analytics');
-        $response->assertSee('Undergraduate Discipline Applicant Demand');
-        $response->assertSee('Computer Science & AI');
-        $response->assertSee('Inter-Provincial Student Migration Flow');
-    }
-
-    /**
-     * 15. System Settings and Audit Logs.
-     */
-    public function test_settings_and_audit_logs_renders_and_updates_concurrency(): void
-    {
-        $response = $this->get('/admin/national/settings');
-
-        $response->assertStatus(200);
-        $response->assertSee('System Settings and Audit Logs');
-        $response->assertSee('Crawler Worker Concurrency');
-        $response->assertSee('Immutable Supervisory Audit Trail');
-
-        // Update settings
-        $updateResponse = $this->post('/admin/national/settings', [
-            'crawler_concurrency' => 12,
-            'api_rate_limit_per_minute' => 800,
-            'immutable_audit_logging_enabled' => '1',
-        ]);
-
-        $updateResponse->assertStatus(302);
-        $updateResponse->assertSessionHas('toast_success');
-    }
-
-    /**
-     * 16. Security & Authorization Boundary.
-     */
-    public function test_unauthorized_user_is_blocked_from_national_admin(): void
-    {
-        // When authenticated or identified as a student role, access should be forbidden (403)
-        $response = $this->get('/admin/national/dashboard?auth_role=student');
-        $response->assertStatus(403);
+        $this->loginAs('admin@gmail.com');
+        $this->post('/admin/platform/settings', ['crawler_concurrency' => 2, 'api_rate_limit_per_minute' => 40])->assertRedirect();
+        $this->assertSame(2, SystemSetting::get('platform.settings')['crawler_concurrency']);
+        $this->post('/admin/platform/knowledge-base/reindex')->assertSessionHasErrors('knowledge_base');
+        $this->post('/admin/platform/users/invite', ['name' => 'New user', 'email' => 'new@example.com', 'role' => 'student', 'scope' => 'platform'])->assertSessionHasErrors('email');
+        $this->assertSame(3, User::count());
     }
 }

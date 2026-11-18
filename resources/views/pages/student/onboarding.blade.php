@@ -6,12 +6,12 @@
         x-data="{
             step: 1,
             totalSteps: 5,
-            stream: '{{ $profile['stream'] ?? 'pre_engineering' }}',
+            stream: @js(config('academic_streams.aliases.'.old('stream', $profile['stream'] ?? 'pre_engineering'), old('stream', $profile['stream'] ?? 'pre_engineering'))),
             matricPercentage: {{ $profile['matric']['percentage'] ?? 85.0 }},
             fscPercentage: {{ $profile['fsc']['percentage'] ?? 80.0 }},
-            targetDisciplines: ['Computer Science & AI', 'Software Engineering'],
-            targetCities: ['Islamabad', 'Lahore'],
-            budgetMax: 200000,
+            targetDisciplines: @js(old('target_disciplines', $profile['preferences']['target_disciplines'])),
+            targetCities: @js(old('target_cities', $profile['preferences']['target_cities'])),
+            budgetMax: @js(old('budget_max', $profile['preferences']['budget_max'])),
             scholarshipInterest: 'need_and_merit',
 
             toggleDiscipline(item) {
@@ -63,7 +63,10 @@
 
         <!-- Main Onboarding Body -->
         <main class="max-w-2xl mx-auto w-full px-4 py-8 sm:py-12 flex-1">
-            
+
+            @if($errors->any())
+                <div role="alert" class="mb-6 rounded-xl border border-error-200 bg-error-50 p-4 text-sm text-error-700"><p class="font-semibold">Please check your details.</p><ul class="list-disc pl-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
+            @endif
             <!-- Progress Bar -->
             <div class="w-full bg-surface-subtle h-1.5 rounded-full overflow-hidden mb-8 border border-border-default">
                 <div 
@@ -81,7 +84,7 @@
                         <span class="text-xs font-mono font-bold text-brand-600 uppercase tracking-wider">Step 1 of 5</span>
                         <h1 class="font-heading font-bold text-2xl text-ink-950 mt-1">Select Your Academic Stream</h1>
                         <p class="text-xs sm:text-sm text-ink-500 font-sans mt-1">
-                            Choose your higher secondary qualification stream to calibrate entry test eligibility.
+                            Your signup choice is selected below. You can change it before continuing.
                         </p>
                     </div>
 
@@ -95,7 +98,9 @@
                                     type="radio" 
                                     name="stream" 
                                     value="{{ $st['id'] }}" 
-                                    x-model="stream" 
+                                    x-model="stream"
+                                    @checked(config('academic_streams.aliases.'.old('stream', $profile['stream'] ?? 'pre_engineering'), old('stream', $profile['stream'] ?? 'pre_engineering')) === $st['id'])
+                                    required
                                     class="mt-1 text-brand-600 focus:ring-brand-500" 
                                 />
                                 <div>
@@ -245,7 +250,7 @@
                         <div class="space-y-3">
                             <div class="flex items-center justify-between">
                                 <span class="text-xs font-semibold text-ink-800">Max Semester Tuition:</span>
-                                <span class="text-sm font-bold font-mono text-brand-700 bg-brand-50 px-3 py-1 rounded-full border border-brand-200">
+                                <span class="text-sm font-bold font-mono text-brand-700      ">
                                     PKR <span x-text="Number(budgetMax).toLocaleString()"></span> / sem
                                 </span>
                             </div>
@@ -319,7 +324,7 @@
                         x-show="step === totalSteps"
                         class="px-6 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold shadow-card transition-smooth cursor-pointer flex items-center gap-2 ml-auto"
                     >
-                        <x-icon name="sparkles" class="w-4 h-4" />
+                        <x-icon name="message-circle" class="w-4 h-4" />
                         <span>Complete Profile</span>
                     </button>
                 </div>

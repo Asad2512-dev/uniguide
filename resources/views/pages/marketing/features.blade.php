@@ -59,48 +59,7 @@
             @endforeach
         </div>
 
-        <!-- Interactive Feature Spotlight: Document Locker & 1-Link Banking -->
-        <section class="p-4 sm:p-8 md:p-12 bg-surface rounded-3xl border border-border-default shadow-card">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                <div class="lg:col-span-7 space-y-4">
-                    <span class="text-xs font-mono font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-md border border-emerald-200">
-                        Institutional Payment Gateway
-                    </span>
-                    <h3 class="text-2xl sm:text-3xl font-heading font-bold text-ink-950 tracking-tight">
-                        Integrated with 1-Link, 1-Bill, and National Banking Systems
-                    </h3>
-                    <p class="text-xs sm:text-sm text-ink-600 font-sans leading-relaxed">
-                        Never stand in bank lines during admission cutoff rushes. Download official institutional fee challans with automatic 1-Bill reference codes payable through any mobile banking app (HBL, Meezan, Bank Alfalah, Easypaisa, Nayapay, or JazzCash).
-                    </p>
-                    <div class="pt-2 flex items-center gap-4 text-xs font-sans text-ink-700">
-                        <span class="flex items-center gap-1.5 font-semibold text-emerald-700">
-                            <x-icon name="check-circle-2" class="w-4 h-4 text-emerald-600" />
-                            Instant Receipt Generation
-                        </span>
-                        <span class="flex items-center gap-1.5 font-semibold text-emerald-700">
-                            <x-icon name="check-circle-2" class="w-4 h-4 text-emerald-600" />
-                            Direct University Portal Sync
-                        </span>
-                    </div>
-                </div>
-
-                <div class="lg:col-span-5 bg-surface-subtle p-4 sm:p-6 rounded-2xl border border-border-default text-center space-y-3">
-                    <x-icon name="receipt" class="w-12 h-12 text-brand-600 mx-auto" />
-                    <span class="font-heading font-bold text-base text-ink-950 block">1-Bill National Integration</span>
-                    <p class="text-xs text-ink-500 font-sans">Automated challan verification for 240+ institutions</p>
-                    <div class="font-mono text-xs font-bold text-ink-800 bg-surface px-3 py-1.5 rounded-lg border border-border-default inline-block">
-                        1-Bill Prefix: 100248-XXXX-XXXX
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Final CTA -->
-        <div class="text-center pt-6">
-            <x-ui.button variant="primary" size="lg" :href="route('auth.register')" iconRight="arrow-right">
-                Create Free Account to Use All Features
-            </x-ui.button>
-        </div>
+        <section class="rounded-2xl border border-border-default p-6"><h2 class="text-xl font-semibold">Your university application stays with the institution</h2><p class="mt-3 text-sm text-ink-600">UniGuide helps you research and track your plans. Applications and fee payments are completed through official university channels.</p></section>
     </div>
 </x-layouts.public>
 

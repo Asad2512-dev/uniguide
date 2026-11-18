@@ -7,12 +7,12 @@ use App\Models\User;
 class NationalAdminPolicy
 {
     /**
-     * Determine whether the user has national regulatory authority.
+     * Determine whether the user has regulatory authority.
      */
     public function manageNational(User $user): bool
     {
         $role = $user->role ?? session()->get('uniguide_user_role', 'admin');
 
-        return in_array($role, ['admin', 'super_admin', 'hec_regulator']);
+        return in_array($role, ['admin', 'super_admin', 'national_admin']);
     }
 }

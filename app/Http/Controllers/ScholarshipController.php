@@ -12,7 +12,7 @@ class ScholarshipController extends Controller
     ) {}
 
     /**
-     * Display the national scholarship directory.
+     * Display the scholarship directory.
      */
     public function index(Request $request)
     {

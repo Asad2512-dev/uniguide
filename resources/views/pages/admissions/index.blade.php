@@ -1,6 +1,6 @@
 <x-layouts.public 
     title="Admission Explorer — UniGuide Pakistan"
-    description="Discover active Pakistani university admissions, application deadlines, national entry test schedules, and verified intake sessions."
+    description="Discover active Pakistani university admissions, application deadlines, entry test schedules, and verified intake sessions."
 >
     <div x-data="{ 
         mobileFilterOpen: false,
@@ -8,7 +8,7 @@
         activeProvince: '{{ $filters['province'] }}',
         activeDegreeLevel: '{{ $filters['degree_level'] }}'
     }" class="min-h-screen bg-canvas pb-20">
-        
+
         <!-- Header Banner & Tools Strip -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -21,12 +21,12 @@
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-brand-50 border border-brand-200/60 text-brand-700 text-xs font-semibold font-sans mb-3">
+                        <div class="inline-flex items-center gap-2       text-brand-700 text-xs font-semibold font-sans mb-3">
                             <x-icon name="calendar-clock" class="w-3.5 h-3.5 text-brand-600" />
-                            <span>National Intake Intelligence • Fall 2026</span>
+                            <span>Intake Intelligence • Fall 2026</span>
                         </div>
                         <h1 class="font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-ink-950 tracking-tight">
-                            National University Admission Explorer
+                            University Admission Explorer
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
                             Track verified admission campaigns, registration deadlines, and entrance test criteria across Punjab and Islamabad’s top public and chartered institutions.
@@ -133,7 +133,7 @@
         <!-- Main Body: Desktop Filter Sidebar + Results Viewport -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                
+
                 <!-- Desktop Sidebar Filters -->
                 <aside class="hidden lg:block lg:col-span-1 space-y-6">
                     <form action="{{ route('admissions.index') }}" method="GET" id="desktop-adm-filter-form">
@@ -267,7 +267,7 @@
 
                 <!-- Results Viewport -->
                 <section class="lg:col-span-3 space-y-6">
-                    
+
                     <!-- Control Bar: Result Count, Mobile Trigger, Sort -->
                     <div class="bg-surface rounded-2xl border border-border-default p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                         <div class="flex items-center gap-3">
@@ -375,7 +375,7 @@
                                                         {{ $adm['title'] }}
                                                     </a>
                                                 </h3>
-                                                
+
                                                 <p class="text-xs text-brand-700 font-semibold font-sans mt-0.5">
                                                     {{ $adm['university_name'] }} ({{ $adm['university_acronym'] }})
                                                 </p>

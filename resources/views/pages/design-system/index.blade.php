@@ -25,7 +25,7 @@
                     <div class="flex items-center gap-2.5">
                         <x-brand.logo size="lg" />
                         <div>
-                            <span class="text-[11px] font-mono uppercase tracking-widest font-bold text-brand-700 bg-brand-50 px-2.5 py-0.5 rounded-full border border-brand-200/60">
+                            <span class="text-[11px] font-mono uppercase tracking-widest font-bold text-brand-700      ">
                                 Global Design System v1.0
                             </span>
                             <h1 class="text-3xl md:text-4xl font-heading font-extrabold text-ink-950 tracking-tight mt-1">
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <p class="text-sm md:text-base text-ink-600 font-sans leading-relaxed">
-                        A national-level, commercial SaaS frontend architecture built strictly with <strong>Laravel Blade</strong>, <strong>Tailwind CSS</strong>, <strong>Alpine.js</strong>, and <strong>Chart.js</strong>. Clean light mode palette, verified editorial typography, WCAG 2.2 AA accessibility, and zero external frontend frameworks.
+                        A platform, commercial SaaS frontend architecture built strictly with <strong>Laravel Blade</strong>, <strong>Tailwind CSS</strong>, <strong>Alpine.js</strong>, and <strong>Chart.js</strong>. Clean light mode palette, verified editorial typography, WCAG 2.2 AA accessibility, and zero external frontend frameworks.
                     </p>
                 </div>
 
@@ -238,7 +238,7 @@
                         <x-ui.button size="xs" icon="plus">Extra Small</x-ui.button>
                         <x-ui.button size="sm" icon="search">Small</x-ui.button>
                         <x-ui.button size="md" iconRight="arrow-right">Medium (Default)</x-ui.button>
-                        <x-ui.button size="lg" icon="sparkles">Large Hero</x-ui.button>
+                        <x-ui.button size="lg" icon="message-circle">Large Hero</x-ui.button>
                         <x-ui.button size="md" :loading="true">Processing</x-ui.button>
                         <x-ui.button size="md" :disabled="true">Disabled</x-ui.button>
                     </div>
@@ -359,7 +359,7 @@
                     <h4 class="text-xs font-bold font-sans text-ink-900 uppercase tracking-wider">
                         Switches & Choice Controls
                     </h4>
-                    
+
                     <div class="space-y-2">
                         <x-form.toggle 
                             name="notifications_enabled" 
@@ -403,7 +403,7 @@
             <x-ui.section-header 
                 eyebrow="Credibility & Trust"
                 title="Badges, Admission States & Statutory Seals"
-                description="National regulatory credentials, freshness stamps, and admission cycle indicators."
+                description="regulatory credentials, freshness stamps, and admission cycle indicators."
             />
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -417,7 +417,7 @@
                         <x-ui.badge variant="success" :dot="true">Verified Active</x-ui.badge>
                         <x-ui.badge variant="warning" :dot="true" :pulse="true">Review Required</x-ui.badge>
                         <x-ui.badge variant="error">Unaccredited</x-ui.badge>
-                        <x-ui.badge variant="lavender" icon="sparkles">AI Assisted</x-ui.badge>
+
                         <x-ui.badge variant="mint" icon="shield-check">Chartered</x-ui.badge>
                         <x-ui.badge variant="outline">Neutral Outline</x-ui.badge>
                     </div>
@@ -442,7 +442,7 @@
                         Statutory Regulatory Credentials
                     </h4>
                     <div class="space-y-2.5">
-                        <div><x-domain.verification-badge type="hec_recognized" detail="Category W (Highest National Ranking)" verifiedAt="2026 Sync" /></div>
+                        <div><x-domain.verification-badge type="hec_recognized" detail="Category W (Highest Ranking)" verifiedAt="2026 Sync" /></div>
                         <div><x-domain.verification-badge type="chartered" detail="Federal Act No. XXXV of 1991" verifiedAt="Gazette" /></div>
                         <div><x-domain.verification-badge type="council_accredited" detail="Pakistan Engineering Council (PEC) Level-II" /></div>
                         <div><x-domain.verification-badge type="gazette_verified" detail="Statutory SRO Notification 884(I)/2025" /></div>
@@ -553,7 +553,7 @@
             />
 
             <x-domain.ai-message 
-                advisorName="UniGuide National Merit Intelligence"
+                advisorName="UniGuide Merit Intelligence"
                 confidence="98% High Confidence"
                 timestamp="Calculated using verified Fall 2026 merit guidelines"
                 :citations="[
@@ -748,7 +748,7 @@
                     <x-ui.error-state 
                         title="Source Sync Offline"
                         message="Federal registry connection timed out."
-                        code="HEC_SYNC_504"
+                        code="UniGuide_SYNC_504"
                     />
                 </div>
             </div>

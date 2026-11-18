@@ -1,4 +1,4 @@
-<x-layouts.public title="University source evidence — UniGuide">
+<x-layouts.counselor title="University source evidence — UniGuide">
     <div class="px-4 py-8 sm:px-8">
         <x-ui.page-header title="University source evidence" description="Recorded official references, review status and verification dates. Source availability does not establish current fees, program accreditation or admission decisions.">
             <x-slot:actions><x-ui.button :href="route('counselor.chat')" variant="outline">Open counselor</x-ui.button></x-slot:actions>
@@ -21,4 +21,4 @@
         </div>
         <div class="mt-6">{{ $records->links() }}</div>
     </div>
-</x-layouts.public>
+</x-layouts.counselor>

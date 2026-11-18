@@ -2,18 +2,8 @@
     :title="$program['title'] . ' — ' . $program['university_name'] . ' — UniGuide Pakistan'"
     :description="$program['overview']"
 >
-    <div x-data="{ 
-        saved: false,
-        saveProgram() {
-            this.saved = !this.saved;
-            if (this.saved) {
-                $store.toasts.add('Saved ' + '{{ $program['title'] }}' + ' to your shortlist.', 'success');
-            } else {
-                $store.toasts.add('Removed from shortlist.', 'info');
-            }
-        }
-    }" class="min-h-screen bg-canvas pb-24">
-        
+    <div class="min-h-screen bg-canvas pb-24">
+
         <!-- Breadcrumbs & Program Identity Header -->
         <header class="bg-surface border-b border-border-default/80">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -30,13 +20,13 @@
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2">
                     <div>
                         <div class="flex flex-wrap items-center gap-2 mb-2">
-                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200/60 font-sans uppercase font-mono">
+                            <span class="   text-xs font-semibold  text-brand-700   font-sans uppercase font-mono">
                                 {{ $program['degree_level_label'] }}
                             </span>
-                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-surface-subtle text-ink-700 border border-border-default font-sans">
+                            <span class="   text-xs font-semibold  text-ink-700   font-sans">
                                 {{ $program['discipline_label'] }}
                             </span>
-                            <span class="inline-flex items-center gap-1 text-xs font-sans text-success-700 font-semibold bg-success-50 px-2 py-0.5 rounded-full border border-success-200/60">
+                            <span class="inline-flex items-center gap-1 text-xs font-sans text-success-700 font-semibold      ">
                                 <x-icon name="shield-check" class="w-3.5 h-3.5" />
                                 <span>{{ $program['council'] }} Accredited</span>
                             </span>
@@ -61,18 +51,10 @@
 
                     <!-- Right CTAs: Save, Calculate Merit, Apply -->
                     <div class="flex items-center flex-wrap gap-2.5 shrink-0">
-                        <button 
-                            type="button" 
-                            @click="saveProgram()"
-                            :class="saved ? 'bg-brand-50 border-brand-300 text-brand-700' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle'"
-                            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold font-sans shadow-2xs transition-smooth cursor-pointer"
-                        >
-                            <x-icon name="bookmark" class="w-4 h-4" ::class="saved ? 'fill-brand-600 text-brand-600' : ''" />
-                            <span x-text="saved ? 'Shortlisted' : 'Save Program'"></span>
-                        </button>
+                        <x-domain.save-item type="program" :slug="$program['slug']" />
 
                         <a 
-                            href="{{ route('preview.student') }}" 
+                            href="{{ route('student.tracker') }}"
                             class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold font-sans shadow-xs transition-smooth"
                         >
                             <x-icon name="calculator" class="w-4 h-4" />
@@ -86,10 +68,10 @@
         <!-- Main Body Grid -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
+
                 <!-- Left 2 Cols: Academic Details & Curriculum -->
                 <div class="lg:col-span-2 space-y-8">
-                    
+
                     <!-- High-Level Metrics Strip -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
@@ -157,7 +139,7 @@
                                     <span class="text-brand-700">Enter your Matric and FSc marks into our formula engine.</span>
                                 </div>
                             </div>
-                            <x-ui.button variant="primary" size="xs" :href="route('preview.student')">
+                            <x-ui.button variant="primary" size="xs" :href="route('student.tracker')">
                                 Calculate
                             </x-ui.button>
                         </div>
@@ -231,7 +213,7 @@
 
                 <!-- Right 1 Col: Offering Campuses & Institutional Summary -->
                 <aside class="space-y-6">
-                    
+
                     <!-- Offering Campuses -->
                     <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-4">
                         <h3 class="font-heading font-bold text-sm text-ink-950 flex items-center gap-2">
@@ -283,7 +265,7 @@
                             <span class="text-xs font-sans text-ink-800 font-semibold">{{ $program['accreditation'] }}</span>
                         </div>
                         <p class="text-xs text-ink-500 font-sans leading-relaxed pt-1">
-                            Graduating from an accredited council program qualifies the degree holder for national licensure and professional council registration.
+                            Graduating from an accredited council program qualifies the degree holder for licensure and professional council registration.
                         </p>
                     </div>
 

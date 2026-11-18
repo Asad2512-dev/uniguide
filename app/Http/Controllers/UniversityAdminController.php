@@ -2,9 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admission;
+use App\Models\Campus;
+use App\Models\KnowledgeBaseDocument;
+use App\Models\University;
 use App\Services\UniversityAdminService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class UniversityAdminController extends Controller
@@ -168,7 +174,7 @@ class UniversityAdminController extends Controller
             'study_mode', 'accreditation', 'intake_seats', 'tuition_semester', 'min_eligibility', 'merit_formula',
         ]));
 
-        return back()->with('toast_success', 'Academic degree program published to national registry.');
+        return back()->with('toast_success', 'Academic degree program published to registry.');
     }
 
     public function updateProgram(Request $request, string $id): RedirectResponse
@@ -226,17 +232,22 @@ class UniversityAdminController extends Controller
 
     public function updateAdmissions(Request $request): RedirectResponse
     {
-        $request->validate([
-            'cycle_id' => 'required|string',
-            'deadline_date' => 'required|string',
-            'status' => 'required|string',
+        $data = $request->validate([
+            'cycle_id' => 'nullable|string', 'title' => 'required_without:cycle_id|string|max:200', 'campus_id' => 'required_without:cycle_id|integer',
+            'deadline_date' => 'required|date', 'status' => 'required|in:open,closing_soon,upcoming,closed',
+            'official_url' => 'nullable|url:http,https', 'session' => 'nullable|string|max:100',
         ]);
+        if ($request->filled('cycle_id')) {
+            $this->adminService->updateAdmissionCycle($data['cycle_id'], $request->only(['deadline_date', 'status', 'entry_tests', 'merit_list_1', 'merit_list_2']));
+        } else {
+            $institution = $this->adminService->getInstitution();
+            $u = University::withoutGlobalScopes()->where('slug', $institution['slug'])->firstOrFail();
+            $campus = Campus::withoutGlobalScopes()->where('university_id', $u->id)->findOrFail($data['campus_id']);
+            Admission::create(['university_id' => $u->id, 'campus_id' => $campus->id, 'coverage_status' => 'verified', 'slug' => Str::slug($data['title']).'-'.strtolower(Str::random(6)),
+                'title' => $data['title'], 'status' => $data['status'], 'deadline_date' => $data['deadline_date'], 'deadline' => $data['deadline_date'], 'session' => $data['session'] ?? '', 'official_url' => $data['official_url'] ?? null]);
+        }
 
-        $this->adminService->updateAdmissionCycle($request->input('cycle_id'), $request->only([
-            'deadline_date', 'status', 'entry_tests', 'merit_list_1', 'merit_list_2',
-        ]));
-
-        return back()->with('toast_success', 'Admission cycle timeline updated.');
+        return back()->with('toast_success', 'Admission record saved.');
     }
 
     /**
@@ -261,7 +272,7 @@ class UniversityAdminController extends Controller
         ]);
 
         $total = $request->input('net_weight') + $request->input('fsc_weight') + $request->input('matric_weight');
-        if ($total !== 100) {
+        if (abs((float) $total - 100.0) > 0.001) {
             return back()->withErrors(['net_weight' => 'The sum of weights must equal 100% (currently '.$total.'%).']);
         }
 
@@ -325,12 +336,14 @@ class UniversityAdminController extends Controller
 
     public function uploadDocument(Request $request): RedirectResponse
     {
-        $request->validate([
-            'title' => 'required|string|max:200',
-            'type' => 'required|string',
-        ]);
+        $data = $request->validate(['title' => 'required|string|max:200', 'type' => 'required|in:prospectus,gazette,fee_gazette,policy', 'document' => 'required|file|mimes:pdf|max:51200']);
+        $institution = $this->adminService->getInstitution();
+        $u = University::withoutGlobalScopes()->where('slug', $institution['slug'])->firstOrFail();
+        $c = Campus::withoutGlobalScopes()->where('university_id', $u->id)->firstOrFail();
+        $path = $request->file('document')->store('institution-documents/'.$u->id, 'local');
+        KnowledgeBaseDocument::create(['university_id' => $u->id, 'campus_id' => $c->id, 'coverage_status' => 'pending', 'document_code' => (string) Str::uuid(), 'title' => $data['title'], 'category' => $data['type'], 'file_path' => $path, 'authority' => $u->name, 'status' => 'pending']);
 
-        return back()->with('toast_success', 'Official institutional document uploaded and queued for HEC validation.');
+        return back()->with('toast_success', 'Document saved privately and awaiting review.');
     }
 
     /**
@@ -350,7 +363,7 @@ class UniversityAdminController extends Controller
     {
         $this->adminService->processAiVerification($id, 'approved');
 
-        return back()->with('toast_success', 'AI-extracted field verified and applied to live institutional record.');
+        return back()->with('toast_success', 'Extraction review saved. Edit the corresponding record to publish a change.');
     }
 
     public function rejectAiVerification(string $id): RedirectResponse
@@ -368,7 +381,7 @@ class UniversityAdminController extends Controller
 
         $this->adminService->processAiVerification($id, 'edited', $request->input('edited_value'));
 
-        return back()->with('toast_success', 'Modified value approved and published to live registry.');
+        return back()->with('toast_success', 'Extraction review saved. Edit the corresponding record to publish a change.');
     }
 
     /**
@@ -392,7 +405,7 @@ class UniversityAdminController extends Controller
 
         $this->adminService->replyInquiry($id, $request->input('reply'));
 
-        return back()->with('toast_success', 'Official response dispatched to applicant via email and student portal.');
+        return back()->with('toast_success', 'Reply saved. A notification is available to the applicant on UniGuide.');
     }
 
     public function updateInquiryStatus(Request $request, string $id): RedirectResponse
@@ -424,9 +437,19 @@ class UniversityAdminController extends Controller
             'two_factor_required' => $request->has('two_factor_required'),
             'auto_ai_scrape_notification' => $request->has('auto_ai_scrape_notification'),
             'weekly_inquiry_digest' => $request->has('weekly_inquiry_digest'),
-            'notify_email' => $request->input('notify_email', 'admissions.alerts@nust.edu.pk'),
+            'notify_email' => $request->input('notify_email', auth()->user()->email),
         ]);
 
         return back()->with('toast_success', 'Security protocols and institutional notification settings saved.');
+    }
+
+    public function downloadDocument(string $id)
+    {
+        $institution = $this->adminService->getInstitution();
+        $university = University::withoutGlobalScopes()->where('slug', $institution['slug'])->firstOrFail();
+        $document = KnowledgeBaseDocument::withoutGlobalScopes()->where('university_id', $university->id)->findOrFail($id);
+        abort_unless($document->file_path, 404);
+
+        return Storage::disk('local')->download($document->file_path);
     }
 }

@@ -1,9 +1,9 @@
 <x-layouts.public 
-    :title="(!empty($query) ? 'Search: ' . $query : 'National Search') . ' — UniGuide Pakistan'"
+    :title="(!empty($query) ? 'Search: ' . $query : 'Search') . ' — UniGuide Pakistan'"
     description="Unified search across all accredited Pakistani universities, campuses, and degree programs."
 >
     <div class="min-h-screen bg-canvas pb-24">
-        
+
         <!-- Header & Search Box -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -69,7 +69,7 @@
                                 class="px-3.5 py-1.5 rounded-xl border transition-smooth whitespace-nowrap flex items-center gap-1.5 {{ $type === 'all' ? 'bg-brand-600 text-white border-brand-600 shadow-2xs' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle' }}"
                             >
                                 <span>All Results</span>
-                                <span class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono {{ $type === 'all' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
+                                <span class="   text-xs sm:text-[10px] font-mono {{ $type === 'all' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
                                     {{ $results['total'] }}
                                 </span>
                             </a>
@@ -78,7 +78,7 @@
                                 class="px-3.5 py-1.5 rounded-xl border transition-smooth whitespace-nowrap flex items-center gap-1.5 {{ $type === 'universities' ? 'bg-brand-600 text-white border-brand-600 shadow-2xs' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle' }}"
                             >
                                 <span>Universities</span>
-                                <span class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono {{ $type === 'universities' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
+                                <span class="   text-xs sm:text-[10px] font-mono {{ $type === 'universities' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
                                     {{ count($results['universities']) }}
                                 </span>
                             </a>
@@ -87,7 +87,7 @@
                                 class="px-3.5 py-1.5 rounded-xl border transition-smooth whitespace-nowrap flex items-center gap-1.5 {{ $type === 'programs' ? 'bg-brand-600 text-white border-brand-600 shadow-2xs' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle' }}"
                             >
                                 <span>Degree Programs</span>
-                                <span class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono {{ $type === 'programs' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
+                                <span class="   text-xs sm:text-[10px] font-mono {{ $type === 'programs' ? 'bg-white/20 text-white' : 'bg-surface-subtle border border-border-default' }}">
                                     {{ count($results['programs']) }}
                                 </span>
                             </a>
@@ -142,7 +142,7 @@
             @else
                 <!-- Results View -->
                 <div class="space-y-10">
-                    
+
                     <!-- Universities Section (if shown) -->
                     @if(($type === 'all' || $type === 'universities') && count($results['universities']) > 0)
                         <section class="space-y-4">

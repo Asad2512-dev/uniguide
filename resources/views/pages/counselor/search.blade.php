@@ -1,22 +1,22 @@
-<x-layouts.public 
+<x-layouts.counselor
     title="Conversational University Search — UniGuide Pakistan"
     description="Search Pakistani universities using everyday natural language. AI intent analysis, criteria extraction, and matching accredited institutions."
 >
     <div class="min-h-screen bg-canvas pb-24">
-        
+
         <!-- Header & Search Input Section -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
-                        ['label' => 'AI Counselor', 'url' => route('counselor.index')],
+                        ['label' => 'Admission Counselor', 'url' => route('counselor.index')],
                         ['label' => 'Conversational Search', 'url' => route('counselor.search')]
                     ]" />
                 </div>
 
                 <div class="max-w-3xl">
-                    <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-3">
+                    <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-3">
                         <x-icon name="search" class="w-3.5 h-3.5 text-brand-600" />
                         <span>Natural Language Intent Engine</span>
                     </div>
@@ -55,7 +55,7 @@
                         @foreach($sampleQueries as $sample)
                             <a 
                                 href="{{ route('counselor.search', ['q' => $sample]) }}"
-                                class="px-2.5 py-1 rounded-full bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth font-sans truncate max-w-xs"
+                                class="px-2.5 py-1 rounded-md bg-surface border border-border-default hover:border-brand-300 hover:text-brand-700 text-ink-600 transition-smooth font-sans truncate max-w-xs"
                             >
                                 {{ $sample }}
                             </a>
@@ -68,7 +68,7 @@
         <!-- Search Results & Interpreted Criteria Grid -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                
+
                 <!-- Left Sidebar: Interpreted Query Breakdown -->
                 <aside class="space-y-6">
                     <div class="p-5 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
@@ -139,11 +139,11 @@
                     <div class="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-brand-50/70 via-surface to-brand-50/40 border border-brand-200/80 shadow-2xs">
                         <div class="flex items-start gap-3">
                             <div class="w-8 h-8 rounded-lg bg-brand-600 text-white flex items-center justify-center shrink-0 shadow-xs">
-                                <x-icon name="sparkles" class="w-4 h-4" />
+                                <x-icon name="message-circle" class="w-4 h-4" />
                             </div>
                             <div class="space-y-1 text-xs font-sans text-ink-700 leading-relaxed">
                                 <div class="font-heading font-bold text-sm text-ink-950 flex items-center gap-2">
-                                    <span>AI Counselor Analysis</span>
+                                    <span>Admission Counselor Analysis</span>
                                     <span class="text-xs sm:text-[10px] font-mono text-brand-800 bg-brand-100 px-1.5 py-0.2 rounded font-bold">
                                         {{ count($matches) }} Matches Found
                                     </span>
@@ -178,7 +178,7 @@
                                     </div>
 
                                     <div class="shrink-0 flex items-center gap-2">
-                                        <span class="text-xs font-mono font-bold text-success-700 bg-success-50 border border-success-200/60 px-2.5 py-1 rounded-full">
+                                        <span class="text-xs font-mono font-bold text-success-700      ">
                                             {{ $m['relevance_score'] }}% Match
                                         </span>
                                     </div>
@@ -212,7 +212,7 @@
                                         href="{{ route('counselor.chat') }}?prompt=Give+me+a+detailed+breakdown+of+{{ urlencode($uni['name']) }}+admissions+and+fees"
                                         class="inline-flex items-center gap-1 font-semibold text-brand-600 hover:text-brand-700"
                                     >
-                                        <x-icon name="sparkles" class="w-3.5 h-3.5" />
+                                        <x-icon name="message-circle" class="w-3.5 h-3.5" />
                                         <span>Consult Counselor About This University</span>
                                     </a>
 
@@ -239,5 +239,5 @@
             </div>
         </main>
     </div>
-</x-layouts.public>
+</x-layouts.counselor>
 

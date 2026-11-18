@@ -3,7 +3,7 @@
     description="Statutory eligibility determination based on Pakistan Engineering Council, NCEAC computing guidelines, and university prospectuses."
 >
     <div x-data="{ activeTab: 'all' }" class="min-h-screen bg-canvas pb-24">
-        
+
         <!-- Header Banner & Counts Strip -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -17,7 +17,7 @@
 
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs font-semibold mb-2">
+                        <div class="inline-flex items-center gap-1.5       text-emerald-700 text-xs font-semibold mb-2">
                             <x-icon name="shield-check" class="w-3.5 h-3.5 text-emerald-600" />
                             <span>Verified Backend Rules Engine</span>
                             <span class="text-ink-300">•</span>
@@ -83,7 +83,7 @@
 
         <!-- Main Results Grid -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-8">
-            
+
             <!-- Filter Tabs -->
             <div class="flex items-center justify-between pb-4 border-b border-border-default flex-wrap gap-4">
                 <div class="flex items-center gap-2">

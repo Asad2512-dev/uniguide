@@ -40,7 +40,7 @@
             <span 
                 x-show="selected.length > 0" 
                 x-text="selected.length" 
-                class="px-1.5 py-0.2 bg-brand-600 text-white font-bold rounded-full text-xs sm:text-[10px]"
+                class="   text-white font-bold  text-xs sm:text-[10px]"
             ></span>
         </span>
         <x-icon name="chevron-down" class="w-3.5 h-3.5 text-ink-400 transition-transform duration-200" ::class="open ? 'rotate-180' : ''" />

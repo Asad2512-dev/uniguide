@@ -2,18 +2,8 @@
     :title="$scholarship['title'] . ' — UniGuide Pakistan'"
     :description="$scholarship['coverage'] . ' by ' . $scholarship['provider']"
 >
-    <div x-data="{ 
-        saved: false,
-        saveScholarship() {
-            this.saved = !this.saved;
-            if (this.saved) {
-                $store.toasts.add('Saved ' + '{{ $scholarship['title'] }}' + ' to your financial aid shortlist.', 'success');
-            } else {
-                $store.toasts.add('Removed from shortlist.', 'info');
-            }
-        }
-    }" class="min-h-screen bg-canvas pb-24">
-        
+    <div class="min-h-screen bg-canvas pb-24">
+
         <!-- Header Banner -->
         <header class="bg-surface border-b border-border-default/80">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -28,10 +18,10 @@
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2">
                     <div>
                         <div class="flex flex-wrap items-center gap-2 mb-2">
-                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-800 border border-emerald-200 font-sans uppercase font-mono">
+                            <span class="   text-xs font-semibold  text-emerald-800   font-sans uppercase font-mono">
                                 {{ $scholarship['type_label'] }}
                             </span>
-                            <span class="inline-flex items-center gap-1 text-xs font-sans text-success-700 font-semibold bg-success-50 px-2 py-0.5 rounded-full border border-success-200/60">
+                            <span class="inline-flex items-center gap-1 text-xs font-sans text-success-700 font-semibold      ">
                                 <x-icon name="shield-check" class="w-3.5 h-3.5" />
                                 <span>Official Verified Grant</span>
                             </span>
@@ -54,15 +44,7 @@
 
                     <!-- Right CTAs: Save, Apply -->
                     <div class="flex items-center flex-wrap gap-2.5 shrink-0">
-                        <button 
-                            type="button" 
-                            @click="saveScholarship()"
-                            :class="saved ? 'bg-emerald-50 border-emerald-300 text-emerald-800' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle'"
-                            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold font-sans shadow-2xs transition-smooth cursor-pointer"
-                        >
-                            <x-icon name="bookmark" class="w-4 h-4" ::class="saved ? 'fill-emerald-600 text-emerald-600' : ''" />
-                            <span x-text="saved ? 'Shortlisted' : 'Save Scholarship'"></span>
-                        </button>
+                        <x-domain.save-item type="scholarship" :slug="$scholarship['slug']" />
 
                         <a 
                             href="{{ $scholarship['official_url'] }}" 
@@ -81,10 +63,10 @@
         <!-- Main Body Grid -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
+
                 <!-- Left 2 Cols: Scholarship Specifications -->
                 <div class="lg:col-span-2 space-y-8">
-                    
+
                     <!-- High-Level Benefits Banner -->
                     <div class="p-4 sm:p-6 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-200/80 shadow-2xs space-y-3">
                         <span class="text-xs font-bold font-mono uppercase tracking-wider text-emerald-800">
@@ -177,7 +159,7 @@
 
                 <!-- Right 1 Col: Urgent Deadline Card & Official Channels -->
                 <aside class="space-y-6">
-                    
+
                     <!-- Deadline Card -->
                     <div class="bg-surface rounded-2xl border border-emerald-200 shadow-elevated p-4 sm:p-6 space-y-4 ring-1 ring-emerald-500/10">
                         <div class="flex items-center justify-between">

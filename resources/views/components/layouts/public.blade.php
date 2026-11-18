@@ -1,5 +1,5 @@
 @props([
-    'title' => 'UniGuide Pakistan — National Higher Education Discovery',
+    'title' => 'UniGuide Pakistan — Higher Education Discovery',
     'description' => null,
     'workspace' => false,
 ])
@@ -38,7 +38,7 @@
                         <li><a href="{{ route('universities.index') }}" class="inline-flex min-h-11 items-center hover:text-brand-600 transition-colors">{{ content('global.footer.university_directory', 'University Directory') }}</a></li>
                         <li><a href="{{ route('programs.index') }}" class="inline-flex min-h-11 items-center hover:text-brand-600 transition-colors">{{ content('global.footer.program_explorer', 'Academic Program Explorer') }}</a></li>
                         <li><a href="{{ route('admissions.index') }}" class="inline-flex min-h-11 items-center hover:text-brand-600 transition-colors">{{ content('global.footer.admissions_deadlines', 'Admissions & Deadlines') }}</a></li>
-                        <li><a href="{{ route('scholarships.index') }}" class="inline-flex min-h-11 items-center hover:text-brand-600 transition-colors">{{ content('global.footer.scholarships_directory', 'National Scholarships Directory') }}</a></li>
+                        <li><a href="{{ route('scholarships.index') }}" class="inline-flex min-h-11 items-center hover:text-brand-600 transition-colors">{{ content('global.footer.scholarships_directory', 'Scholarships Directory') }}</a></li>
                         <li><a href="{{ route('compare.index') }}" class="inline-flex min-h-11 items-center hover:text-brand-600 transition-colors">{{ content('global.footer.comparison_matrix', 'University Comparison Matrix') }}</a></li>
                     </ul>
                 </details>

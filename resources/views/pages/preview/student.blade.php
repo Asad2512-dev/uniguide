@@ -3,7 +3,7 @@
     <div class="mb-6 p-4 rounded-2xl bg-gradient-to-r from-brand-600 via-indigo-600 to-brand-800 text-white shadow-card flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div class="flex items-center gap-3">
             <div class="w-10 h-10 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center font-bold text-white shrink-0">
-                <x-icon name="sparkles" class="w-5 h-5 text-white" />
+                <x-icon name="message-circle" class="w-5 h-5 text-white" />
             </div>
             <div>
                 <h2 class="font-heading font-bold text-sm text-white">Full Authenticated Student Experience (Phase 05) Active</h2>

@@ -44,7 +44,7 @@
                                 </span>
                             </div>
 
-                            <span class="text-xs sm:text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">
+                            <span class="text-xs sm:text-[10px] font-mono font-bold     text-emerald-700  ">
                                 Active
                             </span>
                         </div>

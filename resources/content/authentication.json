@@ -1,11 +1,11 @@
 {
   "login": {
     "title": "Sign in to UniGuide",
-    "subtitle": "National Higher Education Gateway for Pakistani students & institutions",
+    "subtitle": "University discovery and admissions guidance",
     "role_label": "Select Workspace Account Type",
     "roles": {
       "student": "Student",
-      "university": "University Registrar",
+      "university": "University administrator",
       "admin": "Superadmin"
     },
     "email_label": "Email Address",
@@ -18,7 +18,7 @@
   },
   "register": {
     "title": "Create Your Student Account",
-    "subtitle": "Join over 340,000 Pakistani candidates tracking Fall 2026 university admissions",
+    "subtitle": "Join Pakistani candidates tracking Fall 2026 university admissions",
     "full_name_label": "Full Legal Name",
     "full_name_placeholder": "As registered with BISE / Cambridge Board",
     "email_label": "Email Address",

@@ -1,6 +1,8 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AdmissionController;
+use App\Http\Controllers\AdmissionReminderController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ComparisonController;
 use App\Http\Controllers\CounselorController;
@@ -9,21 +11,30 @@ use App\Http\Controllers\EligibilityController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\MarketingController;
 use App\Http\Controllers\NationalAdminController;
+use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PlatformInquiryController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\SavedItemController;
 use App\Http\Controllers\ScholarshipController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\ShellPreviewController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\UniversityAdminController;
+use App\Http\Controllers\UniversityApplicationController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Middleware\EnsureNationalAdminAuthorized;
+use App\Http\Middleware\EnsureStudentAuthorized;
 use App\Http\Middleware\EnsureUniversityAdminAuthorized;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Each route connects a page address to a controller method.
 
 // Homepage
 Route::get('/', [HomeController::class, 'index'])->name('home');
+
+Route::get('/universities/join', [UniversityApplicationController::class, 'create'])->name('universities.join');
+Route::post('/universities/join', [UniversityApplicationController::class, 'store'])->middleware('throttle:5,1')->name('universities.join.submit');
 
 // University directory and campus details
 Route::get('/universities', [UniversityController::class, 'index'])->name('universities.index');
@@ -75,13 +86,15 @@ Route::prefix('counselor')->name('counselor.')->group(function () {
 });
 
 // Student pages and account actions
-Route::prefix('student')->name('student.')->group(function () {
+Route::prefix('student')->name('student.')->middleware(['auth', EnsureStudentAuthorized::class])->group(function () {
     Route::get('/onboarding', [StudentController::class, 'onboarding'])->name('onboarding');
     Route::post('/onboarding', [StudentController::class, 'processOnboarding'])->name('onboarding.submit');
     Route::get('/dashboard', [StudentController::class, 'dashboard'])->name('dashboard');
     Route::get('/profile', [StudentController::class, 'profile'])->name('profile');
     Route::post('/profile', [StudentController::class, 'updateProfile'])->name('profile.update');
     Route::get('/recommendations', [StudentController::class, 'recommendations'])->name('recommendations');
+
+    Route::post('/saved/toggle', [SavedItemController::class, 'toggle'])->name('saved.toggle');
 
     // Saved Collections
     Route::get('/saved/universities', [StudentController::class, 'savedUniversities'])->name('saved.universities');
@@ -90,6 +103,8 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::delete('/saved/programs/{slug}', [StudentController::class, 'removeSavedProgram'])->name('saved.programs.destroy');
     Route::get('/saved/scholarships', [StudentController::class, 'savedScholarships'])->name('saved.scholarships');
     Route::delete('/saved/scholarships/{slug}', [StudentController::class, 'removeSavedScholarship'])->name('saved.scholarships.destroy');
+
+    Route::post('/admissions/{slug}/reminders', [AdmissionReminderController::class, 'store'])->name('admissions.reminders');
 
     // Admission Tracker
     Route::get('/tracker', [StudentController::class, 'tracker'])->name('tracker');
@@ -101,6 +116,11 @@ Route::prefix('student')->name('student.')->group(function () {
     Route::get('/notifications', [StudentController::class, 'notifications'])->name('notifications');
     Route::post('/notifications/{id}/read', [StudentController::class, 'markNotificationRead'])->name('notifications.read');
     Route::post('/notifications/read-all', [StudentController::class, 'markAllNotificationsRead'])->name('notifications.read_all');
+
+    Route::post('/entry-tests', [StudentController::class, 'storeEntryTest'])->name('entry_tests.store');
+    Route::get('/export', [StudentController::class, 'exportData'])->name('export');
+    Route::post('/documents', [StudentController::class, 'uploadDocument'])->name('documents.store');
+    Route::get('/documents/{id}', [StudentController::class, 'downloadDocument'])->name('documents.download');
 
     // Account Settings
     Route::get('/settings', [StudentController::class, 'settings'])->name('settings');
@@ -149,6 +169,8 @@ Route::prefix('admin/university')
         Route::get('/scholarships', [UniversityAdminController::class, 'scholarships'])->name('scholarships');
         Route::post('/scholarships', [UniversityAdminController::class, 'storeScholarship'])->name('scholarships.store');
 
+        Route::get('/documents/{id}/download', [UniversityAdminController::class, 'downloadDocument'])->whereNumber('id')->name('documents.download');
+
         // Document Management
         Route::get('/documents', [UniversityAdminController::class, 'documents'])->name('documents');
         Route::post('/documents/verify/{id}', [UniversityAdminController::class, 'verifyDocument'])->name('documents.verify');
@@ -170,8 +192,15 @@ Route::prefix('admin/university')
         Route::post('/settings', [UniversityAdminController::class, 'updateSettings'])->name('settings.update');
     });
 
-// National administration
-Route::prefix('admin/national')
+// Keep existing bookmarks and submitted forms working after the URL change.
+Route::any('/admin/national/{path?}', function (Request $request, ?string $path = null) {
+    $target = url('/admin/platform'.($path ? '/'.$path : ''));
+
+    return redirect()->to($target.($request->getQueryString() ? '?'.$request->getQueryString() : ''), 308);
+})->where('path', '.*');
+
+// Platform administration
+Route::prefix('admin/platform')
     ->name('national_admin.')
     ->middleware(EnsureNationalAdminAuthorized::class)
     ->group(function () {
@@ -215,6 +244,9 @@ Route::prefix('admin/national')
         // AI Chatbot Configuration
         Route::get('/chatbot-config', [NationalAdminController::class, 'chatbotConfig'])->name('chatbot_config');
         Route::post('/chatbot-config', [NationalAdminController::class, 'updateChatbotConfig'])->name('chatbot_config.update');
+
+        Route::get('/inquiries', [PlatformInquiryController::class, 'index'])->name('inquiries');
+        Route::post('/inquiries/{id}/reply', [PlatformInquiryController::class, 'reply'])->whereNumber('id')->name('inquiries.reply');
 
         // Student and Admin User Management
         Route::get('/users', [NationalAdminController::class, 'users'])->name('users');
@@ -265,4 +297,20 @@ Route::prefix('preview')->name('preview.')->group(function () {
     Route::get('/student', [ShellPreviewController::class, 'student'])->name('student');
     Route::get('/university-admin', [ShellPreviewController::class, 'universityAdmin'])->name('university_admin');
     Route::get('/national-admin', [ShellPreviewController::class, 'nationalAdmin'])->name('national_admin');
+});
+
+Route::middleware(EnsureNationalAdminAuthorized::class)->prefix('admin/platform')->name('national_admin.')->group(function () {
+    Route::get('/applications', [UniversityApplicationController::class, 'index'])->name('applications');
+    Route::post('/applications/{application}/review', [UniversityApplicationController::class, 'review'])->name('applications.review');
+});
+
+Route::middleware('auth')->prefix('notifications')->name('notifications.')->group(function () {
+    Route::get('/', [NotificationController::class, 'index'])->name('index');
+    Route::post('/read-all', [NotificationController::class, 'readAll'])->name('read_all');
+    Route::post('/{id}/read', [NotificationController::class, 'read'])->whereNumber('id')->name('read');
+});
+
+Route::middleware('auth')->group(function () {
+    Route::get('/account/password', [AccountController::class, 'password'])->name('account.password');
+    Route::post('/account/password', [AccountController::class, 'updatePassword'])->name('account.password.update');
 });

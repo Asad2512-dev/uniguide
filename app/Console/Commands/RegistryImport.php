@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class RegistryImport extends Command
 {
-    protected $signature = 'registry:import {--national : Import the reviewed national reference snapshot after NUML}';
+    protected $signature = 'registry:import {--national : Import the reviewed reference snapshot after NUML}';
 
     protected $description = 'Idempotently import reviewed offline university and campus snapshots';
 
@@ -21,7 +21,7 @@ class RegistryImport extends Command
             'national' => $counts, 'numl_campuses' => $numl->campuses()->count(),
             'allowed_regions' => config('uniguide.allowed_regions'),
         ], JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR));
-        $this->info('NUML imported; national results: '.json_encode($counts));
+        $this->info('NUML imported; results: '.json_encode($counts));
 
         return self::SUCCESS;
     }

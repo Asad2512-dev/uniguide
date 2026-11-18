@@ -4,10 +4,10 @@ namespace App\Services;
 
 use App\Models\Notification;
 use App\Models\Program;
-use App\Models\SavedItem;
 use App\Models\StudentApplication;
 use App\Models\StudentProfile;
 use App\Models\User;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\ValidationException;
 
 class StudentService
@@ -33,177 +33,27 @@ class StudentService
      */
     public function getProfile(): array
     {
-        $defaultProfile = [
-            'full_name' => 'Ahmad Raza Khan',
-            'applicant_id' => 'UG-2026-8841',
-            'email' => 'ahmad.raza.khan@student.pk',
-            'phone' => '+92 300 5558841',
-            'city' => 'Rawalpindi',
-            'domicile_province' => 'ict',
-            'domicile_label' => 'Islamabad Capital Territory / Rawalpindi',
-            'cnic' => '61101-9876543-1',
-            'gender' => 'Male',
-            'dob' => '2007-04-12',
-            'stream' => 'pre_engineering',
-            'stream_label' => 'FSc Pre-Engineering',
-            'monthly_household_income' => 45000,
-            'avatar_initials' => 'AR',
-            'onboarding_completed' => true,
-
-            // Academic Records
-            'matric' => [
-                'degree' => 'Matriculation (SSC)',
-                'board' => 'Federal Board of Intermediate & Secondary Education (FBISE)',
-                'year' => 2024,
-                'total_marks' => 1100,
-                'obtained_marks' => 968,
-                'percentage' => 88.0,
-                'grade' => 'A1 / Exceptional',
-                'roll_number' => '284192',
-                'verified' => true,
-            ],
-            'fsc' => [
-                'degree' => 'FSc (Pre-Engineering) Part-1',
-                'board' => 'Federal Board of Intermediate & Secondary Education (FBISE)',
-                'year' => 2025,
-                'total_marks' => 520,
-                'obtained_marks' => 421,
-                'percentage' => 81.0,
-                'grade' => 'A / Excellent',
-                'roll_number' => '719204',
-                'verified' => true,
-                'expected_part2_percentage' => 82.5,
-            ],
-
-            // Entry Tests Records
-            'entry_tests' => [
-                [
-                    'name' => 'NUST Entry Test (NET-2)',
-                    'test_type' => 'net',
-                    'test_date' => '18 March 2026',
-                    'score' => 152,
-                    'max_score' => 200,
-                    'percentage' => 76.0,
-                    'roll_number' => 'NET-2026-8841',
-                    'status' => 'Verified Score',
-                ],
-                [
-                    'name' => 'FAST-NU Computing Admission Test',
-                    'test_type' => 'fast',
-                    'test_date' => 'Upcoming (08 July 2026)',
-                    'score' => 74,
-                    'max_score' => 100,
-                    'percentage' => 74.0,
-                    'roll_number' => 'NU-ISB-99201',
-                    'status' => 'Admit Card Issued',
-                ],
-                [
-                    'name' => 'NTS National Aptitude Test (NAT-IE)',
-                    'test_type' => 'nat',
-                    'test_date' => '22 February 2026',
-                    'score' => 78,
-                    'max_score' => 100,
-                    'percentage' => 78.0,
-                    'roll_number' => 'NTS-2026-1149',
-                    'status' => 'Official Result Card Received',
-                ],
-            ],
-
-            // Documents Verification
-            'documents' => [
-                [
-                    'id' => 'doc-1',
-                    'title' => 'Matriculation (SSC) Official Sanad & Result Card',
-                    'status' => 'verified',
-                    'status_label' => 'IBCC & Board Verified',
-                    'file_name' => 'ahmad_matric_fbise_sanad.pdf',
-                    'uploaded_at' => '15 Jan 2026',
-                ],
-                [
-                    'id' => 'doc-2',
-                    'title' => 'HSSC / FSc Part-1 Official Mark Sheet',
-                    'status' => 'verified',
-                    'status_label' => 'Verified Attestation',
-                    'file_name' => 'ahmad_fsc_part1_fbise.pdf',
-                    'uploaded_at' => '15 Jan 2026',
-                ],
-                [
-                    'id' => 'doc-3',
-                    'title' => 'National Identity Card (Smart CNIC / B-Form)',
-                    'status' => 'verified',
-                    'status_label' => 'NADRA Verified',
-                    'file_name' => 'cnic_6110198765431.pdf',
-                    'uploaded_at' => '18 Jan 2026',
-                ],
-                [
-                    'id' => 'doc-4',
-                    'title' => 'Father\'s Attested Income Certificate / Pension Slip',
-                    'status' => 'pending',
-                    'status_label' => 'Pending Verification for HEC Aid',
-                    'file_name' => 'salary_affidavit_45k.pdf',
-                    'uploaded_at' => '02 Feb 2026',
-                ],
-                [
-                    'id' => 'doc-5',
-                    'title' => 'Domicile Certificate (ICT / Punjab)',
-                    'status' => 'verified',
-                    'status_label' => 'Verified',
-                    'file_name' => 'domicile_rawalpindi.pdf',
-                    'uploaded_at' => '20 Jan 2026',
-                ],
-            ],
-
-            // Preferences
-            'preferences' => [
-                'target_disciplines' => ['Computing & Artificial Intelligence', 'Software Engineering', 'Data Science'],
-                'target_cities' => ['Islamabad', 'Rawalpindi', 'Lahore'],
-                'budget_max' => 200000,
-                'university_types' => ['public', 'chartered'],
-                'needs_hostel' => true,
-                'scholarship_interest' => 'need_and_merit',
-            ],
-        ];
-
         $student = $this->getCurrentStudent();
-        if ($student) {
-            $dbProfile = StudentProfile::where('user_id', $student->id)->first();
-            if ($dbProfile) {
-                $merged = $defaultProfile;
-                $merged['full_name'] = $dbProfile->full_name ?? $student->name ?? $defaultProfile['full_name'];
-                $merged['applicant_id'] = $dbProfile->applicant_id ?? $defaultProfile['applicant_id'];
-                $merged['email'] = $student->email ?? $defaultProfile['email'];
-                $merged['phone'] = $dbProfile->phone ?? $student->phone ?? $defaultProfile['phone'];
-                $merged['city'] = $dbProfile->city ?? $defaultProfile['city'];
-                $merged['domicile_province'] = $dbProfile->domicile_province ?? $defaultProfile['domicile_province'];
-                $merged['domicile_label'] = $dbProfile->domicile_label ?? $defaultProfile['domicile_label'];
-                $merged['cnic'] = $dbProfile->cnic ?? $defaultProfile['cnic'];
-                $merged['gender'] = $dbProfile->gender ?? $defaultProfile['gender'];
-                $merged['stream'] = $dbProfile->stream ?? $defaultProfile['stream'];
-                $merged['stream_label'] = $dbProfile->stream_label ?? $defaultProfile['stream_label'];
-                $merged['monthly_household_income'] = $dbProfile->monthly_household_income ?? $defaultProfile['monthly_household_income'];
-                $merged['onboarding_completed'] = (bool) $dbProfile->onboarding_completed;
+        $record = $student?->profile()->first();
+        $stream = config('academic_streams.aliases.'.($record?->stream ?? ''), $record?->stream ?? '');
+        $academic = ['degree' => '', 'board' => '', 'year' => '', 'total_marks' => 0, 'obtained_marks' => 0, 'percentage' => 0, 'grade' => '', 'roll_number' => '', 'verified' => false];
 
-                if (! empty($dbProfile->matric_data)) {
-                    $merged['matric'] = array_merge($defaultProfile['matric'], $dbProfile->matric_data);
-                }
-                if (! empty($dbProfile->fsc_data)) {
-                    $merged['fsc'] = array_merge($defaultProfile['fsc'], $dbProfile->fsc_data);
-                }
-                if (! empty($dbProfile->entry_tests_data)) {
-                    $merged['entry_tests'] = $dbProfile->entry_tests_data;
-                }
-                if (! empty($dbProfile->preferences)) {
-                    $merged['preferences'] = array_merge($defaultProfile['preferences'], $dbProfile->preferences);
-                }
-
-                // Session overrides if present
-                $sessionOverrides = session()->get('uniguide_student_profile', []);
-
-                return array_replace_recursive($merged, $sessionOverrides);
-            }
-        }
-
-        return session()->get('uniguide_student_profile', $defaultProfile);
+        return [
+            'full_name' => $record?->full_name ?? $student?->name ?? '',
+            'applicant_id' => $record?->applicant_id ?? '', 'email' => $student?->email ?? '',
+            'phone' => $record?->phone ?? $student?->phone ?? '', 'city' => $record?->city ?? '',
+            'domicile_province' => $record?->domicile_province ?? $student?->province ?? '',
+            'domicile_label' => $record?->domicile_label ?? '', 'cnic' => $record?->cnic ?? '',
+            'gender' => $record?->gender ?? '', 'dob' => $record?->dob?->toDateString() ?? '',
+            'stream' => $stream, 'stream_label' => config('academic_streams.options.'.$stream.'.name', ''),
+            'monthly_household_income' => $record?->monthly_household_income,
+            'avatar_initials' => mb_strtoupper(mb_substr($student?->name ?? '', 0, 2)),
+            'onboarding_completed' => (bool) $record?->onboarding_completed,
+            'matric' => array_replace($academic, $record?->matric_data ?? []),
+            'fsc' => array_replace($academic + ['expected_part2_percentage' => 0], $record?->fsc_data ?? []),
+            'entry_tests' => $record?->entry_tests_data ?? [], 'documents' => $record?->documents_data ?? [],
+            'preferences' => array_replace(['target_cities' => [], 'target_disciplines' => [], 'budget_max' => null, 'scholarship_interest' => ''], $record?->preferences ?? []),
+        ];
     }
 
     /**
@@ -211,35 +61,28 @@ class StudentService
      */
     public function updateProfile(array $data): array
     {
-        $current = $this->getProfile();
-        $updated = array_replace_recursive($current, $data);
-        session()->put('uniguide_student_profile', $updated);
-
         $student = $this->getCurrentStudent();
-        if ($student) {
-            StudentProfile::updateOrCreate(
-                ['user_id' => $student->id],
-                [
-                    'full_name' => $updated['full_name'] ?? $student->name,
-                    'phone' => $updated['phone'] ?? $student->phone,
-                    'city' => $updated['city'] ?? 'Rawalpindi',
-                    'domicile_province' => $updated['domicile_province'] ?? 'ict',
-                    'domicile_label' => $updated['domicile_label'] ?? null,
-                    'cnic' => $updated['cnic'] ?? null,
-                    'gender' => $updated['gender'] ?? 'Male',
-                    'stream' => $updated['stream'] ?? 'pre_engineering',
-                    'stream_label' => $updated['stream_label'] ?? null,
-                    'monthly_household_income' => $updated['monthly_household_income'] ?? null,
-                    'matric_data' => $updated['matric'] ?? [],
-                    'fsc_data' => $updated['fsc'] ?? [],
-                    'entry_tests_data' => $updated['entry_tests'] ?? [],
-                    'preferences' => $updated['preferences'] ?? [],
-                    'onboarding_completed' => true,
-                ]
-            );
+        abort_unless($student, 403);
+        if (isset($data['stream'])) {
+            $data['stream'] = config('academic_streams.aliases.'.$data['stream'], $data['stream']);
+            $data['stream_label'] = config('academic_streams.options.'.$data['stream'].'.name');
         }
+        $updated = array_replace_recursive($this->getProfile(), $data);
+        StudentProfile::updateOrCreate(['user_id' => $student->id], [
+            'applicant_id' => $updated['applicant_id'] ?: 'UG-'.str_pad($student->id, 8, '0', STR_PAD_LEFT),
+            'full_name' => $updated['full_name'], 'phone' => $updated['phone'], 'city' => $updated['city'],
+            'domicile_province' => $updated['domicile_province'], 'domicile_label' => $updated['domicile_label'],
+            'cnic' => $updated['cnic'] ?: null, 'gender' => $updated['gender'] ?: null,
+            'stream' => $updated['stream'] ?: 'pre_engineering', 'stream_label' => $updated['stream_label'],
+            'monthly_household_income' => $updated['monthly_household_income'],
+            'matric_data' => $updated['matric'], 'fsc_data' => $updated['fsc'],
+            'entry_tests_data' => $updated['entry_tests'], 'preferences' => $updated['preferences'],
+            'onboarding_completed' => $updated['onboarding_completed'],
+        ]);
+        $student->update(['name' => $updated['full_name'], 'phone' => $updated['phone']]);
+        $student->unsetRelation('profile');
 
-        return $updated;
+        return $this->getProfile();
     }
 
     /**
@@ -376,11 +219,11 @@ class StudentService
             'campus' => $data['campus'] ?? 'Main Campus, Lahore',
             'stage' => $stage,
             'stage_label' => $stageLabel,
-            'deadline' => $data['deadline'] ?? '30 July 2026',
+            'deadline' => $program->university->deadline ?? 'Not recorded',
             'deadline_date' => ! empty($data['deadline_date']) ? $data['deadline_date'] : null,
             'fee_challan_status' => $data['fee_challan_status'] ?? 'Unpaid',
             'test_date' => $data['test_date'] ?? 'TBD',
-            'calculated_aggregate' => floatval($data['calculated_aggregate'] ?? 78.5),
+            'calculated_aggregate' => floatval($data['calculated_aggregate'] ?? 0),
             'closing_cutoff_ref' => $data['closing_cutoff_ref'] ?? 'Merit Archive',
             'notes' => $data['notes'] ?? 'Manual admission entry added by student.',
         ]);
@@ -420,9 +263,7 @@ class StudentService
         $student = $this->getCurrentStudent();
         $numericId = (int) str_replace('app-', '', $id);
 
-        $app = StudentApplication::where('id', $numericId)
-            ->orWhere('application_ref', $id)
-            ->first();
+        $app = StudentApplication::where('user_id', $student?->id)->where(fn ($q) => $q->where('id', $numericId)->orWhere('application_ref', $id))->firstOrFail();
 
         if ($app) {
             $stageLabels = [
@@ -439,7 +280,7 @@ class StudentService
                 $data['stage_label'] = $stageLabels[$data['stage']] ?? 'Updated';
             }
 
-            $app->update($data);
+            $app->update(Arr::only($data, ['stage', 'stage_label', 'notes', 'application_ref', 'test_date', 'fee_challan_status']));
 
             return [
                 'id' => (string) $app->id,
@@ -477,9 +318,8 @@ class StudentService
     public function deleteTrackerApplication(string $id): bool
     {
         $numericId = (int) str_replace('app-', '', $id);
-        $deleted = StudentApplication::where('id', $numericId)
-            ->orWhere('application_ref', $id)
-            ->delete();
+        $application = StudentApplication::where('user_id', $this->getCurrentStudent()?->id)->where(fn ($q) => $q->where('id', $numericId)->orWhere('application_ref', $id))->firstOrFail();
+        $deleted = $application->delete();
 
         return $deleted > 0;
     }
@@ -489,77 +329,18 @@ class StudentService
      */
     public function getSavedUniversities(string $sort = 'rank'): array
     {
-        $student = $this->getCurrentStudent();
         $items = [];
-
-        if ($student) {
-            $saved = SavedItem::where('user_id', $student->id)
-                ->where('item_type', 'university')
-                ->get();
-
-            foreach ($saved as $item) {
-                if (! empty($item->metadata)) {
-                    $items[] = $item->metadata;
-                }
+        if (! $student = $this->getCurrentStudent()) {
+            return [];
+        }
+        foreach ($student->savedItems()->where('item_type', 'university')->get() as $item) {
+            $record = $this->discoveryService->getUniversityBySlug($item->item_slug);
+            if ($record) {
+                $items[] = array_replace($record, ['match_tier' => 'Not assessed']);
             }
         }
 
-        if (empty($items)) {
-            $defaultSaved = [
-                [
-                    'slug' => 'nust',
-                    'name' => 'National University of Sciences & Technology',
-                    'acronym' => 'NUST',
-                    'city' => 'Islamabad',
-                    'province_label' => 'Islamabad (ICT)',
-                    'sector' => 'public',
-                    'hec_ranking' => '#1 Overall Engineering',
-                    'fee_range' => 'PKR 195,000 / sem',
-                    'fee_numeric' => 195000,
-                    'deadline' => '15 July 2026',
-                    'deadline_date' => '2026-07-15',
-                    'status' => 'open',
-                    'match_tier' => 'Reach (NET 155+ Target)',
-                    'saved_at' => '2026-10-18',
-                ],
-                [
-                    'slug' => 'fast-nuces',
-                    'name' => 'FAST - National University of Computer & Emerging Sciences',
-                    'acronym' => 'FAST-NUCES',
-                    'city' => 'Islamabad',
-                    'province_label' => 'Islamabad (ICT)',
-                    'sector' => 'chartered',
-                    'hec_ranking' => '#1 Computing & AI',
-                    'fee_range' => 'PKR 215,000 / sem',
-                    'fee_numeric' => 215000,
-                    'deadline' => '05 July 2026',
-                    'deadline_date' => '2026-07-05',
-                    'status' => 'open',
-                    'match_tier' => 'Target Match (75.5% vs 74.8% Cutoff)',
-                    'saved_at' => '2026-10-20',
-                ],
-                [
-                    'slug' => 'lums',
-                    'name' => 'Lahore University of Management Sciences',
-                    'acronym' => 'LUMS',
-                    'city' => 'Lahore',
-                    'province_label' => 'Punjab',
-                    'sector' => 'private',
-                    'hec_ranking' => '#1 Business & Economics',
-                    'fee_range' => 'PKR 485,000 / sem',
-                    'fee_numeric' => 485000,
-                    'deadline' => '30 January 2026',
-                    'deadline_date' => '2026-01-30',
-                    'status' => 'closed',
-                    'match_tier' => 'Reach (LCAT / SAT Competitive)',
-                    'saved_at' => '2026-10-22',
-                ],
-            ];
-
-            $items = session()->get('uniguide_student_saved_unis', $defaultSaved);
-        }
-
-        return app(RegionalStudentCatalog::class)->activeSaved($items, 'university');
+        return $items;
     }
 
     /**
@@ -567,17 +348,7 @@ class StudentService
      */
     public function removeSavedUniversity(string $slug): void
     {
-        $student = $this->getCurrentStudent();
-        if ($student) {
-            SavedItem::where('user_id', $student->id)
-                ->where('item_type', 'university')
-                ->where('item_slug', $slug)
-                ->delete();
-        }
-
-        $saved = session()->get('uniguide_student_saved_unis', []);
-        $filtered = array_values(array_filter($saved, fn ($u) => ($u['slug'] ?? '') !== $slug));
-        session()->put('uniguide_student_saved_unis', $filtered);
+        $this->getCurrentStudent()?->savedItems()->where('item_type', 'university')->where('item_slug', $slug)->delete();
     }
 
     /**
@@ -585,57 +356,18 @@ class StudentService
      */
     public function getSavedPrograms(): array
     {
-        $student = $this->getCurrentStudent();
         $items = [];
-
-        if ($student) {
-            $saved = SavedItem::where('user_id', $student->id)
-                ->where('item_type', 'program')
-                ->get();
-
-            foreach ($saved as $item) {
-                if (! empty($item->metadata)) {
-                    $items[] = $item->metadata;
-                }
+        if (! $student = $this->getCurrentStudent()) {
+            return [];
+        }
+        foreach ($student->savedItems()->where('item_type', 'program')->get() as $item) {
+            $record = $this->discoveryService->getProgramBySlug($item->item_slug);
+            if ($record) {
+                $items[] = array_replace($record, ['name' => $record['title'], 'university_acronym' => $record['university_name'], 'campus' => $record['city'], 'calculated_aggregate' => null, 'closing_merit_ref' => $record['cutoff_merit']]);
             }
         }
 
-        if (empty($items)) {
-            $defaultPrograms = [
-                [
-                    'slug' => 'nust-bs-computer-science',
-                    'name' => 'BS Computer Science',
-                    'university_acronym' => 'NUST',
-                    'university_name' => 'National University of Sciences & Technology',
-                    'university_slug' => 'nust',
-                    'campus' => 'SEECS, Islamabad (H-12)',
-                    'duration' => '4 Years (8 Semesters)',
-                    'fee_semester' => 'PKR 195,000',
-                    'calculated_aggregate' => 77.95,
-                    'closing_merit_ref' => '79.24%',
-                    'accreditation' => 'NCEAC Category W',
-                    'saved_at' => '18 Oct 2026',
-                ],
-                [
-                    'slug' => 'fast-bs-software-engineering',
-                    'name' => 'BS Software Engineering',
-                    'university_acronym' => 'FAST-NUCES',
-                    'university_name' => 'FAST - National University of Computer & Emerging Sciences',
-                    'university_slug' => 'fast-nuces',
-                    'campus' => 'Islamabad Campus (H-9)',
-                    'duration' => '4 Years (8 Semesters)',
-                    'fee_semester' => 'PKR 215,000',
-                    'calculated_aggregate' => 75.50,
-                    'closing_merit_ref' => '74.80%',
-                    'accreditation' => 'NCEAC Category W',
-                    'saved_at' => '20 Oct 2026',
-                ],
-            ];
-
-            $items = session()->get('uniguide_student_saved_programs', $defaultPrograms);
-        }
-
-        return app(RegionalStudentCatalog::class)->activeSaved($items, 'program');
+        return $items;
     }
 
     /**
@@ -643,17 +375,7 @@ class StudentService
      */
     public function removeSavedProgram(string $slug): void
     {
-        $student = $this->getCurrentStudent();
-        if ($student) {
-            SavedItem::where('user_id', $student->id)
-                ->where('item_type', 'program')
-                ->where('item_slug', $slug)
-                ->delete();
-        }
-
-        $saved = session()->get('uniguide_student_saved_programs', []);
-        $filtered = array_values(array_filter($saved, fn ($p) => ($p['slug'] ?? '') !== $slug));
-        session()->put('uniguide_student_saved_programs', $filtered);
+        $this->getCurrentStudent()?->savedItems()->where('item_type', 'program')->where('item_slug', $slug)->delete();
     }
 
     /**
@@ -661,57 +383,18 @@ class StudentService
      */
     public function getSavedScholarships(): array
     {
-        $student = $this->getCurrentStudent();
         $items = [];
-
-        if ($student) {
-            $saved = SavedItem::where('user_id', $student->id)
-                ->where('item_type', 'scholarship')
-                ->get();
-
-            foreach ($saved as $item) {
-                if (! empty($item->metadata)) {
-                    $items[] = $item->metadata;
-                }
+        if (! $student = $this->getCurrentStudent()) {
+            return [];
+        }
+        foreach ($student->savedItems()->where('item_type', 'scholarship')->get() as $item) {
+            $record = $this->admissionService->getScholarshipBySlug($item->item_slug);
+            if ($record) {
+                $items[] = array_replace($record, ['name' => $record['title'], 'badge' => 'Saved', 'badge_color' => 'neutral', 'eligibility_status' => 'Not assessed']);
             }
         }
 
-        if (empty($items)) {
-            $defaultScholarships = [
-                [
-                    'slug' => 'hec-need-based',
-                    'name' => 'HEC Need-Based Undergraduate Scholarship 2026',
-                    'provider' => 'Higher Education Commission (HEC)',
-                    'type' => 'Need-Based Full Tuition + Monthly Stipend',
-                    'coverage' => '100% Tuition + PKR 6,000 / month living stipend',
-                    'coverage_numeric' => 195000,
-                    'status' => 'Eligible & Recommended',
-                    'eligibility_status' => 'Eligible & Recommended',
-                    'badge' => 'National Merit',
-                    'badge_color' => 'success',
-                    'deadline' => '25 July 2026',
-                    'saved_at' => '22 Oct 2026',
-                ],
-                [
-                    'slug' => 'peef-special-quota',
-                    'name' => 'Punjab Educational Endowment Fund (PEEF) Master Grant',
-                    'provider' => 'Government of the Punjab',
-                    'type' => 'Provincial Need & Merit Quota',
-                    'coverage' => '100% Tuition Subsidy + Boarding Facility',
-                    'coverage_numeric' => 150000,
-                    'status' => 'Eligible for Punjab & Rawalpindi Domicile',
-                    'eligibility_status' => 'Eligible for Punjab & Rawalpindi Domicile',
-                    'badge' => 'Provincial Endowment',
-                    'badge_color' => 'indigo',
-                    'deadline' => '30 September 2026',
-                    'saved_at' => '01 Nov 2026',
-                ],
-            ];
-
-            $items = session()->get('uniguide_student_saved_scholarships', $defaultScholarships);
-        }
-
-        return app(RegionalStudentCatalog::class)->activeSaved($items, 'scholarship');
+        return $items;
     }
 
     /**
@@ -719,17 +402,7 @@ class StudentService
      */
     public function removeSavedScholarship(string $slug): void
     {
-        $student = $this->getCurrentStudent();
-        if ($student) {
-            SavedItem::where('user_id', $student->id)
-                ->where('item_type', 'scholarship')
-                ->where('item_slug', $slug)
-                ->delete();
-        }
-
-        $saved = session()->get('uniguide_student_saved_scholarships', []);
-        $filtered = array_values(array_filter($saved, fn ($s) => ($s['slug'] ?? '') !== $slug));
-        session()->put('uniguide_student_saved_scholarships', $filtered);
+        $this->getCurrentStudent()?->savedItems()->where('item_type', 'scholarship')->where('item_slug', $slug)->delete();
     }
 
     /**
@@ -737,59 +410,15 @@ class StudentService
      */
     public function getNotifications(string $filter = 'all'): array
     {
-        $student = $this->getCurrentStudent();
-        $items = [];
-
-        if ($student) {
-            $query = Notification::where('user_id', $student->id)->latest('dispatched_at');
-            if ($filter !== 'all') {
-                $query->where('category', $filter);
-            }
-
-            $dbNotifs = $query->get();
-            if ($dbNotifs->isNotEmpty()) {
-                foreach ($dbNotifs as $n) {
-                    $items[] = [
-                        'id' => (string) $n->id,
-                        'type' => $n->category ?? 'general',
-                        'title' => $n->title,
-                        'message' => $n->message ?? '',
-                        'link' => route('student.dashboard'),
-                        'time_ago' => $n->dispatched_at?->diffForHumans() ?? 'Recently',
-                        'read' => ! empty($n->read_at),
-                        'urgent' => ($n->category === 'deadline'),
-                    ];
-                }
-
-                return $items;
-            }
+        if (! $student = $this->getCurrentStudent()) {
+            return [];
         }
 
-        // Fallback session/default
-        $defaultNotifications = [
-            [
-                'id' => 'notif-1',
-                'type' => 'deadline',
-                'title' => 'NUST NET-4 Registration Closes in 5 Days',
-                'message' => 'Online registration for NET Series 4 closes on 15 July 2026. Submit your application challan to confirm test slot.',
-                'link' => route('admissions.show', 'nust-fall-2026'),
-                'time_ago' => '2 hours ago',
-                'read' => false,
-                'urgent' => true,
-            ],
-            [
-                'id' => 'notif-2',
-                'type' => 'merit',
-                'title' => 'FAST-NU Entry Test Admit Slip Generated',
-                'message' => 'Your test admit slip for BS Software Engineering (Roll #NU-ISB-99201) is ready. Exam center: H-9 Campus Islamabad.',
-                'link' => route('student.tracker'),
-                'time_ago' => '1 day ago',
-                'read' => false,
-                'urgent' => false,
-            ],
-        ];
-
-        return session()->get('uniguide_student_notifications', $defaultNotifications);
+        return $student->notifications()->where('status', 'active')->when($filter !== 'all', fn ($q) => $q->where('category', $filter))->latest()->get()->map(fn ($n) => [
+            'id' => (string) $n->id, 'type' => $n->category, 'title' => $n->title, 'message' => $n->message ?? '',
+            'link' => $n->safeActionUrl() ?? route('notifications.index'), 'time_ago' => $n->created_at?->diffForHumans(),
+            'read' => $n->read_at !== null, 'urgent' => $n->category === 'deadline',
+        ])->all();
     }
 
     /**
@@ -825,18 +454,12 @@ class StudentService
     public function getPersonalizedRecommendations(): array
     {
         $profile = $this->getProfile();
+        $test = $profile['entry_tests'][0] ?? [];
 
-        $counselorProfile = [
-            'matric_percentage' => $profile['matric']['percentage'] ?? 88.0,
-            'fsc_percentage' => $profile['fsc']['percentage'] ?? 81.0,
-            'test_type' => 'net',
-            'test_score' => 152,
-            'discipline' => 'computing',
-            'location' => 'islamabad',
-            'budget_max' => $profile['preferences']['budget_max'] ?? 200000,
-            'monthly_income' => $profile['monthly_household_income'] ?? 45000,
-        ];
-
-        return $this->counselorService->evaluateStudent($counselorProfile);
+        return $this->counselorService->evaluateStudent([
+            'matric_percentage' => $profile['matric']['percentage'], 'fsc_percentage' => $profile['fsc']['percentage'],
+            'test_type' => $test['test_type'] ?? 'none', 'test_score' => $test['score'] ?? 0, 'test_max' => $test['max_score'] ?? 0,
+            'budget_max' => $profile['preferences']['budget_max'], 'monthly_income' => $profile['monthly_household_income'],
+        ]);
     }
 }

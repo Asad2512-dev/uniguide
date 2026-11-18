@@ -1,12 +1,12 @@
 <x-layouts.public 
-    title="National Scholarship Directory — UniGuide Pakistan"
+    title="Scholarship Directory — UniGuide Pakistan"
     description="Discover verified higher education scholarships in Pakistan including Need-Based, Ehsaas Undergraduate, PEEF, BEEF, LUMS NOP, and university endowment trust funds."
 >
     <div x-data="{ 
         activeType: '{{ $filters['type'] }}',
         activeStatus: '{{ $filters['status'] }}'
     }" class="min-h-screen bg-canvas pb-20">
-        
+
         <!-- Header Banner & Search -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -18,12 +18,12 @@
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold font-sans mb-3">
+                        <div class="inline-flex items-center gap-2       text-emerald-800 text-xs font-semibold font-sans mb-3">
                             <x-icon name="award" class="w-3.5 h-3.5 text-emerald-600" />
-                            <span>Verified National Financial Aid Repository</span>
+                            <span>Verified Financial Aid Repository</span>
                         </div>
                         <h1 class="font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-ink-950 tracking-tight">
-                            National Scholarship & Financial Aid Explorer
+                            Scholarship & Financial Aid Explorer
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
                             Search government scholarships, provincial endowment funds, and university tuition waivers. Availability depends on verified regional eligibility.
@@ -105,7 +105,7 @@
 
         <!-- Main Body: Results Grid -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-6">
-            
+
             <!-- Control Bar: Result Count, Status Filter, Sort -->
             <div class="bg-surface rounded-2xl border border-border-default p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <p class="text-xs sm:text-sm font-sans text-ink-600">

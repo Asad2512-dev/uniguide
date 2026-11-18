@@ -3,7 +3,7 @@
     description="Your curated shortlist of eligible Pakistani universities with deadline alerts, verified tuition fees, and one-click side-by-side comparison."
 >
     <div class="min-h-screen bg-canvas pb-24">
-        
+
         <!-- Header Strip -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -17,7 +17,7 @@
 
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
+                        <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
                             <x-icon name="bookmark" class="w-3.5 h-3.5 text-brand-600" />
                             <span>Curated Candidate Portfolio</span>
                         </div>
@@ -71,7 +71,7 @@
 
                             <div class="p-3 rounded-xl bg-surface-subtle text-xs font-sans flex items-center justify-between">
                                 <span class="text-ink-500">Eligibility Status:</span>
-                                <span class="font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200/60 px-2 py-0.5 rounded-full">
+                                <span class="font-semibold text-emerald-700      ">
                                     {{ $uni['match_tier'] ?? 'Eligible Target' }}
                                 </span>
                             </div>
@@ -82,8 +82,8 @@
                                 href="{{ route('counselor.chat') }}?prompt=What+is+my+chances+at+{{ urlencode($uni['name']) }}"
                                 class="font-semibold text-brand-600 hover:text-brand-700 flex items-center gap-1"
                             >
-                                <x-icon name="sparkles" class="w-3.5 h-3.5" />
-                                <span>AI Counselor Strategy</span>
+                                <x-icon name="message-circle" class="w-3.5 h-3.5" />
+                                <span>Admission Counselor Strategy</span>
                             </a>
 
                             <a href="{{ route('universities.show', $uni['slug']) }}" class="text-ink-600 hover:text-ink-950 font-medium">

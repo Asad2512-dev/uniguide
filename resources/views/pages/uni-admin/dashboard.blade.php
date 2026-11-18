@@ -23,7 +23,7 @@
             <x-ui.button variant="outline" size="sm" icon="file-down">
                 Export Gazette Report
             </x-ui.button>
-            <x-ui.button variant="primary" size="sm" icon="sparkles" href="{{ route('uni_admin.ai_verification') }}">
+            <x-ui.button variant="primary" size="sm" icon="message-circle" href="{{ route('uni_admin.ai_verification') }}">
                 Review AI Queue ({{ $pending_verifications_count }})
             </x-ui.button>
         </x-slot:actions>
@@ -39,10 +39,10 @@
                 <div>
                     <div class="flex items-center gap-2">
                         <h2 class="font-heading font-bold text-base text-ink-950">Institutional Profile Completeness</h2>
-                        <x-ui.badge variant="success" size="sm">National Tier 1</x-ui.badge>
+                        <x-ui.badge variant="success" size="sm">Tier 1</x-ui.badge>
                     </div>
                     <p class="text-xs text-ink-500 font-sans mt-0.5 max-w-xl">
-                        Your university profile is visible to over 240,000 Pakistani candidates. Complete pending items to maintain Priority Verification on the national portal.
+                        Your university profile is visible to over 240,000 Pakistani candidates. Complete pending items to maintain Priority Verification on the portal.
                     </p>
                 </div>
             </div>

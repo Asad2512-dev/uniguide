@@ -40,7 +40,7 @@
             </x-slot:breadcrumbs>
 
             <x-slot:actions>
-                <x-ui.button variant="outline" size="sm" icon="download">
+                <x-ui.button variant="outline" size="sm" icon="download" :disabled="true" title="No export is configured for this screen">
                     Export Curriculum PDF
                 </x-ui.button>
                 <x-ui.button variant="primary" size="sm" icon="plus" @click="addModalOpen = true">
@@ -122,7 +122,7 @@
                                 </td>
 
                                 <td class="py-3.5 px-4">
-                                    <span class="px-2 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold bg-emerald-50 text-emerald-800 border border-emerald-200" x-text="p.accreditation"></span>
+                                    <span class="   text-xs sm:text-[10px] font-mono font-bold  text-emerald-800  " x-text="p.accreditation"></span>
                                 </td>
 
                                 <td class="py-3.5 px-4">
@@ -270,7 +270,7 @@
                             <label class="block text-xs font-semibold text-ink-800 mb-1">Department</label>
                             <select name="department" class="w-full px-3 py-2 rounded-xl border border-border-default text-xs font-sans">
                                 @foreach($departments as $d)
-                                    <option value="{{ $d['acronym'] }}">{{ $d['name'] }}</option>
+                                    <option value="{{ $d['id'] }}">{{ $d['name'] }}</option>
                                 @endforeach
                             </select>
                         </div>

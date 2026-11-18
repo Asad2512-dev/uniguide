@@ -1,6 +1,6 @@
-<x-layouts.national-admin title="Chartered University Registry — National Directory">
+<x-layouts.national-admin title="Chartered University Registry — Directory">
     <x-ui.page-header 
-        title="National University Registry"
+        title="University Registry"
         description="Master registry of all chartered higher education institutions under federal and provincial legislative acts."
         :badge="count($universities) . ' Registry Records'"
         badgeVariant="brand"
@@ -16,7 +16,7 @@
 
         <x-slot:actions>
             <x-ui.button variant="outline" size="sm" icon="file-down">
-                Export National Gazette
+                Export Gazette
             </x-ui.button>
             <x-ui.button variant="primary" size="sm" icon="plus" href="{{ route('national_admin.approvals') }}">
                 Charter Applications
@@ -162,7 +162,7 @@
                                     {{ $uni['last_audit_date'] }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs sm:text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="inline-flex items-center gap-1.5    text-xs sm:text-[11px] font-medium  text-emerald-700  ">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         Verified
                                     </span>

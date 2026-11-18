@@ -37,16 +37,16 @@
     /* -------------------------------------------------------------------------
        2. BACKGROUND SURFACES
        ------------------------------------------------------------------------- */
-    --surface-canvas: #FAFBFD;
+    --surface-canvas: #FFFFFF;
     --surface-card: #FFFFFF;
     --surface-elevated: #FFFFFF;
-    --surface-subtle: #F5F7FB;
-    --surface-muted: #EEF2F6;
+    --surface-subtle: #FFFFFF;
+    --surface-muted: #FFFFFF;
 
-    --color-canvas: #FAFBFD;
+    --color-canvas: #FFFFFF;
     --color-surface: #FFFFFF;
-    --color-surface-subtle: #F5F7FB;
-    --color-surface-muted: #EEF2F6;
+    --color-surface-subtle: #FFFFFF;
+    --color-surface-muted: #FFFFFF;
 
     /* -------------------------------------------------------------------------
        3. TEXT & INK HIERARCHY

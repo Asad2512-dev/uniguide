@@ -32,6 +32,19 @@ class Notification extends Model
         ];
     }
 
+    public function safeActionUrl(): ?string
+    {
+        $url = $this->action_url;
+        if (! $url || preg_match('/[\\\\\r\n]/', $url)) {
+            return null;
+        }
+        if (str_starts_with($url, '/') && ! str_starts_with($url, '//')) {
+            return $url;
+        }
+
+        return str_starts_with($url, url('/').'/') ? $url : null;
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

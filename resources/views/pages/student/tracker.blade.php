@@ -22,7 +22,7 @@
         <!-- Header Strip -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-default">
             <div>
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
+                <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
                     <x-icon name="file-text" class="w-3.5 h-3.5 text-brand-600" />
                     <span>Application Lifecycle Engine</span>
                 </div>
@@ -100,7 +100,7 @@
                         </div>
 
                         <div class="flex items-center gap-2">
-                            <span class="px-3 py-1 rounded-full text-xs font-semibold font-mono {{ match($app['stage']) {
+                            <span class="   text-xs font-semibold font-mono {{ match($app['stage']) {
                                 'offer_received' => 'bg-success-50 text-success-700 border border-success-200/80 font-bold',
                                 'test_scheduled' => 'bg-warning-50 text-warning-700 border border-warning-200/80 font-bold',
                                 'applied' => 'bg-brand-50 text-brand-700 border border-brand-200/80 font-bold',

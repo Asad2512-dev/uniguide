@@ -9,9 +9,9 @@
         <x-nav.sidebar 
             menuKey="student" 
             roleLabel="Student Portal" 
-            userName="Ahmad Raza Khan" 
-            userRole="FSc Pre-Engineering • Roll #8841" 
-            userAvatar="AR" 
+            :userName="auth()->user()?->name ?? 'Student'"
+            :userRole="auth()->user()?->profile?->stream_label ?? 'Student'"
+            :userAvatar="mb_strtoupper(mb_substr(auth()->user()?->name ?? 'S', 0, 2))"
         />
 
         <!-- Mobile Drawer Navigation -->
@@ -21,10 +21,10 @@
         <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
             <!-- Dashboard Topbar -->
             <x-nav.topbar 
-                contextBadge="Fall 2026 Admission Cycle Active" 
-                userName="Ahmad Raza Khan" 
-                userRole="Applicant #UG-2026-8841" 
-                avatarText="AR" 
+                contextBadge="Student workspace"
+                :userName="auth()->user()?->name ?? 'Student'"
+                :userRole="auth()->user()?->profile?->applicant_id ?? 'Student'"
+                :avatarText="mb_strtoupper(mb_substr(auth()->user()?->name ?? 'S', 0, 2))"
             />
 
             <!-- Scrollable Content Canvas -->

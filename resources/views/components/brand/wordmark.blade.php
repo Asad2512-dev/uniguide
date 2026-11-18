@@ -41,7 +41,7 @@
         </div>
         @if($tagline)
         <span class="font-sans font-medium text-ink-500 tracking-normal mt-0.5 {{ $taglineSize }}">
-            {{ config('brand.subtitle', 'National Higher Education Portal') }}
+            {{ config('brand.subtitle', 'Higher Education Portal') }}
         </span>
         @endif
     </div>

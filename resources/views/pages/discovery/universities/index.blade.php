@@ -9,31 +9,31 @@
         activeProvince: '{{ $filters['province'] }}',
         activeSector: '{{ $filters['sector'] }}'
     }" class="min-h-screen bg-canvas pb-20">
-        
+
         <!-- Header Banner & Search -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
-                        ['label' => 'National Directory', 'url' => route('universities.index')]
+                        ['label' => 'Directory', 'url' => route('universities.index')]
                     ]" />
                 </div>
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-brand-50 border border-brand-200/60 text-brand-700 text-xs font-semibold font-sans mb-3">
+                        <div class="inline-flex items-center gap-2       text-brand-700 text-xs font-semibold font-sans mb-3">
                             <x-icon name="shield-check" class="w-3.5 h-3.5 text-brand-600" />
                             <span>University Registry & Statutory Gazette Audited</span>
                         </div>
                         <h1 class="font-heading font-extrabold text-2xl sm:text-3xl md:text-4xl text-ink-950 tracking-tight">
-                            National University Directory
+                            University Directory
                         </h1>
                         <p class="text-sm sm:text-base text-ink-600 font-sans max-w-2xl mt-1.5 leading-relaxed">
                             Authoritative catalog of public sector and chartered higher education institutions in Pakistan, verified against official parliamentary charters and standards.
                         </p>
                     </div>
 
-                    <!-- Live National Counter Metric -->
+                    <!-- Live Counter Metric -->
                     <div class="flex items-center gap-4 bg-surface-subtle p-3.5 rounded-xl border border-border-subtle shrink-0">
                         <div class="text-center px-2">
                             <span class="block font-heading font-extrabold text-xl text-ink-950">{{ $results['total'] }}</span>
@@ -102,7 +102,7 @@
         <!-- Main Body: Desktop Filter Sidebar + Results Viewport -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
-                
+
                 <!-- Desktop Sidebar Filters -->
                 <aside class="hidden lg:block lg:col-span-1 space-y-6">
                     <form action="{{ route('universities.index') }}" method="GET" id="desktop-filter-form">
@@ -221,7 +221,7 @@
                             </div>
 
                             <!-- Category Tier -->
-                            
+
 
                             <!-- Max Semester Tuition -->
                             <div>
@@ -262,10 +262,10 @@
 
                 <!-- Results Viewport -->
                 <section class="lg:col-span-3 space-y-6">
-                    
+
                     <!-- Control Bar: Result Count, Mobile Filter Trigger, Sort, View Toggle -->
                     <div class="bg-surface rounded-2xl border border-border-default p-4 shadow-2xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                        
+
                         <!-- Left: Count & Mobile Filter Button -->
                         <div class="flex items-center gap-3">
                             <button 
@@ -427,7 +427,7 @@
                                                 <span>•</span>
                                                 <span class="font-medium text-ink-700">{{ $uni['charter_type'] }}</span>
                                                 <span>•</span>
-                                                
+
                                                 <span>•</span>
                                                 <span>{{ count($uni['campuses'] ?? []) }} Campuses recorded · {{ str_replace('_', ' ', $uni['verification_status']) }}</span>
                                             </div>
@@ -557,7 +557,7 @@
                                 </select>
                             </div>
 
-                            
+
 
                             <div class="pt-4 flex items-center gap-3">
                                 <a 

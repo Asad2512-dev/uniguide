@@ -55,15 +55,9 @@
                         <x-form.select 
                             name="stream" 
                             label="Intermediate Academic Stream" 
-                            :options="[
-                                'fsc_pre_eng' => 'FSc Pre-Engineering',
-                                'fsc_pre_med' => 'FSc Pre-Medical',
-                                'ics_math_stat' => 'ICS (Computer Science & Math)',
-                                'a_levels' => 'Cambridge A-Levels (Equivalence)',
-                                'icom' => 'I.Com (Commerce)',
-                                'dae' => 'DAE (Associate Engineering)'
-                            ]"
-                            selected="{{ old('stream', 'fsc_pre_eng') }}"
+                            :options="collect(config('academic_streams.options'))->mapWithKeys(fn ($option, $key) => [$key => $option['name']])->all()"
+                            :selected="config('academic_streams.aliases.'.old('stream'), old('stream', 'pre_engineering'))"
+                            :error="$errors->first('stream')"
                             required="true"
                         />
 

@@ -3,11 +3,11 @@
     description="Manage your student account preferences, security credentials, notification channels, and privacy controls."
 >
     <div class="space-y-8 pb-12">
-        
+
         <!-- Header Strip -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-default">
             <div>
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
+                <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
                     <x-icon name="settings" class="w-3.5 h-3.5 text-brand-600" />
                     <span>User Governance</span>
                 </div>
@@ -27,7 +27,7 @@
             <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
                 <div class="pb-3 border-b border-border-subtle">
                     <h2 class="font-heading font-bold text-base text-ink-950">Candidate Information</h2>
-                    <p class="text-xs text-ink-500 font-sans mt-0.5">Primary contact details associated with your national applicant ID.</p>
+                    <p class="text-xs text-ink-500 font-sans mt-0.5">Primary contact details associated with your applicant ID.</p>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 text-xs font-sans">
@@ -89,7 +89,7 @@
                             <span class="font-bold text-ink-900 block">Registration Deadline Reminders</span>
                             <span class="text-ink-500">Receive email alerts 5 days and 24 hours prior to application cutoffs.</span>
                         </div>
-                        <input type="checkbox" checked class="rounded text-brand-600 focus:ring-brand-500 h-4 w-4" />
+                        <input name="deadline_reminders" type="checkbox" @checked($profile['preferences']['deadline_reminders'] ?? false) class="rounded text-brand-600 focus:ring-brand-500 h-4 w-4" />
                     </label>
 
                     <label class="flex items-center justify-between p-3.5 rounded-xl border border-border-default bg-surface-subtle cursor-pointer">
@@ -97,7 +97,7 @@
                             <span class="font-bold text-ink-900 block">Entrance Test Schedule & Roll Number Slips</span>
                             <span class="text-ink-500">Immediate SMS alerts when NUST, FAST, or ECAT exam centers publish dates.</span>
                         </div>
-                        <input type="checkbox" checked class="rounded text-brand-600 focus:ring-brand-500 h-4 w-4" />
+                        <input name="merit_updates" type="checkbox" @checked($profile['preferences']['merit_updates'] ?? false) class="rounded text-brand-600 focus:ring-brand-500 h-4 w-4" />
                     </label>
 
                     <label class="flex items-center justify-between p-3.5 rounded-xl border border-border-default bg-surface-subtle cursor-pointer">
@@ -105,7 +105,7 @@
                             <span class="font-bold text-ink-900 block">Merit List Announcement Alerts</span>
                             <span class="text-ink-500">Instant notification when 1st, 2nd, and 3rd closing cutoffs are finalized.</span>
                         </div>
-                        <input type="checkbox" checked class="rounded text-brand-600 focus:ring-brand-500 h-4 w-4" />
+                        <input name="scholarship_updates" type="checkbox" @checked($profile['preferences']['scholarship_updates'] ?? false) class="rounded text-brand-600 focus:ring-brand-500 h-4 w-4" />
                     </label>
                 </div>
             </div>
@@ -123,8 +123,8 @@
                             <x-icon name="key" class="w-4 h-4 text-brand-600" />
                             <span>Password Credentials</span>
                         </div>
-                        <p class="text-ink-600">Password last changed 3 months ago. Strong alphanumeric recommended.</p>
-                        <a href="{{ route('auth.forgot_password') }}" class="text-brand-600 font-semibold underline block pt-1">
+                        <p class="text-ink-600">Use a unique password to protect your account.</p>
+                        <a href="{{ route('account.password') }}" class="text-brand-600 font-semibold underline block pt-1">
                             Change Password →
                         </a>
                     </div>
@@ -134,9 +134,9 @@
                             <x-icon name="shield" class="w-4 h-4 text-success-600" />
                             <span>Two-Factor Authentication (2FA)</span>
                         </div>
-                        <p class="text-ink-600">SMS OTP verification active for sensitive document downloads.</p>
+                        <p class="text-ink-600">Two-factor authentication is not connected.</p>
                         <span class="text-xs sm:text-[10px] font-mono text-success-700 bg-success-50 px-2 py-0.5 rounded font-bold inline-block">
-                            Enabled via +92 300 ***8841
+                            Not configured
                         </span>
                     </div>
                 </div>
@@ -155,13 +155,7 @@
                         <span class="text-ink-500">Download a verified JSON or PDF bundle of all your marks, test scores, and notes.</span>
                     </div>
 
-                    <button 
-                        type="button" 
-                        onclick="alert('Your full applicant data archive has been generated and queued for download.')"
-                        class="px-4 py-2 rounded-xl border border-border-default bg-surface hover:bg-surface-subtle text-ink-800 font-semibold shadow-2xs cursor-pointer shrink-0"
-                    >
-                        Export Data Bundle
-                    </button>
+                    <a data-download href="{{ route('student.export') }}" class="px-4 py-2 rounded-xl border border-border-default text-sm text-brand-700">Export Data Bundle</a>
                 </div>
             </div>
 

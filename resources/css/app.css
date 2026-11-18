@@ -380,3 +380,49 @@ h1, h2, h3 { text-wrap: balance; }
 @media (min-width: 40rem) {
     .portal-workspace .registry-table th:first-child { width: 30%; }
 }
+
+/* Pure white surfaces across the public site and all workspaces. */
+html, body, .app-shell, .portal-workspace,
+:where(main, aside, header, footer, nav, section, article, form, details, table, thead, tbody, tr, th, td, input, select, textarea),
+:where(div, label)[class*="bg-"]:not(.h-full, .h-1, .h-1\.5, .h-2, .h-2\.5, [role="progressbar"], [style*="width"], [\:style*="width"]) {
+    background-color: #ffffff !important;
+    background-image: none !important;
+}
+
+/* Dark promotional panels now have white surfaces and readable foregrounds.
+   Button/link foregrounds retain their own contrast and interaction styling. */
+:where(div, section, article, header, footer, aside, main)[class*="bg-"]:is(.text-white, .text-brand-100, .text-brand-200, .text-brand-300) {
+    color: var(--color-ink-900) !important;
+}
+:where(div, section, article, header, footer, aside, main)[class*="bg-"]
+    :is(.text-white, .text-brand-100, .text-brand-200, .text-brand-300, .text-indigo-100, .text-indigo-200):not(:where(button, button *, a, a *)) {
+    color: var(--color-ink-900) !important;
+}
+
+/* Remove colored hero glows without altering page composition. */
+:where(div)[class*="blur-"][class*="bg-"] {
+    background: #ffffff !important;
+}
+
+.glass-header {
+    background: #ffffff !important;
+}
+
+/* Feedback only while actual work is pending; all surfaces remain white. */
+.progress-spinner {
+    display: inline-block; flex: 0 0 auto; width: 1em; height: 1em;
+    border: 2px solid currentColor; border-right-color: transparent;
+    border-radius: 50%; vertical-align: middle; animation: progress-spin .8s linear infinite;
+}
+[data-progress-pending] { cursor: wait; }
+[data-progress-pending] > .progress-spinner { margin-inline-start: .5rem; }
+.page-progress-strip { position: fixed; inset: 0 0 auto; height: 3px; z-index: 100; overflow: hidden; pointer-events: none; }
+.page-progress-strip::after { content: ''; position: absolute; inset: 0 auto 0 0; width: 35%; background: var(--color-brand-600); animation: progress-travel 1.3s ease-in-out infinite; }
+.page-progress-status { position: fixed; bottom: max(1rem, env(safe-area-inset-bottom)); right: 1rem; z-index: 100; display: flex; align-items: center; gap: .65rem; max-width: calc(100vw - 2rem); padding: .8rem 1rem; border: 1px solid var(--color-border-default); border-radius: .5rem; background: #fff; color: var(--color-ink-700); font-size: .8125rem; box-shadow: var(--shadow-card); pointer-events: none; }
+.page-progress-status .progress-spinner { color: var(--color-brand-600); }
+.chart-loading-state { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; gap: .65rem; background: #fff; color: var(--color-ink-600); font-size: .875rem; }
+[data-page-progress][hidden], [data-progress-status][hidden] { display: none !important; }
+@keyframes progress-spin { to { transform: rotate(360deg); } }
+@keyframes progress-travel { from { transform: translateX(-110%); } to { transform: translateX(390%); } }
+@media (prefers-reduced-motion: reduce) { .progress-spinner, .page-progress-strip::after { animation: none; }.page-progress-strip::after { width: 100%; } }
+@media (max-width: 767px) { .page-progress-status { bottom: calc(5rem + env(safe-area-inset-bottom)); } }

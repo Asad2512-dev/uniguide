@@ -1,6 +1,6 @@
-<x-layouts.national-admin title="AI Extraction Review Workspace — Federal Verification">
+<x-layouts.national-admin title="Extraction Review Workspace — Federal Verification">
     <x-ui.page-header 
-        title="AI Extraction Review Workspace"
+        title="Extraction Review Workspace"
         description="High-throughput human-in-the-loop audit workspace for reviewing machine-extracted admissions rules, fee structures, and eligibility changes before public propagation."
         badge="4 Staged Extractions"
         badgeVariant="warning"
@@ -9,7 +9,7 @@
             <x-ui.breadcrumbs 
                 :items="[
                     ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
-                    ['label' => 'AI Extraction Review']
+                    ['label' => 'Extraction Review']
                 ]"
             />
         </x-slot:breadcrumbs>

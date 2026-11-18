@@ -23,6 +23,6 @@
     <!-- Tagline: Pakistan -->
     <rect x="145" y="11" width="56" height="15" rx="3" fill="#EEF0FF" stroke="#C7CDFE" stroke-width="0.8" />
     <text x="173" y="22" font-family="'Inter', system-ui, sans-serif" font-weight="700" font-size="8.5" fill="#3542CE" letter-spacing="1" text-anchor="middle">PAKISTAN</text>
-    <text x="51" y="35" font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="9" fill="#667085" letter-spacing="0.2">National Higher Education Portal</text>
+    <text x="51" y="35" font-family="'Inter', system-ui, sans-serif" font-weight="500" font-size="9" fill="#667085" letter-spacing="0.2">Higher Education Portal</text>
 </svg>
 

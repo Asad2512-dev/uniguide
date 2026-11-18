@@ -17,14 +17,14 @@ return [
     'acronym' => 'UG',
     'country' => 'Pakistan',
     'country_code' => 'PK',
-    'tagline' => 'National Higher Education Discovery & Admissions Gateway',
-    'subtitle' => 'National Higher Education Portal',
+    'tagline' => 'Higher Education Discovery & Admissions Gateway',
+    'subtitle' => 'Higher Education Portal',
     'jurisdiction' => 'Punjab & Islamabad Capital Territory (ICT)',
 
-    'description' => 'UniGuide Pakistan is the national AI-powered platform for university discovery, verified admission merit calculation, degree program comparison, and scholarship tracking.',
+    'description' => 'UniGuide Pakistan is the AI-powered platform for university discovery, verified admission merit calculation, degree program comparison, and scholarship tracking.',
 
     'seo' => [
-        'default_title' => 'UniGuide Pakistan — National University Discovery & Admissions Platform',
+        'default_title' => 'UniGuide Pakistan — University Discovery & Admissions Platform',
         'title_suffix' => 'Premium Higher Education Discovery & Admissions Platform',
         'default_description' => 'Discover universities and admission opportunities across Punjab and Islamabad.',
         'keywords' => 'Pakistani universities, HEC admissions, merit calculator, NUST, FAST-NUCES, LUMS, scholarships Pakistan, PEEF, Ehsaas, entry tests',
@@ -85,8 +85,7 @@ return [
     'legal' => [
         'copyright' => '© :year UniGuide Pakistan. All rights reserved. Data verified against official provincial charters and gazetted fee schedules.',
         'charter_notice' => 'Official Pakistani Higher Education Verification Protocol',
-        'regulatory_sync' => 'National Registry Sync',
+        'regulatory_sync' => 'Registry Sync',
         'verification_level' => 'HEC Chartered & Council Accredited (PEC, PMDC, NCEAC)',
     ],
 ];
-

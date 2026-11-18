@@ -25,7 +25,7 @@
         <div class="bg-gradient-to-r from-brand-600 to-brand-800 px-4 py-1 flex flex-wrap gap-2 items-center justify-between text-white text-xs sm:text-[11px] font-semibold tracking-wide">
             <span class="flex items-center gap-1.5">
                 <x-icon name="sparkles" class="w-3.5 h-3.5 text-brand-200" />
-                Featured National Institution
+                Featured Institution
             </span>
             <span class="uppercase tracking-widest text-xs sm:text-[9px] bg-white/20 px-1.5 py-0.2 rounded font-mono">
                 University

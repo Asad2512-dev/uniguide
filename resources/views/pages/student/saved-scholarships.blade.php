@@ -5,11 +5,11 @@
 <p class="mb-4 rounded-xl border border-border-default bg-surface p-3 text-sm text-ink-600">Saved records outside current coverage remain in your account history and are hidden from this active list.</p>
 
     <div x-data="{ deleteModalOpen: false, deleteActionUrl: '', deleteItemName: '' }" class="space-y-8 pb-12">
-        
+
         <!-- Header Strip -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-default">
             <div>
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs font-semibold mb-2">
+                <div class="inline-flex items-center gap-1.5       text-emerald-700 text-xs font-semibold mb-2">
                     <x-icon name="award" class="w-3.5 h-3.5 text-emerald-600" />
                     <span>Financial Aid Portfolio</span>
                 </div>
@@ -17,7 +17,7 @@
                     Saved Scholarships & Financial Aid
                 </h1>
                 <p class="text-xs sm:text-sm text-ink-600 font-sans mt-1">
-                    Matched national, provincial, and university scholarships to fund your higher education in Pakistan.
+                    Matched Provincial and university scholarships to fund your higher education in Pakistan.
                 </p>
             </div>
 

@@ -1,6 +1,6 @@
 {
   "hero": {
-    "eyebrow": "Fall 2026 National University Admissions Cycle Live",
+    "eyebrow": "Explore universities in Punjab and Islamabad",
     "institutions_listed": ":count Listed Institutions",
     "headline_main": "Find your university in Punjab or Islamabad.",
     "headline_gradient": "Calculate exact merit.",
@@ -21,7 +21,7 @@
   },
   "stats": {
     "institutions_value": "248+",
-    "institutions_title": "HEC Recognized",
+    "institutions_title": "Listed on UniGuide",
     "institutions_subtitle": "Chartered Institutions",
     "fees_value": "100%",
     "fees_title": "Verified Fee Structures",
@@ -41,7 +41,7 @@
       "view_all": "View All Active Intakes"
     },
     "universities": {
-      "eyebrow": "Provincial & National Registry",
+      "eyebrow": "Provincial & Registry",
       "title": "Top Public & Chartered Universities in Punjab & Islamabad",
       "subtitle": "Browse leading higher education institutions with verified accreditations, historical closing merits, and campus facilities.",
       "view_all": "Browse All :count Universities"
@@ -49,7 +49,7 @@
     "cta": {
       "eyebrow": "Start Your Higher Education Journey",
       "title": "Everything you need to secure university admission in Pakistan.",
-      "description": "Join over 340,000 students using UniGuide to calculate accurate merit aggregates, compare fee schedules, and track admission deadlines across Punjab and Islamabad.",
+      "description": "Join students using UniGuide to calculate accurate merit aggregates, compare fee schedules, and track admission deadlines across Punjab and Islamabad.",
       "primary_button": "Create Free Student Locker",
       "secondary_button": "Talk to AI Counselor"
     }

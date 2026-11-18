@@ -1,15 +1,15 @@
-<x-layouts.national-admin title="AI Chatbot Configuration & Statutory Guardrails">
+<x-layouts.national-admin title="Counselor Settingsuration & Listing Guardrails">
     <x-ui.page-header 
-        title="AI Chatbot Configuration"
-        description="Federal oversight hyperparameters, prompt engineering, statutory rules injection, and strict citation enforcement for UniGuide's AI Counselor."
-        badge="Regulatory Safety Tier"
+        title="Counselor Settingsuration"
+        description="Platform oversight hyperparameters, prompt engineering, published rules injection, and strict citation enforcement for UniGuide's Admission Counselor."
+        badge="Platform Safety Tier"
         badgeVariant="brand"
     >
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
                     ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
-                    ['label' => 'AI Chatbot Config']
+                    ['label' => 'Counselor Settings']
                 ]"
             />
         </x-slot:breadcrumbs>
@@ -47,9 +47,7 @@
                                 name="model" 
                                 class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono"
                             >
-                                <option value="gemini-1.5-pro" {{ ($config['model'] ?? '') === 'gemini-1.5-pro' ? 'selected' : '' }}>Google Gemini 1.5 Pro</option>
-                                <option value="gpt-4o" {{ ($config['model'] ?? '') === 'gpt-4o' ? 'selected' : '' }}>OpenAI GPT-4o</option>
-                                <option value="claude-3-5-sonnet" {{ ($config['model'] ?? '') === 'claude-3-5-sonnet' ? 'selected' : '' }}>Anthropic Claude 3.5 Sonnet</option>
+                                <option value="registry" selected>Local university database</option>
                             </select>
                         </div>
 
@@ -88,7 +86,7 @@
                                 value="{{ $config['citation_threshold'] ?? 0.85 }}"
                                 class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500 font-mono"
                             />
-                            <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Requires minimum 0.85 similarity to cite statutory gazettes.</span>
+                            <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Requires minimum 0.85 similarity to cite published gazettes.</span>
                         </div>
                     </div>
                 </div>
@@ -98,7 +96,7 @@
                     <div class="flex items-center justify-between">
                         <h3 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
                             <x-icon name="bot" class="w-4 h-4 text-brand-600" />
-                            National Regulatory System Prompt
+                            Platform System Prompt
                         </h3>
                         <span class="text-xs sm:text-[11px] font-mono text-ink-600">Strict Persona Invariant</span>
                     </div>
@@ -111,16 +109,16 @@
                 </div>
             </div>
 
-            <!-- Right Column: Statutory Guardrails & Save (5 Cols) -->
+            <!-- Right Column: Listing Guardrails & Save (5 Cols) -->
             <div class="lg:col-span-5 space-y-6">
                 <!-- Guardrails Injection Rules Card -->
                 <div class="p-4 sm:p-6 rounded-2xl bg-surface border border-border-default shadow-card space-y-4">
                     <h3 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
                         <x-icon name="shield-check" class="w-4 h-4 text-emerald-600" />
-                        Statutory Guardrail Injection
+                        Listing Guardrail Injection
                     </h3>
                     <p class="text-xs text-ink-500 font-sans">
-                        Dynamic prompt-injection layers enforcing mandatory regulatory checks during inference.
+                        Dynamic prompt-injection layers enforcing mandatory platform checks during inference.
                     </p>
 
                     <div class="space-y-3.5 pt-2">
@@ -199,7 +197,7 @@
                 <!-- Save Action Button -->
                 <div class="flex justify-end">
                     <x-ui.button type="submit" variant="primary" size="lg" icon="save">
-                        Save AI Counselor Configuration
+                        Save Admission Counselor Configuration
                     </x-ui.button>
                 </div>
             </div>

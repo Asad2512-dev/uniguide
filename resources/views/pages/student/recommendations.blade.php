@@ -3,12 +3,12 @@
     description="Your strategic Reach, Match, and Safety university tiers calibrated against your verified Matric, FSc, and NET scores."
 >
     <div x-data="{ activeTab: 'all' }" class="space-y-8 pb-12">
-        
+
         <!-- Header Banner & Calculated Aggregates Strip -->
         <div class="rounded-2xl border border-brand-200/80 bg-gradient-to-r from-surface via-surface to-brand-50/40 p-6 sm:p-8 shadow-card">
             <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                 <div>
-                    <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
+                    <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
                         <x-icon name="compass" class="w-3.5 h-3.5 text-brand-600" />
                         <span>Calibrated Strategy Plan</span>
                         <span class="text-ink-300">•</span>
@@ -25,8 +25,8 @@
 
                 <div class="shrink-0 p-3.5 rounded-xl border border-border-default bg-surface shadow-2xs text-xs font-sans">
                     <span class="text-xs sm:text-[10px] text-ink-600 uppercase font-mono block">Profile Snapshot</span>
-                    <span class="font-bold text-ink-900 block mt-0.5">88% Matric • 81% FSc • NET 152</span>
-                    <span class="text-xs sm:text-[11px] text-brand-700 font-mono block mt-0.5">Cap: PKR 200k/semester</span>
+                    <span class="font-bold text-ink-900 block mt-0.5">{{ $profile['matric']['percentage'] }}% SSC · {{ $profile['fsc']['percentage'] }}% HSSC</span>
+                    <span class="text-xs sm:text-[11px] text-brand-700 font-mono block mt-0.5">Budget: {{ $profile['preferences']['budget_max'] ? 'PKR '.number_format($profile['preferences']['budget_max']) : 'Not provided' }}</span>
                 </div>
             </div>
 
@@ -93,7 +93,7 @@
                 href="{{ route('counselor.chat') }}"
                 class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-brand-600 text-white text-xs font-semibold shadow-2xs hover:bg-brand-700 transition-smooth"
             >
-                <x-icon name="sparkles" class="w-3.5 h-3.5" />
+                <x-icon name="message-circle" class="w-3.5 h-3.5" />
                 <span>Discuss with Counselor</span>
             </a>
         </div>

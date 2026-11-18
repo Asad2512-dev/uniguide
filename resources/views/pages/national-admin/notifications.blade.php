@@ -1,7 +1,7 @@
-<x-layouts.national-admin title="Regulatory Broadcasts & Alerts — National Dispatch">
+<x-layouts.national-admin title="Platform Announcements & Alerts — Dispatch">
     <x-ui.page-header 
-        title="Regulatory Broadcasts & Notifications"
-        description="National communication engine for dispatching statutory circulars, admission deadline extensions, and compliance notices to institutions and candidates."
+        title="Platform Announcements & Notifications"
+        description="communication engine for dispatching published circulars, admission deadline extensions, and compliance notices to institutions and candidates."
         badge="Federal Broadcast Active"
         badgeVariant="brand"
     >
@@ -16,7 +16,7 @@
 
         <x-slot:actions>
             <x-ui.button variant="primary" size="sm" icon="send" @click="$dispatch('open-broadcast-modal')">
-                Compose Regulatory Broadcast
+                Compose Platform Broadcast
             </x-ui.button>
         </x-slot:actions>
     </x-ui.page-header>
@@ -37,7 +37,7 @@
         <!-- Broadcasts Roster -->
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
             <div class="overflow-x-auto">
-                <table data-mobile-table class="w-full text-left border-collapse" aria-label="Regulatory Broadcasts Roster">
+                <table data-mobile-table class="w-full text-left border-collapse" aria-label="Platform Announcements Roster">
                     <thead>
                         <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
                             <th scope="col" class="py-3.5 px-4 font-semibold">Broadcast Title & Category</th>
@@ -70,7 +70,7 @@
                                     {{ $notif['dispatched_at'] }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs sm:text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="inline-flex items-center gap-1.5    text-xs sm:text-[11px] font-medium  text-emerald-700  ">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         {{ $notif['status'] }}
                                     </span>
@@ -88,7 +88,7 @@
             x-modal-focus="showModal"
             role="dialog"
             aria-modal="true"
-            aria-label="Compose regulatory broadcast"
+            aria-label="Compose platform broadcast"
             x-cloak
             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-ink-950/60 backdrop-blur-xs"
             @keydown.escape.window="showModal = false"
@@ -98,7 +98,7 @@
                 @click.away="showModal = false"
             >
                 <div class="px-6 py-4 border-b border-border-default bg-surface-subtle flex items-center justify-between">
-                    <h3 class="font-heading font-bold text-sm text-ink-950">Compose Regulatory Broadcast</h3>
+                    <h3 class="font-heading font-bold text-sm text-ink-950">Compose Platform Broadcast</h3>
                     <button type="button" @click="showModal = false" class="text-ink-400 hover:text-ink-700 cursor-pointer">
                         <x-icon name="x" class="w-4 h-4" />
                     </button>
@@ -126,7 +126,7 @@
                                 class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
                             >
                                 <option value="Platform Announcement">Platform Announcement</option>
-                                <option value="National Admissions Alert">National Admissions Alert</option>
+                                <option value="Admissions Alert">Admissions Alert</option>
                                 <option value="Inspection Notice">Inspection Notice</option>
                             </select>
                         </div>
@@ -137,13 +137,14 @@
                                 required
                                 class="w-full text-xs rounded-xl border border-border-default bg-canvas px-3 py-2 text-ink-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
                             >
-                                <option value="All Chartered Universities & Candidates">All Universities & Candidates</option>
-                                <option value="All Chartered Universities">Universities Only</option>
-                                <option value="FSc Final Year Candidates">All Student Candidates</option>
+                                <option value="all">All Universities & Candidates</option>
+                                <option value="universities">Universities Only</option>
+                                <option value="students">All Student Candidates</option>
                             </select>
                         </div>
                     </div>
 
+                    <label class="block text-sm">Message<textarea name="message" required maxlength="5000" rows="4" class="mt-2 block w-full rounded-lg border border-border-default p-3"></textarea></label>
                     <div class="pt-4 border-t border-border-subtle flex justify-end gap-3">
                         <button type="button" @click="showModal = false" class="px-4 py-2 text-xs font-semibold text-ink-600 hover:text-ink-800">
                             Cancel

@@ -1,5 +1,5 @@
 <x-layouts.public 
-    title="About UniGuide Pakistan — National Higher Education Intelligence Portal"
+    title="About UniGuide Pakistan — Higher Education Intelligence Portal"
     description="Learn about UniGuide Pakistan's mission, statutory data verification protocols, regulatory compliance, and academic governance."
 >
     <!-- Header -->
@@ -7,7 +7,7 @@
         <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <x-ui.page-header 
                 :title="content('about.header.title', 'About UniGuide Pakistan')"
-                :description="content('about.header.description', 'Pakistan\'s national intelligence platform for university discovery, verified merit calculations, and transparent higher education opportunities.')"
+                :description="content('about.header.description', 'Pakistan\'s intelligence platform for university discovery, verified merit calculations, and transparent higher education opportunities.')"
                 :badge="content('about.header.badge', 'University Discovery')"
                 badgeVariant="brand"
             >
@@ -27,9 +27,9 @@
         <!-- Mission & Editorial Narrative -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             <div class="lg:col-span-7 space-y-5">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold font-sans bg-brand-50 text-brand-700 border border-brand-200">
-                    <x-icon name="sparkles" class="w-4 h-4 text-brand-600" />
-                    <span>The National Education Imperative</span>
+                <div class="inline-flex items-center gap-1.5    text-xs font-semibold font-sans  text-brand-700  ">
+                    <x-icon name="message-circle" class="w-4 h-4 text-brand-600" />
+                    <span>The Education Imperative</span>
                 </div>
 
                 <h2 class="text-2xl sm:text-3xl md:text-4xl font-heading font-extrabold text-ink-950 tracking-tight leading-tight">
@@ -41,7 +41,7 @@
                 </p>
 
                 <p class="text-sm text-ink-600 font-sans leading-relaxed">
-                    UniGuide Pakistan was established to provide a unified, authentic, and completely free national gateway. We do not sell promotional placements or accept paid ranking manipulations. Every statistic, fee figure, and merit formula is directly cross-referenced against official provincial assembly charters and gazetted university circulars.
+                    UniGuide Pakistan was established to provide a unified, authentic, and completely free gateway. We do not sell promotional placements or accept paid ranking manipulations. Every statistic, fee figure, and merit formula is directly cross-referenced against official provincial assembly charters and gazetted university circulars.
                 </p>
             </div>
 
@@ -51,18 +51,18 @@
                     <div class="flex items-center gap-3">
                         <x-brand.logo size="lg" />
                         <div>
-                            <h4 class="font-heading font-bold text-base text-ink-950">Statutory Data Seal</h4>
-                            <p class="text-xs text-ink-500 font-sans">Federal Higher Education Registry</p>
+                            <h4 class="font-heading font-bold text-base text-ink-950">University records</h4>
+                            <p class="text-xs text-ink-500 font-sans">UniGuide directory</p>
                         </div>
                     </div>
                     <div class="pt-3 border-t border-border-subtle space-y-2 text-xs font-sans">
                         <div class="flex items-center justify-between">
                             <span class="text-ink-600">Total Recognized Universities:</span>
-                            <span class="font-bold text-ink-950">248 Institutions</span>
+                            <span class="font-bold text-ink-950">{{ $coverageCounts['universities'] }} institutions</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-ink-600">Accredited Curricula Monitored:</span>
-                            <span class="font-bold text-ink-950">6,420 Degrees</span>
+                            <span class="font-bold text-ink-950">{{ $coverageCounts['programs'] }} programs</span>
                         </div>
                         <div class="flex items-center justify-between">
                             <span class="text-ink-600">Regulatory Oversight:</span>
@@ -117,12 +117,12 @@
             </div>
         </section>
 
-        <!-- National Charter Milestones (Timeline) -->
+        <!-- Charter Milestones (Timeline) -->
         <section class="space-y-8">
             <x-ui.section-header 
                 eyebrow="Platform Timeline"
-                title="Evolution of the National Platform"
-                description="From research initiative to national higher education infrastructure."
+                title="Evolution of the Platform"
+                description="From research initiative to higher education infrastructure."
             />
 
             <div class="grid grid-cols-1 md:grid-cols-4 gap-6">

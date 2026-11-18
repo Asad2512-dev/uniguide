@@ -13,10 +13,10 @@ return [
 
     'public' => [
         [
-            'label' => 'AI Counselor',
+            'label' => 'Admission Counselor',
             'route' => 'counselor.index',
             'icon' => 'sparkles',
-            'badge' => 'Intelligent',
+            'badge' => null,
             'badge_color' => 'brand',
             'description' => 'Personalized admission advisor, aggregate evaluation, and conversational search.',
         ],
@@ -37,7 +37,7 @@ return [
             'route' => 'admissions.index',
             'icon' => 'calendar-clock',
             'badge' => 'Fall 2026',
-            'description' => 'Track open intakes, national entry test dates, and application cutoffs.',
+            'description' => 'Track open intakes, entry test dates, and application cutoffs.',
         ],
         [
             'label' => 'Scholarships',
@@ -75,7 +75,7 @@ return [
             'label' => 'About UniGuide',
             'route' => 'marketing.about',
             'icon' => 'shield-check',
-            'description' => 'Our national charter, data transparency, mission, and leadership.',
+            'description' => 'Our charter, data transparency, mission, and leadership.',
         ],
     ],
 
@@ -125,7 +125,7 @@ return [
                 'active' => 'student.saved.scholarships*',
             ],
             [
-                'label' => 'AI Admission Advisor',
+                'label' => 'Admission Advisor',
                 'route' => 'counselor.index',
                 'icon' => 'sparkles',
                 'badge' => 'Online',
@@ -221,7 +221,7 @@ return [
         ],
         'secondary' => [
             [
-                'label' => 'AI Data Verification',
+                'label' => 'Data Verification',
                 'route' => 'uni_admin.ai_verification',
                 'icon' => 'sparkles',
                 'badge' => '4 Pending',
@@ -253,8 +253,9 @@ return [
 
     'national_admin' => [
         'main' => [
+            ['label' => 'Platform Inquiries', 'route' => 'national_admin.inquiries', 'icon' => 'message-circle', 'active' => 'national_admin.inquiries*'],
             [
-                'label' => 'National Operations',
+                'label' => 'Platform Overview',
                 'route' => 'national_admin.dashboard',
                 'icon' => 'layout-dashboard',
                 'active' => 'national_admin.dashboard',
@@ -263,16 +264,16 @@ return [
                 'label' => 'University Registry',
                 'route' => 'national_admin.universities',
                 'icon' => 'building-2',
-                'badge' => '248 Chartered',
+                'badge' => 'University listings',
                 'active' => 'national_admin.universities*',
             ],
             [
-                'label' => 'Charter Approvals',
-                'route' => 'national_admin.approvals',
+                'label' => 'University Applications',
+                'route' => 'national_admin.applications',
                 'icon' => 'file-badge-2',
-                'badge' => '3 Pending',
+                'badge' => null,
                 'badge_color' => 'warning',
-                'active' => 'national_admin.approvals*',
+                'active' => 'national_admin.applications*',
             ],
             [
                 'label' => 'Program Registry',
@@ -295,7 +296,7 @@ return [
                 'active' => 'national_admin.scraping*',
             ],
             [
-                'label' => 'AI Extraction Review',
+                'label' => 'Extraction Review',
                 'route' => 'national_admin.ai_extraction',
                 'icon' => 'sparkles',
                 'badge' => '4 Staged',
@@ -317,7 +318,7 @@ return [
         ],
         'secondary' => [
             [
-                'label' => 'AI Chatbot Config',
+                'label' => 'Counselor Settings',
                 'route' => 'national_admin.chatbot_config',
                 'icon' => 'bot',
                 'active' => 'national_admin.chatbot_config*',
@@ -329,13 +330,13 @@ return [
                 'active' => 'national_admin.users*',
             ],
             [
-                'label' => 'Regulatory Broadcasts',
+                'label' => 'Platform Announcements',
                 'route' => 'national_admin.notifications',
                 'icon' => 'bell',
                 'active' => 'national_admin.notifications*',
             ],
             [
-                'label' => 'National Analytics',
+                'label' => 'Analytics',
                 'route' => 'national_admin.analytics',
                 'icon' => 'bar-chart-3',
                 'active' => 'national_admin.analytics*',

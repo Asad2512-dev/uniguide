@@ -3,7 +3,7 @@
     description="Inspect the official statutory eligibility rules, Pakistan Engineering Council regulations, and directives."
 >
     <div class="min-h-screen bg-canvas pb-24">
-        
+
         <!-- Header Strip -->
         <section class="border-b border-border-default/80 bg-surface">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-10">
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="max-w-3xl">
-                    <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-700 text-xs font-semibold mb-2">
+                    <div class="inline-flex items-center gap-1.5       text-emerald-700 text-xs font-semibold mb-2">
                         <x-icon name="shield-check" class="w-3.5 h-3.5 text-emerald-600" />
                         <span>Statutory Rules Architecture</span>
                     </div>
@@ -33,7 +33,7 @@
         <!-- Master-Detail Layout -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                
+
                 <!-- Left 5 Cols: Rules Directory -->
                 <div class="lg:col-span-5 space-y-4">
                     <div class="flex items-center justify-between pb-2 border-b border-border-subtle">
@@ -71,7 +71,7 @@
                         <div class="p-6 sm:p-8 rounded-2xl bg-surface border border-border-default shadow-card space-y-6">
                             <div class="pb-6 border-b border-border-default space-y-2">
                                 <div class="flex items-center gap-2">
-                                    <span class="text-xs font-mono font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-0.5 rounded-full">
+                                    <span class="text-xs font-mono font-bold text-emerald-800      ">
                                         {{ $selectedRule['category'] }}
                                     </span>
                                     <span class="text-xs font-mono text-ink-600">{{ $selectedRule['verified_date'] }}</span>

@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 
 class AuthController extends Controller
@@ -36,6 +37,7 @@ class AuthController extends Controller
 
         $credentials = [
             'email' => $request->input('email'),
+            'status' => 'active',
             'password' => $request->input('password'),
         ];
 
@@ -54,8 +56,8 @@ class AuthController extends Controller
             return match ($user->role) {
                 'university_admin', 'university_staff' => redirect()->route('uni_admin.dashboard')
                     ->with('toast_success', 'Welcome to '.($user->institution_slug ? strtoupper($user->institution_slug).' Institutional Console' : 'University Console').', '.$user->name.'.'),
-                'national_admin' => redirect()->route('national_admin.dashboard')
-                    ->with('toast_success', 'HEC National Regulatory Command authenticated. Welcome, '.$user->name.'.'),
+                'national_admin', 'super_admin', 'admin' => redirect()->route('national_admin.dashboard')
+                    ->with('toast_success', 'Platform administrator signed in. Welcome, '.$user->name.'.'),
                 default => redirect()->route('student.dashboard')
                     ->with('toast_success', 'Welcome back, '.$user->name.'! Fall 2026 application cycle is active.'),
             };
@@ -79,11 +81,14 @@ class AuthController extends Controller
      */
     public function processRegister(Request $request): RedirectResponse
     {
+        if (is_string($request->input('stream'))) {
+            $request->merge(['stream' => config('academic_streams.aliases.'.$request->input('stream'), $request->input('stream'))]);
+        }
         $validated = $request->validate([
             'full_name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:150', 'unique:users,email'],
             'phone' => ['required', 'string', 'max:25'],
-            'stream' => ['required', 'string'],
+            'stream' => ['required', 'string', Rule::in(array_keys(config('academic_streams.options')))],
             'province' => ['required', 'string'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'terms' => ['accepted'],
@@ -107,9 +112,11 @@ class AuthController extends Controller
             'phone' => $validated['phone'],
             'domicile_province' => $validated['province'],
             'stream' => $validated['stream'],
+            'stream_label' => config('academic_streams.options.'.$validated['stream'].'.name'),
             'onboarding_completed' => false,
         ]);
 
+        $request->session()->forget('uniguide_student_profile');
         Auth::login($user);
         $request->session()->regenerate();
         session(['uniguide_user_role' => 'student']);
@@ -135,7 +142,7 @@ class AuthController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        return redirect()->route('auth.login')->with('toast_success', 'Password reset instructions sent to '.$request->input('email').'. Please check your inbox.');
+        return back()->withErrors(['email' => 'Email recovery is not configured. If you are signed in, change your password from account settings. Otherwise contact the platform administrator.']);
     }
 
     /**

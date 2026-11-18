@@ -1,9 +1,9 @@
-<x-layouts.public 
+<x-layouts.counselor
     title="Your Strategic Recommendation Tiers — UniGuide Pakistan"
     description="Personalized Pakistani university admission recommendations categorized into Reach, Match, and Safety tiers with statutory aggregate calculations."
 >
     <div x-data="{ activeTab: 'all' }" class="min-h-screen bg-canvas pb-24">
-        
+
         <div class="mx-4 mt-4 rounded-xl border border-warning-200 bg-warning-50 p-4 text-sm leading-relaxed text-warning-800" role="note">Planning illustration: this assessment uses existing preset calculations. It does not establish verified eligibility or guarantee admission. Confirm current requirements and financial-aid terms with the institution.</div>
         <!-- Header Banner & Calculated Merit Overview -->
         <section class="border-b border-border-default/80 bg-surface">
@@ -11,7 +11,7 @@
                 <!-- Breadcrumbs -->
                 <div class="mb-4">
                     <x-ui.breadcrumbs :items="[
-                        ['label' => 'AI Counselor', 'url' => route('counselor.index')],
+                        ['label' => 'Admission Counselor', 'url' => route('counselor.index')],
                         ['label' => 'Guided Assessment', 'url' => route('counselor.guided')],
                         ['label' => 'Strategic Recommendation Tiers', 'url' => '#']
                     ]" />
@@ -19,9 +19,9 @@
 
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
-                            <x-icon name="sparkles" class="w-3.5 h-3.5 text-brand-600" />
-                            <span>AI Strategic Evaluation Plan</span>
+                        <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
+                            <x-icon name="message-circle" class="w-3.5 h-3.5 text-brand-600" />
+                            <span>Your admission plan</span>
                             <span class="text-ink-300">•</span>
                             <span class="font-mono text-xs sm:text-[11px] text-brand-800">Fall 2026 Intake</span>
                         </div>
@@ -77,7 +77,7 @@
 
         <!-- Main Tiers & Program Recommendations -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-            
+
             <!-- Tier Filter Pills -->
             <div class="flex items-center justify-between pb-6 border-b border-border-default flex-wrap gap-4">
                 <div class="flex items-center gap-2">
@@ -132,8 +132,8 @@
                         href="{{ route('counselor.chat') }}"
                         class="px-3 py-1.5 rounded-lg bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold font-sans transition-smooth inline-flex items-center gap-1.5 shadow-2xs"
                     >
-                        <x-icon name="sparkles" class="w-3.5 h-3.5" />
-                        <span>Discuss with AI Advisor</span>
+                        <x-icon name="message-circle" class="w-3.5 h-3.5" />
+                        <span>Discuss with the counselor</span>
                     </a>
                 </div>
             </div>
@@ -188,7 +188,7 @@
                                         href="{{ route('counselor.chat') }}?prompt=How+can+I+improve+my+chances+for+{{ urlencode($item['program']) }}+at+{{ urlencode($item['acronym']) }}%3F"
                                         class="font-semibold text-brand-600 hover:text-brand-700"
                                     >
-                                        Ask AI Strategy →
+                                        Discuss your options →
                                     </a>
                                 </div>
                             </div>
@@ -373,5 +373,5 @@
             </div>
         </main>
     </div>
-</x-layouts.public>
+</x-layouts.counselor>
 

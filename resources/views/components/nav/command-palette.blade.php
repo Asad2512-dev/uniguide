@@ -68,7 +68,7 @@
                     <a href="{{ route('counselor.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="bot" class="w-4 h-4 text-brand-600" />
-                            <span>AI University Counselor</span>
+                            <span>University Counselor</span>
                         </span>
                         <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/counselor</span>
                     </a>
@@ -96,7 +96,7 @@
                     <a href="{{ route('scholarships.index') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-ink-800 hover:bg-surface-subtle group">
                         <span class="flex items-center gap-2.5 font-medium">
                             <x-icon name="award" class="w-4 h-4 text-brand-600" />
-                            <span>National Scholarships Directory</span>
+                            <span>Scholarships Directory</span>
                         </span>
                         <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/scholarships</span>
                     </a>
@@ -119,11 +119,11 @@
                             <x-icon name="shield-check" class="w-4 h-4 text-brand-600" />
                             <span>Superadmin Platform</span>
                         </span>
-                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/admin/national</span>
+                        <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-ink-600">/admin/platform</span>
                     </a>
                     <a href="{{ route('design-system') }}" @click="$store.commandPalette.close()" class="flex items-center justify-between gap-3 px-3 py-2 rounded-lg text-brand-700 bg-brand-50/60 font-semibold group">
                         <span class="flex items-center gap-2.5">
-                            <x-icon name="sparkles" class="w-4 h-4 text-brand-600" />
+                            <x-icon name="message-circle" class="w-4 h-4 text-brand-600" />
                             <span>Design System Living Catalog</span>
                         </span>
                         <span class="hidden sm:inline text-xs sm:text-[10px] font-mono text-brand-600">/design-system</span>

@@ -4,14 +4,19 @@
     'institutionCode' => 'INST-PK-019',
 ])
 
+@php
+    $institution = app(\App\Services\UniversityAdminService::class)->getInstitution();
+    $institutionName = $institution['name'];
+    $institutionCode = $institution['code'];
+@endphp
 <x-layouts.base :title="$title">
     <div class="portal-workspace flex min-h-dvh w-full bg-canvas">
         <!-- University Admin Sidebar -->
         <x-nav.sidebar 
             menuKey="university_admin" 
             roleLabel="Institutional Console" 
-            userName="Dr. Tariq Mahmood" 
-            userRole="Director of Admissions • NUST" 
+            :userName="auth()->user()?->name ?? 'University administrator'"
+            userRole="University administrator"
             userAvatar="TM" 
         />
 
@@ -23,7 +28,7 @@
             <!-- Institutional Authority Topbar -->
             <x-nav.topbar 
                 contextBadge="{{ $institutionName }}" 
-                userName="Dr. Tariq Mahmood" 
+                :userName="auth()->user()?->name ?? 'University administrator'"
                 userRole="Registrar Office • Verified" 
                 avatarText="TM" 
             />
@@ -43,6 +48,7 @@
             <!-- Scrollable Content Canvas -->
             <main id="main-content" class="min-w-0 flex-1 p-4 sm:p-6 lg:p-8">
                 <div class="max-w-none mx-auto">
+                    @if($errors->any())<div role="alert" class="mb-5 rounded-lg border border-error-200 p-4 text-sm text-error-700"><ul class="list-disc pl-5">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
                     {{ $slot }}
                 </div>
             </main>

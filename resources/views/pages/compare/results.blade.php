@@ -34,7 +34,7 @@
 
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
                     <div>
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
+                        <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
                             <x-icon name="git-compare" class="w-3.5 h-3.5 text-brand-600" />
                             <span>Comparing {{ count($universities) }} Institutions</span>
                         </div>
@@ -93,7 +93,7 @@
         </fieldset>
 
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
-            
+
             <!-- Sticky Header Strip for Desktop -->
             <div class="hidden lg:grid grid-cols-12 gap-4 sticky top-16 z-30 bg-surface/95 backdrop-blur-xs p-4 rounded-2xl border border-border-default shadow-card mb-8">
                 <div class="col-span-3 flex items-center">
@@ -202,8 +202,8 @@
                         href="{{ route('counselor.chat') }}?prompt=Compare+{{ urlencode(implode(' and ', array_column($universities, 'name'))) }}+for+admissions"
                         class="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white text-xs font-semibold shadow-xs transition-smooth inline-flex items-center gap-1.5"
                     >
-                        <x-icon name="sparkles" class="w-3.5 h-3.5" />
-                        <span>Consult AI Counselor on this Comparison</span>
+                        <x-icon name="message-circle" class="w-3.5 h-3.5" />
+                        <span>Consult Admission Counselor on this Comparison</span>
                     </a>
                 </div>
             </div>

@@ -1,7 +1,7 @@
 <x-layouts.national-admin title="Campus & Program Registry — Accredited Offerings">
     <x-ui.page-header 
         title="Campus and Program Registry"
-        description="National master inventory of accredited undergraduate and graduate degree programs across all constituent university campuses."
+        description="master inventory of accredited undergraduate and graduate degree programs across all constituent university campuses."
         badge="{{ number_format($total_programs) }} Degree Offerings"
         badgeVariant="brand"
     >
@@ -111,7 +111,7 @@
                                     {{ $p['annual_fee'] }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs sm:text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="inline-flex items-center gap-1.5    text-xs sm:text-[11px] font-medium  text-emerald-700  ">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         {{ $p['status'] }}
                                     </span>

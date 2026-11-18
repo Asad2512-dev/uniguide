@@ -1,5 +1,5 @@
 <x-layouts.university-admin 
-    :title="'AI Data Verification & Source Audit — ' . $institution['acronym']"
+    :title="'Data Verification & Source Audit — ' . $institution['acronym']"
     :institutionName="$institution['name']"
     :institutionCode="$institution['code']"
 >
@@ -23,7 +23,7 @@
         <!-- Informational Banner -->
         <div class="mb-8 p-5 rounded-2xl bg-brand-50/40 border border-brand-200/80 flex items-start gap-4">
             <div class="w-10 h-10 rounded-xl bg-brand-100 text-brand-700 flex items-center justify-center shrink-0">
-                <x-icon name="sparkles" class="w-5 h-5" />
+                <x-icon name="message-circle" class="w-5 h-5" />
             </div>
             <div>
                 <h3 class="font-heading font-bold text-sm text-brand-950">Automated Higher Education Crawler & Audit Protocol</h3>
@@ -59,7 +59,7 @@
                                 <span class="text-xs font-mono font-bold text-brand-600">{{ $item['confidence_score'] }}%</span>
                             </div>
 
-                            <span class="px-3 py-1 rounded-full text-xs font-mono font-bold uppercase {{ match($item['status']) {
+                            <span class="   text-xs font-mono font-bold uppercase {{ match($item['status']) {
                                 'approved' => 'bg-emerald-50 text-emerald-700 border border-emerald-200',
                                 'rejected' => 'bg-surface-subtle text-ink-600 border border-border-subtle',
                                 'edited' => 'bg-indigo-50 text-indigo-700 border border-indigo-200',

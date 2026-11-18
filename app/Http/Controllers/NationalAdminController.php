@@ -14,7 +14,7 @@ class NationalAdminController extends Controller
     ) {}
 
     /**
-     * 1. National Overview Dashboard
+     * 1. Overview Dashboard
      */
     public function dashboard(): View
     {
@@ -38,21 +38,14 @@ class NationalAdminController extends Controller
     /**
      * 3. University Approval Center
      */
-    public function approvals(): View
+    public function approvals(): RedirectResponse
     {
-        $approvals = $this->nationalService->getApprovals();
-
-        return view('pages.national-admin.approvals', [
-            'approvals' => $approvals,
-        ]);
+        return redirect()->route('national_admin.applications');
     }
 
     public function processApproval(Request $request, string $id): RedirectResponse
     {
-        $action = $request->input('action', 'approved');
-        $this->nationalService->processApproval($id, $action);
-
-        return back()->with('toast_success', 'Institutional accreditation application status updated to '.ucfirst($action).'.');
+        return redirect()->route('national_admin.applications');
     }
 
     /**
@@ -105,7 +98,7 @@ class NationalAdminController extends Controller
         $source = $request->input('source_name', 'All Active Institutional Repositories');
         $this->nationalService->triggerCrawl($source);
 
-        return back()->with('toast_success', 'Crawl worker dispatched for '.htmlspecialchars($source).'.');
+        return back()->with('toast_success', 'Collection review dispatched for '.htmlspecialchars($source).'.');
     }
 
     public function retryFailedCrawls(): RedirectResponse
@@ -182,7 +175,7 @@ class NationalAdminController extends Controller
     {
         $this->nationalService->reindexKnowledgeBase();
 
-        return back()->with('toast_success', 'Vector store re-indexing pipeline triggered across all statutory documents.');
+        return back()->with('toast_success', 'Indexing request processed.');
     }
 
     /**
@@ -252,7 +245,7 @@ class NationalAdminController extends Controller
             'two_factor' => $request->has('two_factor'),
         ]);
 
-        return back()->with('toast_success', 'Administrative credentials invitation dispatched with mandatory 2FA enrollment.');
+        return back()->with('toast_success', 'Invitation request saved.');
     }
 
     /**
@@ -272,12 +265,13 @@ class NationalAdminController extends Controller
         $request->validate([
             'title' => 'required|string|max:200',
             'category' => 'required|string',
-            'target_audience' => 'required|string',
+            'target_audience' => 'required|in:all,universities,students',
+            'message' => 'required|string|max:5000',
         ]);
 
-        $this->nationalService->createNotification($request->only(['title', 'category', 'target_audience']));
+        $this->nationalService->createNotification($request->only(['title', 'category', 'target_audience', 'message']));
 
-        return back()->with('toast_success', 'Regulatory broadcast notification dispatched successfully.');
+        return back()->with('toast_success', 'In-app notifications saved for the selected recipients.');
     }
 
     /**
@@ -309,6 +303,6 @@ class NationalAdminController extends Controller
             'immutable_audit_logging_enabled' => $request->has('immutable_audit_logging_enabled'),
         ]);
 
-        return back()->with('toast_success', 'National platform system settings updated.');
+        return back()->with('toast_success', 'platform system settings updated.');
     }
 }

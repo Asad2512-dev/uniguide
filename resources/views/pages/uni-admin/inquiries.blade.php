@@ -95,7 +95,7 @@
 
                             <div class="flex items-center gap-2">
                                 <span class="text-xs sm:text-[10px] font-mono font-bold uppercase px-2 py-0.5 rounded" :class="inq.priority === 'high' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-surface-subtle text-ink-600'" x-text="inq.priority + ' Priority'"></span>
-                                <span class="px-2.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold uppercase" :class="inq.status === 'resolved' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : (inq.status === 'new' ? 'bg-brand-50 text-brand-700 border border-brand-200' : 'bg-amber-50 text-amber-700 border border-amber-200')" x-text="inq.status"></span>
+                                <span class="   text-xs sm:text-[10px] font-mono font-bold uppercase" :class="inq.status === 'resolved' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : (inq.status === 'new' ? 'bg-brand-50 text-brand-700 border border-brand-200' : 'bg-amber-50 text-amber-700 border border-amber-200')" x-text="inq.status"></span>
                             </div>
                         </div>
 

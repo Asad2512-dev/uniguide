@@ -1,7 +1,7 @@
 <x-layouts.national-admin title="Knowledge Base (RAG) — Vector Store Management">
     <x-ui.page-header 
         title="Knowledge Base Management (RAG)"
-        description="Vector embeddings index and statutory knowledge store powering UniGuide's AI Counselor with hallucination-resistant grounded citations."
+        description="Vector embeddings index and published knowledge store powering UniGuide's Admission Counselor with hallucination-resistant grounded citations."
         badge="{{ number_format($stats['embedded_chunks']) }} Embedded Vectors"
         badgeVariant="brand"
     >
@@ -41,7 +41,7 @@
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
             <span class="text-xs sm:text-[10px] font-mono uppercase text-ink-500 block mb-1">Total Corpus</span>
             <span class="font-heading font-extrabold text-2xl text-ink-950">{{ $stats['total_documents'] }}</span>
-            <span class="text-xs sm:text-[10px] text-ink-500 block mt-0.5">Statutory Dossiers</span>
+            <span class="text-xs sm:text-[10px] text-ink-500 block mt-0.5">Listing Dossiers</span>
         </div>
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
             <span class="text-xs sm:text-[10px] font-mono uppercase text-ink-500 block mb-1">Vector Chunks</span>
@@ -66,23 +66,23 @@
         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-card">
             <span class="text-xs sm:text-[10px] font-mono uppercase text-ink-500 block mb-1">Chunk Failures</span>
             <span class="font-heading font-extrabold text-2xl text-emerald-700">{{ $stats['failed_chunks'] }}</span>
-            <span class="text-xs sm:text-[10px] text-emerald-600 block mt-0.5">100% Parsing Health</span>
+            <span class="text-xs sm:text-[10px] text-emerald-600 block mt-0.5">Recorded document status</span>
         </div>
     </div>
 
-    <!-- Statutory Corpus Documents Registry -->
+    <!-- Listing Corpus Documents Registry -->
     <div class="space-y-4">
         <div class="flex items-center justify-between">
-            <h3 class="font-heading font-bold text-base text-ink-950">Statutory & Regulatory Corpus Repository</h3>
+            <h3 class="font-heading font-bold text-base text-ink-950">Listing & Platform Corpus Repository</h3>
             <span class="text-xs font-mono text-ink-600">Official Federal Sources</span>
         </div>
 
         <div class="rounded-2xl bg-surface border border-border-default shadow-card overflow-hidden">
             <div class="overflow-x-auto">
-                <table data-mobile-table class="w-full text-left border-collapse" aria-label="Statutory Corpus Repository">
+                <table data-mobile-table class="w-full text-left border-collapse" aria-label="Listing Corpus Repository">
                     <thead>
                         <tr class="border-b border-border-default bg-surface-subtle text-xs sm:text-[11px] font-mono uppercase text-ink-500 tracking-wider">
-                            <th scope="col" class="py-3.5 px-4 font-semibold">Statutory Document & Authority</th>
+                            <th scope="col" class="py-3.5 px-4 font-semibold">Listing Document & Authority</th>
                             <th scope="col" class="py-3.5 px-4 text-center font-semibold">Vector Chunks</th>
                             <th scope="col" class="py-3.5 px-4 font-semibold">Last Embedded</th>
                             <th scope="col" class="py-3.5 px-4 text-right font-semibold">Index Status</th>
@@ -102,7 +102,7 @@
                                     {{ $doc['last_embedded'] }}
                                 </td>
                                 <td class="py-3.5 px-4 text-right">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-xs sm:text-[11px] font-medium bg-emerald-50 text-emerald-700 border border-emerald-200">
+                                    <span class="inline-flex items-center gap-1.5    text-xs sm:text-[11px] font-medium  text-emerald-700  ">
                                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
                                         {{ $doc['status'] }}
                                     </span>

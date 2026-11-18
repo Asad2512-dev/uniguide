@@ -48,7 +48,7 @@
 
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                     <div class="max-w-3xl">
-                        <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-3">
+                        <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-3">
                             <x-icon name="git-compare" class="w-3.5 h-3.5 text-brand-600" />
                             <span>Institutional Benchmark Workspace</span>
                         </div>
@@ -82,7 +82,7 @@
         </section>
 
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8 space-y-12">
-            
+
             <!-- Curated Benchmark Presets -->
             <div>
                 <div class="flex items-center justify-between mb-4">
@@ -103,7 +103,7 @@
                                     <div class="w-9 h-9 rounded-xl bg-brand-50 text-brand-700 flex items-center justify-center group-hover:bg-brand-600 group-hover:text-white transition-colors">
                                         <x-icon :name="$pre['icon']" class="w-4.5 h-4.5" />
                                     </div>
-                                    <span class="text-xs sm:text-[10px] font-mono font-bold px-2 py-0.5 rounded-full {{ match($pre['badge_color'] ?? 'brand') {
+                                    <span class="text-xs sm:text-[10px] font-mono font-bold    {{ match($pre['badge_color'] ?? 'brand') {
                                         'success' => 'bg-success-50 text-success-700 border border-success-200/60',
                                         'indigo' => 'bg-indigo-50 text-indigo-700 border border-indigo-200/60',
                                         'warning' => 'bg-warning-50 text-warning-700 border border-warning-200/60',
@@ -134,7 +134,7 @@
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                     <div>
                         <h2 class="font-heading font-bold text-lg text-ink-950">Build Custom Comparison</h2>
-                        <p class="text-xs text-ink-500 font-sans">Search and toggle institutions from our verified national directory.</p>
+                        <p class="text-xs text-ink-500 font-sans">Search and toggle institutions from our verified directory.</p>
                     </div>
 
                     <div class="relative max-w-xs w-full">
@@ -158,7 +158,7 @@
                             <div>
                                 <div class="flex items-center justify-between pb-2 mb-2 border-b border-border-subtle">
                                     <span class="font-heading font-bold text-xs text-ink-950" x-text="uni.acronym"></span>
-                                    
+
                                 </div>
                                 <h3 class="font-heading font-bold text-sm text-ink-900 truncate" x-text="uni.name"></h3>
                                 <p class="text-xs sm:text-[11px] text-ink-500 font-sans mt-0.5">

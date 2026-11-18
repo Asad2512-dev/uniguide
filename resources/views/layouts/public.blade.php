@@ -1,5 +1,5 @@
 @props([
-    'title' => 'UniGuide Pakistan — National Higher Education Discovery',
+    'title' => 'UniGuide Pakistan — Higher Education Discovery',
     'description' => null,
 ])
 
@@ -49,7 +49,7 @@
                     <ul class="space-y-2 text-xs font-sans text-ink-600">
                         <li><a href="{{ route('marketing.how_it_works') }}" class="hover:text-brand-600 transition-colors">How Admissions Work</a></li>
                         <li><a href="{{ route('home') }}#scholarships" class="hover:text-brand-600 transition-colors">Ehsaas & Scholarships</a></li>
-                        <li><a href="{{ route('home') }}#ai-counselor" class="hover:text-brand-600 transition-colors">AI Admission Counselor</a></li>
+                        <li><a href="{{ route('home') }}#ai-counselor" class="hover:text-brand-600 transition-colors">Admission Counselor</a></li>
                         <li><a href="{{ route('home') }}#comparison" class="hover:text-brand-600 transition-colors">University Comparison Matrix</a></li>
                         <li><a href="{{ route('marketing.features') }}" class="hover:text-brand-600 transition-colors">Platform Capabilities</a></li>
                     </ul>

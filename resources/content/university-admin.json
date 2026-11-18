@@ -5,8 +5,8 @@
     "export_button": "Export Gazette Report",
     "review_button": "Review AI Queue (:count)",
     "completeness_title": "Institutional Profile Completeness",
-    "completeness_badge": "National Tier 1",
-    "completeness_description": "Your university profile is visible to over 240,000 Pakistani candidates. Complete pending items to maintain Priority Verification on the national portal."
+    "completeness_badge": "Tier 1",
+    "completeness_description": "Your university profile is visible to over 240,000 Pakistani candidates. Complete pending items to maintain Priority Verification on the portal."
   },
   "sections": {
     "campuses": {

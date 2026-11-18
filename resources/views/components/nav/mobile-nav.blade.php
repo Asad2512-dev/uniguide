@@ -59,11 +59,6 @@
                             <x-icon :name="$item['icon']" class="w-4 h-4 {{ $isActive ? 'text-brand-600' : 'text-ink-400' }}" />
                             <span>{{ $item['label'] }}</span>
                         </span>
-                        @if(isset($item['badge']))
-                            <span class="px-1.5 py-0.2 rounded text-xs sm:text-[10px] bg-brand-50 text-brand-700">
-                                {{ $item['badge'] }}
-                            </span>
-                        @endif
                     </a>
                 @endforeach
                 @endforeach
@@ -72,7 +67,7 @@
 
         <div class="pt-4 border-t border-border-default space-y-2">
             <a href="{{ route('design-system') }}" class="flex items-center gap-2 min-h-11 px-3 py-2 rounded-lg text-sm font-semibold text-brand-700 bg-brand-50">
-                <x-icon name="sparkles" class="w-4 h-4" />
+                <x-icon name="message-circle" class="w-4 h-4" />
                 <span>Design System Catalog</span>
             </a>
             <a href="{{ route('home') }}" class="flex items-center gap-2 min-h-11 px-3 py-2 rounded-lg text-sm font-semibold text-ink-600 hover:bg-surface-subtle">

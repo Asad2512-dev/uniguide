@@ -18,6 +18,9 @@ class EnsureUniversityAdminAuthorized
     public function handle(Request $request, Closure $next): Response
     {
         $user = auth()->user();
+        if (! $user) {
+            return redirect()->route('auth.login', ['role' => 'university']);
+        }
 
         if ($user) {
             if (! in_array($user->role, ['university_admin', 'university_staff', 'national_admin', 'admin', 'super_admin'])) {

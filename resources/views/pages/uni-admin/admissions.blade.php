@@ -143,5 +143,15 @@
             </div>
         </div>
     </div>
+    <form action="{{ route('uni_admin.admissions.update') }}" method="POST" class="mt-8 rounded-xl border border-border-default p-6 space-y-4">
+        @csrf<h2 class="text-lg font-semibold">Add an admission cycle</h2>
+        <label class="block text-sm">Title<input name="title" required maxlength="200" class="mt-2 block w-full rounded-lg border border-border-default p-3"></label>
+        <label class="block text-sm">Campus<select name="campus_id" required class="mt-2 block w-full rounded-lg border border-border-default p-3">@foreach(app(\App\Services\UniversityAdminService::class)->getCampuses() as $campus)<option value="{{ $campus['id'] }}">{{ $campus['name'] }}</option>@endforeach</select></label>
+        <label class="block text-sm">Session<input name="session" maxlength="100" class="mt-2 block w-full rounded-lg border border-border-default p-3"></label>
+        <label class="block text-sm">Deadline<input type="date" name="deadline_date" required class="mt-2 block w-full rounded-lg border border-border-default p-3"></label>
+        <label class="block text-sm">Official application URL<input type="url" name="official_url" class="mt-2 block w-full rounded-lg border border-border-default p-3"></label>
+        <label class="block text-sm">Status<select name="status" class="mt-2 block w-full rounded-lg border border-border-default p-3"><option value="upcoming">Upcoming</option><option value="open">Open</option><option value="closing_soon">Closing soon</option><option value="closed">Closed</option></select></label>
+        <x-ui.button type="submit">Save admission cycle</x-ui.button>
+    </form>
 </x-layouts.university-admin>
 

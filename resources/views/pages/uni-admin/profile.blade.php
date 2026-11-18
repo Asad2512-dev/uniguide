@@ -5,7 +5,7 @@
 >
     <x-ui.page-header 
         title="University Profile & Institutional Identity"
-        description="Official national charter credentials, statutory accreditations, central admissions helpline, and executive leadership roster."
+        description="Official charter credentials, statutory accreditations, central admissions helpline, and executive leadership roster."
         badge="Verified Federal Charter"
         badgeVariant="success"
     >
@@ -51,7 +51,7 @@
                             <input 
                                 type="text" 
                                 value="{{ $profile['charter_act'] }}" 
-                                disabled 
+                                disabled
                                 class="w-full px-3.5 py-2.5 rounded-xl border border-border-subtle bg-surface-subtle text-ink-500 text-xs font-mono cursor-not-allowed"
                             />
                             <span class="text-xs sm:text-[10px] text-ink-600 mt-1 block">Locked by UniGuide Registry</span>
@@ -62,7 +62,7 @@
                             <input 
                                 type="text" 
                                 value="Est. {{ $profile['established'] }} • {{ $profile['hec_ranking'] }}" 
-                                disabled 
+                                disabled
                                 class="w-full px-3.5 py-2.5 rounded-xl border border-border-subtle bg-surface-subtle text-ink-500 text-xs font-sans cursor-not-allowed"
                             />
                         </div>

@@ -2,19 +2,8 @@
     :title="$university['name'] . ' (' . $university['acronym'] . ') — UniGuide Pakistan'"
     :description="$university['description']"
 >
-    <div x-data="{ 
-        activeTab: 'overview',
-        saved: false,
-        saveUniversity() {
-            this.saved = !this.saved;
-            if (this.saved) {
-                $store.toasts.add('Added ' + '{{ $university['acronym'] }}' + ' to your saved institutions.', 'success');
-            } else {
-                $store.toasts.add('Removed ' + '{{ $university['acronym'] }}' + ' from saved list.', 'info');
-            }
-        }
-    }" class="min-h-screen bg-canvas pb-24">
-        
+    <div x-data="{ activeTab: 'overview' }" class="min-h-screen bg-canvas pb-24">
+
         <!-- Breadcrumb & Institutional Header -->
         <header class="bg-surface border-b border-border-default/80">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -43,7 +32,7 @@
 
                         <div>
                             <div class="flex flex-wrap items-center gap-2 mb-1.5">
-                                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200/60 font-sans">
+                                <span class="   text-xs font-semibold  text-brand-700   font-sans">
                                     {{ $university['charter_type'] }}
                                 </span>
                                 <x-domain.verification-badge type="hec_recognized" :detail="$university['hec_category']" size="sm" />
@@ -70,18 +59,10 @@
 
                     <!-- Right CTAs: Save, Compare, Official Site -->
                     <div class="flex items-center flex-wrap gap-2.5 shrink-0">
-                        <button 
-                            type="button" 
-                            @click="saveUniversity()"
-                            :class="saved ? 'bg-brand-50 border-brand-300 text-brand-700' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle'"
-                            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold font-sans shadow-2xs transition-smooth cursor-pointer"
-                        >
-                            <x-icon name="bookmark" class="w-4 h-4" ::class="saved ? 'fill-brand-600 text-brand-600' : ''" />
-                            <span x-text="saved ? 'Saved' : 'Save Institution'"></span>
-                        </button>
+                        <x-domain.save-item type="university" :slug="$university['slug']" />
 
                         <a 
-                            href="{{ route('preview.student') }}" 
+                            href="{{ route('student.tracker') }}"
                             class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-border-default bg-surface hover:bg-surface-subtle text-xs font-semibold text-ink-700 font-sans shadow-2xs transition-smooth"
                         >
                             <x-icon name="git-compare" class="w-4 h-4 text-ink-500" />
@@ -119,7 +100,7 @@
                         class="px-3.5 py-2 rounded-lg border-b-2 transition-smooth whitespace-nowrap flex items-center gap-1.5 cursor-pointer"
                     >
                         <span>Degree Programs</span>
-                        <span class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono bg-surface-subtle border border-border-default">{{ count($programs) }}</span>
+                        <span class="   text-xs sm:text-[10px] font-mono   ">{{ count($programs) }}</span>
                     </button>
                     <button 
                         type="button" 
@@ -128,7 +109,7 @@
                         class="px-3.5 py-2 rounded-lg border-b-2 transition-smooth whitespace-nowrap flex items-center gap-1.5 cursor-pointer"
                     >
                         <span>Campuses & Facilities</span>
-                        <span class="px-1.5 py-0.2 rounded-full text-xs sm:text-[10px] font-mono bg-surface-subtle border border-border-default">{{ count($university['campuses'] ?? []) }}</span>
+                        <span class="   text-xs sm:text-[10px] font-mono   ">{{ count($university['campuses'] ?? []) }}</span>
                     </button>
                     <button 
                         type="button" 
@@ -153,10 +134,10 @@
         <!-- Main Content Layout -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
+
                 <!-- Left 2 Cols: Main Institutional Details -->
                 <div class="lg:col-span-2 space-y-8">
-                    
+
                     <!-- Overview Tab Content -->
                     <div x-show="activeTab === 'overview'" class="space-y-8">
                         <!-- Key Institutional Metrics -->
@@ -166,7 +147,7 @@
                                 <span class="font-heading font-extrabold text-base sm:text-lg text-ink-950 mt-0.5 block">
                                     {{ $university['acceptance_rate'] }}
                                 </span>
-                                <span class="text-xs sm:text-[10px] text-ink-600 font-sans">National Selection</span>
+                                <span class="text-xs sm:text-[10px] text-ink-600 font-sans">Selection</span>
                             </div>
                             <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
                                 <span class="block text-xs font-sans text-ink-500 font-medium">Estimated Tuition</span>
@@ -203,7 +184,7 @@
                             <div class="pt-2">
                                 <x-domain.source-citation 
                                     source="University source records"
-                                    url="https://hec.gov.pk"
+                                    url="https://uniguide.pk"
                                     verifiedAt="May 2026 Audit"
                                 />
                             </div>
@@ -491,7 +472,7 @@
 
                 <!-- Right 1 Col: Institutional Sticky Sidebar -->
                 <aside class="space-y-6">
-                    
+
                     <!-- Admissions Status Card -->
                     <div class="bg-surface rounded-2xl border border-border-default p-4 sm:p-6 shadow-2xs space-y-5">
                         <div class="flex items-center justify-between">
@@ -517,7 +498,7 @@
                         </div>
 
                         <a 
-                            href="{{ route('preview.student') }}" 
+                            href="{{ route('student.tracker') }}"
                             class="block w-full text-center py-2.5 rounded-xl bg-brand-600 hover:bg-brand-700 text-white font-sans text-xs font-semibold shadow-xs transition-smooth"
                         >
                             Check My Merit Eligibility
@@ -592,5 +573,13 @@
         </main>
 
     </div>
+    @if(auth()->user()?->isStudent())
+        <form method="POST" action="{{ route('marketing.contact.submit') }}" class="landing-container mx-auto mb-10 rounded-xl border border-border-default p-6 space-y-4">
+            @csrf<input type="hidden" name="university_slug" value="{{ $university['slug'] }}"><input type="hidden" name="name" value="{{ auth()->user()->name }}"><input type="hidden" name="email" value="{{ auth()->user()->email }}">
+            <h2 class="text-xl font-semibold">Ask the university a question</h2><p class="text-sm text-ink-500">Your inquiry is saved for the institution’s administration team.</p>
+            <label class="block text-sm">Subject<input name="subject" required maxlength="200" class="mt-2 block w-full rounded-lg border border-border-default p-3"></label>
+            <label class="block text-sm">Message<textarea name="message" required maxlength="5000" rows="4" class="mt-2 block w-full rounded-lg border border-border-default p-3"></textarea></label><x-ui.button type="submit">Send inquiry</x-ui.button>
+        </form>
+    @endif
 </x-layouts.public>
 

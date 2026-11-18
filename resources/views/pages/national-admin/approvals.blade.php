@@ -1,15 +1,15 @@
 <x-layouts.national-admin title="Charter Approval Center — Institutional Accreditation">
     <x-ui.page-header 
         title="University Approval Center"
-        description="Statutory review board for constituent campus approvals, degree charter level upgrades, and statutory council accreditations."
-        badge="Regulatory Board"
+        description="Review university listing requests and manage platform approvals."
+        badge="Platform Review"
         badgeVariant="warning"
     >
         <x-slot:breadcrumbs>
             <x-ui.breadcrumbs 
                 :items="[
                     ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
-                    ['label' => 'Charter Approvals']
+                    ['label' => 'University Applications']
                 ]"
             />
         </x-slot:breadcrumbs>
@@ -48,7 +48,7 @@
                 class="px-3.5 py-1.5 rounded-xl border text-xs transition-colors flex items-center gap-2 shrink-0 cursor-pointer"
             >
                 <span>All Filings</span>
-                <span class="px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] bg-surface font-mono text-ink-600 border border-border-subtle">
+                <span class="   text-xs sm:text-[10px]  font-mono text-ink-600  ">
                     {{ count($approvals) }}
                 </span>
             </button>
@@ -59,8 +59,8 @@
                 :class="activeTab === 'pending' ? 'bg-amber-50 text-amber-800 border-amber-200 font-semibold' : 'text-ink-600 hover:text-ink-950 border-transparent hover:bg-surface-subtle'"
                 class="px-3.5 py-1.5 rounded-xl border text-xs transition-colors flex items-center gap-2 shrink-0 cursor-pointer"
             >
-                <span>Pending Statutory Review</span>
-                <span class="px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] bg-amber-100 font-mono text-amber-800 font-bold">
+                <span>Pending Platform Review</span>
+                <span class="   text-xs sm:text-[10px]  font-mono text-amber-800 font-bold">
                     {{ count(array_filter($approvals, fn($a) => $a['status'] !== 'approved')) }}
                 </span>
             </button>
@@ -71,8 +71,8 @@
                 :class="activeTab === 'approved' ? 'bg-emerald-50 text-emerald-800 border-emerald-200 font-semibold' : 'text-ink-600 hover:text-ink-950 border-transparent hover:bg-surface-subtle'"
                 class="px-3.5 py-1.5 rounded-xl border text-xs transition-colors flex items-center gap-2 shrink-0 cursor-pointer"
             >
-                <span>Gazette Ratified</span>
-                <span class="px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] bg-emerald-100 font-mono text-emerald-800 font-bold">
+                <span>Approved</span>
+                <span class="   text-xs sm:text-[10px]  font-mono text-emerald-800 font-bold">
                     {{ count(array_filter($approvals, fn($a) => $a['status'] === 'approved')) }}
                 </span>
             </button>
@@ -148,7 +148,7 @@
             @endforeach
         </div>
 
-        <!-- Full Statutory Dossier Inspection Modal (Alpine.js) -->
+        <!-- Full Listing Dossier Inspection Modal (Alpine.js) -->
         <div 
             x-show="showModal" 
             x-cloak
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
 
-                            <!-- Statutory Compliance Metrics -->
+                            <!-- Listing Compliance Metrics -->
                             <div>
                                 <h4 class="font-heading font-bold text-ink-950 text-xs uppercase tracking-wider mb-3">Federal Accreditation Criteria Evaluation</h4>
                                 <div class="grid grid-cols-2 gap-3 font-sans">
@@ -210,7 +210,7 @@
                                     <div class="p-3 rounded-xl bg-surface-subtle border border-border-subtle flex items-start gap-2.5">
                                         <x-icon name="check-circle-2" class="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                                         <div>
-                                            <span class="font-bold text-ink-900 block">Statutory Council Clearance</span>
+                                            <span class="font-bold text-ink-900 block">Listing Council Clearance</span>
                                             <span class="text-ink-500 text-xs sm:text-[11px]">PEC & NCEAC inspection delegations have ratified initial infrastructure.</span>
                                         </div>
                                     </div>
@@ -235,7 +235,7 @@
                                 </button>
 
                                 <template x-if="selectedDossier.status !== 'approved'">
-                                    <form method="POST" :action="'/admin/national/approvals/' + selectedDossier.id" class="inline">
+                                    <form method="POST" :action="'/admin/platform/approvals/' + selectedDossier.id" class="inline">
                                         @csrf
                                         <input type="hidden" name="action" value="approved">
                                         <x-ui.button type="submit" variant="primary" size="sm" icon="check">

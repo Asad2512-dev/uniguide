@@ -15,6 +15,7 @@
             </div>
 
             <div class="bg-surface rounded-3xl border border-border-default p-6 sm:p-8 shadow-card space-y-6">
+                @if($errors->any())<p role="alert" class="text-sm text-error-700">{{ $errors->first() }}</p>@endif
                 <form action="{{ route('auth.forgot_password.submit') }}" method="POST" class="space-y-4">
                     @csrf
 

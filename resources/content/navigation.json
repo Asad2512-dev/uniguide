@@ -3,7 +3,7 @@
     "explore": "Explore",
     "admissions": "Admissions",
     "more": "More",
-    "intelligent_tools": "Intelligent Tools",
+    "intelligent_tools": "Planning tools",
     "platform": "Platform",
     "main_workspace": "Main Workspace",
     "governance_tools": "Governance & Tools",
@@ -11,8 +11,8 @@
   },
   "public": {
     "counselor": {
-      "label": "AI Counselor",
-      "badge": "Intelligent",
+      "label": "Admission Counselor",
+      "badge": null,
       "description": "Personalized admission advisor, aggregate evaluation, and conversational search."
     },
     "universities": {
@@ -26,7 +26,7 @@
     "admissions": {
       "label": "Admissions & Deadlines",
       "badge": "Fall 2026",
-      "description": "Track open intakes, national entry test dates, and application cutoffs."
+      "description": "Track open intakes, entry test dates, and application cutoffs."
     },
     "scholarships": {
       "label": "Scholarships",
@@ -52,7 +52,7 @@
     },
     "about": {
       "label": "About UniGuide",
-      "description": "Our national charter, data transparency, mission, and leadership."
+      "description": "Our charter, data transparency, mission, and leadership."
     },
     "contact": {
       "label": "Contact",
@@ -92,7 +92,7 @@
         "badge": "3"
       },
       "counselor": {
-        "label": "AI Admission Advisor",
+        "label": "Admission Advisor",
         "badge": "Online"
       }
     },
@@ -145,7 +145,7 @@
     },
     "secondary": {
       "ai_verification": {
-        "label": "AI Data Verification",
+        "label": "Data Verification",
         "badge": "4 Pending"
       },
       "inquiries": {
@@ -164,14 +164,14 @@
     "role_label": "Superadmin",
     "main": {
       "dashboard": {
-        "label": "National Operations"
+        "label": "Platform Overview"
       },
       "universities": {
         "label": "University Registry",
-        "badge": "248 Chartered"
+        "badge": "University listings"
       },
       "approvals": {
-        "label": "Charter Approvals",
+        "label": "University Applications",
         "badge": "3 Pending"
       },
       "programs": {
@@ -185,7 +185,7 @@
         "badge": "4 Active"
       },
       "ai_extraction": {
-        "label": "AI Extraction Review",
+        "label": "Extraction Review",
         "badge": "4 Staged"
       },
       "verification": {
@@ -197,16 +197,16 @@
     },
     "secondary": {
       "chatbot_config": {
-        "label": "AI Chatbot Config"
+        "label": "Counselor Settings"
       },
       "users": {
         "label": "User Management"
       },
       "notifications": {
-        "label": "Regulatory Broadcasts"
+        "label": "Platform Announcements"
       },
       "analytics": {
-        "label": "National Analytics"
+        "label": "Analytics"
       },
       "settings": {
         "label": "Settings & Audit Logs"
@@ -214,4 +214,3 @@
     }
   }
 }
-

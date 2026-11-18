@@ -3,11 +3,11 @@
     description="Real-time alerts on closing registration deadlines, entry-test admit slips, merit announcements, and scholarship openings."
 >
     <div class="space-y-8 pb-12">
-        
+
         <!-- Header Strip -->
         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-border-default">
             <div>
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-50 border border-brand-200/80 text-brand-700 text-xs font-semibold mb-2">
+                <div class="inline-flex items-center gap-1.5       text-brand-700 text-xs font-semibold mb-2">
                     <x-icon name="bell" class="w-3.5 h-3.5 text-brand-600" />
                     <span>Admissions Signal Center</span>
                 </div>

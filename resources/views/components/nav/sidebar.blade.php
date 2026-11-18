@@ -78,15 +78,6 @@
                             <x-icon :name="$item['icon']" class="w-4.5 h-4.5 shrink-0 {{ $isActive ? 'text-brand-600' : 'text-ink-400' }}" />
                             <span x-show="!collapsed" class="truncate">{{ $item['label'] }}</span>
                         </div>
-
-                        @if(isset($item['badge']))
-                            <span 
-                                x-show="!collapsed" 
-                                class="shrink-0 whitespace-nowrap px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold border {{ $badgeColor }}"
-                            >
-                                {{ $item['badge'] }}
-                            </span>
-                        @endif
                     </a>
                 @endforeach
             </nav>
@@ -120,15 +111,6 @@
                                 <x-icon :name="$item['icon']" class="w-4.5 h-4.5 shrink-0 {{ $isActive ? 'text-brand-600' : 'text-ink-400' }}" />
                                 <span x-show="!collapsed" class="truncate">{{ $item['label'] }}</span>
                             </div>
-
-                            @if(isset($item['badge']))
-                                <span 
-                                    x-show="!collapsed" 
-                                    class="shrink-0 whitespace-nowrap px-1.5 py-0.5 rounded-full text-xs sm:text-[10px] font-mono font-bold border {{ $badgeColor }}"
-                                >
-                                    {{ $item['badge'] }}
-                                </span>
-                            @endif
                         </a>
                     @endforeach
                 </nav>

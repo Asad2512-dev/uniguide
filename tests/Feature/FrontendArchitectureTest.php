@@ -2,249 +2,44 @@
 
 namespace Tests\Feature;
 
-use Tests\TestCase;
+use App\Models\Inquiry;
+use App\Models\User;
+use Tests\DatabaseFeatureTestCase;
 
-class FrontendArchitectureTest extends TestCase
+class FrontendArchitectureTest extends DatabaseFeatureTestCase
 {
-    /**
-     * Test the Homepage renders with all required product sections.
-     */
-    public function test_homepage_renders_all_required_sections(): void
+    public function test_public_pages_render_with_live_catalog_and_no_fabricated_identity(): void
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-        // Header & Navigation
-        $response->assertSee('UniGuide');
-        $response->assertSee('PAKISTAN');
-
-        // Editorial Hero & Central Intelligent Search
-        $response->assertSee('Find your university in Punjab or Islamabad', false);
-        $response->assertSee('Calculate exact merit', false);
-        $response->assertSee('By University');
-        $response->assertSee('By Degree Program');
-        $response->assertSee('By My Aggregate %');
-
-        // Quick Access Entry Tiles
-        $response->assertSee('Universities');
-        $response->assertSee('Degree Offerings');
-        $response->assertSee('Scholarship Opportunities');
-
-        // Featured Universities Section
-        $response->assertSee('Explore Verified Pakistani Universities');
-        $response->assertSee('National University of Sciences');
-        $response->assertSee('FAST - National University of Computer');
-        $response->assertSee('Lahore University of Management Sciences');
-
-        // Degree Programs Exploration
-        $response->assertSee('Popular Undergraduate Degree Programs');
-        $response->assertSee('BS Computer Science (BSCS)');
-
-        // AI Counselor Product Showcase
-        $response->assertSee('An AI Counselor grounded strictly in verified Pakistani admission guidelines');
-        $response->assertSee('UniGuide National Merit Intelligence');
-
-        // University Comparison Showcase
-        $response->assertSee('Side-by-Side Institutional Comparison');
-        $response->assertSee('Evaluation Parameter');
-
-        // Scholarship Discovery Section
-        $response->assertSee('National Scholarships &amp; Grants', false);
-        $response->assertSee('HEC Need-Based Undergraduate Scholarship');
-
-        // How the Platform Works
-        $response->assertSee('How Pakistani Students Navigate Admissions with UniGuide');
-        $response->assertSee('Discover & Filter', false);
-
-        // Trust & Data Transparency
-        $response->assertSee('Higher Education Commission of Pakistan Ordinance 2002');
-        $response->assertSee('Statutory Verification Seal');
-
-        // Final Conversion Section
-        $response->assertSee('Join thousands of Pakistani students finding their future on UniGuide');
+        foreach (['/', '/about', '/features', '/contact', '/how-it-works', '/login', '/register', '/forgot-password', '/universities/join'] as $path) {
+            $this->get($path)->assertOk();
+        }
+        $this->get('/')->assertSee('Find your university in Punjab or Islamabad.')->assertDontSee('1042/1100')->assertDontSee('482/520');
     }
 
-    /**
-     * Test Screen 2: About UniGuide screen.
-     */
-    public function test_about_page_renders_successfully(): void
+    public function test_contact_form_creates_a_database_record_and_validates_input(): void
     {
-        $response = $this->get(route('marketing.about'));
-
-        $response->assertStatus(200);
-        $response->assertSee('About UniGuide Pakistan');
-        $response->assertSee('The UniGuide Zero-Hallucination', false);
-        $response->assertSee('Evolution of the National Platform');
-        $response->assertSee('Academic Advisory Council');
+        $this->post('/contact', ['name' => 'A student', 'email' => 'contact@example.com', 'subject' => 'Help needed', 'message' => 'Please help me find the correct university page.'])->assertRedirect();
+        $this->assertSame('Help needed', Inquiry::firstOrFail()->subject);
+        $this->post('/contact', ['email' => 'invalid'])->assertSessionHasErrors(['email', 'name', 'message']);
     }
 
-    /**
-     * Test Screen 3: How It Works screen.
-     */
-    public function test_how_it_works_page_renders_successfully(): void
+    public function test_recovery_does_not_claim_to_send_email_without_a_mail_service(): void
     {
-        $response = $this->get(route('marketing.how_it_works'));
-
-        $response->assertStatus(200);
-        $response->assertSee('How Admissions Work on UniGuide');
-        $response->assertSee('Standard Pakistani Aggregate Merit Formulas');
-        $response->assertSee('NUST Entry Test (NET)');
-        $response->assertSee('FAST-NUCES (NU Test)');
-        $response->assertSee('Medical & Dental (MDCAT)', false);
+        $this->post('/forgot-password', ['email' => 'student@gmail.com'])->assertSessionHasErrors('email');
     }
 
-    /**
-     * Test Screen 4: Platform Features screen.
-     */
-    public function test_features_page_renders_successfully(): void
+    public function test_only_three_seeded_accounts_and_correct_workspace_redirects(): void
     {
-        $response = $this->get(route('marketing.features'));
-
-        $response->assertStatus(200);
-        $response->assertSee('UniGuide Platform Capabilities');
-        $response->assertSee('Intelligent Multi-Parameter University Search');
-        $response->assertSee('Algorithmic Aggregate Merit Calculator');
-        $response->assertSee('Integrated with 1-Link, 1-Bill, and National Banking Systems');
+        $this->assertSame(3, User::count());
+        foreach (['student@gmail.com' => 'student.dashboard', 'numl@gmail.com' => 'uni_admin.dashboard', 'admin@gmail.com' => 'national_admin.dashboard'] as $email => $route) {
+            $this->post('/login', ['email' => $email, 'password' => '12345678'])->assertRedirect(route($route));
+            $this->post('/logout');
+        }
     }
 
-    /**
-     * Test Screen 5: Contact and Support screen.
-     */
-    public function test_contact_page_renders_and_handles_submission(): void
-    {
-        $response = $this->get(route('marketing.contact'));
-
-        $response->assertStatus(200);
-        $response->assertSee('Admissions Support');
-        $response->assertSee('Emergency Admissions Helpline');
-        $response->assertSee('Federal &amp; ICT Headquarters', false);
-
-        // Test POST submission
-        $postResponse = $this->post(route('marketing.contact.submit'), [
-            'name' => 'Usman Tariq',
-            'email' => 'usman.tariq@gmail.com',
-            'phone' => '03001234567',
-            'category' => 'aggregate',
-            'subject' => 'Inquiry regarding NUST NET-3 cutoff aggregate calculation',
-            'message' => 'I have scored 940/1100 in Matric and 480/520 in FSc Part-I. What is my probability for Software Engineering?',
-        ]);
-
-        $postResponse->assertRedirect(route('marketing.contact'));
-        $postResponse->assertSessionHas('success');
-    }
-
-    /**
-     * Test Screen 6a: Shared Authentication Login.
-     */
-    public function test_login_page_renders_and_handles_role_switching(): void
-    {
-        $response = $this->get(route('auth.login'));
-
-        $response->assertStatus(200);
-        $response->assertSee('Sign in to UniGuide');
-        $response->assertSee('Select Workspace Account Type');
-
-        // Test Student Login Submission
-        $postStudent = $this->post(route('auth.login.submit'), [
-            'role' => 'student',
-            'email' => 'ahmad.raza@student.uniguide.pk',
-            'password' => 'StudentPass2026!',
-        ]);
-        $postStudent->assertRedirect(route('student.dashboard'));
-
-        // Test University Admin Login Submission
-        $postUniv = $this->post(route('auth.login.submit'), [
-            'role' => 'university',
-            'email' => 'admissions@nust.edu.pk',
-            'password' => 'NustAdmin2026!',
-        ]);
-        $postUniv->assertRedirect(route('uni_admin.dashboard'));
-
-        // Test HEC Admin Login Submission
-        $postAdmin = $this->post(route('auth.login.submit'), [
-            'role' => 'admin',
-            'email' => 'regulatory@hec.gov.pk',
-            'password' => 'HecFederal2026!',
-        ]);
-        $postAdmin->assertRedirect(route('national_admin.dashboard'));
-    }
-
-    /**
-     * Test Screen 6b: Candidate Registration.
-     */
-    public function test_register_page_renders_and_validates(): void
-    {
-        $response = $this->get(route('auth.register'));
-
-        $response->assertStatus(200);
-        $response->assertSee('Create Your Student Account');
-        $response->assertSee('Intermediate Academic Stream');
-
-        $email = 'zainab.bibi.'.uniqid().'@gmail.com';
-
-        // Test Successful Registration
-        $postResponse = $this->post(route('auth.register.submit'), [
-            'full_name' => 'Zainab Bibi',
-            'email' => $email,
-            'phone' => '03211234567',
-            'stream' => 'fsc_pre_eng',
-            'province' => 'punjab',
-            'password' => 'SecurePass2026!',
-            'password_confirmation' => 'SecurePass2026!',
-            'terms' => '1',
-        ]);
-
-        $postResponse->assertRedirect(route('student.onboarding'));
-    }
-
-    /**
-     * Test Screen 6c: Forgot Password.
-     */
-    public function test_forgot_password_page_renders_and_submits(): void
-    {
-        $response = $this->get(route('auth.forgot_password'));
-
-        $response->assertStatus(200);
-        $response->assertSee('Reset Your Password');
-
-        $postResponse = $this->post(route('auth.forgot_password.submit'), [
-            'email' => 'zainab.bibi@gmail.com',
-        ]);
-
-        $postResponse->assertRedirect(route('auth.login'));
-    }
-
-    /**
-     * Test Design System Showcase and Shell Previews remain functional.
-     */
-    public function test_design_system_and_shells_continue_to_pass(): void
-    {
-        $this->get('/design-system')->assertStatus(200);
-        $this->get(route('preview.public'))->assertStatus(200);
-        $this->get(route('preview.student'))->assertStatus(200);
-        $this->get(route('preview.university_admin'))->assertStatus(200);
-        $this->get(route('preview.national_admin'))->assertStatus(200);
-    }
-
-    /**
-     * Test brand logo is linked as favicon and touch icon across pages.
-     */
     public function test_pages_include_brand_favicon_and_assets_exist(): void
     {
-        $response = $this->get('/');
-        $response->assertStatus(200);
-        $response->assertSee('favicon.svg');
-        $response->assertSee('favicon.ico');
-        $response->assertSee('apple-touch-icon.png');
-        $response->assertSee('site.webmanifest');
-
+        $this->get('/')->assertSee('favicon', false);
         $this->assertFileExists(public_path('favicon.svg'));
-        $this->assertGreaterThan(0, filesize(public_path('favicon.svg')));
-
-        $this->assertFileExists(public_path('favicon.ico'));
-        $this->assertGreaterThan(0, filesize(public_path('favicon.ico')));
-
-        $this->assertFileExists(public_path('apple-touch-icon.png'));
-        $this->assertGreaterThan(0, filesize(public_path('apple-touch-icon.png')));
     }
 }

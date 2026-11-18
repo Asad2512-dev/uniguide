@@ -1,5 +1,5 @@
 <x-layouts.public 
-    title="UniGuide Pakistan — National University Discovery & Admissions Platform"
+    title="UniGuide Pakistan — University Discovery & Admissions Platform"
     description="Discover universities and admission opportunities across Punjab and Islamabad."
 >
     <!-- ========================================================================= -->
@@ -14,13 +14,13 @@
 
         <div class="relative landing-container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-4xl mx-auto flex flex-col items-center text-center gap-4 sm:gap-6">
-                <!-- National Context Eyebrow -->
-                <div class="hidden sm:inline-flex order-1 items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold font-sans bg-surface border border-brand-200 text-brand-700 shadow-2xs">
+                <!-- Context Eyebrow -->
+                <div class="hidden sm:inline-flex order-1 items-center gap-2    text-xs font-semibold font-sans    text-brand-700 ">
                     <span class="flex h-2 w-2 relative">
                         <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-500 opacity-75"></span>
                         <span class="relative inline-flex rounded-full h-2 w-2 bg-brand-600"></span>
                     </span>
-                    <span>{{ content('homepage.hero.eyebrow', 'Fall 2026 National University Admissions Cycle Live') }}</span>
+                    <span>{{ content('homepage.hero.eyebrow', 'Fall 2026 University Admissions Cycle Live') }}</span>
                     <span class="text-ink-300">•</span>
                     <span class="text-ink-600 font-normal">{{ content('homepage.hero.institutions_listed', $coverageCounts['universities'] . ' Listed Institutions', ['count' => $coverageCounts['universities']]) }}</span>
                 </div>
@@ -30,7 +30,7 @@
                     {{ content('homepage.hero.headline_main', 'Find your university in Punjab or Islamabad.') }} <br class="hidden sm:inline" />
                     <span class="hidden sm:inline text-transparent bg-clip-text bg-gradient-to-r from-brand-600 via-brand-700 to-indigo-900">
                         {{ content('homepage.hero.headline_gradient', 'Calculate exact merit.') }}
-                    </span> 
+                    </span>
                     <span class="hidden sm:inline">{{ content('homepage.hero.headline_end', 'Apply with confidence.') }}</span>
                 </h1>
 
@@ -49,14 +49,7 @@
                         selectedProvince: 'all',
                         selectedSector: 'all',
                         selectedDiscipline: 'all',
-                        suggestions: [
-                            { type: 'University', title: 'National University of Sciences & Technology (NUST)', meta: 'Islamabad • University', route: '{{ route('universities.show', 'nust') }}' },
-                            { type: 'University', title: 'FAST - NUCES (Computing & AI)', meta: 'Islamabad and Lahore', route: '{{ route('universities.show', 'fast-nuces') }}' },
-                            { type: 'University', title: 'Lahore University of Management Sciences (LUMS)', meta: 'Lahore • Business & CS', route: '{{ route('universities.show', 'lums') }}' },
-                            { type: 'Program', title: 'BS Computer Science (BSCS)', meta: '4 Years • Average Fee PKR 140k/sem', route: '{{ route('programs.show', 'fast-bs-computer-science') }}' },
-                            { type: 'Program', title: 'BS Software Engineering (BSSE)', meta: '4 Years • Top Merit', route: '{{ route('programs.show', 'nust-bs-software-engineering') }}' },
-                            { type: 'Scholarship', title: 'Need-Based Undergraduate Scholarship', meta: '100% Tuition + PKR 6,000/mo', route: '{{ route('scholarships.index') }}' },
-                        ],
+                        suggestions: @js($searchSuggestions),
                         get filteredSuggestions() {
                             if (!this.searchQuery.trim()) return [];
                             return this.suggestions.filter(s => 
@@ -129,7 +122,7 @@
                                         @keydown.enter="window.location.href = searchQuery.trim() ? '{{ route('search.index') }}?q=' + encodeURIComponent(searchQuery) : '{{ route('universities.index') }}'"
                                     />
                                     <button 
-                                        type="button" 
+                                        type="button"
                                         x-show="searchQuery.length > 0" 
                                         aria-label="Clear university search"
                                         @click="searchQuery = ''"
@@ -192,7 +185,7 @@
                                     type="button" 
                                     @click="selectedProvince = selectedProvince === 'ict' ? 'all' : 'ict'"
                                     :class="selectedProvince === 'ict' ? 'bg-brand-50 text-brand-700 border-brand-300 font-bold' : 'bg-surface text-ink-600 border-border-default hover:bg-surface-subtle'"
-                                    class="px-2.5 py-1 rounded-full border transition-smooth text-xs sm:text-[11px] cursor-pointer"
+                                    class="px-2.5 py-1 rounded-md border transition-smooth text-xs sm:text-[11px] cursor-pointer"
                                 >
                                     Islamabad (Federal)
                                 </button>
@@ -200,16 +193,16 @@
                                     type="button" 
                                     @click="selectedProvince = selectedProvince === 'punjab' ? 'all' : 'punjab'"
                                     :class="selectedProvince === 'punjab' ? 'bg-brand-50 text-brand-700 border-brand-300 font-bold' : 'bg-surface text-ink-600 border-border-default hover:bg-surface-subtle'"
-                                    class="px-2.5 py-1 rounded-full border transition-smooth text-xs sm:text-[11px] cursor-pointer"
+                                    class="px-2.5 py-1 rounded-md border transition-smooth text-xs sm:text-[11px] cursor-pointer"
                                 >
                                     Punjab
                                 </button>
-                                
+
                                 <button 
                                     type="button" 
                                     @click="selectedSector = selectedSector === 'public' ? 'all' : 'public'"
                                     :class="selectedSector === 'public' ? 'bg-emerald-50 text-emerald-800 border-emerald-300 font-bold' : 'bg-surface text-ink-600 border-border-default hover:bg-surface-subtle'"
-                                    class="px-2.5 py-1 rounded-full border transition-smooth text-xs sm:text-[11px] cursor-pointer"
+                                    class="px-2.5 py-1 rounded-md border transition-smooth text-xs sm:text-[11px] cursor-pointer"
                                 >
                                     Public Sector Only
                                 </button>
@@ -285,7 +278,7 @@
                             Admission Cycles & Cutoffs
                         </h3>
                         <p class="text-xs text-ink-500 font-sans mt-1 leading-relaxed">
-                            Live deadlines, multi-year closing aggregates, and 1-Link bank challan procedures.
+                            Recorded application dates and requirements from university records.
                         </p>
                     </div>
                     <span class="inline-flex items-center gap-1 text-xs font-semibold text-warning-700 mt-4 font-sans">
@@ -331,9 +324,9 @@
             <div class="shrink-0 flex items-center gap-2">
                 <x-ui.segmented-control 
                     :options="[
-                        ['id' => 'all', 'label' => 'All Sectors', 'count' => 248],
-                        ['id' => 'public', 'label' => 'Public', 'count' => 142],
-                        ['id' => 'private', 'label' => 'Chartered Private', 'count' => 106],
+                        ['id' => 'all', 'label' => 'All Sectors', 'count' => \App\Models\University::count()],
+                        ['id' => 'public', 'label' => 'Public', 'count' => \App\Models\University::where('sector','public')->count()],
+                        ['id' => 'private', 'label' => 'Chartered Private', 'count' => \App\Models\University::where('sector','private')->count()],
                     ]"
                     default="all"
                 />
@@ -422,7 +415,7 @@
             <!-- Left Narrative -->
             <div class="lg:col-span-5 space-y-6">
                 <x-ui.section-header 
-                    eyebrow="National Intelligence Engine"
+                    eyebrow="Intelligence Engine"
                     title="An AI Counselor grounded strictly in verified Pakistani admission guidelines"
                     description="Trained on official Higher Education Commission policies, 5-year university merit archives, and BISE grading curves. No hallucinated requirements, no fabricated cutoff rumors."
                 />
@@ -433,8 +426,8 @@
                             <x-icon name="shield-check" class="w-4 h-4" />
                         </div>
                         <div>
-                            <h4 class="font-bold text-ink-900 text-sm">Regulatory Citations on Every Answer</h4>
-                            <p class="text-ink-500 mt-0.5">Whenever UniGuide suggests a target institution, it quotes the exact published prospectus circular or statutory gazette number.</p>
+                            <h4 class="font-bold text-ink-900 text-sm">Recorded Sources</h4>
+                            <p class="text-ink-500 mt-0.5">Review the recorded sources for available institution information. Missing records are identified clearly.</p>
                         </div>
                     </div>
 
@@ -443,8 +436,8 @@
                             <x-icon name="calculator" class="w-4 h-4" />
                         </div>
                         <div>
-                            <h4 class="font-bold text-ink-900 text-sm">40+ Standardized University Formulas</h4>
-                            <p class="text-ink-500 mt-0.5">Calculates precise aggregates across NUST NET (75/15/10), FAST NU (50/50), MDCAT Punjab/Sindh, and provincial engineering quotas.</p>
+                            <h4 class="font-bold text-ink-900 text-sm">Recorded University Formulas</h4>
+                            <p class="text-ink-500 mt-0.5">Calculates scores only from saved academic results and institution-configured formulas.</p>
                         </div>
                     </div>
 
@@ -453,8 +446,8 @@
                             <x-icon name="clock" class="w-4 h-4" />
                         </div>
                         <div>
-                            <h4 class="font-bold text-ink-900 text-sm">Safe vs Target vs Reach Stratification</h4>
-                            <p class="text-ink-500 mt-0.5">Provides realistic risk analysis so candidates never apply exclusively to high-cutoff programs without backup safety options.</p>
+                            <h4 class="font-bold text-ink-900 text-sm">Your Saved Research</h4>
+                            <p class="text-ink-500 mt-0.5">Keep your saved universities, programs, and conversations together in your account.</p>
                         </div>
                     </div>
                 </div>
@@ -471,34 +464,10 @@
 
             <!-- Right Interactive AI Demonstration Balloon -->
             <div class="lg:col-span-7">
-                <x-domain.ai-message 
-                    advisorName="UniGuide National Merit Intelligence"
-                    confidence="98% High Confidence"
-                    timestamp="Calculated using verified Fall 2026 guidelines"
-                    :citations="[
-                        ['source' => 'NUST SEECS Official Admission Gazette 2025-26', 'reference' => 'Cutoff Circular 2025-SEECS-CS', 'date' => 'Official Source'],
-                        ['source' => 'FAST-NUCES Islamabad Admission Office', 'reference' => 'Batch 2025 Aggregate Closing List', 'date' => 'Verified']
-                    ]"
-                    :prompts="[
-                        'What aggregate is needed for FAST BS Artificial Intelligence?',
-                        'Calculate fee payment installments for LUMS SDSB',
-                        'Show need-based scholarship application deadline'
-                    ]"
-                >
-                    <p>
-                        Greetings Candidate! Here is your personalized admission prognosis based on your Matriculation marks (<strong>1042/1100 • 94.7%</strong>) and FSc Pre-Engineering marks (<strong>482/520 • 92.6%</strong>):
-                    </p>
-                    <ul class="list-disc pl-5 space-y-1.5">
-                        <li>
-                            <strong>NUST SEECS (Islamabad):</strong> A target score of <strong>150+ in NET-3</strong> yields an aggregate of <strong>81.20%</strong>. This safely clears the historical first merit cutoff for <em>BS Software Engineering</em> (80.12%) and <em>BS Computer Science</em> (81.40%).
-                        </li>
-                        <li>
-                            <strong>FAST-NUCES (Islamabad / Lahore):</strong> Your 92.6% FSc Part-I provides exceptional leverage under the 50% FSc + 50% NU Test formula. A modest NU score of <strong>66/100</strong> secures admission in the First Merit List.
-                        </li>
-                        <li>
-                            <strong>Financial Aid Feasibility:</strong> You qualify for the <strong>Need-Based Grant</strong> and the <strong>PEEF Merit Scholarship</strong> for public sector enrollment.
-                        </li>
-                    </ul>
+                <x-domain.ai-message advisorName="UniGuide Admission Advisor" timestamp="University database guidance" :citations="[]" :prompts="[]">
+                    <p>Explore the university directory, review recorded campus information, and save your shortlist.</p>
+                    <p>Program fees, application dates, and eligibility results are shown only when recorded. Missing information is marked for review rather than estimated.</p>
+                    <p>Sign in to keep your conversations and academic profile in your account.</p>
                 </x-domain.ai-message>
             </div>
         </div>
@@ -538,9 +507,9 @@
                             @foreach($comparisonMatrix['attributes'] as $attr)
                                 <tr class="hover:bg-surface-subtle/50 transition-colors">
                                     <td class="p-4 font-semibold text-ink-900 bg-surface-subtle/30">{{ $attr['label'] }}</td>
-                                    <td class="p-4 text-center text-ink-700 font-medium">{{ $attr['nust'] }}</td>
-                                    <td class="p-4 text-center text-ink-700 font-medium">{{ $attr['fast'] }}</td>
-                                    <td class="p-4 text-center text-ink-700 font-medium">{{ $attr['lums'] }}</td>
+                                    <td class="p-4 text-center text-ink-700 font-medium">{{ $attr['nust'] ?? 'Not recorded' }}</td>
+                                    <td class="p-4 text-center text-ink-700 font-medium">{{ $attr['fast'] ?? 'Not recorded' }}</td>
+                                    <td class="p-4 text-center text-ink-700 font-medium">{{ $attr['lums'] ?? 'Not recorded' }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -563,7 +532,7 @@
         <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
             <x-ui.section-header 
                 eyebrow="Financial Aid & Equality"
-                title="National Scholarships & Grants (2026–2027)"
+                title="Scholarships & Grants (2026–2027)"
                 description="Over PKR 4.2 Billion in verified federal, provincial, and bilateral educational grants. No student should discontinue higher education due to tuition costs."
             />
 
@@ -628,7 +597,7 @@
                 <div class="relative p-4 sm:p-6 bg-surface-subtle rounded-2xl border border-border-default flex flex-col justify-between">
                     <span class="text-3xl font-heading font-extrabold text-brand-600/30">03</span>
                     <div class="mt-4 space-y-2">
-                        <h4 class="font-heading font-bold text-base text-ink-950">AI Cutoff Forecaster</h4>
+                        <h4 class="font-heading font-bold text-base text-ink-950">Admission Planning</h4>
                         <p class="text-xs text-ink-500 font-sans leading-relaxed">
                             Compare your aggregate against 5-year closing cutoffs to evaluate selection chances.
                         </p>
@@ -642,10 +611,10 @@
                     <div class="mt-4 space-y-2">
                         <h4 class="font-heading font-bold text-base text-ink-950">Track & Pay Challans</h4>
                         <p class="text-xs text-ink-500 font-sans leading-relaxed">
-                            Follow merit list declarations, download 1-Link bank challans, and confirm your enrollment.
+                            Track your own application progress and complete applications through university channels.
                         </p>
                     </div>
-                    <span class="text-xs sm:text-[11px] font-mono text-brand-700 font-semibold mt-4">1-Link Banking →</span>
+                    <span class="text-xs sm:text-[11px] font-mono text-brand-700 font-semibold mt-4">Track applications →</span>
                 </div>
             </div>
         </div>
@@ -658,7 +627,7 @@
         <div class="bg-surface rounded-3xl border border-border-default p-4 sm:p-8 md:p-12 shadow-card">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
                 <div class="lg:col-span-8 space-y-4">
-                    <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold font-sans bg-success-50 text-success-800 border border-success-200">
+                    <div class="inline-flex items-center gap-1.5    text-xs font-semibold font-sans  text-success-800  ">
                         <x-icon name="shield-check" class="w-4 h-4 text-success-600" />
                         <span>Data Transparency Protocol</span>
                     </div>
@@ -673,8 +642,8 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-border-subtle text-xs font-sans">
                         <div>
-                            <span class="block font-bold text-ink-950 font-heading text-sm">248 Chartered Bodies</span>
-                            <span class="text-ink-500">142 Public • 106 Chartered Private</span>
+                            <span class="block font-bold text-ink-950 font-heading text-sm">University listings</span>
+                            <span class="text-ink-500">{{ \App\Models\University::where('sector','public')->count() }} Public · {{ \App\Models\University::where('sector','private')->count() }} Private</span>
                         </div>
                         <div>
                             <span class="block font-bold text-ink-950 font-heading text-sm">Zero Fabricated Stats</span>
@@ -710,7 +679,7 @@
             </div>
 
             <div class="relative max-w-2xl space-y-5">
-                <span class="text-xs font-mono uppercase tracking-widest text-brand-200 bg-white/10 px-3 py-1 rounded-full font-bold">
+                <span class="text-xs font-mono uppercase tracking-widest text-brand-200     font-bold">
                     Start Your Higher Education Journey
                 </span>
                 <h2 class="text-3xl sm:text-4xl md:text-5xl font-heading font-extrabold text-white tracking-tight leading-tight">

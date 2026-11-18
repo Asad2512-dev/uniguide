@@ -15,6 +15,8 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable;
 
+    protected $attributes = ['role' => 'student', 'status' => 'active'];
+
     protected $fillable = [
         'name',
         'email',
@@ -53,7 +55,7 @@ class User extends Authenticatable
 
     public function isNationalAdmin(): bool
     {
-        return in_array($this->role, ['national_admin', 'admin', 'super_admin', 'hec_regulator']);
+        return in_array($this->role, ['national_admin', 'admin', 'super_admin']);
     }
 
     public function profile(): HasOne

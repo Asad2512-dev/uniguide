@@ -2,30 +2,8 @@
     :title="$admission['title'] . ' — UniGuide Pakistan'"
     :description="$admission['summary']"
 >
-    <div x-data="{ 
-        saved: false,
-        reminderSet: false,
-        reminderModalOpen: false,
-        reminderEmail: '',
-        saveAdmission() {
-            this.saved = !this.saved;
-            if (this.saved) {
-                $store.toasts.add('Saved ' + '{{ $admission['university_acronym'] }}' + ' admission campaign to your watchlist.', 'success');
-            } else {
-                $store.toasts.add('Removed from watchlist.', 'info');
-            }
-        },
-        submitReminder() {
-            if (!this.reminderEmail || !this.reminderEmail.includes('@')) {
-                $store.toasts.add('Please enter a valid email address.', 'error');
-                return;
-            }
-            this.reminderSet = true;
-            this.reminderModalOpen = false;
-            $store.toasts.add('Deadline alert scheduled! We will notify ' + this.reminderEmail + ' 7 days and 48 hours before cutoff.', 'success');
-        }
-    }" class="min-h-screen bg-canvas pb-24">
-        
+    <div x-data="{ reminderModalOpen: false, reminderSet: false }" class="min-h-screen bg-canvas pb-24">
+
         <!-- Header Banner -->
         <header class="bg-surface border-b border-border-default/80">
             <div class="landing-container mx-auto px-4 sm:px-6 lg:px-8 py-6">
@@ -41,7 +19,7 @@
                 <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-6 pb-2">
                     <div>
                         <div class="flex flex-wrap items-center gap-2 mb-2">
-                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-brand-50 text-brand-700 border border-brand-200/60 font-sans uppercase font-mono">
+                            <span class="   text-xs font-semibold  text-brand-700   font-sans uppercase font-mono">
                                 {{ $admission['session'] }}
                             </span>
                             <x-domain.admission-status :status="$admission['status']" size="sm" />
@@ -72,15 +50,7 @@
 
                     <!-- Right CTAs: Save, Set Reminder, Apply Official -->
                     <div class="flex items-center flex-wrap gap-2.5 shrink-0">
-                        <button 
-                            type="button" 
-                            @click="saveAdmission()"
-                            :class="saved ? 'bg-brand-50 border-brand-300 text-brand-700' : 'bg-surface border-border-default text-ink-700 hover:bg-surface-subtle'"
-                            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold font-sans shadow-2xs transition-smooth cursor-pointer"
-                        >
-                            <x-icon name="bookmark" class="w-4 h-4" ::class="saved ? 'fill-brand-600 text-brand-600' : ''" />
-                            <span x-text="saved ? 'Watchlisted' : 'Save Campaign'"></span>
-                        </button>
+                        <x-domain.save-item type="admission" :slug="$admission['slug']" />
 
                         <button 
                             type="button" 
@@ -109,10 +79,10 @@
         <!-- Main Body Grid -->
         <main class="landing-container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                
+
                 <!-- Left 2 Cols: Comprehensive Admissions Dossier -->
                 <div class="lg:col-span-2 space-y-8">
-                    
+
                     <!-- High-Level Dates Strip -->
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
                         <div class="p-4 rounded-2xl bg-surface border border-border-default shadow-2xs">
@@ -269,7 +239,7 @@
                                 <span>Required Submission Documents</span>
                             </h2>
                             <a href="{{ route('admissions.checklist') }}" class="text-xs font-semibold text-brand-600 hover:underline">
-                                Full National Checklist →
+                                Full Checklist →
                             </a>
                         </div>
 
@@ -287,7 +257,7 @@
 
                 <!-- Right 1 Col: Urgent Countdown & Official Contacts -->
                 <aside class="space-y-6">
-                    
+
                     <!-- Deadline Countdown Box -->
                     <div class="bg-surface rounded-2xl border border-brand-200 shadow-elevated p-4 sm:p-6 space-y-4 ring-1 ring-brand-500/10">
                         <div class="flex items-center justify-between">
@@ -304,7 +274,7 @@
                                 {{ $admission['deadline'] }}
                             </span>
                             <span class="text-xs text-ink-500 font-sans mt-0.5 block">
-                                Registration closes strictly at 11:59 PM PST.
+                                Confirm the closing time with the university.
                             </span>
                         </div>
 
@@ -375,59 +345,11 @@
             </div>
         </main>
 
-        <!-- Deadline Reminder Modal -->
-        <div 
-            x-show="reminderModalOpen" 
-            x-cloak
-            class="fixed inset-0 z-50 overflow-y-auto p-4 sm:p-6 md:p-20"
-            role="dialog"
-            aria-modal="true"
-        >
-            <div 
-                x-show="reminderModalOpen" 
-                class="fixed inset-0 bg-ink-950/40 backdrop-blur-xs" 
-                @click="reminderModalOpen = false"
-            ></div>
-
-            <div class="mx-auto max-w-md transform rounded-2xl bg-surface border border-border-default shadow-modal p-4 sm:p-6 transition-all relative z-10 space-y-5">
-                <div class="flex items-center justify-between border-b border-border-subtle pb-3">
-                    <h3 class="font-heading font-bold text-base text-ink-950 flex items-center gap-2">
-                        <x-icon name="bell" class="w-4 h-4 text-brand-600" />
-                        <span>Schedule Deadline Alert</span>
-                    </h3>
-                    <button type="button" @click="reminderModalOpen = false" class="p-1 text-ink-400 hover:text-ink-700">
-                        <x-icon name="x" class="w-4 h-4" />
-                    </button>
-                </div>
-
-                <div class="space-y-3 text-xs font-sans">
-                    <p class="text-ink-600 leading-relaxed">
-                        Never miss an admission cutoff. Enter your email to receive automatic verification alerts for <strong>{{ $admission['title'] }}</strong> (Deadline: {{ $admission['deadline'] }}).
-                    </p>
-
-                    <div>
-                        <label for="reminder-email" class="block font-semibold text-ink-700 mb-1">Your Email Address</label>
-                        <input 
-                            type="email" 
-                            id="reminder-email"
-                            x-model="reminderEmail" 
-                            placeholder="student@example.com"
-                            class="w-full text-xs font-sans rounded-xl border-border-default bg-surface-subtle py-2.5 px-3 focus:border-brand-500 focus:ring-1 focus:ring-brand-500 text-ink-900"
-                        />
-                    </div>
-                </div>
-
-                <div class="flex items-center justify-end gap-2.5 pt-2">
-                    <x-ui.button variant="ghost" size="sm" @click="reminderModalOpen = false">
-                        Cancel
-                    </x-ui.button>
-                    <x-ui.button variant="primary" size="sm" @click="submitReminder()">
-                        Activate Alerts
-                    </x-ui.button>
-                </div>
-            </div>
+        <div x-show="reminderModalOpen" x-cloak @keydown.escape.window="reminderModalOpen = false" class="fixed inset-0 z-50 flex items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="reminder-title">
+            <div class="w-full max-w-md rounded-xl border border-border-default bg-surface p-6 shadow-modal"><h2 id="reminder-title" class="text-lg font-semibold">Save deadline reminders</h2><p class="mt-3 text-sm text-ink-600">In-app reminders are available seven and two days before the recorded deadline. Passed reminder dates are skipped.</p>
+            @if(auth()->user()?->isStudent())<form method="POST" action="{{ route('student.admissions.reminders',$admission['slug']) }}" class="mt-5">@csrf<x-ui.button type="submit">Save in-app reminders</x-ui.button></form>@else<a href="{{ route('auth.login') }}" class="mt-5 block text-brand-700">Sign in to save reminders</a>@endif
+            <button type="button" @click="reminderModalOpen=false" class="mt-4 text-sm text-ink-600">Cancel</button></div>
         </div>
-
     </div>
 </x-layouts.public>
 

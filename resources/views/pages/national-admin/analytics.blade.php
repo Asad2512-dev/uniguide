@@ -1,6 +1,6 @@
-<x-layouts.national-admin title="National Higher Education Analytics & Reports">
+<x-layouts.national-admin title="Higher Education Analytics & Reports">
     <x-ui.page-header 
-        title="National Higher Education Analytics & Reports"
+        title="Higher Education Analytics & Reports"
         description="Macro insights into student discipline demand shifts, inter-provincial applicant migration flows, and tuition fee inflation benchmarks across Punjab and Islamabad."
         badge="Platform Analytics"
         badgeVariant="brand"
@@ -9,7 +9,7 @@
             <x-ui.breadcrumbs 
                 :items="[
                     ['label' => 'Platform Administration', 'url' => route('national_admin.dashboard')],
-                    ['label' => 'National Analytics']
+                    ['label' => 'Analytics']
                 ]"
             />
         </x-slot:breadcrumbs>
@@ -46,7 +46,7 @@
                     <h3 class="font-heading font-bold text-base text-ink-950">Undergraduate Discipline Applicant Demand (Fall 2026)</h3>
                     <p class="text-xs text-ink-500 font-sans">Percentage of total first-preference applications submitted within current regional coverage.</p>
                 </div>
-                <span class="text-xs font-mono text-ink-600">240,000 Total Candidates Sample</span>
+                <span class="text-xs font-mono text-ink-600">{{ \App\Models\User::where('role','student')->where('status','active')->count() }} active students</span>
             </div>
 
             <!-- Chart.js Visualization Canvas -->

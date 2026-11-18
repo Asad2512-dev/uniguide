@@ -3,7 +3,7 @@
     <div class="flex h-20 shrink-0 items-center justify-between gap-2 px-4">
         <a x-show="{{ $mobile ? 'true' : '!sidebarCollapsed' }}" href="{{ route('home') }}" class="flex min-h-11 items-center gap-2.5 rounded-lg" aria-label="UniGuide home">
             <x-brand.logo size="sm" />
-            <span x-show="{{ $mobile ? 'true' : '!sidebarCollapsed' }}" class="font-heading text-sm font-extrabold tracking-tight">UniGuide <span class="text-brand-600">AI</span><span class="mt-0.5 block text-[11px] font-medium tracking-normal text-ink-500">University Counselor</span></span>
+            <span x-show="{{ $mobile ? 'true' : '!sidebarCollapsed' }}" class="font-heading text-sm font-extrabold tracking-tight">UniGuide <span class="mt-0.5 block text-[11px] font-medium tracking-normal text-ink-500">University Counselor</span></span>
         </a>
         @if($mobile)
             <button type="button" @click="historyOpen = false" class="counselor-icon-button" aria-label="Close conversation history"><x-icon name="x" class="size-4" /></button>
@@ -35,6 +35,6 @@
         <a href="{{ route('counselor.history') }}" class="mx-3 mb-3 flex min-h-11 items-center gap-2 rounded-lg px-3 text-xs font-medium text-ink-600 hover:bg-white"><x-icon name="history" class="size-4" />Search all conversations<span class="ml-auto text-ink-500">50 recent</span></a>
     </div>
     <div class="shrink-0 border-t border-border-default/60 px-3 py-3 safe-area-bottom">
-        <a href="{{ route(!auth()->check() ? 'auth.login' : (in_array(auth()->user()->role, ['admin', 'super_admin', 'hec_regulator']) ? 'national_admin.settings' : (in_array(auth()->user()->role, ['university', 'university_admin', 'university_staff']) ? 'uni_admin.settings' : 'student.settings'))) }}" class="flex min-h-11 items-center gap-2.5 rounded-xl px-2 text-sm text-ink-700 hover:bg-white" aria-label="{{ auth()->check() ? 'Account settings' : 'Sign in to save conversations' }}"><span class="flex size-8 shrink-0 items-center justify-center rounded-full border border-border-default bg-white"><x-icon name="user" class="size-4" /></span><span x-show="{{ $mobile ? 'true' : '!sidebarCollapsed' }}" class="min-w-0 truncate">{{ auth()->user()?->name ?? 'Sign in to save your research' }}</span></a>
+        <a href="{{ route(!auth()->check() ? 'auth.login' : (in_array(auth()->user()->role, ['admin', 'super_admin', 'national_admin']) ? 'national_admin.settings' : (in_array(auth()->user()->role, ['university', 'university_admin', 'university_staff']) ? 'uni_admin.settings' : 'student.settings'))) }}" class="flex min-h-11 items-center gap-2.5 rounded-xl px-2 text-sm text-ink-700 hover:bg-white" aria-label="{{ auth()->check() ? 'Account settings' : 'Sign in to save conversations' }}"><span class="flex size-8 shrink-0 items-center justify-center rounded-full border border-border-default bg-white"><x-icon name="user" class="size-4" /></span><span x-show="{{ $mobile ? 'true' : '!sidebarCollapsed' }}" class="min-w-0 truncate">{{ auth()->user()?->name ?? 'Sign in to save your research' }}</span></a>
     </div>
 </div>
