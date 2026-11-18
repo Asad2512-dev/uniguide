@@ -53,6 +53,29 @@ The default example configuration uses SQLite. If using MySQL through MAMP, set 
 
 Database migrations create tables. Seeders add records separately; they include sample data and should be reviewed before use on a shared database.
 
+## Demo logins
+
+Open `/login` and use one of these local demo accounts. These are application accounts, not credentials for the institutions' external websites.
+
+| Role | Email | Password |
+| --- | --- | --- |
+| Student | `ahmad.raza.khan@student.pk` | `Student@UniGuide2026!` |
+| Student (alternate) | `ahmad.raza@student.uniguide.pk` | `StudentPass2026!` |
+| University administrator (NUST) | `tariq.mahmood@nust.edu.pk` | `NustAdmin@2026!` |
+| University administrator (NUST, alternate) | `admissions@nust.edu.pk` | `NustAdmin2026!` |
+| University staff (NUST) | `registrar@nust.edu.pk` | `NustStaff@2026!` |
+| National administrator | `chairman@hec.gov.pk` | `HecFederal@2026!` |
+| National administrator (alternate) | `regulatory@hec.gov.pk` | `HecFederal2026!` |
+| National administrator (generic) | `admin@uniguide.pk` | `SuperAdmin@UniGuide2026!` |
+
+All eight accounts are defined in `database/seeders/UserSeeder.php`, which is included in `DatabaseSeeder`. To create or reset only these accounts without running the catalog seeders:
+
+```bash
+php artisan db:seed --class=UserSeeder
+```
+
+This command updates accounts by email and resets their passwords to the values above. Use these publicly documented credentials only for local demonstrations.
+
 ## Check changes
 
 ```bash
